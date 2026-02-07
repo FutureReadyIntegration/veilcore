@@ -1,0 +1,6 @@
+[console_scripts]
+veil = veil.cli:main
+veil-api = veil.api.__main__:main
+veil-compile = veil.compiler:compile_all
+veil-hospital = veil.hospital.__main__:main
+veil-intrusion = veil.intrusion.__main__:main

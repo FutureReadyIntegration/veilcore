@@ -1,0 +1,3 @@
+[console_scripts]
+veil = veil.cli:main
+veil-gui = veil.hospital_gui:main

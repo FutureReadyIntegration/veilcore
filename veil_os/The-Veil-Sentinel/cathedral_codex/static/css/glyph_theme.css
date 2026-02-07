@@ -1,0 +1,116 @@
+/*────────────────────────────────────────────────────────────────────────*/
+/* Glyph Theme Variables                                                */
+/*────────────────────────────────────────────────────────────────────────*/
+:root {
+  --bg-color:      #1e1e2f;
+  --text-color:    #e0e0ff;
+  --accent-color:  #b7925d;
+  --glyph-color:   #d9c17b;
+  --link-color:    #8ab4f8;
+  --font-body:     'Segoe UI', Tahoma, sans-serif;
+  --font-symbol:   'Segoe UI Symbol', 'Noto Sans Symbols', serif;
+  --transition:    0.3s ease-in-out;
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Global Reset & Base                                                */
+/*────────────────────────────────────────────────────────────────────────*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  padding: 1rem;
+}
+
+h1, h2, h3 {
+  color: var(--accent-color);
+  margin-bottom: 0.75rem;
+  font-family: var(--font-symbol), var(--font-body);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--accent-color);
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Glyph Icons                                                         */
+/*────────────────────────────────────────────────────────────────────────*/
+.glyph-icon {
+  font-family: var(--font-symbol);
+  color: var(--glyph-color);
+  margin-right: 0.5rem;
+  transition: transform var(--transition);
+}
+.glyph-icon:hover {
+  transform: scale(1.2);
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Lists & Items                                                       */
+/*────────────────────────────────────────────────────────────────────────*/
+ul, ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--glyph-color);
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Tables                                                              */
+/*────────────────────────────────────────────────────────────────────────*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+th, td {
+  padding: 0.75rem;
+  border: 1px solid #44475a;
+}
+th {
+  background: #27293d;
+  text-align: left;
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Code & Preformatted                                                 */
+/*────────────────────────────────────────────────────────────────────────*/
+pre, code {
+  background: #27293d;
+  color: #f8f8f2;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  overflow-x: auto;
+}
+
+/*────────────────────────────────────────────────────────────────────────*/
+/* Page-Specific Glyph Prefixes                                        */
+/*────────────────────────────────────────────────────────────────────────*/
+.status-page    ul li::before { content: "🩺"; }
+.stats-page     ul li::before { content: "📊"; }
+.vault-page     ul li::before { content: "💾"; }
+.timeline-page  ul li::before { content: "🕰️"; }
+.search-page    .result-item::before { content: "🔍"; }

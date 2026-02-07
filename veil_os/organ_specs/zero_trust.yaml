@@ -1,0 +1,23 @@
+name: zero_trust
+tier: 3
+glyph: "🚫"
+description: |
+  Enforces strict zero-trust principles across the system, validating every
+  action and ensuring no implicit trust exists between components.
+
+entrypoint: "veil.organs.zero_trust.main"
+
+logging:
+  file: "/var/log/veil/zero_trust.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/zero_trust"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

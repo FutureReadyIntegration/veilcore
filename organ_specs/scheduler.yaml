@@ -1,0 +1,25 @@
+name: scheduler
+version: 1.0
+tier: core
+glyph: "📅"
+technical_role: task_scheduler
+symbolic_role: timekeeper
+description: Distributed task scheduling and cron management.
+inputs:
+  - source: /opt/veil_os/sockets/scheduler.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/scheduler.log
+    format: jsonl
+triggers:
+  - type: schedule_due
+  - type: task_submit
+actions:
+  - type: schedule
+  - type: dispatch
+  - type: cancel
+dependencies:
+  - clock
+  - engine
+  - queue
+affirmation: Everything happens in its proper time.

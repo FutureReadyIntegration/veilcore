@@ -1,0 +1,30 @@
+[Unit]
+Description=The Veil - Hospital Cybersecurity Platform (API)
+After=network.target
+Wants=veil-sentinel.service veil-insider-threat.service veil-auto-lockdown.service veil-zero-trust.service
+
+[Service]
+Type=simple
+User=user
+Group=user
+WorkingDirectory=/opt/veil_os
+Environment="PYTHONPATH=/opt/veil_os"
+Environment="VEIL_HOST=127.0.0.1"
+Environment="VEIL_PORT=8000"
+ExecStart=/opt/veil_os/api_venv/bin/python -m uvicorn veil.hospital_gui.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ReadWritePaths=/var/lib/veil /var/log/veil
+
+# Watchdog
+WatchdogSec=60
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

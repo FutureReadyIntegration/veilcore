@@ -1,0 +1,9 @@
+<h1>🔉 Braille-Compatible Glyph Stream</h1>
+<div role="log" aria-live="polite">
+  {% for e in entries %}
+    <div class="stream-entry {% if e.urgent %}urgent{% endif %}">
+      <strong>[{{ e.timestamp }}]</strong><br>
+      {{ e.phrase }} by <em>{{ e.user }}</em> via {{ e.method }}
+    </div>
+  {% endfor %}
+</div>

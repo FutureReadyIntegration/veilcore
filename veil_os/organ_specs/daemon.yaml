@@ -1,0 +1,24 @@
+name: daemon
+version: 1.0
+tier: core
+glyph: "👻"
+technical_role: service_manager
+symbolic_role: spirit
+description: Background service manager for Veil OS daemons.
+inputs:
+  - source: /opt/veil_os/sockets/daemon.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/daemon.log
+    format: jsonl
+triggers:
+  - type: service_crash
+  - type: health_check
+actions:
+  - type: restart
+  - type: monitor
+  - type: report
+dependencies:
+  - watchdog
+  - heartbeat
+affirmation: I keep the spirits running in shadow.

@@ -1,0 +1,24 @@
+name: dock
+version: 1.0
+tier: core
+glyph: "🚢"
+technical_role: container_dock
+symbolic_role: harbor_master
+description: Container lifecycle and deployment management.
+inputs:
+  - source: /opt/veil_os/sockets/dock.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/dock.log
+    format: jsonl
+triggers:
+  - type: deploy_request
+  - type: container_crash
+actions:
+  - type: deploy
+  - type: scale
+  - type: destroy
+dependencies:
+  - harbor
+  - orchestrator
+affirmation: Ships dock safely in my waters.

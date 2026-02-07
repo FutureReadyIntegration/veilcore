@@ -1,0 +1,10 @@
+{
+  "name": "dock",
+  "version": 1.0,
+  "description": "Container lifecycle and deployment management.",
+  "tier": "core",
+  "glyph": "\ud83d\udea2",
+  "technical_role": "container_dock",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.793581+00:00"
+}

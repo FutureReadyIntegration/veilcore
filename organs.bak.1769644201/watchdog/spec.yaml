@@ -1,0 +1,26 @@
+actions:
+- type: restart
+- type: alert
+- type: isolate
+affirmation: I never sleep, I never rest, I always watch.
+dependencies:
+- heartbeat
+- daemon
+description: Process watchdog ensuring organ health and auto-recovery.
+glyph: "\U0001F415"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/watchdog.sock
+name: watchdog
+organ: watchdog
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/watchdog.log
+symbolic_role: faithful_guardian
+technical_role: health_monitor
+tier: core
+triggers:
+- type: heartbeat_missed
+- type: process_crash
+- type: memory_leak
+version: 1.0

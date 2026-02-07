@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SVG Badge Wall</title>
+  <style>
+    .badge-wall { display: flex; flex-wrap: wrap; gap: 0.5em; }
+    .badge {
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e1e2f;
+      color: white;
+      border: 2px solid;
+      border-radius: 50%;
+      font-size: 2em;
+      transition: transform 0.3s ease-in-out;
+    }
+    .badge:hover {
+      transform: scale(1.1);
+      background: radial-gradient(circle at center, #444, #1e1e2f);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🜅 SVG Badge Wall</h1>
+  <div class="badge-wall">
+    {% for e in entries %}
+      <div class="badge" style="border-color: {{ e.color }};" title="{{ e.tier }} • {{ e.role }} • Line {{ e.line }}">
+        {{ e.glyph }}
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

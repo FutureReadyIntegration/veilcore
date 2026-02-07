@@ -1,0 +1,10 @@
+{
+  "name": "keystore",
+  "version": 1.0,
+  "description": "Cryptographic key management and secure storage.",
+  "tier": "security",
+  "glyph": "\ud83d\udddd\ufe0f",
+  "technical_role": "key_management",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.835220+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "vault",
+  "version": 1.0,
+  "description": "Secure secrets management and credential vault.",
+  "tier": "security",
+  "glyph": "\ud83c\udfe6",
+  "technical_role": "secret_store",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.808906+00:00"
+}

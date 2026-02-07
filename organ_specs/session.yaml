@@ -1,0 +1,25 @@
+name: session
+version: 1.0
+tier: security
+glyph: "⏱️"
+technical_role: session_manager
+symbolic_role: timekeeper
+description: Session management with automatic timeout for HIPAA compliance.
+inputs:
+  - source: /opt/veil_os/sockets/session.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/session.log
+    format: jsonl
+triggers:
+  - type: idle_timeout
+  - type: session_anomaly
+actions:
+  - type: extend
+  - type: terminate
+  - type: lock
+dependencies:
+  - auth
+  - imprivata
+  - audit
+affirmation: Time honors the vigilant.

@@ -1,0 +1,24 @@
+name: fanout
+version: 1.0
+tier: core
+glyph: "🌳"
+technical_role: message_fanout
+symbolic_role: branching_tree
+description: Message fanout for multi-destination delivery.
+inputs:
+  - source: /opt/veil_os/sockets/fanout.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/fanout.log
+    format: jsonl
+triggers:
+  - type: fanout_request
+  - type: delivery_failure
+actions:
+  - type: duplicate
+  - type: route
+  - type: confirm
+dependencies:
+  - dispatcher
+  - queue
+affirmation: One becomes many through me.

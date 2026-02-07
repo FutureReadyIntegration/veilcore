@@ -1,0 +1,24 @@
+actions:
+- type: register
+- type: discover
+- type: link
+affirmation: I bind organs together in purpose.
+dependencies:
+- fabric
+description: Dynamic service discovery and linking between organs.
+glyph: "\U0001F517"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/linker.sock
+name: linker
+organ: linker
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/linker.log
+symbolic_role: binder
+technical_role: service_linker
+tier: core
+triggers:
+- type: service_registered
+- type: lookup_request
+version: 1.0

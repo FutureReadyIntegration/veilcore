@@ -1,0 +1,316 @@
+{% extends "base_secure.html" %}
+
+{% block title %}Security Dashboard - Veil Hospital{% endblock %}
+
+{% block left_panel %}
+<h2>🔐 Security Dashboard</h2>
+<p class="panel-subtitle">Manage users, sessions, and security settings</p>
+
+<div class="security-stats">
+    <div class="stat-card">
+        <span class="stat-value">{{ users|length }}</span>
+        <span class="stat-label">Users</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ sessions|length }}</span>
+        <span class="stat-label">Active Sessions</span>
+    </div>
+</div>
+
+<h3>👥 User Management</h3>
+<div class="user-list">
+    {% for u in users %}
+    <div class="user-card">
+        <div class="user-avatar">{{ u.username[0]|upper }}</div>
+        <div class="user-info">
+            <div class="user-name">{{ u.username }}</div>
+            <span class="role-badge role-{{ u.role }}">{{ u.role }}</span>
+        </div>
+        <div class="user-status {% if u.is_active %}active{% else %}inactive{% endif %}">
+            {{ "Active" if u.is_active else "Disabled" }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<button class="btn btn-primary" onclick="showAddUserModal()">
+    ➕ Add User
+</button>
+{% endblock %}
+
+{% block right_panel %}
+<h2>🔑 Active Sessions</h2>
+
+<div class="sessions-list">
+    {% for s in sessions %}
+    <div class="session-card">
+        <div class="session-header">
+            <span class="session-user">{{ s.username }}</span>
+            <span class="role-badge role-{{ s.role }}">{{ s.role }}</span>
+        </div>
+        <div class="session-details">
+            <div class="detail-row">
+                <span class="detail-label">🌐 IP:</span>
+                <span class="detail-value">{{ s.ip_address or "Unknown" }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">⏱️ Created:</span>
+                <span class="detail-value">{{ s.created_at }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">📍 Last Activity:</span>
+                <span class="detail-value">{{ s.last_activity }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">⏳ Expires:</span>
+                <span class="detail-value">{{ s.expires_at }}</span>
+            </div>
+        </div>
+        <div class="session-actions">
+            <button class="btn btn-danger btn-sm" onclick="revokeSession('{{ s.id }}')">
+                🚫 Revoke
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-sessions">
+        <p>No active sessions</p>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+.security-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-value {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 24px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.user-status {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.user-status.active {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.user-status.inactive {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.role-admin {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.role-operator {
+    background: rgba(234, 179, 8, 0.2);
+    color: #fde047;
+}
+
+.role-viewer {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.sessions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.session-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.session-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.session-user {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.session-details {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.detail-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.detail-label {
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 100px;
+}
+
+.detail-value {
+    color: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+}
+
+.session-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.no-sessions {
+    text-align: center;
+    padding: 40px;
+    color: rgba(255, 255, 255, 0.5);
+}
+</style>
+
+<script>
+async function revokeSession(sessionId) {
+    if (!confirm('Are you sure you want to revoke this session?')) return;
+    
+    try {
+        const response = await fetch(`/api/sessions/${sessionId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert('Failed to revoke session');
+        }
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+}
+
+function showAddUserModal() {
+    alert('Add User modal - TODO: Implement form');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: #0b0f14; color: #e7eef7; }
+.top { display:flex; justify-content:space-between; align-items:center; padding: 14px 18px; border-bottom: 1px solid #17202b; background:#0b0f14; position: sticky; top: 0; }
+.brand { font-weight: 700; letter-spacing: 0.2px; }
+.status { font-size: 12px; opacity: 0.85; }
+.wrap { padding: 18px; max-width: 1200px; margin: 0 auto; }
+.panel { background:#0f1620; border: 1px solid #17202b; border-radius: 14px; padding: 14px; }
+.panel-title { font-weight: 700; margin-bottom: 6px; }
+.hint { font-size: 12px; opacity: 0.7; margin-bottom: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { border: 1px solid #17202b; border-radius: 14px; padding: 12px; background: #0b0f14; }
+.card-top { display:flex; gap:10px; align-items:center; margin-bottom: 10px; }
+.glyph { width: 34px; height: 34px; display:flex; align-items:center; justify-content:center; border-radius: 10px; border: 1px solid #17202b; }
+.name { font-weight: 700; }
+.meta { font-size: 12px; opacity: 0.9; }
+.line { display:flex; justify-content:space-between; gap: 10px; padding: 4px 0; border-top: 1px dashed #17202b; }
+.line:first-child { border-top: none; }
+.k { opacity: 0.7; }
+.v { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 11px; }
+.error { padding: 12px; border: 1px solid #3a1b1b; background: #1a0e0e; border-radius: 12px; }

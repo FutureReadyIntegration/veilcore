@@ -1,0 +1,24 @@
+name: monitor
+version: 1.0
+tier: monitoring
+glyph: "👁️"
+technical_role: system_monitor
+symbolic_role: watcher
+description: Continuous system health and performance monitoring.
+inputs:
+  - source: /opt/veil_os/sockets/monitor.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/monitor.log
+    format: jsonl
+triggers:
+  - type: health_check
+  - type: anomaly_detected
+actions:
+  - type: observe
+  - type: alert
+  - type: escalate
+dependencies:
+  - heartbeat
+  - metrics
+affirmation: I watch without rest.

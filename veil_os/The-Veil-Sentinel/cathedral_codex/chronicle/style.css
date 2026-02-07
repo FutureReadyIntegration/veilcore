@@ -1,0 +1,71 @@
+/* Base Page Styling */
+body {
+  background-color: #0d0d20;
+  color: #f8f8f8;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 40px;
+}
+
+/* Chronicle Container */
+.chronicle-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Filter Bar */
+.filter-bar {
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #FFD700;
+}
+
+.filter-bar label {
+  margin-right: 12px;
+}
+
+.filter-bar select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #00CED1;
+  background-color: #191970;
+  color: #FFD700;
+}
+
+/* Badge Cards */
+.badge-card {
+  background-color: #191970;
+  border: 2px solid #00CED1;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 206, 209, 0.3);
+}
+
+/* Badge Images */
+.badge-card img {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+/* Badge Meta Text */
+.badge-meta h2 {
+  color: #FFD700;
+  font-size: 24px;
+  margin: 0 0 8px 0;
+}
+
+.badge-meta p {
+  margin: 6px 0;
+  color: #e0e0e0;
+}
+
+.badge-desc {
+  font-style: italic;
+  color: #b0b0ff;
+  margin-top: 10px;
+}

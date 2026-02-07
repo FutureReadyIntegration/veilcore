@@ -1,0 +1,10 @@
+{
+  "name": "engine",
+  "version": 1.0,
+  "description": "Core execution engine powering all Veil OS operations.",
+  "tier": "core",
+  "glyph": "\u2699\ufe0f",
+  "technical_role": "execution_engine",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.162645+00:00"
+}

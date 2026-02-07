@@ -1,0 +1,10 @@
+{
+  "name": "auth",
+  "version": 1.0,
+  "description": "Primary authentication service for all Veil OS components.",
+  "tier": "core",
+  "glyph": "\ud83d\udd11",
+  "technical_role": "authentication",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:57.894997+00:00"
+}

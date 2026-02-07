@@ -1,0 +1,15 @@
+name: zombie-sweeper
+description: Zombie Sweeper Process Cleaner
+category: Security
+unit: veil-zombie-sweeper
+display_name: "Zombie"
+glyph: "🧟"
+tier: P2
+allowed: true
+group: "Security Guardians"
+order: 20
+color: "#B71C1C"
+accent: "#FFEBEE"
+health_check: true
+telemetry: true
+purpose: "Detects and removes orphaned, stalled, or suspicious processes to reduce attack surface and resource waste."

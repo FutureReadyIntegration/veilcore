@@ -1,0 +1,10 @@
+{
+  "name": "firewall",
+  "version": 1.0,
+  "description": "Core firewall engine for network traffic control.",
+  "tier": "security",
+  "glyph": "\ud83d\udd25",
+  "technical_role": "packet_filter",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.624480+00:00"
+}

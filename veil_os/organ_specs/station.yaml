@@ -1,0 +1,26 @@
+name: station
+version: 1.0
+tier: interface
+glyph: "🚉"
+technical_role: workstation_agent
+symbolic_role: outpost
+description: Endpoint agent for clinical workstation protection.
+inputs:
+  - source: /opt/veil_os/sockets/station.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/station.log
+    format: jsonl
+triggers:
+  - type: workstation_event
+  - type: usb_inserted
+  - type: screen_lock
+actions:
+  - type: monitor
+  - type: enforce
+  - type: report
+dependencies:
+  - imprivata
+  - guardian
+  - dlp
+affirmation: I guard the places where healers work.

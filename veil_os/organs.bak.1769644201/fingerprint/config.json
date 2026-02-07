@@ -1,0 +1,10 @@
+{
+  "name": "fingerprint",
+  "version": 1.0,
+  "description": "File and system integrity verification via cryptographic hashes.",
+  "tier": "security",
+  "glyph": "\ud83d\udc46",
+  "technical_role": "hash_verifier",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.578249+00:00"
+}

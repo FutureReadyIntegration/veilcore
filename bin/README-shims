@@ -1,0 +1,2 @@
+veil-zombie-shim maps zombie_sweeper -> insider_threat as a temporary workaround.
+Remove after veil.organ_runner natively supports zombie_sweeper.

@@ -1,0 +1,26 @@
+[Unit]
+Description=The Veil - Auto-Lockdown Engine (Automated Response)
+After=network.target
+PartOf=veil.service
+
+[Service]
+Type=simple
+User=user
+Group=user
+WorkingDirectory=/opt/veil_os
+Environment="PYTHONPATH=/opt/veil_os"
+ExecStart=/opt/veil_os/api_venv/bin/python -m veil.organ_runner auto_lockdown
+Restart=always
+RestartSec=5
+
+# Self-healing - faster restart for critical P0 organ
+StartLimitIntervalSec=120
+StartLimitBurst=10
+
+# Security
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/veil/lockdown /var/log/veil
+
+[Install]
+WantedBy=veil.service

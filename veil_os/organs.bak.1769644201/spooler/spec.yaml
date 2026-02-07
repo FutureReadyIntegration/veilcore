@@ -1,0 +1,25 @@
+actions:
+- type: spool
+- type: batch
+- type: process
+affirmation: I gather threads into rope.
+dependencies:
+- queue
+- scheduler
+description: Job spooling and batch processing queue.
+glyph: "\U0001F9F5"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/spooler.sock
+name: spooler
+organ: spooler
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/spooler.log
+symbolic_role: weaver
+technical_role: job_spooler
+tier: core
+triggers:
+- type: job_submit
+- type: batch_ready
+version: 1.0

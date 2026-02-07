@@ -1,0 +1,25 @@
+organs:
+  - id: "icu_monitor"
+    name: "ICU Monitor Cluster"
+    type: "monitoring"
+    status: "healthy"
+
+  - id: "lab_pipeline"
+    name: "Lab Result Pipeline"
+    type: "integration"
+    status: "degraded"
+
+  - id: "ehr_gateway"
+    name: "EHR Gateway"
+    type: "gateway"
+    status: "healthy"
+
+  - id: "rbac_shield"
+    name: "RBAC Shield"
+    type: "security"
+    status: "healthy"
+
+  - id: "zero_trust_core"
+    name: "Zero-Trust Core"
+    type: "security"
+    status: "watching"

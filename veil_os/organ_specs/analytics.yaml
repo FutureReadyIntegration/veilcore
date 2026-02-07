@@ -1,0 +1,24 @@
+name: analytics
+tier: 4
+glyph: "📊"
+description: |
+  Analytics organ responsible for aggregating telemetry, performing statistical
+  analysis, detecting anomalies, and generating insights across the Veil OS
+  ecosystem. Supports long-term trend analysis and cross-organ correlation.
+
+entrypoint: "veil.organs.analytics.main"
+
+logging:
+  file: "/var/log/veil/analytics.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/analytics"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

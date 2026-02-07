@@ -1,0 +1,174 @@
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from veil.hospital_gui.systemd import list_veil_units
+
+from veil.orchestrator import list_services
+
+TEMPLATES_DIR = "/home/user/veil_os/backend/veil/hospital_gui/templates"
+STATIC_DIR = "/home/user/veil_os/backend/veil/hospital_gui/static"
+
+DATA_DIR = Path("/home/user/veil_os/backend/veil/hospital_gui/data")
+PATIENTS_FILE = DATA_DIR / "patients.json"
+
+ORGANS_DIR = Path("/opt/veil_os/organs")
+
+FRONTEND_DIST = Path("/home/user/veil_os/backend/veil/hospital_gui/frontend/dist")
+
+app = FastAPI(title="Veil Hospital GUI")
+
+# Hospital static
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+# React dist at /app (serves /app/index.html + /app/assets/*)
+if FRONTEND_DIST.exists():
+    app.mount("/app", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="app")
+
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
+
+# ---- organs tiers/glyphs (local rules) ----
+GLYPH = {"sentinel": "🛡️", "watchtower": "🛰️", "audit": "📜"}
+P0 = {"sentinel"}
+P1 = {"watchtower"}
+
+def _tier(name: str) -> str:
+    if name in P0:
+        return "P0"
+    if name in P1:
+        return "P1"
+    return "P2"
+
+def _is_runnable(name: str) -> bool:
+    # Runnable means: /opt/veil_os/organs/<name>/run.sh exists
+    return (ORGANS_DIR / name / "run.sh").exists()
+
+def get_organs():
+    out = []
+    for s in list_services():
+        out.append(
+            {
+                "name": s.name,
+                "running": bool(getattr(s, "running", False)),  # PID-based truth
+                "tier": _tier(s.name),
+                "glyph": GLYPH.get(s.name, "🫀"),
+                "pid": getattr(s, "pid", None),
+                "log": getattr(s, "log", ""),
+                "runnable": _is_runnable(s.name),
+            }
+        )
+    return out
+
+# ---- patients counts for systems page ----
+def _load_patients() -> dict:
+    if not PATIENTS_FILE.exists():
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        PATIENTS_FILE.write_text('{"next_id": 1, "patients": []}\n', encoding="utf-8")
+    try:
+        return json.loads(PATIENTS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {"next_id": 1, "patients": []}
+
+def _counts() -> dict:
+    data = _load_patients()
+    pts = data.get("patients", [])
+    active = [p for p in pts if not p.get("discharged_at")]
+    discharged = [p for p in pts if p.get("discharged_at")]
+    return {"total": len(pts), "active": len(active), "discharged": len(discharged)}
+
+# ---------------- PAGES ----------------
+
+@app.get("/", response_class=HTMLResponse)
+def systems(request: Request):
+    organs = get_organs()
+    c = _counts()
+
+    organs_total = len(organs)
+    organs_running = sum(1 for o in organs if o.get("running") or o.get("pid"))
+    organs_runnable = sum(1 for o in organs if o.get("runnable"))
+
+    return templates.TemplateResponse(
+        "systems.html",
+        {
+            "request": request,
+            "counts": c,
+            "organs_total": organs_total,
+            "organs_running": organs_running,      # PID-based (truth)
+            "organs_runnable": organs_runnable,    # has run.sh
+        },
+    )
+
+@app.get("/patients", response_class=HTMLResponse)
+def patients(request: Request):
+    return templates.TemplateResponse("patients.html", {"request": request})
+
+@app.get("/discharged", response_class=HTMLResponse)
+def discharged(request: Request):
+    return templates.TemplateResponse("discharged.html", {"request": request})
+
+@app.get("/organs", response_class=HTMLResponse)
+def organs(request: Request):
+    organs = get_organs()
+    p0 = [o for o in organs if o.get("tier") == "P0"]
+    p1 = [o for o in organs if o.get("tier") == "P1"]
+    p2 = [o for o in organs if o.get("tier") == "P2"]
+    return templates.TemplateResponse(
+        "organs.html",
+        {"request": request, "total": len(organs), "p0": p0, "p1": p1, "p2": p2},
+    )
+
+@app.get("/status", response_class=HTMLResponse)
+def status(request: Request):
+    return templates.TemplateResponse("status.html", {"request": request})
+
+# ---------------- API ----------------
+
+@app.get("/api/organs", response_class=JSONResponse)
+def api_organs():
+    return get_organs()
+
+@app.get("/api/systems", response_class=JSONResponse)
+def api_systems():
+    organs = get_organs()
+    return {
+        "organs_total": len(organs),
+        "organs_running": sum(1 for o in organs if o.get("running") or o.get("pid")),
+        "organs_runnable": sum(1 for o in organs if o.get("runnable")),
+        "patients": _counts(),
+    }
+
+@app.post("/api/restart")
+def api_restart():
+    subprocess.run(["sudo", "systemctl", "restart", "veil.service"])
+    return {"status": "restarting"}
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+    return 0
+@app.get("/systems", response_class=HTMLResponse)
+def systems(request: Request):
+    systems = list_veil_units()
+    running = [s for s in systems if s["running"]]
+
+    return templates.TemplateResponse(
+        "systems.html",
+        {
+            "request": request,
+            "systems": systems,
+            "total": len(systems),
+            "running": len(running),
+        },
+    )
+
+
+@app.get("/api/systems", response_class=JSONResponse)
+def api_systems():
+    return list_veil_units()

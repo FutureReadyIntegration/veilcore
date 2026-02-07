@@ -1,0 +1,50 @@
+cd /opt/veil_os
+
+# Remove nested git repo
+sudo rm -rf organs/righteousness_engine/icons/twemoji/.git
+
+# Create .gitignore to exclude venv and other junk
+sudo nano .gitignore
+```
+
+**Paste this:**
+```
+# Virtual environments
+venv/
+api_venv/
+backend/venv/
+veil_os/venv/
+veil_os/api_venv/
+veil_os/backend/venv/
+*.venv
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary
+*.tmp
+*.temp
+.cache/
+
+# Node modules (if any)
+node_modules/

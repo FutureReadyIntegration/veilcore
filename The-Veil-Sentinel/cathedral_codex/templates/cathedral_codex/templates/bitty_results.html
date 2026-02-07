@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/glyph_theme.css') }}"
+>
+  <title>Glyph Search Results</title>
+</head>
+<body>- bitty_results.html → <body class="search-page">
+  <h1>📖 Results for: {{ query }}</h1>
+  {% for r in results %}
+    <div style="margin-bottom: 1em;">
+      <p><strong>{{ r.glyph }}</strong> {{ r.file }} [Line {{ r.line }}]</p>
+      <pre>{{ r.text }}</pre>
+    <div class="result-item">
+  ...
+</div>
+  {% else %}
+    <p>No results found.</p>
+  {% endfor %}
+</body>
+</html>

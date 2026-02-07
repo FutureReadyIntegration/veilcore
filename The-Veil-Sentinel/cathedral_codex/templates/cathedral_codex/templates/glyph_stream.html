@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Glyph Stream</title>
+  <meta http-equiv="refresh" content="10">
+</head>
+<body onload="scrollToBottom()">
+  <h1>🔄 Live Glyph Stream</h1>
+  <ul>
+    {% for e in entries %}
+      <li>
+        <strong>{{ e.timestamp }}</strong> — {{ e.glyph }} <span>[{{ e.role }}]</span><br>
+        <em>{{ e.text }}</em>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><small>Auto-refreshes every 10 seconds</small></p>
+  <script>
+    function scrollToBottom() {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Future Ready SOC Console</title>
+  <link rel="stylesheet" href="/static/soc.css" />
+
+  <style>
+    :root{
+      --bg:#070A10;
+      --panel:#0C1220;
+      --panel2:#0B1020;
+      --line:#1B2540;
+      --text:#E7ECFF;
+      --muted:#AAB4D6;
+      --accent:#7C5CFF;
+      --good:#2EE59D;
+      --bad:#FF4D6D;
+      --warn:#FFCC66;
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --r:18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(124,92,255,.22), transparent 55%),
+        radial-gradient(900px 500px at 95% 10%, rgba(46,229,157,.10), transparent 55%),
+        radial-gradient(1200px 900px at 40% 120%, rgba(255,77,109,.08), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    .topbar{
+      position:sticky; top:0; z-index:20;
+      padding:14px 18px 16px;
+      background: linear-gradient(180deg, rgba(7,10,16,.92), rgba(7,10,16,.70));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(27,37,64,.65);
+    }
+    .topbar-inner{
+      max-width:1280px; margin:0 auto;
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+    }
+
+    .brand{ display:flex; flex-direction:column; gap:3px; min-width:260px; }
+    .brand .kicker{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+    .brand h1{ margin:0; font-size:20px; letter-spacing:.02em; line-height:1.15; }
+    .brand .sub{ font-size:12px; color:var(--muted); }
+
+    .right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(27,37,64,.9);
+      background: rgba(12,18,32,.65);
+      font-size:12px; color:var(--muted);
+    }
+    .pill strong{ color:var(--text); font-weight:650; }
+
+    .live{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(46,229,157,.35);
+      background: rgba(46,229,157,.10);
+      color:var(--text); font-size:12px; font-weight:700;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--good);
+      box-shadow: 0 0 0 0 rgba(46,229,157,.55);
+      animation: pulse 2.2s infinite;
+    }
+    @keyframes pulse{
+      0% { box-shadow: 0 0 0 0 rgba(46,229,157,.55); }
+      70% { box-shadow: 0 0 0 10px rgba(46,229,157,0); }
+      100% { box-shadow: 0 0 0 0 rgba(46,229,157,0); }
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:12px;
+      border:1px solid rgba(27,37,64,.9);
+      background: rgba(12,18,32,.75);
+      color:var(--text);
+      cursor:pointer; font-weight:700;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0px); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+    .status{ font-size:12px; color:var(--muted); padding-left:6px; }
+
+    /* ====== LAYOUT (SIDEBAR + CONTENT) ====== */
+    .shell{
+      max-width:1280px;
+      margin:0 auto;
+      padding:16px 18px 28px;
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:14px;
+    }
+
+    .nav{
+      border:1px solid rgba(27,37,64,.85);
+      background: rgba(12,18,32,.62);
+      border-radius: 18px;
+      padding:12px;
+      position:sticky;
+      top:82px;
+      height: fit-content;
+    }
+
+    .nav .title{
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .nav a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid transparent;
+      color:var(--text);
+      font-weight:750;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .nav a small{ color:var(--muted); font-weight:650; }
+    .nav a:hover{
+      border-color: rgba(27,37,64,.9);
+      background: rgba(7,10,16,.25);
+    }
+    .nav a.active{
+      border-color: rgba(124,92,255,.45);
+      background: rgba(124,92,255,.10);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+
+    .content{
+      border:1px solid rgba(27,37,64,.85);
+      background: rgba(12,18,32,.55);
+      border-radius: 18px;
+      padding:14px;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .tab{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(27,37,64,.9);
+      background: rgba(7,10,16,.18);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tab.active{
+      border-color: rgba(124,92,255,.45);
+      background: rgba(124,92,255,.12);
+      color:var(--text);
+    }
+
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      margin: 6px 0 2px;
+    }
+
+    /* ====== ORGANS GRID ====== */
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px; margin-top:12px; }
+
+    .card{
+      border:1px solid rgba(27,37,64,.85);
+      background: rgba(12,18,32,.72);
+      border-radius: 18px;
+      padding:14px;
+    }
+    .name{ display:flex; justify-content:space-between; gap:10px; font-weight:800; letter-spacing:.01em; }
+    .meta{ font-size:12px; margin-top:6px; color:var(--muted); }
+    .state{ font-size:12px; margin-top:10px; }
+    .ok{ color:var(--good); }
+    .bad{ color:var(--bad); }
+
+    .chip{
+      font-size:11px; padding:2px 10px;
+      border-radius:999px; border:1px solid rgba(27,37,64,.9);
+      background: rgba(7,10,16,.30);
+      color:var(--muted);
+      font-weight:750;
+      white-space:nowrap;
+    }
+    .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+
+    .mini{
+      padding:7px 10px; border-radius:12px;
+      border:1px solid rgba(27,37,64,.9);
+      background: rgba(7,10,16,.20);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:750;
+      font-size:12px;
+    }
+    .mini:hover{ transform: translateY(-1px); }
+    .mini:active{ transform: translateY(0px); }
+    .mini.start{ border-color: rgba(46,229,157,.35); }
+    .mini.stop{ border-color: rgba(255,77,109,.35); }
+    .mini.restart{ border-color: rgba(255,204,102,.35); }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .shell{ grid-template-columns: 1fr; }
+      .nav{ position:relative; top:auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="kicker">Future Ready</div>
+        <h1>VEIL SOC COMMAND</h1>\n      <div class="stamp" id="updated">Updated —</div>
+        <div class="sub">Autonomous Security Intelligence</div>
+      </div>
+
+      <div class="right">
+        <div class="pill">Authorized User: <strong>SOC Admin</strong> • admin</div>
+        <div class="live"><span class="dot"></span> LIVE</div>
+        <button id="refresh" class="btn">Refresh</button>
+        <span id="status" class="status">Idle</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="nav">
+      <div class="title">SOC Console</div>
+      <a class="navlink" data-view="threats"><span>Threats</span><small>soon</small></a>
+      <a class="navlink" data-view="signals"><span>Signals</span><small>soon</small></a>
+      <a class="navlink active" data-view="organs"><span>Organs</span><small>live</small></a>
+      <a class="navlink" data-view="health"><span>Health</span><small>soon</small></a>
+    </div>
+
+    <div class="content">
+      <div class="tabs">
+        <div class="tab active" data-view="organs">Organs</div>
+        <div class="tab" data-view="threats">Threats</div>
+        <div class="tab" data-view="signals">Signals</div>
+        <div class="tab" data-view="health">Health</div>
+      </div>
+
+      <div id="view-organs">
+        <div class="hint">Live view: Supervisor → Organs</div>
+        <div class="grid" id="grid"></div>
+      </div>
+
+      <div id="view-threats" style="display:none;">
+        <div class="hint">Threats panel coming next. This will show prioritized incidents + active hunts.</div>
+        <div class="card">Placeholder: Threat feed (unwired)</div>
+      </div>
+
+      <div id="view-signals" style="display:none;">
+        <div class="hint">Signals panel coming next. This will show detections, anomalies, and raw events.</div>
+        <div class="card">Placeholder: Signals stream (unwired)</div>
+      </div>
+
+      <div id="view-health" style="display:none;">
+        <div class="hint">Health panel coming next. This will show /healthz across organs and latency to supervisor.</div>
+        <div class="card">Placeholder: Platform health (unwired)</div>
+      </div>
+    </div>
+  </div>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="kicker">Future Ready</div>
+        <h1>VEIL SOC COMMAND</h1>
+        <div class="sub">Autonomous Security Intelligence</div>
+      </div>
+
+      <div class="right">
+        <div class="pill">Authorized User: <strong>SOC Admin</strong> • admin</div>
+        <div class="live"><span class="dot"></span> LIVE</div>
+        <button id="refresh" class="btn">Refresh</button>
+        <span id="status" class="status">Idle</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="nav">
+      <div class="title">SOC Console</div>
+      <a class="navlink" data-view="threats"><span>Threats</span><small>soon</small></a>
+      <a class="navlink" data-view="signals"><span>Signals</span><small>soon</small></a>
+      <a class="navlink active" data-view="organs"><span>Organs</span><small>live</small></a>
+      <a class="navlink" data-view="health"><span>Health</span><small>soon</small></a>
+    </div>
+
+    <div class="content">
+      <div class="tabs">
+        <div class="tab active" data-view="organs">Organs</div>
+        <div class="tab" data-view="threats">Threats</div>
+        <div class="tab" data-view="signals">Signals</div>
+        <div class="tab" data-view="health">Health</div>
+      </div>
+
+      <div id="view-organs">
+        <div class="hint">Live view: Supervisor → Organs</div>
+        <div class="grid" id="grid"></div>
+      </div>
+
+      <div id="view-threats" style="display:none;">
+        <div class="hint">Threats panel coming next. This will show prioritized incidents + active hunts.</div>
+        <div class="card">Placeholder: Threat feed (unwired)</div>
+      </div>
+
+      <div id="view-signals" style="display:none;">
+        <div class="hint">Signals panel coming next. This will show detections, anomalies, and raw events.</div>
+        <div class="card">Placeholder: Signals stream (unwired)</div>
+      </div>
+
+      <div id="view-health" style="display:none;">
+        <div class="hint">Health panel coming next. This will show /healthz across organs and latency to supervisor.</div>
+        <div class="card">Placeholder: Platform health (unwired)</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const statusEl = document.getElementById("status");
+const grid = document.getElementById("grid");
+const refreshBtn = document.getElementById("refresh");
+
+const navLinks = Array.from(document.querySelectorAll(".navlink"));
+const tabs = Array.from(document.querySelectorAll(".tab"));
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function setView(view){
+  // toggle view panels
+  const panels = ["organs","threats","signals","health"];
+  for (const v of panels){
+    const el = document.getElementById(`view-${v}`);
+    if (el) el.style.display = (v === view) ? "" : "none";
+  }
+
+  // highlight nav + tab
+  navLinks.forEach(a => a.classList.toggle("active", a.dataset.view === view));
+  tabs.forEach(t => t.classList.toggle("active", t.dataset.view === view));
+
+  // only organs view auto-refreshes right now
+  if (view === "organs") loadOrgans();
+  else statusEl.textContent = `Mode: ${view}`;
+}
+
+async function loadOrgans() {
+  statusEl.textContent = "Loading…";
+  refreshBtn.disabled = true;
+
+  try {
+    const res = await fetch("/api/organs", { cache: "no-store" });
+    const data = await res.json();
+
+    /*RENDER_STATUS_PATCH*/
+    const organs = Array.isArray(data) ? data : (data.organs || []);
+
+
+    statusEl.textContent = `Supervisor v${(data && data.version) ? data.version : "?"} • ${organs.length} organs`;
+    grid.innerHTML = "";
+
+    for (const o of organs) {
+      const sd = o.systemd || {};
+      const active = (o.status || sd.active || "unknown");
+      const sub = (sd.sub || "");
+      const good = (active === "running" || active === "active");
+      const err = sd.error ? String(sd.error) : "";
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="name">
+          <div>${esc(o.name || o.id || "organ")}</div>
+          <span class="chip">${esc((o.component || o.id || "organ").toUpperCase())}</span>
+        </div>
+        <div class="meta"><span class="muted">unit:</span> <strong>${esc(sd.unit || o.unit || "—")}</strong> &nbsp;•&nbsp; <span class="muted">pid:</span> <strong>${esc(sd.pid || "—")}</strong></div>
+        <div class="state">
+          <span class="${good ? "ok" : "bad"}"><strong>${esc(active)}</strong></span>
+          <span class="muted">/</span>
+          <span class="muted">${esc(sub)}</span>
+          ${err ? `<div class="bad" style="margin-top:6px; font-size:11px;"><strong>error:</strong> ${esc(err)}</div>` : ``}
+        </div>
+        <div class="actions">
+          <button class="mini start" data-id="${esc(o.id)}" data-action="start">Start</button>
+          <button class="mini stop" data-id="${esc(o.id)}" data-action="stop">Stop</button>
+          <button class="mini restart" data-id="${esc(o.id)}" data-action="restart">Restart</button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    }
+
+  } catch (e) {
+    statusEl.textContent = "Error loading organs";
+    console.error(e);
+  } finally {
+    refreshBtn.disabled = false;
+  }
+}
+
+async function actionOrgan(id, action) {
+  statusEl.textContent = `${action.toUpperCase()} ${id}…`;
+  refreshBtn.disabled = true;
+
+  try {
+    const res = await fetch(`/api/organs/${encodeURIComponent(id)}/${encodeURIComponent(action)}`, {
+      method: "POST",
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(t || `HTTP ${res.status}`);
+    }
+  } catch (e) {
+    console.error(e);
+    statusEl.textContent = `Action failed: ${e.message || e}`;
+    refreshBtn.disabled = false;
+    return;
+  }
+
+  await loadOrgans();
+}
+
+grid.addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button");
+  if (!btn) return;
+  const id = btn.getAttribute("data-id");
+  const action = btn.getAttribute("data-action");
+  if (!id || !action) return;
+  actionOrgan(id, action);
+});
+
+refreshBtn.addEventListener("click", () => {
+  // refresh current view
+  const current = (tabs.find(t => t.classList.contains("active")) || {}).dataset?.view || "organs";
+  if (current === "organs") loadOrgans();
+  else statusEl.textContent = "Refreshed";
+});
+
+navLinks.forEach(a => a.addEventListener("click", () => setView(a.dataset.view)));
+tabs.forEach(t => t.addEventListener("click", () => setView(t.dataset.view)));
+
+// initial
+setView("organs");
+</script>
+<script>(function(){var el=document.getElementById("updated");if(!el)return;function tick(){var d=new Date();el.textContent="Updated "+d.toLocaleTimeString();}tick();setInterval(tick,1000);})();</script><script>/*L4KPI*/(function(){async function run(){try{var r=await fetch("/api/health",{cache:"no-store"}); if(!r.ok) return; var j=await r.json(); var organs=(j.organs||[]); var total=organs.length; var running=organs.filter(function(o){return (o.status||"")==="running";}).length; var autore=organs.filter(function(o){return (o.status||"")==="auto-restart";}).length; var bad=organs.filter(function(o){return (o.status||"") && (o.status!=="running");}).length; function set(id,v){var el=document.getElementById(id); if(el) el.textContent=String(v);} set("kpiAssets", total); set("kpiVerified", running); set("kpiMismatch", autore); set("kpiAlerts", bad); var strip=document.getElementById("alertStrip"); var msg=document.getElementById("alertMsg"); if(strip && msg){ if(bad>0){ strip.style.display="flex"; msg.textContent = bad+" organ(s) require attention ("+autore+" auto-restart)"; } else { strip.style.display="none"; } } }catch(e){} } run(); setInterval(run, 4000);})();</script></body>
+</html>

@@ -1,0 +1,24 @@
+name: backup
+version: 1.0
+tier: core
+glyph: "💾"
+technical_role: recovery
+symbolic_role: memory
+description: Immutable backup orchestrator for ransomware recovery.
+inputs:
+  - source: /opt/veil_os/config/backup_policy.yaml
+    format: yaml
+outputs:
+  - path: /opt/veil_os/ledger/backup.log
+    format: jsonl
+triggers:
+  - type: scheduled_backup
+  - type: ransomware_detected
+actions:
+  - type: snapshot
+  - type: verify_integrity
+dependencies:
+  - vault
+  - scheduler
+  - audit
+affirmation: What is remembered cannot be destroyed.

@@ -1,0 +1,10 @@
+{
+  "name": "gateway",
+  "version": 1.0,
+  "description": "Secure API gateway for external service integration.",
+  "tier": "network",
+  "glyph": "\ud83d\udeaa",
+  "technical_role": "api_gateway",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.753665+00:00"
+}

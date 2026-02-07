@@ -1,0 +1,25 @@
+actions:
+- type: emit
+- type: broadcast
+- type: subscribe
+affirmation: I announce what all must hear.
+dependencies:
+- dispatcher
+- fabric
+description: Event emission and pub/sub message broadcasting.
+glyph: "\U0001F4E2"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/emitter.sock
+name: emitter
+organ: emitter
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/emitter.log
+symbolic_role: announcer
+technical_role: event_emitter
+tier: core
+triggers:
+- type: event_publish
+- type: subscriber_join
+version: 1.0

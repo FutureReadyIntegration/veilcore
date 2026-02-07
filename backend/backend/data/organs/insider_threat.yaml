@@ -1,0 +1,18 @@
+name: insider-threat
+description: Insider Threat Detection Engine
+category: security
+unit: veil-insider-threat
+
+# Cockpit Display
+display_name: "Insider Threat"
+glyph: "🛡️"
+tier: P1
+allowed: true
+group: "Security"
+order: 42
+color: "#C62828"
+accent: "#FFCDD2"
+
+# Health + Telemetry
+health_check: true
+telemetry: true

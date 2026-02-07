@@ -1,0 +1,24 @@
+name: dispatcher
+version: 1.0
+tier: core
+glyph: "📤"
+technical_role: event_dispatcher
+symbolic_role: herald
+description: Routes events and commands to appropriate organs.
+inputs:
+  - source: /opt/veil_os/sockets/dispatcher.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/dispatcher.log
+    format: jsonl
+triggers:
+  - type: event_received
+  - type: command_issued
+actions:
+  - type: route
+  - type: queue
+  - type: confirm
+dependencies:
+  - queue
+  - signal_router
+affirmation: Every message finds its destination.

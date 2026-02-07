@@ -1,0 +1,24 @@
+name: console
+version: 1.0
+tier: interface
+glyph: "🖥️"
+technical_role: admin_console
+symbolic_role: command_throne
+description: Administrative console for Veil OS operators.
+inputs:
+  - source: /opt/veil_os/sockets/console.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/console.log
+    format: jsonl
+triggers:
+  - type: command_issued
+  - type: session_start
+actions:
+  - type: execute
+  - type: audit_command
+dependencies:
+  - auth
+  - rbac
+  - audit
+affirmation: Command flows through me with purpose.

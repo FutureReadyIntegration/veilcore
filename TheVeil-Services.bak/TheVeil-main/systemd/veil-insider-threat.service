@@ -1,0 +1,26 @@
+[Unit]
+Description=The Veil - Insider Threat Detector
+After=network.target
+PartOf=veil.service
+
+[Service]
+Type=simple
+User=user
+Group=user
+WorkingDirectory=/opt/veil_os
+Environment="PYTHONPATH=/opt/veil_os"
+ExecStart=/opt/veil_os/api_venv/bin/python -m veil.organ_runner insider_threat
+Restart=always
+RestartSec=10
+
+# Self-healing
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+# Security
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/veil/insider_threat /var/log/veil
+
+[Install]
+WantedBy=veil.service

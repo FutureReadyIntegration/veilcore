@@ -1,0 +1,27 @@
+actions:
+- type: generate
+- type: store
+- type: rotate
+- type: revoke
+affirmation: I guard the keys that guard all else.
+dependencies:
+- vault
+- audit
+description: Cryptographic key management and secure storage.
+glyph: "\U0001F5DD\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/keystore.sock
+name: keystore
+organ: keystore
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/keystore.log
+symbolic_role: keeper_of_keys
+technical_role: key_management
+tier: security
+triggers:
+- type: key_request
+- type: rotation_due
+- type: key_compromise
+version: 1.0

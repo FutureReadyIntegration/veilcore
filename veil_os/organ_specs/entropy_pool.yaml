@@ -1,0 +1,23 @@
+name: entropy_pool
+version: 1.0
+tier: security
+glyph: "🌊"
+technical_role: entropy_reservoir
+symbolic_role: deep_well
+description: Entropy pool management for continuous randomness.
+inputs:
+  - source: /opt/veil_os/sockets/entropy_pool.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/entropy_pool.log
+    format: jsonl
+triggers:
+  - type: draw_request
+  - type: refill_needed
+actions:
+  - type: store
+  - type: draw
+  - type: mix
+dependencies:
+  - vault
+affirmation: I hold the waters of randomness.

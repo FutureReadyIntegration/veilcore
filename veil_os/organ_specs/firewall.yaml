@@ -1,0 +1,26 @@
+name: firewall
+version: 1.0
+tier: security
+glyph: "🔥"
+technical_role: packet_filter
+symbolic_role: flame_wall
+description: Core firewall engine for network traffic control.
+inputs:
+  - source: /opt/veil_os/sockets/firewall.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/firewall.log
+    format: jsonl
+triggers:
+  - type: rule_violation
+  - type: ddos_detected
+  - type: port_scan
+actions:
+  - type: block
+  - type: allow
+  - type: log
+  - type: rate_limit
+dependencies:
+  - guardian
+  - audit
+affirmation: None shall pass without my blessing.

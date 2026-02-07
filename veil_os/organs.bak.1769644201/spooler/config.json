@@ -1,0 +1,10 @@
+{
+  "name": "spooler",
+  "version": 1.0,
+  "description": "Job spooling and batch processing queue.",
+  "tier": "core",
+  "glyph": "\ud83e\uddf5",
+  "technical_role": "job_spooler",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.580252+00:00"
+}

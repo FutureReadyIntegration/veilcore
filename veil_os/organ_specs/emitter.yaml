@@ -1,0 +1,24 @@
+name: emitter
+version: 1.0
+tier: core
+glyph: "📢"
+technical_role: event_emitter
+symbolic_role: announcer
+description: Event emission and pub/sub message broadcasting.
+inputs:
+  - source: /opt/veil_os/sockets/emitter.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/emitter.log
+    format: jsonl
+triggers:
+  - type: event_publish
+  - type: subscriber_join
+actions:
+  - type: emit
+  - type: broadcast
+  - type: subscribe
+dependencies:
+  - dispatcher
+  - fabric
+affirmation: I announce what all must hear.

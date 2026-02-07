@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: veil-os
+Version: 0.1.0
+Summary: Veil OS hybrid organ engine
+Author: Future_Ready
+Requires-Python: >=3.10
+License-File: LICENSE
+Requires-Dist: pyyaml
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: jinja2
+Dynamic: license-file

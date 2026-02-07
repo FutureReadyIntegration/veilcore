@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/zombie_sweeper.log",
+  "module": "veil.organs.runner",
+  "name": "zombie_sweeper",
+  "pid": 152682
+}

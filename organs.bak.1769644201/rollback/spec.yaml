@@ -1,0 +1,28 @@
+actions:
+- type: select_snapshot
+- type: verify_integrity
+- type: restore
+- type: validate_restore
+affirmation: What was lost shall be restored.
+dependencies:
+- backup
+- vault
+- audit
+description: Rapid system restore from verified backup snapshots.
+glyph: "\u23EA"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/rollback.sock
+name: rollback
+organ: rollback
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/rollback.log
+symbolic_role: time_reversal
+technical_role: system_restore
+tier: recovery
+triggers:
+- type: ransomware_confirmed
+- type: manual_request
+- type: integrity_failure
+version: 1.0

@@ -1,0 +1,25 @@
+actions:
+- type: alert
+- type: log
+affirmation: I protect the healers so they may heal.
+dependencies:
+- auth
+- guardian
+- audit
+description: Epic EHR integration layer for ransomware protection.
+glyph: "\U0001F3E5"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/epic.sock
+name: epic
+organ: epic
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/epic.log
+symbolic_role: healer
+technical_role: ehr_connector
+tier: clinical
+triggers:
+- type: anomalous_query_volume
+- type: bulk_record_access
+version: 1.0

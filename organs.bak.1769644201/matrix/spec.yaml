@@ -1,0 +1,25 @@
+actions:
+- type: update
+- type: broadcast
+- type: reconcile
+affirmation: I hold the true state of all things.
+dependencies:
+- state_vector
+- fabric
+description: System-wide state matrix for organ coordination.
+glyph: "\U0001F522"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/matrix.sock
+name: matrix
+organ: matrix
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/matrix.log
+symbolic_role: reality
+technical_role: state_matrix
+tier: core
+triggers:
+- type: state_change
+- type: sync_request
+version: 1.0

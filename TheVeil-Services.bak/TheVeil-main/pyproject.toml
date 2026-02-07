@@ -1,0 +1,17 @@
+[project]
+name = "veil-os"
+version = "0.1.0"
+description = "Veil OS hybrid organ engine"
+authors = [{ name = "Future_Ready" }]
+requires-python = ">=3.10"
+dependencies = ["pyyaml"]
+
+[project.scripts]
+veil = "veil.cli:main"
+veil-compile = "veil.compiler:compile_all"
+veil-hospital = "veil.hospital.__main__:main"
+veil-intrusion = "veil.intrusion.__main__:main"
+veil-api = "veil.api.__main__:main"
+
+[tool.setuptools]
+packages = ["veil"]

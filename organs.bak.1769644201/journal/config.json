@@ -1,0 +1,10 @@
+{
+  "name": "journal",
+  "version": 1.0,
+  "description": "Append-only event journal for forensic reconstruction.",
+  "tier": "monitoring",
+  "glyph": "\ud83d\udcd4",
+  "technical_role": "event_journal",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.782188+00:00"
+}

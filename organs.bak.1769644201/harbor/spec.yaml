@@ -1,0 +1,26 @@
+actions:
+- type: verify
+- type: store
+- type: distribute
+affirmation: Safe harbor for trusted images only.
+dependencies:
+- fingerprint
+- vault
+description: Secure container image registry and verification.
+glyph: "\u2693"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/harbor.sock
+name: harbor
+organ: harbor
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/harbor.log
+symbolic_role: safe_port
+technical_role: container_registry
+tier: network
+triggers:
+- type: image_push
+- type: image_pull
+- type: vulnerability_scan
+version: 1.0

@@ -1,0 +1,25 @@
+name: harbor
+version: 1.0
+tier: network
+glyph: "⚓"
+technical_role: container_registry
+symbolic_role: safe_port
+description: Secure container image registry and verification.
+inputs:
+  - source: /opt/veil_os/sockets/harbor.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/harbor.log
+    format: jsonl
+triggers:
+  - type: image_push
+  - type: image_pull
+  - type: vulnerability_scan
+actions:
+  - type: verify
+  - type: store
+  - type: distribute
+dependencies:
+  - fingerprint
+  - vault
+affirmation: Safe harbor for trusted images only.

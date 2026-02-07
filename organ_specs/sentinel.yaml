@@ -1,0 +1,23 @@
+name: sentinel
+tier: 2
+glyph: "👁️"
+description: |
+  Surveillance and monitoring organ responsible for watching system activity,
+  detecting anomalies, and reporting suspicious behavior.
+
+entrypoint: "veil.organs.sentinel.main"
+
+logging:
+  file: "/var/log/veil/sentinel.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/sentinel"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

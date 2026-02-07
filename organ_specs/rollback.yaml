@@ -1,0 +1,27 @@
+name: rollback
+version: 1.0
+tier: recovery
+glyph: "⏪"
+technical_role: system_restore
+symbolic_role: time_reversal
+description: Rapid system restore from verified backup snapshots.
+inputs:
+  - source: /opt/veil_os/sockets/rollback.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/rollback.log
+    format: jsonl
+triggers:
+  - type: ransomware_confirmed
+  - type: manual_request
+  - type: integrity_failure
+actions:
+  - type: select_snapshot
+  - type: verify_integrity
+  - type: restore
+  - type: validate_restore
+dependencies:
+  - backup
+  - vault
+  - audit
+affirmation: What was lost shall be restored.

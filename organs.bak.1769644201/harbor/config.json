@@ -1,0 +1,10 @@
+{
+  "name": "harbor",
+  "version": 1.0,
+  "description": "Secure container image registry and verification.",
+  "tier": "network",
+  "glyph": "\u2693",
+  "technical_role": "container_registry",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.842974+00:00"
+}

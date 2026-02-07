@@ -1,0 +1,25 @@
+actions:
+- type: route
+- type: queue
+- type: confirm
+affirmation: Every message finds its destination.
+dependencies:
+- queue
+- signal_router
+description: Routes events and commands to appropriate organs.
+glyph: "\U0001F4E4"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/dispatcher.sock
+name: dispatcher
+organ: dispatcher
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/dispatcher.log
+symbolic_role: herald
+technical_role: event_dispatcher
+tier: core
+triggers:
+- type: event_received
+- type: command_issued
+version: 1.0

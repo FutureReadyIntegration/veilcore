@@ -1,0 +1,16 @@
+timeline:
+  - timestamp: "2026-02-04T16:45:00Z"
+    category: "clinical"
+    description: "Synthetic patient admission surge simulated (x5)."
+
+  - timestamp: "2026-02-04T16:52:30Z"
+    category: "integration"
+    description: "Lab pipeline latency test injected."
+
+  - timestamp: "2026-02-04T17:10:12Z"
+    category: "security"
+    description: "Zero-trust policy update deployed to sandbox."
+
+  - timestamp: "2026-02-04T17:18:49Z"
+    category: "monitoring"
+    description: "ICU monitor cluster failover drill completed."

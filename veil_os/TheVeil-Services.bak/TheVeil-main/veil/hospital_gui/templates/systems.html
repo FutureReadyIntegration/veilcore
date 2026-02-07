@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Veil - Systems Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header .tagline {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0,212,255,0.3);
+        }
+        
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-card.healthy .number { color: #00ff88; }
+        .stat-card.warning .number { color: #ffaa00; }
+        .stat-card.danger .number { color: #ff4444; }
+        .stat-card.info .number { color: #00d4ff; }
+        
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .section-body {
+            padding: 0;
+        }
+        
+        .organ-row, a.organ-row {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .organ-row:last-child { border-bottom: none; }
+        .organ-row:hover { background: rgba(255,255,255,0.03); }
+        
+        .organ-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .organ-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+        
+        .organ-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .organ-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .organ-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-badge.running {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+        }
+        
+        .status-badge.stopped {
+            background: rgba(255,68,68,0.2);
+            color: #ff4444;
+        }
+        
+        .status-badge.degraded {
+            background: rgba(255,170,0,0.2);
+            color: #ffaa00;
+        }
+        
+        .tier-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .tier-badge.p0 { background: #ff4444; color: white; }
+        .tier-badge.p1 { background: #ffaa00; color: black; }
+        .tier-badge.p2 { background: #888; color: white; }
+        
+        .self-heal-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(0,255,136,0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .last-updated {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .security-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0,255,136,0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+        
+        .security-status.secure { color: #00ff88; }
+        .security-status.warning { color: #ffaa00; background: rgba(255,170,0,0.1); }
+        .security-status.critical { color: #ff4444; background: rgba(255,68,68,0.1); }
+        
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .user-info a:hover { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="user-info">
+        <span>{{ user.username if user else 'Guest' }}</span>
+        <a href="/logout">Logout</a>
+    </div>
+    
+    <div class="header">
+        <h1>🏥 The Veil</h1>
+        <p class="tagline">"I stand between chaos and those I protect."</p>
+        <div class="security-status secure" id="security-status">
+            <span class="pulse"></span>
+            <span>All Systems Secure</span>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card healthy" id="organs-card">
+            <div class="number" id="organs-running">-/-</div>
+            <div class="label">Organs Running</div>
+        </div>
+        <div class="stat-card info" id="patients-card">
+            <div class="number" id="patients-active">-</div>
+            <div class="label">Active Patients</div>
+        </div>
+        <div class="stat-card" id="discharged-card">
+            <div class="number" id="patients-discharged">-</div>
+            <div class="label">Discharged</div>
+        </div>
+        <div class="stat-card healthy" id="alerts-card">
+            <div class="number" id="alerts-count">0</div>
+            <div class="label">Active Alerts</div>
+        </div>
+    </div>
+    
+    <div class="sections">
+        <div class="section">
+            <div class="section-header">
+                <h2>🫀 Security Organs</h2>
+                <span id="organs-summary">Loading...</span>
+            </div>
+            <div class="section-body" id="organs-list">
+                <div class="organ-row">
+                    <span class="organ-icon">⏳</span>
+                    <div class="organ-info">
+                        <div class="organ-name">Loading...</div>
+                        <div class="organ-desc">Fetching organ status</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2>📊 System Pages</h2>
+            </div>
+            <div class="section-body" id="pages-list">
+                <a href="/patients" class="organ-row">
+                    <span class="organ-icon">👥</span>
+                    <div class="organ-info">
+                        <div class="organ-name">Patients</div>
+                        <div class="organ-desc">Manage active patients</div>
+                    </div>
+                    <span class="status-badge running">Active</span>
+                </a>
+                <a href="/discharged" class="organ-row">
+                    <span class="organ-icon">📋</span>
+                    <div class="organ-info">
+                        <div class="organ-name">Discharged</div>
+                        <div class="organ-desc">View discharged records</div>
+                    </div>
+                    <span class="status-badge running">Active</span>
+                </a>
+                <a href="/organs" class="organ-row">
+                    <span class="organ-icon">🫀</span>
+                    <div class="organ-info">
+                        <div class="organ-name">All Organs</div>
+                        <div class="organ-desc">View all 78 security modules</div>
+                    </div>
+                    <span class="status-badge running">Active</span>
+                </a>
+                <a href="/audit" class="organ-row">
+                    <span class="organ-icon">📜</span>
+                    <div class="organ-info">
+                        <div class="organ-name">Audit Log</div>
+                        <div class="organ-desc">Tamper-proof event history</div>
+                    </div>
+                    <span class="status-badge running">Active</span>
+                </a>
+                <a href="/security" class="organ-row">
+                    <span class="organ-icon">🔐</span>
+                    <div class="organ-info">
+                        <div class="organ-name">Security</div>
+                        <div class="organ-desc">Users, sessions, lockdowns</div>
+                    </div>
+                    <span class="status-badge running">Active</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="self-heal-indicator" id="self-heal">
+        <span class="pulse"></span>
+        <span>Self-Healing Active — Organs auto-restart on failure (systemd)</span>
+    </div>
+    
+    <div class="last-updated" id="last-updated">
+        Last updated: --
+    </div>
+    
+    <script>
+        const CORE_ORGANS = [
+            { id: 'guardian', name: 'Guardian', desc: 'Authentication Gateway', icon: '🛡️', tier: 'P0', library: true },
+            { id: 'auto_lockdown', name: 'Auto-Lockdown', desc: 'Automated Threat Response', icon: '🔒', tier: 'P0' },
+            { id: 'zero_trust', name: 'Zero-Trust', desc: 'Continuous Verification', icon: '🔐', tier: 'P1' },
+            { id: 'sentinel', name: 'Sentinel', desc: 'Behavioral Anomaly Detection', icon: '👁️', tier: 'P1' },
+            { id: 'insider_threat', name: 'Insider Threat', desc: 'Privilege Abuse Detection', icon: '🕵️', tier: 'P1' },
+            { id: 'audit', name: 'Audit', desc: 'Tamper-Proof Logging', icon: '📜', tier: 'P1', library: true },
+        ];
+        
+        function renderOrgans(apiOrgans) {
+            const container = document.getElementById('organs-list');
+            let html = '';
+            let running = 0;
+            let total = CORE_ORGANS.length;
+            
+            CORE_ORGANS.forEach(organ => {
+                // Find matching API data
+                const apiData = apiOrgans.find(o => 
+                    o.name === organ.id || 
+                    o.name === organ.id.replace('_', '-')
+                ) || {};
+                
+                // Library modules (guardian, audit) are always "running" as part of main API
+                const isRunning = organ.library || apiData.running || apiData.pid;
+                const isHealthy = apiData.healthy !== false;
+                
+                if (isRunning) running++;
+                
+                let statusClass = isRunning ? (isHealthy ? 'running' : 'degraded') : 'stopped';
+                let statusText = isRunning ? (isHealthy ? 'Running' : 'Degraded') : 'Stopped';
+                
+                html += `
+                    <div class="organ-row">
+                        <span class="organ-icon">${organ.icon}</span>
+                        <div class="organ-info">
+                            <div class="organ-name">${organ.name}</div>
+                            <div class="organ-desc">${organ.desc}</div>
+                        </div>
+                        <div class="organ-status">
+                            <span class="tier-badge ${organ.tier.toLowerCase()}">${organ.tier}</span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            document.getElementById('organs-summary').textContent = `${running}/${total} active`;
+            document.getElementById('organs-running').textContent = `${running}/${total}`;
+            
+            // Update card color
+            const card = document.getElementById('organs-card');
+            if (running === total) {
+                card.className = 'stat-card healthy';
+            } else if (running >= total / 2) {
+                card.className = 'stat-card warning';
+            } else {
+                card.className = 'stat-card danger';
+            }
+            
+            return { running, total };
+        }
+        
+        async function refresh() {
+            try {
+                // Fetch organs
+                const organsResp = await fetch('/api/organs');
+                const organs = await organsResp.json();
+                
+                // Fetch system stats
+                const systemsResp = await fetch('/api/systems');
+                const systems = await systemsResp.json();
+                
+                // Render organs
+                const organStats = renderOrgans(organs);
+                
+                // Update patient counts
+                document.getElementById('patients-active').textContent = systems.patients?.active || 0;
+                document.getElementById('patients-discharged').textContent = systems.patients?.discharged || 0;
+                
+                // Try to get threat alerts (admin only)
+                try {
+                    const threatsResp = await fetch('/api/security/threats');
+                    if (threatsResp.ok) {
+                        const threats = await threatsResp.json();
+                        const alertCount = Array.isArray(threats) ? threats.length : 0;
+                        document.getElementById('alerts-count').textContent = alertCount;
+                        
+                        const alertsCard = document.getElementById('alerts-card');
+                        const secStatus = document.getElementById('security-status');
+                        
+                        if (alertCount > 0) {
+                            alertsCard.className = 'stat-card danger';
+                            secStatus.className = 'security-status warning';
+                            secStatus.innerHTML = `<span class="pulse" style="background:#ffaa00"></span><span>${alertCount} Active Alert${alertCount > 1 ? 's' : ''}</span>`;
+                        } else {
+                            alertsCard.className = 'stat-card healthy';
+                            secStatus.className = 'security-status secure';
+                            secStatus.innerHTML = '<span class="pulse"></span><span>All Systems Secure</span>';
+                        }
+                    }
+                } catch (e) {
+                    // Not admin, no access to threats endpoint
+                }
+                
+                // Update timestamp
+                document.getElementById('last-updated').textContent = 
+                    'Last updated: ' + new Date().toLocaleTimeString();
+                
+            } catch (error) {
+                console.error('Refresh error:', error);
+                document.getElementById('organs-list').innerHTML = `
+                    <div class="organ-row">
+                        <span class="organ-icon">⚠️</span>
+                        <div class="organ-info">
+                            <div class="organ-name">Error</div>
+                            <div class="organ-desc">Failed to fetch status: ${error.message}</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initial load
+        refresh();
+        
+        // Auto-refresh every 10 seconds
+        setInterval(refresh, 10000);
+    </script>
+</body>
+</html>

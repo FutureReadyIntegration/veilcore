@@ -1,0 +1,486 @@
+#!/usr/bin/env python3
+"""
+veilctl - The Veil Control CLI
+==============================
+Manage The Veil hospital cybersecurity platform.
+
+Usage:
+    veilctl status              Show status of all organs
+    veilctl start [organ]       Start organ(s)
+    veilctl stop [organ]        Stop organ(s)
+    veilctl restart [organ]     Restart organ(s)
+    veilctl logs [organ]        View organ logs
+    veilctl health              Health check all organs
+    veilctl patients            Patient statistics
+    veilctl audit [n]           Show recent audit events
+    veilctl lockdown <user>     Emergency lockdown user
+    veilctl unlock <user>       Remove lockdown
+"""
+
+import subprocess
+import sys
+import json
+import os
+from pathlib import Path
+from datetime import datetime
+from typing import Optional
+
+# Colors
+RED = '\033[0;31m'
+GREEN = '\033[0;32m'
+YELLOW = '\033[1;33m'
+BLUE = '\033[0;34m'
+CYAN = '\033[0;36m'
+NC = '\033[0m'  # No Color
+BOLD = '\033[1m'
+
+ORGANS = {
+    "veil": {"desc": "Main API", "tier": "P0", "glyph": "🏥"},
+    "sentinel": {"desc": "Anomaly Detection", "tier": "P1", "glyph": "👁️"},
+    "insider_threat": {"desc": "Insider Threat", "tier": "P1", "glyph": "🕵️"},
+    "auto_lockdown": {"desc": "Auto Response", "tier": "P0", "glyph": "🔒"},
+    "zero_trust": {"desc": "Zero Trust", "tier": "P1", "glyph": "🔐"},
+}
+
+SERVICE_MAP = {
+    "veil": "veil.service",
+    "sentinel": "veil-sentinel.service",
+    "insider_threat": "veil-insider-threat.service",
+    "auto_lockdown": "veil-auto-lockdown.service",
+    "zero_trust": "veil-zero-trust.service",
+}
+
+STATUS_DIR = Path("/var/lib/veil")
+LOG_DIR = Path("/var/log/veil")
+
+def run_cmd(cmd: list, capture: bool = True) -> tuple:
+    """Run a shell command."""
+    try:
+        result = subprocess.run(cmd, capture_output=capture, text=True)
+        return result.returncode, result.stdout, result.stderr
+    except Exception as e:
+        return 1, "", str(e)
+
+def is_service_running(service: str) -> bool:
+    """Check if systemd service is running."""
+    code, out, _ = run_cmd(["systemctl", "is-active", "--quiet", service])
+    return code == 0
+
+def get_service_status(service: str) -> dict:
+    """Get detailed service status."""
+    code, out, _ = run_cmd(["systemctl", "show", service, 
+                           "--property=ActiveState,SubState,MainPID,MemoryCurrent"])
+    status = {}
+    for line in out.strip().split('\n'):
+        if '=' in line:
+            k, v = line.split('=', 1)
+            status[k] = v
+    return status
+
+def get_organ_health(organ: str) -> dict:
+    """Get organ health from status.json."""
+    paths = [
+        STATUS_DIR / organ / "status.json",
+        STATUS_DIR / "lockdown" / "status.json" if organ == "auto_lockdown" else None,
+        STATUS_DIR / "security" / "status.json" if organ == "veil" else None,
+    ]
+    
+    for path in paths:
+        if path and path.exists():
+            try:
+                return json.loads(path.read_text())
+            except:
+                pass
+    return {}
+
+def print_header(title: str):
+    print(f"\n{BLUE}{'='*60}{NC}")
+    print(f"{BLUE}  {title}{NC}")
+    print(f"{BLUE}{'='*60}{NC}\n")
+
+def cmd_status(args):
+    """Show status of all organs."""
+    print_header("THE VEIL - System Status")
+    
+    running = 0
+    total = len(ORGANS)
+    
+    for organ, info in ORGANS.items():
+        service = SERVICE_MAP.get(organ, f"veil-{organ}.service")
+        is_running = is_service_running(service)
+        health = get_organ_health(organ)
+        
+        if is_running:
+            running += 1
+            status_info = get_service_status(service)
+            mem = status_info.get("MemoryCurrent", "0")
+            try:
+                mem_mb = int(mem) / 1024 / 1024
+                mem_str = f"{mem_mb:.1f}MB"
+            except:
+                mem_str = "?"
+            
+            healthy = health.get("healthy", True)
+            msg = health.get("message", "")
+            
+            if healthy:
+                icon = f"{GREEN}✓{NC}"
+            else:
+                icon = f"{YELLOW}⚠{NC}"
+            
+            print(f"  {icon} {info['glyph']} {BOLD}{organ:18}{NC} {GREEN}RUNNING{NC}  {mem_str:>8}  {msg}")
+        else:
+            print(f"  {RED}✗{NC} {info['glyph']} {BOLD}{organ:18}{NC} {RED}STOPPED{NC}")
+    
+    print()
+    
+    # Summary
+    if running == total:
+        print(f"  {GREEN}All {total} organs running{NC}")
+    elif running == 0:
+        print(f"  {RED}All organs stopped!{NC}")
+    else:
+        print(f"  {YELLOW}{running}/{total} organs running{NC}")
+    
+    print()
+    return 0
+
+def cmd_start(args):
+    """Start organ(s)."""
+    organ = args[0] if args else "all"
+    
+    if organ == "all":
+        services = list(SERVICE_MAP.values())
+        print(f"{CYAN}Starting all organs...{NC}")
+    else:
+        if organ not in SERVICE_MAP:
+            print(f"{RED}Unknown organ: {organ}{NC}")
+            return 1
+        services = [SERVICE_MAP[organ]]
+        print(f"{CYAN}Starting {organ}...{NC}")
+    
+    for service in services:
+        code, _, err = run_cmd(["sudo", "systemctl", "start", service])
+        if code == 0:
+            print(f"  {GREEN}✓{NC} {service}")
+        else:
+            print(f"  {RED}✗{NC} {service}: {err}")
+    
+    return 0
+
+def cmd_stop(args):
+    """Stop organ(s)."""
+    organ = args[0] if args else "all"
+    
+    if organ == "all":
+        services = list(SERVICE_MAP.values())
+        print(f"{CYAN}Stopping all organs...{NC}")
+    else:
+        if organ not in SERVICE_MAP:
+            print(f"{RED}Unknown organ: {organ}{NC}")
+            return 1
+        services = [SERVICE_MAP[organ]]
+        print(f"{CYAN}Stopping {organ}...{NC}")
+    
+    for service in services:
+        code, _, err = run_cmd(["sudo", "systemctl", "stop", service])
+        if code == 0:
+            print(f"  {GREEN}✓{NC} {service}")
+        else:
+            print(f"  {RED}✗{NC} {service}: {err}")
+    
+    return 0
+
+def cmd_restart(args):
+    """Restart organ(s)."""
+    organ = args[0] if args else "all"
+    
+    if organ == "all":
+        services = list(SERVICE_MAP.values())
+        print(f"{CYAN}Restarting all organs...{NC}")
+    else:
+        if organ not in SERVICE_MAP:
+            print(f"{RED}Unknown organ: {organ}{NC}")
+            return 1
+        services = [SERVICE_MAP[organ]]
+        print(f"{CYAN}Restarting {organ}...{NC}")
+    
+    for service in services:
+        code, _, err = run_cmd(["sudo", "systemctl", "restart", service])
+        if code == 0:
+            print(f"  {GREEN}✓{NC} {service}")
+        else:
+            print(f"  {RED}✗{NC} {service}: {err}")
+    
+    return 0
+
+def cmd_logs(args):
+    """View organ logs."""
+    organ = args[0] if args else "veil"
+    lines = args[1] if len(args) > 1 else "50"
+    
+    if organ not in SERVICE_MAP:
+        print(f"{RED}Unknown organ: {organ}{NC}")
+        return 1
+    
+    service = SERVICE_MAP[organ]
+    print(f"{CYAN}Logs for {organ} (last {lines} lines):{NC}\n")
+    
+    code, out, err = run_cmd(["journalctl", "-u", service, "-n", lines, "--no-pager"], capture=True)
+    if out:
+        print(out)
+    if err:
+        print(err)
+    
+    return code
+
+def cmd_health(args):
+    """Health check all organs."""
+    print_header("Health Check")
+    
+    all_healthy = True
+    
+    for organ, info in ORGANS.items():
+        service = SERVICE_MAP.get(organ)
+        running = is_service_running(service)
+        health = get_organ_health(organ)
+        
+        checks = []
+        
+        # Service running
+        if running:
+            checks.append(f"{GREEN}✓ Service running{NC}")
+        else:
+            checks.append(f"{RED}✗ Service stopped{NC}")
+            all_healthy = False
+        
+        # Health status
+        if health.get("healthy"):
+            checks.append(f"{GREEN}✓ Healthy{NC}")
+        elif health:
+            checks.append(f"{YELLOW}⚠ Degraded{NC}")
+            all_healthy = False
+        
+        # Stale check
+        if health.get("stale"):
+            checks.append(f"{YELLOW}⚠ Stale status{NC}")
+        
+        print(f"  {info['glyph']} {BOLD}{organ}{NC}")
+        for check in checks:
+            print(f"      {check}")
+        print()
+    
+    if all_healthy:
+        print(f"  {GREEN}All systems healthy{NC}")
+    else:
+        print(f"  {YELLOW}Some issues detected{NC}")
+    
+    return 0 if all_healthy else 1
+
+def cmd_patients(args):
+    """Show patient statistics."""
+    print_header("Patient Statistics")
+    
+    try:
+        patients_file = Path("/var/lib/veil/patients.json")
+        if not patients_file.exists():
+            patients_file = Path("/opt/veil_os/veil/hospital_gui/data/patients.json")
+        
+        if patients_file.exists():
+            data = json.loads(patients_file.read_text())
+            patients = data.get("patients", [])
+            
+            active = [p for p in patients if not p.get("discharged_at")]
+            discharged = [p for p in patients if p.get("discharged_at")]
+            
+            print(f"  Total patients:      {len(patients)}")
+            print(f"  {GREEN}Active:              {len(active)}{NC}")
+            print(f"  {BLUE}Discharged:          {len(discharged)}{NC}")
+        else:
+            print(f"  {YELLOW}No patient data found{NC}")
+    except Exception as e:
+        print(f"  {RED}Error reading patients: {e}{NC}")
+    
+    print()
+    return 0
+
+def cmd_audit(args):
+    """Show recent audit events."""
+    n = int(args[0]) if args else 20
+    print_header(f"Recent Audit Events (last {n})")
+    
+    audit_file = Path("/var/lib/veil/audit/audit.log")
+    if not audit_file.exists():
+        print(f"  {YELLOW}No audit log found{NC}")
+        return 0
+    
+    try:
+        lines = audit_file.read_text().strip().split('\n')
+        recent = lines[-n:] if len(lines) > n else lines
+        
+        for line in recent:
+            try:
+                event = json.loads(line)
+                ts = event.get("timestamp", "")[:19]
+                level = event.get("level", "INFO")
+                action = event.get("action", "")
+                user = event.get("username", "-")
+                
+                if level == "ERROR":
+                    color = RED
+                elif level == "WARNING":
+                    color = YELLOW
+                else:
+                    color = NC
+                
+                print(f"  {ts}  {color}{level:8}{NC}  {user:12}  {action}")
+            except:
+                print(f"  {line[:80]}")
+        
+    except Exception as e:
+        print(f"  {RED}Error reading audit: {e}{NC}")
+    
+    print()
+    return 0
+
+def cmd_lockdown(args):
+    """Emergency lockdown a user."""
+    if not args:
+        print(f"{RED}Usage: veilctl lockdown <user_id>{NC}")
+        return 1
+    
+    user_id = args[0]
+    print(f"{RED}EMERGENCY LOCKDOWN: {user_id}{NC}")
+    
+    # Call API
+    import urllib.request
+    import urllib.error
+    
+    try:
+        data = json.dumps({
+            "target_type": "user",
+            "target_id": user_id,
+            "level": "lockdown",
+            "reason": "Emergency lockdown via veilctl"
+        }).encode()
+        
+        req = urllib.request.Request(
+            "http://localhost:8000/api/security/lockdown",
+            data=data,
+            headers={"Content-Type": "application/json"}
+        )
+        
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read())
+            print(f"  {GREEN}✓ User {user_id} locked down{NC}")
+            return 0
+            
+    except urllib.error.HTTPError as e:
+        print(f"  {RED}✗ API error: {e.code}{NC}")
+        return 1
+    except Exception as e:
+        print(f"  {RED}✗ Error: {e}{NC}")
+        return 1
+
+def cmd_unlock(args):
+    """Remove lockdown from user."""
+    if not args:
+        print(f"{RED}Usage: veilctl unlock <user_id>{NC}")
+        return 1
+    
+    user_id = args[0]
+    print(f"{CYAN}Removing lockdown: {user_id}{NC}")
+    
+    import urllib.request
+    import urllib.error
+    
+    try:
+        data = json.dumps({
+            "target_type": "user",
+            "target_id": user_id,
+            "reason": "Manual unlock via veilctl"
+        }).encode()
+        
+        req = urllib.request.Request(
+            "http://localhost:8000/api/security/unlock",
+            data=data,
+            headers={"Content-Type": "application/json"}
+        )
+        
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read())
+            print(f"  {GREEN}✓ Lockdown removed{NC}")
+            return 0
+            
+    except Exception as e:
+        print(f"  {RED}✗ Error: {e}{NC}")
+        return 1
+
+def cmd_help(args):
+    """Show help."""
+    print(f"""
+{BOLD}veilctl{NC} - The Veil Control CLI
+
+{BOLD}USAGE:{NC}
+    veilctl <command> [args...]
+
+{BOLD}COMMANDS:{NC}
+    status              Show status of all organs
+    start [organ]       Start organ (or all)
+    stop [organ]        Stop organ (or all)
+    restart [organ]     Restart organ (or all)
+    logs <organ> [n]    View last n log lines
+    health              Health check all organs
+    patients            Patient statistics
+    audit [n]           Show last n audit events
+    lockdown <user>     Emergency lockdown user
+    unlock <user>       Remove user lockdown
+    help                Show this help
+
+{BOLD}ORGANS:{NC}
+    veil                Main API server
+    sentinel            Behavioral anomaly detection
+    insider_threat      Insider threat detector
+    auto_lockdown       Automated response engine
+    zero_trust          Zero-trust verification
+
+{BOLD}EXAMPLES:{NC}
+    veilctl status
+    veilctl restart sentinel
+    veilctl logs veil 100
+    veilctl lockdown suspicious_user
+""")
+    return 0
+
+COMMANDS = {
+    "status": cmd_status,
+    "start": cmd_start,
+    "stop": cmd_stop,
+    "restart": cmd_restart,
+    "logs": cmd_logs,
+    "health": cmd_health,
+    "patients": cmd_patients,
+    "audit": cmd_audit,
+    "lockdown": cmd_lockdown,
+    "unlock": cmd_unlock,
+    "help": cmd_help,
+    "--help": cmd_help,
+    "-h": cmd_help,
+}
+
+def main():
+    if len(sys.argv) < 2:
+        return cmd_status([])
+    
+    cmd = sys.argv[1]
+    args = sys.argv[2:]
+    
+    if cmd in COMMANDS:
+        return COMMANDS[cmd](args)
+    else:
+        print(f"{RED}Unknown command: {cmd}{NC}")
+        print(f"Run 'veilctl help' for usage")
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())

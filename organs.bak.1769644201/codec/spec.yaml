@@ -1,0 +1,24 @@
+actions:
+- type: encode
+- type: decode
+- type: validate
+affirmation: I transform data to travel safely.
+dependencies:
+- vault
+description: Data encoding/decoding for secure transmission formats.
+glyph: "\U0001F504"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/codec.sock
+name: codec
+organ: codec
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/codec.log
+symbolic_role: translator
+technical_role: encoder_decoder
+tier: core
+triggers:
+- type: encode_request
+- type: decode_request
+version: 1.0
