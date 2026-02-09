@@ -134,4 +134,5 @@ def api_get_patient(patient_id: int):
     for p in data["patients"]:
         if p["id"] == patient_id:
             return {"patient": p}
-    return JSONResponse(status_code=404, content
+    return JSONResponse(status_code=404, content={"error": "Not found"})
+
