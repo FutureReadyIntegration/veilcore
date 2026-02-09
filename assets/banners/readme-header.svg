@@ -1,88 +1,241 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380">
   <defs>
     <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:rgb(0,229,255);stop-opacity:0"/>
-      <stop offset="50%" style="stop-color:rgb(0,229,255);stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:rgb(0,229,255);stop-opacity:0"/>
+      <stop offset="0%" style="stop-color:rgb(0,229,255);stop-opacity:0" />
+      <stop offset="50%" style="stop-color:rgb(0,229,255);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(0,229,255);stop-opacity:0" />
     </linearGradient>
     <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgb(0,200,240)"/>
-      <stop offset="100%" style="stop-color:rgb(0,160,200)"/>
+      <stop offset="0%" style="stop-color:rgb(0,200,240);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(0,160,200);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldRadial" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(255,215,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,165,0);stop-opacity:0.6" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,215,0);stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:rgb(255,185,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,215,0);stop-opacity:0.8" />
     </linearGradient>
     <linearGradient id="irisGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgb(0,255,255)"/>
-      <stop offset="100%" style="stop-color:rgb(0,180,220)"/>
+      <stop offset="0%" style="stop-color:rgb(0,255,255);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(0,180,220);stop-opacity:1" />
+    </linearGradient>
+    <filter id="shieldGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="eyeGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="goldGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="scanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(0,229,255);stop-opacity:0" />
+      <stop offset="50%" style="stop-color:rgb(0,229,255);stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:rgb(0,229,255);stop-opacity:0" />
     </linearGradient>
   </defs>
+  <style>
+    @keyframes eyePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.75; } }
+    @keyframes rayRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes rayCounterRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+    @keyframes scan { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(300px); opacity: 0; } }
+    @keyframes shieldPulse { 0%, 100% { filter: url(#shieldGlow) drop-shadow(0 0 5px rgba(0,229,255,0.5)); } 50% { filter: url(#shieldGlow) drop-shadow(0 0 12px rgba(0,229,255,0.9)); } }
+    @keyframes irisPulse { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; } }
+    .geometric-eye { animation: eyePulse 3s ease-in-out infinite; filter: url(#eyeGlow); }
+    .eye-rays-outer { animation: rayRotate 25s linear infinite; transform-origin: center; }
+    .eye-rays-inner { animation: rayCounterRotate 15s linear infinite; transform-origin: center; }
+    .scan-line { animation: scan 4s linear infinite; }
+    .shield-group { animation: shieldPulse 3s ease-in-out infinite; }
+    .iris { animation: irisPulse 2s ease-in-out infinite; }
+  </style>
+
+  <!-- Background -->
   <rect width="1200" height="380" fill="#0d1117"/>
+  <rect class="scan-line" x="0" y="0" width="1200" height="3" fill="url(#scanGradient)" opacity="0.5"/>
   <rect x="0" y="0" width="1200" height="2" fill="url(#accentGradient)"/>
   <rect x="0" y="298" width="1200" height="2" fill="url(#accentGradient)"/>
-  <g transform="translate(430, 90)">
+
+  <!-- Shield + Signature Eye -->
+  <g class="shield-group" transform="translate(430, 90)">
+    <!-- Shield body - slightly larger -->
     <polygon points="0,-45 -32,-28 -32,12 0,40 32,12 32,-28" fill="url(#shieldGradient)" stroke="rgb(0,229,255)" stroke-width="1.5"/>
+    <!-- Shield inner border -->
     <polygon points="0,-38 -26,-23 -26,8 0,33 26,8 26,-23" fill="none" stroke="rgb(0,229,255)" stroke-width="0.5" opacity="0.4"/>
-    <g transform="translate(0,-2)">
-      <g opacity="0.8">
-        <line x1="0" y1="-24" x2="0" y2="-36" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="17" y1="-17" x2="25" y2="-25" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="24" y1="0" x2="36" y2="0" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="17" y1="17" x2="25" y2="25" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="0" y1="24" x2="0" y2="36" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="-17" y1="17" x2="-25" y2="25" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="-24" y1="0" x2="-36" y2="0" stroke="rgb(255,215,0)" stroke-width="2"/>
-        <line x1="-17" y1="-17" x2="-25" y2="-25" stroke="rgb(255,215,0)" stroke-width="2"/>
+
+    <!-- === SIGNATURE EYE === -->
+    <g transform="translate(0, -2)">
+
+      <!-- Outer radiating gold rays (16 rays, slow rotation) -->
+      <g class="eye-rays-outer" filter="url(#goldGlow)">
+        <line x1="0" y1="-24" x2="0" y2="-36" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="9" y1="-22" x2="14" y2="-34" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="17" y1="-17" x2="25" y2="-25" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="22" y1="-9" x2="34" y2="-14" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="24" y1="0" x2="36" y2="0" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="22" y1="9" x2="34" y2="14" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="17" y1="17" x2="25" y2="25" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="9" y1="22" x2="14" y2="34" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="0" y1="24" x2="0" y2="36" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="-9" y1="22" x2="-14" y2="34" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="-17" y1="17" x2="-25" y2="25" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="-22" y1="9" x2="-34" y2="14" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="-24" y1="0" x2="-36" y2="0" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="-22" y1="-9" x2="-34" y2="-14" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
+        <line x1="-17" y1="-17" x2="-25" y2="-25" stroke="rgb(255,215,0)" stroke-width="2" opacity="0.9"/>
         <line x1="-9" y1="-22" x2="-14" y2="-34" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.7"/>
       </g>
-      <circle cx="0" cy="0" r="22" fill="none" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.4"/>
-      <polygon points="0,-19 13,-13 19,0 13,13 0,19 -13,13 -19,0 -13,-13" fill="none" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.5"/>
-      <path d="M 0,-15 L 13,-7.5 L 13,7.5 L 0,15 L -13,7.5 L -13,-7.5 Z" fill="none" stroke="rgb(255,185,0)" stroke-width="1.5" opacity="0.7"/>
-      <polygon points="0,-11 11,0 0,11 -11,0" fill="none" stroke="rgb(255,200,0)" stroke-width="1" opacity="0.5"/>
-      <circle cx="0" cy="0" r="11" fill="#0a0e14" stroke="rgb(255,215,0)" stroke-width="1.5"/>
-      <circle cx="0" cy="0" r="8" fill="none" stroke="url(#irisGradient)" stroke-width="2"/>
-      <circle cx="0" cy="0" r="7" fill="url(#irisGradient)" opacity="0.85"/>
-      <circle cx="0" cy="0" r="3.5" fill="#000000"/>
-      <circle cx="0" cy="0" r="3.5" fill="none" stroke="rgb(255,215,0)" stroke-width="0.5" opacity="0.4"/>
-      <circle cx="2" cy="-2" r="1.8" fill="rgb(255,255,255)" opacity="0.95"/>
-      <circle cx="-1.5" cy="2" r="0.8" fill="rgb(255,255,255)" opacity="0.4"/>
+
+      <!-- Inner counter-rotating gold rays (8 shorter rays) -->
+      <g class="eye-rays-inner" filter="url(#goldGlow)">
+        <line x1="0" y1="-19" x2="0" y2="-24" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="13" y1="-13" x2="17" y2="-17" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="19" y1="0" x2="24" y2="0" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="13" y1="13" x2="17" y2="17" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="0" y1="19" x2="0" y2="24" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="-13" y1="13" x2="-17" y2="17" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="-19" y1="0" x2="-24" y2="0" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+        <line x1="-13" y1="-13" x2="-17" y2="-17" stroke="rgb(255,185,0)" stroke-width="1" opacity="0.6"/>
+      </g>
+
+      <!-- Concentric geometric shapes -->
+      <g class="geometric-eye">
+        <!-- Outermost circle -->
+        <circle cx="0" cy="0" r="22" fill="none" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.4"/>
+
+        <!-- Outer octagon -->
+        <polygon points="0,-19 13,-13 19,0 13,13 0,19 -13,13 -19,0 -13,-13" fill="none" stroke="rgb(255,215,0)" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- Middle hexagon -->
+        <path d="M 0,-15 L 13,-7.5 L 13,7.5 L 0,15 L -13,7.5 L -13,-7.5 Z" fill="none" stroke="rgb(255,185,0)" stroke-width="1.5" opacity="0.7"/>
+
+        <!-- Inner diamond -->
+        <polygon points="0,-11 11,0 0,11 -11,0" fill="none" stroke="rgb(255,200,0)" stroke-width="1" opacity="0.5"/>
+
+        <!-- Eye base circle -->
+        <circle cx="0" cy="0" r="11" fill="#0a0e14" stroke="rgb(255,215,0)" stroke-width="1.5"/>
+
+        <!-- Iris ring -->
+        <circle cx="0" cy="0" r="8" fill="none" stroke="url(#irisGradient)" stroke-width="2" class="iris"/>
+
+        <!-- Iris fill -->
+        <circle cx="0" cy="0" r="7" fill="url(#irisGradient)" opacity="0.85" class="iris"/>
+
+        <!-- Pupil -->
+        <circle cx="0" cy="0" r="3.5" fill="#000000"/>
+
+        <!-- Pupil inner ring -->
+        <circle cx="0" cy="0" r="3.5" fill="none" stroke="rgb(255,215,0)" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Primary highlight -->
+        <circle cx="2" cy="-2" r="1.8" fill="rgb(255,255,255)" opacity="0.95"/>
+
+        <!-- Secondary highlight -->
+        <circle cx="-1.5" cy="2" r="0.8" fill="rgb(255,255,255)" opacity="0.4"/>
+      </g>
     </g>
   </g>
-  <text x="475" y="108" font-family="Arial,sans-serif" font-size="58" font-weight="bold" fill="rgb(0,229,255)">VeilCore</text>
-  <text x="600" y="148" font-family="Arial,sans-serif" font-size="16" fill="#8b949e" text-anchor="middle">HOSPITAL CYBERSECURITY DEFENSE SYSTEM</text>
+
+  <!-- VeilCore title -->
+  <text x="475" y="108" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="rgb(0,229,255)">VeilCore</text>
+  <text x="600" y="148" font-family="Arial, sans-serif" font-size="16" fill="#8b949e" text-anchor="middle">HOSPITAL CYBERSECURITY DEFENSE SYSTEM</text>
   <line x1="300" y1="165" x2="900" y2="165" stroke="rgb(0,229,255)" stroke-width="1" opacity="0.3"/>
-  <g transform="translate(200,0)"><text x="0" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="bold" fill="rgb(0,229,255)" text-anchor="middle">82</text><text x="0" y="230" font-family="Arial,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">ORGANS</text></g>
+
+  <!-- Stats -->
+  <g transform="translate(200, 0)">
+    <text x="0" y="210" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="rgb(0,229,255)" text-anchor="middle">82</text>
+    <text x="0" y="230" font-family="Arial, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">ORGANS</text>
+  </g>
   <line x1="285" y1="185" x2="285" y2="225" stroke="rgb(0,229,255)" stroke-width="1" opacity="0.15"/>
-  <g transform="translate(370,0)"><text x="0" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="bold" fill="rgb(0,229,255)" text-anchor="middle">17</text><text x="0" y="230" font-family="Arial,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">SUBSYSTEMS</text></g>
+  <g transform="translate(370, 0)">
+    <text x="0" y="210" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="rgb(0,229,255)" text-anchor="middle">17</text>
+    <text x="0" y="230" font-family="Arial, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">SUBSYSTEMS</text>
+  </g>
   <line x1="455" y1="185" x2="455" y2="225" stroke="rgb(0,229,255)" stroke-width="1" opacity="0.15"/>
-  <g transform="translate(540,0)"><text x="0" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="bold" fill="rgb(0,255,106)" text-anchor="middle">100%</text><text x="0" y="230" font-family="Arial,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">HIPAA</text></g>
+  <g transform="translate(540, 0)">
+    <text x="0" y="210" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="rgb(0,255,106)" text-anchor="middle">100%</text>
+    <text x="0" y="230" font-family="Arial, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">HIPAA</text>
+  </g>
   <line x1="625" y1="185" x2="625" y2="225" stroke="rgb(0,229,255)" stroke-width="1" opacity="0.15"/>
-  <g transform="translate(710,0)"><text x="0" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="bold" fill="rgb(0,255,106)" text-anchor="middle">100%</text><text x="0" y="230" font-family="Arial,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">FEDRAMP</text></g>
+  <g transform="translate(710, 0)">
+    <text x="0" y="210" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="rgb(0,255,106)" text-anchor="middle">100%</text>
+    <text x="0" y="230" font-family="Arial, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">FEDRAMP</text>
+  </g>
   <line x1="795" y1="185" x2="795" y2="225" stroke="rgb(0,229,255)" stroke-width="1" opacity="0.15"/>
-  <g transform="translate(880,0)"><text x="0" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="bold" fill="rgb(251,191,36)" text-anchor="middle">24/7</text><text x="0" y="230" font-family="Arial,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">DEFENSE</text></g>
-  <text x="600" y="275" font-family="Arial,sans-serif" font-size="14" font-style="italic" fill="rgb(88,166,255)" text-anchor="middle">"I stand between chaos and those I protect"</text>
+  <g transform="translate(880, 0)">
+    <text x="0" y="210" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="rgb(251,191,36)" text-anchor="middle">24/7</text>
+    <text x="0" y="230" font-family="Arial, sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">DEFENSE</text>
+  </g>
+
+  <text x="600" y="275" font-family="Arial, sans-serif" font-size="14" font-style="italic" fill="rgb(88,166,255)" text-anchor="middle">"I stand between chaos and those I protect"</text>
+
+  <!-- Corner accents -->
   <polyline points="15,30 15,15 30,15" fill="none" stroke="rgb(0,229,255)" stroke-width="2"/>
   <polyline points="1170,15 1185,15 1185,30" fill="none" stroke="rgb(0,229,255)" stroke-width="2"/>
   <polyline points="15,270 15,285 30,285" fill="none" stroke="rgb(0,229,255)" stroke-width="2"/>
   <polyline points="1170,285 1185,285 1185,270" fill="none" stroke="rgb(0,229,255)" stroke-width="2"/>
-  <g transform="translate(0,315)">
-    <g transform="translate(140,0)"><rect width="140" height="28" rx="4" fill="#1a1a1a"/><circle cx="14" cy="14" r="6" fill="rgb(0,229,255)"/><text x="24" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff">PROTECTED BY</text></g>
-    <g transform="translate(285,0)"><rect width="90" height="28" rx="4" fill="rgb(0,229,255)"/><text x="45" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#000" text-anchor="middle">VEILCORE</text></g>
-    <g transform="translate(380,0)"><rect width="70" height="28" rx="4" fill="#1a1a1a"/><text x="35" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">ORGANS</text></g>
-    <g transform="translate(455,0)"><rect width="90" height="28" rx="4" fill="rgb(0,229,255)"/><text x="45" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#000" text-anchor="middle">82 ACTIVE</text></g>
-    <g transform="translate(550,0)"><rect width="60" height="28" rx="4" fill="#1a1a1a"/><text x="30" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">HIPAA</text></g>
-    <g transform="translate(615,0)"><rect width="100" height="28" rx="4" fill="rgb(0,255,106)"/><text x="50" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#000" text-anchor="middle">COMPLIANT</text></g>
-    <g transform="translate(720,0)"><rect width="95" height="28" rx="4" fill="#1a1a1a"/><text x="50" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">PLATFORM</text></g>
-    <g transform="translate(820,0)"><rect width="115" height="28" rx="4" fill="rgb(138,43,226)"/><text x="57" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">UBUNTU 24.04</text></g>
+
+  <!-- Badge Row 1 -->
+  <g transform="translate(0, 315)">
+    <g transform="translate(140, 0)">
+      <rect x="0" y="0" width="140" height="28" rx="4" fill="#1a1a1a"/>
+      <circle cx="14" cy="14" r="6" fill="rgb(0,229,255)"/>
+      <text x="24" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">PROTECTED BY</text>
+    </g>
+    <g transform="translate(285, 0)">
+      <rect x="0" y="0" width="90" height="28" rx="4" fill="rgb(0,229,255)"/>
+      <text x="45" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#000000" text-anchor="middle">VEILCORE</text>
+    </g>
+    <g transform="translate(380, 0)">
+      <rect x="0" y="0" width="70" height="28" rx="4" fill="#1a1a1a"/>
+      <text x="35" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">ORGANS</text>
+    </g>
+    <g transform="translate(455, 0)">
+      <rect x="0" y="0" width="90" height="28" rx="4" fill="rgb(0,229,255)"/>
+      <text x="45" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#000000" text-anchor="middle">82 ACTIVE</text>
+    </g>
+    <g transform="translate(550, 0)">
+      <rect x="0" y="0" width="60" height="28" rx="4" fill="#1a1a1a"/>
+      <text x="30" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">HIPAA</text>
+    </g>
+    <g transform="translate(615, 0)">
+      <rect x="0" y="0" width="100" height="28" rx="4" fill="rgb(0,255,106)"/>
+      <text x="50" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#000000" text-anchor="middle">COMPLIANT</text>
+    </g>
+    <g transform="translate(720, 0)">
+      <rect x="0" y="0" width="95" height="28" rx="4" fill="#1a1a1a"/>
+      <circle cx="14" cy="14" r="6" fill="rgb(255,140,0)" stroke="rgb(255,140,0)" stroke-width="2"/>
+      <circle cx="14" cy="14" r="3" fill="#1a1a1a"/>
+      <text x="28" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">PLATFORM</text>
+    </g>
+    <g transform="translate(820, 0)">
+      <rect x="0" y="0" width="115" height="28" rx="4" fill="rgb(138,43,226)"/>
+      <text x="57" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">UBUNTU 24.04</text>
+    </g>
   </g>
-  <g transform="translate(0,350)">
-    <g transform="translate(350,0)"><rect width="80" height="28" rx="4" fill="#1a1a1a"/><text x="40" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">DEFENSE</text></g>
-    <g transform="translate(435,0)"><rect width="100" height="28" rx="4" fill="rgb(251,191,36)"/><text x="50" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#000" text-anchor="middle">24/7 ACTIVE</text></g>
-    <g transform="translate(540,0)"><rect width="70" height="28" rx="4" fill="#1a1a1a"/><text x="35" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">LICENSE</text></g>
-    <g transform="translate(615,0)"><rect width="115" height="28" rx="4" fill="rgb(0,140,255)"/><text x="57" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">APACHE 2.0</text></g>
+
+  <!-- Badge Row 2 -->
+  <g transform="translate(0, 350)">
+    <g transform="translate(350, 0)">
+      <rect x="0" y="0" width="80" height="28" rx="4" fill="#1a1a1a"/>
+      <text x="40" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">DEFENSE</text>
+    </g>
+    <g transform="translate(435, 0)">
+      <rect x="0" y="0" width="100" height="28" rx="4" fill="rgb(251,191,36)"/>
+      <text x="50" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#000000" text-anchor="middle">24/7 ACTIVE</text>
+    </g>
+    <g transform="translate(540, 0)">
+      <rect x="0" y="0" width="70" height="28" rx="4" fill="#1a1a1a"/>
+      <text x="35" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">LICENSE</text>
+    </g>
+    <g transform="translate(615, 0)">
+      <rect x="0" y="0" width="115" height="28" rx="4" fill="rgb(0,140,255)"/>
+      <text x="57" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">APACHE 2.0</text>
+    </g>
   </g>
 </svg>
