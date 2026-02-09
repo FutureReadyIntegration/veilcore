@@ -228,36 +228,6 @@ Everything needed to take a hospital from "interested" to "fully protected." Ris
 ### 🇺🇸 IronFlag — FedRAMP Compliance
 NIST SP 800-53 Rev 5 control mapping for FedRAMP authorization. 60 controls across 14 families — **100% coverage at Low, Moderate, and High** baselines.
 
-<br/>
-
----
-
-<br/>
-
-  <figcaption>Live compliance coverage — animated holographic dashboard.</figcaption>
-</figure>
-
-
-
-
-  <figcaption>Live compliance coverage — animated holographic dashboard.</figcaption>
-</figure>
-
-
-
-
-
-
-
-
-
-
-<br/>
-
----
-
-<br/>
-
 ## 🚀 Quick Start
 
 ### Prerequisites
