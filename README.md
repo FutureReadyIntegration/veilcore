@@ -427,7 +427,7 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 
 <br/>
 
-<img src="./compliance_dashboard.svg" alt="VeilCore Compliance Dashboard" width="100%">
+<img src="./assets/dashboards/compliance-dashboard.svg" alt="VeilCore Compliance Dashboard" width="100%">
 
 ---
 
