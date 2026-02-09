@@ -3,7 +3,6 @@
 </p>
 
 <p align="center">
-  <img src="./compliance_dashboard.svg" alt="VeilCore Compliance Dashboard" width="100%">
   <img src="https://img.shields.io/badge/🛡️_Protected_By-VeilCore-00e5ff?style=for-the-badge" alt="Protected by VeilCore"/>
   <img src="https://img.shields.io/badge/Organs-82_Active-00e5ff?style=for-the-badge" alt="82 Active Organs"/>
   <img src="https://img.shields.io/badge/HIPAA-100%25_Compliant-00ff6a?style=for-the-badge" alt="HIPAA Compliant"/>
@@ -427,6 +426,8 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 ```
 
 <br/>
+
+<img src="./compliance_dashboard.svg" alt="VeilCore Compliance Dashboard" width="100%">
 
 ---
 
