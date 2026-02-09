@@ -9,13 +9,20 @@
   <desc id="desc">VeilCore-grade animated holographic compliance dashboard.</desc>
 
   <defs>
+    <!-- ================= STYLES ================= -->
     <style>
       svg { font-family: "Noto Sans", Arial, sans-serif; }
 
       .bg { fill: #071026; }
       .vignette { fill: url(#vign); opacity:0.4; }
 
-      .header-title { fill:#E6F7FF; font-weight:700; font-size:20px; filter:url(#textGlow); }
+      .header-title {
+        fill:#E6F7FF;
+        font-weight:700;
+        font-size:20px;
+        filter:url(#textGlow);
+      }
+
       .header-sub { fill:#9FBEDB; font-size:12px; }
 
       .card {
@@ -25,7 +32,13 @@
         filter: url(#cardGlow);
       }
 
-      .framework { fill:#EAF6FF; font-size:14px; font-weight:600; filter:url(#textGlow); }
+      .framework {
+        fill:#EAF6FF;
+        font-size:14px;
+        font-weight:600;
+        filter:url(#textGlow);
+      }
+
       .engine { fill:#9FBEDB; font-size:11px; }
 
       .percent {
@@ -36,7 +49,11 @@
         animation: percentPulse 3s ease-in-out infinite;
       }
 
-      .ring-bg { stroke: rgba(255,255,255,0.1); stroke-width:10; fill:none; }
+      .ring-bg {
+        stroke: rgba(255,255,255,0.1);
+        stroke-width:10;
+        fill:none;
+      }
 
       .ring {
         stroke-linecap:round;
@@ -53,11 +70,25 @@
         animation: ringSweepReverse 10s linear infinite;
       }
 
-      .scanline { animation: scan 4s linear infinite; }
+      .scanline {
+        animation: scan 4s linear infinite;
+      }
 
-      @keyframes ringSweep { from { stroke-dashoffset:314; } to { stroke-dashoffset:0; } }
-      @keyframes ringSweepReverse { from { stroke-dashoffset:0; } to { stroke-dashoffset:314; } }
-      @keyframes percentPulse { 0%,100% { opacity:0.9; } 50% { opacity:1; } }
+      @keyframes ringSweep {
+        from { stroke-dashoffset:314; }
+        to   { stroke-dashoffset:0; }
+      }
+
+      @keyframes ringSweepReverse {
+        from { stroke-dashoffset:0; }
+        to   { stroke-dashoffset:314; }
+      }
+
+      @keyframes percentPulse {
+        0%,100% { opacity:0.9; }
+        50% { opacity:1; }
+      }
+
       @keyframes scan {
         0% { transform: translateY(0); opacity:0; }
         10% { opacity:0.25; }
@@ -66,6 +97,7 @@
       }
     </style>
 
+    <!-- ================= GRADIENTS ================= -->
     <radialGradient id="vign" cx="50%" cy="20%" r="80%">
       <stop offset="0%" stop-color="#0b2540" stop-opacity="0.7"/>
       <stop offset="100%" stop-color="#071026" stop-opacity="1"/>
@@ -89,47 +121,80 @@
       <stop offset="100%" stop-color="#00FFD5"/>
     </linearGradient>
 
-    <filter id="ringGlow"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="textGlow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="strongGlow"><feGaussianBlur stdDeviation="6"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="cardGlow"><feGaussianBlur stdDeviation="8"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <!-- ================= FILTERS ================= -->
+    <filter id="ringGlow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="cardGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
+  <!-- ================= BACKGROUND ================= -->
   <rect width="900" height="360" class="bg"/>
   <rect width="900" height="360" class="vignette"/>
   <rect class="scanline" x="0" y="0" width="900" height="3" fill="rgba(0,229,255,0.45)"/>
 
+  <!-- ================= HEADER ================= -->
   <text x="40" y="50" class="header-title">Compliance Coverage</text>
   <text x="40" y="75" class="header-sub">HIPAA · SOC 2 · HITRUST</text>
 
-  <!-- Cards -->
-  <g>
-    <rect x="40" y="110" width="240" height="200" class="card"/>
-    <text x="60" y="150" class="framework">HIPAA Security Rule</text>
-    <text x="60" y="175" class="engine">ShieldLaw Engine</text>
-    <circle cx="160" cy="240" r="50" class="ring-bg"/>
-    <circle cx="160" cy="240" r="50" class="ring" stroke="url(#grad1)" stroke-dasharray="314"/>
-    <circle cx="160" cy="240" r="38" class="ring inner" stroke="url(#grad1)" stroke-dasharray="239"/>
-    <text x="160" y="250" text-anchor="middle" class="percent">98.6%</text>
-  </g>
+  <!-- ================= CARD 1 ================= -->
+  <rect x="40" y="110" width="240" height="200" class="card"/>
+  <text x="60" y="150" class="framework">HIPAA Security Rule</text>
+  <text x="60" y="175" class="engine">ShieldLaw Engine</text>
 
-  <g>
-    <rect x="330" y="110" width="240" height="200" class="card"/>
-    <text x="350" y="150" class="framework">SOC 2 Type II</text>
-    <text x="350" y="175" class="engine">TrustForge Engine</text>
-    <circle cx="450" cy="240" r="50" class="ring-bg"/>
-    <circle cx="450" cy="240" r="50" class="ring" stroke="url(#grad2)" stroke-dasharray="314"/>
-    <circle cx="450" cy="240" r="38" class="ring inner" stroke="url(#grad2)" stroke-dasharray="239"/>
-    <text x="450" y="250" text-anchor="middle" class="percent">97.4%</text>
-  </g>
+  <circle cx="160" cy="240" r="50" class="ring-bg"/>
+  <circle cx="160" cy="240" r="50" class="ring" stroke="url(#grad1)" stroke-dasharray="314"/>
+  <circle cx="160" cy="240" r="38" class="ring inner" stroke="url(#grad1)" stroke-dasharray="239"/>
 
-  <g>
-    <rect x="620" y="110" width="240" height="200" class="card"/>
-    <text x="640" y="150" class="framework">HITRUST CSF v11</text>
-    <text x="640" y="175" class="engine">AuditIron Engine</text>
-    <circle cx="740" cy="240" r="50" class="ring-bg"/>
-    <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314"/>
-    <circle cx="740" cy="240" r="38" class="ring inner" stroke="url(#grad3)" stroke-dasharray="239"/>
-    <text x="740" y="250" text-anchor="middle" class="percent">96.1%</text>
-  </g>
+  <text x="160" y="250" text-anchor="middle" class="percent">98.6%</text>
+
+  <!-- ================= CARD 2 ================= -->
+  <rect x="330" y="110" width="240" height="200" class="card"/>
+  <text x="350" y="150" class="framework">SOC 2 Type II</text>
+  <text x="350" y="175" class="engine">TrustForge Engine</text>
+
+  <circle cx="450" cy="240" r="50" class="ring-bg"/>
+  <circle cx="450" cy="240" r="50" class="ring" stroke="url(#grad2)" stroke-dasharray="314"/>
+  <circle cx="450" cy="240" r="38" class="ring inner" stroke="url(#grad2)" stroke-dasharray="239"/>
+
+  <text x="450" y="250" text-anchor="middle" class="percent">97.4%</text>
+
+  <!-- ================= CARD 3 ================= -->
+  <rect x="620" y="110" width="240" height="200" class="card"/>
+  <text x="640" y="150" class="framework">HITRUST CSF v11</text>
+  <text x="640" y="175" class="engine">AuditIron Engine</text>
+
+  <circle cx="740" cy="240" r="50" class="ring-bg"/>
+  <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314"/>
+  <circle cx="740" cy="240" r="38" class="ring inner" stroke="url(#grad3)" stroke-dasharray="239"/>
+
+  <text x="740" y="250" text-anchor="middle" class="percent">96.1%</text>
+
 </svg>
