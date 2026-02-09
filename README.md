@@ -439,3 +439,7 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 </p>
 
 
+<figure align="center">
+  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
+  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
+</figure>
