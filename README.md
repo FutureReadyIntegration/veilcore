@@ -241,15 +241,11 @@ NIST SP 800-53 Rev 5 control mapping for FedRAMP authorization. 60 controls acro
   <figcaption>Live compliance coverage — animated holographic dashboard.</figcaption>
 </figure>
 
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated holographic dashboard.</figcaption>
-</figure>
 
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
+
+
+
+
 
 
 <br/>
@@ -438,25 +434,10 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 </p>
 
 
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
 
-<figure align="center">
-  <img src="compliance_dashboard.svg" alt="Compliance Dashboard" width="900"/>
-  <figcaption>Live compliance coverage — animated SVG dashboard.</figcaption>
-</figure>
+
+
+
+
+
 
