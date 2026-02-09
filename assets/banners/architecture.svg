@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e17"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#00e5ff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff4444;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#ff4444;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ff4444;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff6a;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#00ff6a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00ff6a;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="veilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0.15"/>
+      <stop offset="50%" style="stop-color:#00e5ff;stop-opacity:0.05"/>
+      <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0.15"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#fbbf24;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="redGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <style>
+    @keyframes threatPulse { 0%,100% { opacity:0.8; } 50% { opacity:1; } }
+    @keyframes flowDown { 0% { opacity:0; transform:translateY(-8px); } 50% { opacity:1; } 100% { opacity:0; transform:translateY(8px); } }
+    @keyframes veilShimmer { 0%,100% { opacity:0.12; } 50% { opacity:0.2; } }
+    @keyframes shieldPulse { 0%,100% { opacity:0.9; } 50% { opacity:1; } }
+    @keyframes scanLine { 0% { transform:translateY(0); opacity:0; } 10% { opacity:0.15; } 90% { opacity:0.15; } 100% { transform:translateY(720px); opacity:0; } }
+    .threat { animation: threatPulse 2s ease-in-out infinite; }
+    .flow-dot { animation: flowDown 1.5s ease-in-out infinite; }
+    .flow-dot-d1 { animation-delay: 0.3s; }
+    .flow-dot-d2 { animation-delay: 0.6s; }
+    .flow-dot-d3 { animation-delay: 0.9s; }
+    .veil-bg { animation: veilShimmer 4s ease-in-out infinite; }
+    .shield { animation: shieldPulse 3s ease-in-out infinite; }
+    .scan { animation: scanLine 5s linear infinite; }
+  </style>
+
+  <!-- Background -->
+  <rect width="900" height="720" fill="url(#bg)"/>
+  <rect class="scan" x="0" y="0" width="900" height="2" fill="url(#accent)" opacity="0.1"/>
+
+  <!-- Border -->
+  <rect x="1" y="1" width="898" height="718" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.15" rx="8"/>
+
+  <!-- ═══ LAYER 1: THREATS ═══ -->
+  <rect x="20" y="15" width="860" height="55" rx="6" fill="#1a0000" stroke="#ff4444" stroke-width="1" opacity="0.8"/>
+  <rect x="20" y="15" width="860" height="55" rx="6" fill="none" stroke="#ff4444" stroke-width="0.5" opacity="0.3"/>
+  <text x="450" y="35" font-family="Arial,sans-serif" font-size="11" fill="#ff6666" text-anchor="middle" letter-spacing="4" class="threat">☠️  THREAT LANDSCAPE</text>
+  <g font-family="Arial,sans-serif" font-size="11" fill="#cc4444" text-anchor="middle">
+    <text x="115" y="58">Ransomware</text>
+    <text x="265" y="58">APT Groups</text>
+    <text x="415" y="58">Zero-Day</text>
+    <text x="565" y="58">Insiders</text>
+    <text x="735" y="58">Nation-State</text>
+  </g>
+
+  <!-- Flow arrows 1 -->
+  <g fill="#ff4444" class="flow-dot">
+    <circle cx="200" cy="80" r="2"/><circle cx="450" cy="80" r="2"/><circle cx="700" cy="80" r="2"/>
+  </g>
+  <g fill="#ff4444" class="flow-dot flow-dot-d1">
+    <circle cx="300" cy="83" r="1.5"/><circle cx="550" cy="83" r="1.5"/><circle cx="800" cy="83" r="1.5"/>
+  </g>
+
+  <!-- ═══ LAYER 2: ATTACK SURFACE ═══ -->
+  <rect x="20" y="92" width="860" height="38" rx="6" fill="#1a0a00" stroke="#ff8c00" stroke-width="0.8" opacity="0.7"/>
+  <text x="450" y="116" font-family="Arial,sans-serif" font-size="11" fill="#ffaa44" text-anchor="middle" letter-spacing="2">🌐  Network  ·  Wireless  ·  Physical  ·  Cloud  ·  Supply Chain  ·  Social</text>
+
+  <!-- Flow arrows 2 -->
+  <g fill="#ff8c00" class="flow-dot flow-dot-d2">
+    <circle cx="200" cy="140" r="2"/><circle cx="450" cy="140" r="2"/><circle cx="700" cy="140" r="2"/>
+  </g>
+
+  <!-- ═══ LAYER 3: OUTER DEFENSE ═══ -->
+  <rect x="20" y="148" width="860" height="52" rx="6" fill="#001a1a" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <text x="130" y="170" font-size="10" fill="#00e5ff" letter-spacing="1">📶 AIRSHIELD</text>
+    <text x="130" y="188" font-size="9" fill="#5a8a8a">Wireless</text>
+    <text x="320" y="170" font-size="10" fill="#00e5ff" letter-spacing="1">🏢 IRONWATCH</text>
+    <text x="320" y="188" font-size="9" fill="#5a8a8a">Physical</text>
+    <text x="510" y="170" font-size="10" fill="#00e5ff" letter-spacing="1">☁️ SKYVEIL</text>
+    <text x="510" y="188" font-size="9" fill="#5a8a8a">Cloud</text>
+    <text x="700" y="170" font-size="10" fill="#00e5ff" letter-spacing="1">⚔️ REDVEIL</text>
+    <text x="700" y="188" font-size="9" fill="#5a8a8a">Pentest</text>
+  </g>
+  <!-- Defense separator dots -->
+  <g fill="#00e5ff" opacity="0.3">
+    <circle cx="225" cy="175" r="1.5"/><circle cx="415" cy="175" r="1.5"/><circle cx="605" cy="175" r="1.5"/>
+  </g>
+
+  <!-- Flow arrows 3 -->
+  <g fill="#00e5ff" class="flow-dot flow-dot-d3">
+    <circle cx="200" cy="210" r="2"/><circle cx="450" cy="210" r="2"/><circle cx="700" cy="210" r="2"/>
+  </g>
+
+  <!-- ═══ LAYER 4: THE VEIL (main block) ═══ -->
+  <rect class="veil-bg" x="20" y="218" width="860" height="270" rx="8" fill="url(#veilGrad)"/>
+  <rect x="20" y="218" width="860" height="270" rx="8" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Veil title -->
+  <text x="450" y="245" font-family="Arial,sans-serif" font-size="14" fill="#00e5ff" text-anchor="middle" letter-spacing="8" filter="url(#glow)">⬡  T H E   V E I L  ⬡</text>
+  <line x1="150" y1="255" x2="750" y2="255" stroke="#00e5ff" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Core triad -->
+  <g filter="url(#glow)">
+    <rect x="80" y="268" width="220" height="42" rx="5" fill="#0a1628" stroke="#00e5ff" stroke-width="1"/>
+    <text x="190" y="286" font-family="Arial,sans-serif" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">🛡️ GUARDIAN</text>
+    <text x="190" y="302" font-family="Arial,sans-serif" font-size="9" fill="#5a8a9a" text-anchor="middle">Authentication Gateway</text>
+  </g>
+  <g filter="url(#glow)">
+    <rect x="340" y="268" width="220" height="42" rx="5" fill="#0a1628" stroke="#00e5ff" stroke-width="1"/>
+    <text x="450" y="286" font-family="Arial,sans-serif" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">👁️ SENTINEL</text>
+    <text x="450" y="302" font-family="Arial,sans-serif" font-size="9" fill="#5a8a9a" text-anchor="middle">Anomaly Detection</text>
+  </g>
+  <g filter="url(#glow)">
+    <rect x="600" y="268" width="220" height="42" rx="5" fill="#0a1628" stroke="#00e5ff" stroke-width="1"/>
+    <text x="710" y="286" font-family="Arial,sans-serif" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">🧠 CORTEX</text>
+    <text x="710" y="302" font-family="Arial,sans-serif" font-size="9" fill="#5a8a9a" text-anchor="middle">Intelligence Core</text>
+  </g>
+
+  <!-- Organ tiers -->
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <rect x="60" y="325" width="170" height="50" rx="4" fill="#1a0a0a" stroke="#ff4444" stroke-width="0.8" opacity="0.8"/>
+    <text x="145" y="347" font-size="22" fill="#ff4444" font-weight="bold">14</text>
+    <text x="145" y="366" font-size="9" fill="#aa4444" letter-spacing="2">P0 CRITICAL</text>
+
+    <rect x="260" y="325" width="170" height="50" rx="4" fill="#1a0f00" stroke="#ff8c00" stroke-width="0.8" opacity="0.8"/>
+    <text x="345" y="347" font-size="22" fill="#ff8c00" font-weight="bold">14</text>
+    <text x="345" y="366" font-size="9" fill="#aa7744" letter-spacing="2">P1 IMPORTANT</text>
+
+    <rect x="460" y="325" width="170" height="50" rx="4" fill="#001a0a" stroke="#00ff6a" stroke-width="0.8" opacity="0.8"/>
+    <text x="545" y="347" font-size="22" fill="#00ff6a" font-weight="bold">54</text>
+    <text x="545" y="366" font-size="9" fill="#44aa66" letter-spacing="2">P2 STANDARD</text>
+
+    <rect x="660" y="325" width="170" height="50" rx="4" fill="#0a1a2a" stroke="#00e5ff" stroke-width="1.2"/>
+    <text x="745" y="347" font-size="22" fill="#00e5ff" font-weight="bold" filter="url(#glow)">82</text>
+    <text x="745" y="366" font-size="9" fill="#5aaacc" letter-spacing="2">TOTAL ORGANS</text>
+  </g>
+
+  <!-- Subsystems row -->
+  <rect x="50" y="390" width="800" height="44" rx="5" fill="#0a1020" stroke="#00e5ff" stroke-width="0.5" opacity="0.5"/>
+  <g font-family="Arial,sans-serif" font-size="9" fill="#00ccdd" text-anchor="middle">
+    <text x="120" y="410">🔗 NerveBridge</text>
+    <text x="120" y="424" fill="#5a8a8a" font-size="8">Mesh</text>
+    <text x="230" y="410">🤖 DeepSentinel</text>
+    <text x="230" y="424" fill="#5a8a8a" font-size="8">ML Engine</text>
+    <text x="340" y="410">🌍 AllianceNet</text>
+    <text x="340" y="424" fill="#5a8a8a" font-size="8">Federation</text>
+    <text x="450" y="410">📱 Watchtower</text>
+    <text x="450" y="424" fill="#5a8a8a" font-size="8">Mobile API</text>
+    <text x="560" y="410">♿ EqualShield</text>
+    <text x="560" y="424" fill="#5a8a8a" font-size="8">Accessibility</text>
+    <text x="670" y="410">📊 Prism</text>
+    <text x="670" y="424" fill="#5a8a8a" font-size="8">Dashboard</text>
+    <text x="780" y="410">🚀 Genesis</text>
+    <text x="780" y="424" fill="#5a8a8a" font-size="8">Deployer</text>
+  </g>
+
+  <!-- Deployment row -->
+  <rect x="50" y="445" width="800" height="32" rx="4" fill="#0a0f1a" stroke="#fbbf24" stroke-width="0.5" opacity="0.4"/>
+  <g font-family="Arial,sans-serif" font-size="9" fill="#ddaa22" text-anchor="middle">
+    <text x="225" y="466">🔓 VeilUnleashed · Bare-Metal</text>
+    <text x="500" y="466">🏥 Pilot Program · Onboarding</text>
+    <text x="750" y="466">📜 CertForge · HITRUST Submission</text>
+  </g>
+
+  <!-- Flow arrows 4 -->
+  <g fill="#00ff6a" class="flow-dot">
+    <circle cx="200" cy="498" r="2"/><circle cx="450" cy="498" r="2"/><circle cx="700" cy="498" r="2"/>
+  </g>
+
+  <!-- ═══ LAYER 5: COMPLIANCE ═══ -->
+  <rect x="20" y="505" width="860" height="52" rx="6" fill="#001a0a" stroke="#00ff6a" stroke-width="1" opacity="0.6"/>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <text x="130" y="527" font-size="10" fill="#00ff6a" font-weight="bold" letter-spacing="1">✅ TRUSTFORGE</text>
+    <text x="130" y="546" font-size="10" fill="#44cc66">HITRUST 100%</text>
+    <text x="320" y="527" font-size="10" fill="#00ff6a" font-weight="bold" letter-spacing="1">📋 AUDITIRON</text>
+    <text x="320" y="546" font-size="10" fill="#44cc66">SOC 2 — 98.6%</text>
+    <text x="510" y="527" font-size="10" fill="#00ff6a" font-weight="bold" letter-spacing="1">⚖️ SHIELDLAW</text>
+    <text x="510" y="546" font-size="10" fill="#44cc66">HIPAA 100%</text>
+    <text x="700" y="527" font-size="10" fill="#00ff6a" font-weight="bold" letter-spacing="1">🇺🇸 IRONFLAG</text>
+    <text x="700" y="546" font-size="10" fill="#44cc66">FedRAMP 100%</text>
+  </g>
+
+  <!-- Flow arrows 5 -->
+  <g fill="#00ff6a" class="flow-dot flow-dot-d1">
+    <circle cx="200" cy="568" r="2"/><circle cx="450" cy="568" r="2"/><circle cx="700" cy="568" r="2"/>
+  </g>
+
+  <!-- ═══ LAYER 6: PROTECTED INFRASTRUCTURE ═══ -->
+  <rect x="20" y="575" width="860" height="75" rx="6" fill="#0a1020" stroke="#3388ff" stroke-width="1" opacity="0.7"/>
+  <text x="450" y="595" font-family="Arial,sans-serif" font-size="11" fill="#5588cc" text-anchor="middle" letter-spacing="4">🏥  PROTECTED INFRASTRUCTURE</text>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#88aadd" text-anchor="middle">
+    <text x="115" y="622">🏥 Epic EHR</text>
+    <text x="245" y="622">🪪 Imprivata</text>
+    <text x="365" y="622">📨 HL7/FHIR</text>
+    <text x="485" y="622">🩻 DICOM</text>
+    <text x="600" y="622">🩺 IoMT</text>
+    <text x="700" y="622">💊 Pharma</text>
+    <text x="800" y="622">🧪 Lab</text>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#6688aa" text-anchor="middle">
+    <text x="245" y="644">Devices</text>
+    <text x="485" y="644">Imaging</text>
+    <text x="700" y="644">Systems</text>
+  </g>
+
+  <!-- ═══ LAYER 7: PEOPLE ═══ -->
+  <rect x="20" y="665" width="860" height="40" rx="6" fill="#0d1117" stroke="#fbbf24" stroke-width="0.8" opacity="0.5"/>
+  <text x="450" y="691" font-family="Arial,sans-serif" font-size="13" fill="#fbbf24" text-anchor="middle" letter-spacing="3" filter="url(#glow)">👨‍⚕️  PATIENTS  ·  CLINICIANS  ·  STAFF  ·  LIVES</text>
+
+  <!-- Corner accents -->
+  <polyline points="8,20 8,8 20,8" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="880,8 892,8 892,20" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="8,700 8,712 20,712" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="880,712 892,712 892,700" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+</svg>
