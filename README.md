@@ -237,7 +237,7 @@ NIST SP 800-53 Rev 5 control mapping for FedRAMP authorization. 60 controls acro
 ## 📊 Compliance Coverage
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║                    COMPLIANCE DASHBOARD                         ║
+║                  compliance_dashboard.svg                        ║
 ╠═══════════════════════════╦══════════╦══════════════════════════╣
 ║  Framework                ║ Coverage ║  Engine                  ║
 ╠═══════════════════════════╬══════════╬══════════════════════════╣
