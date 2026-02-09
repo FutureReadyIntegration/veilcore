@@ -50,3 +50,4 @@ Thumbs.db
 node_modules/
 .venv
 /run/
+README.md.bak
