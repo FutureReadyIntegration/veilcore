@@ -5,6 +5,8 @@
      role="img"
      aria-labelledby="title desc">
 
+<text x="160" y="105" text-anchor="middle" class="percent">100%</text>
+
   <title id="title">Compliance Dashboard</title>
   <desc id="desc">VeilCore-grade animated holographic compliance dashboard.</desc>
 
@@ -155,6 +157,8 @@
     </filter>
   </defs>
 
+<text x="450" y="105" text-anchor="middle" class="percent">100%</text>
+
   <!-- ================= BACKGROUND ================= -->
   <rect width="900" height="360" class="bg"/>
   <rect width="900" height="360" class="vignette"/>
@@ -197,4 +201,5 @@
 
   <text x="740" y="250" text-anchor="middle" class="percent">96.1%</text>
 
+<text x="740" y="105" text-anchor="middle" class="percent">100%</text>
 </svg>
