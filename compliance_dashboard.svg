@@ -1,135 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="100%" height="auto" role="img" aria-labelledby="cdTitle cdDesc">
-  <title id="cdTitle">Compliance Dashboard</title>
-  <desc id="cdDesc">Coverage percentages for multiple compliance frameworks with engine counts and animated coverage bars.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Compliance Dashboard</title>
+  <desc id="desc">Animated holographic compliance cards showing coverage percentages for HIPAA Security Rule, SOC 2 Type II, and HITRUST CSF v11. Uses Noto Sans stack and animated radial rings and glow effects.</desc>
+
   <defs>
-    <linearGradient id="gBg" x1="0" x2="1">
-      <stop offset="0" stop-color="#071428"/>
-      <stop offset="1" stop-color="#081827"/>
+    <style type="text/css"><![CDATA[
+      svg { font-family: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bg { fill: #071026; }
+      .vignette { fill: url(#vign); opacity:0.35; }
+      .header-title { fill: #E6F7FF; font-weight:700; font-size:20px; letter-spacing:1px; }
+      .header-sub { fill:#9FBEDB; font-size:12px; }
+      .card { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.06); stroke-width:1; rx:14; }
+      .card-glow { filter: url(#glow); }
+      .framework { fill:#EAF6FF; font-size:14px; font-weight:600; }
+      .engine { fill:#BFD8EA; font-size:11px; }
+      .chip { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.06); stroke-width:0.8; rx:10; font-size:11px; fill-opacity:0.06; }
+      .percent { fill:#FFFFFF; font-size:26px; font-weight:800; letter-spacing:0.5px; }
+      .ring-bg { stroke: rgba(255,255,255,0.06); stroke-width:10; fill:none; }
+      .ring { stroke-linecap:round; stroke-width:10; fill:none; }
+      .badge { stroke-width:2; fill: url(#badgeGrad); }
+      .small { font-size:10px; fill:#9FBEDB; }
+      .g1 { stroke: url(#grad1); }
+      .g2 { stroke: url(#grad2); }
+      .g3 { stroke: url(#grad3); }
+      @keyframes ringFill { from { stroke-dashoffset: 314; } to { stroke-dashoffset: 0; } }
+      @keyframes pulse { 0% { transform: scale(1); opacity:1 } 50% { transform: scale(1.06); opacity:0.9 } 100% { transform: scale(1); opacity:1 } }
+      .pulse { transform-origin: center; animation: pulse 2.2s ease-in-out infinite; }
+      .shimmer { animation: shimmer 2.6s linear infinite; }
+      @keyframes shimmer { 0% { opacity:0.0 } 50% { opacity:0.6 } 100% { opacity:0.0 } }
+    ]]></style>
+
+    <radialGradient id="vign" cx="50%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#0b2540" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#071026" stop-opacity="1"/>
+    </radialGradient>
+
+    <linearGradient id="grad1" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#06D6A0"/>
+      <stop offset="50%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#FF4D6D"/>
     </linearGradient>
-    <linearGradient id="gBar" x1="0" x2="1">
-      <stop offset="0" stop-color="#00d4ff"/>
-      <stop offset="1" stop-color="#7b61ff"/>
+    <linearGradient id="grad2" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#FFD166"/>
+      <stop offset="50%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#06D6A0"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="18" flood-color="#000" flood-opacity="0.45"/>
+    <linearGradient id="grad3" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#FF4D6D"/>
+      <stop offset="50%" stop-color="#06D6A0"/>
+      <stop offset="100%" stop-color="#FFD166"/>
+    </linearGradient>
+
+    <linearGradient id="badgeGrad" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#0fffd6"/>
+      <stop offset="50%" stop-color="#7c4dff"/>
+      <stop offset="100%" stop-color="#ff4d6d"/>
+    </linearGradient>
+
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
-    <style>
-      :root { --bg:#071428; --card:#0f1a2a; --muted:#9fb0d6; --text:#e6eefc; --accent:#00d4ff; }
-      .title { font: 700 22px/1 "Inter", "Segoe UI", Roboto, sans-serif; fill:var(--text); }
-      .subtitle { font: 500 13px/1 "Inter", sans-serif; fill:var(--muted); }
-      .framework { font: 700 14px/1 "Inter", sans-serif; fill:#eaf3ff; }
-      .engine { font: 600 12px/1 "Inter", sans-serif; fill:#cfe3ff; }
-      .percent { font: 800 16px/1 "Inter", sans-serif; fill:#eaf3ff; }
-      .small { font: 400 11px/1 "Inter", sans-serif; fill:var(--muted); }
-      .card { fill:var(--card); rx:12; ry:12; opacity:0.95; filter:url(#shadow); }
-      .bar-bg { fill:#071428; opacity:0.45; rx:9; ry:9; }
-      .bar-fill { fill:url(#gBar); rx:9; ry:9; transform-origin: 0 0; }
-      .label-muted { fill:#7f98bf; font:500 12px/1 "Inter", sans-serif; }
-      .fill-anim { animation: fillWidth 1.2s ease-out forwards; }
-      @keyframes fillWidth {
-        from { transform: scaleX(0); }
-        to { transform: scaleX(1); }
-      }
-    </style>
+
+    <circle id="ringPath" cx="0" cy="0" r="50" />
   </defs>
 
-  <rect width="100%" height="100%" fill="url(#gBg)"/>
+  <rect class="bg" width="900" height="360" rx="0" ry="0"/>
+  <rect class="vignette" width="900" height="360" rx="0" ry="0"/>
 
   <g transform="translate(40,28)">
-    <rect x="0" y="0" width="1120" height="84" rx="12" fill="#071428" opacity="0.9"/>
-    <text x="28" y="36" class="title">COMPLIANCE DASHBOARD</text>
-    <text x="28" y="60" class="subtitle">Live coverage snapshot — engines and rule counts</text>
-    <g transform="translate(980,12)">
-      <rect x="0" y="0" width="120" height="60" rx="8" fill="#0b1220" opacity="0.6"/>
-      <text x="12" y="28" class="small">Updated</text>
-      <text x="12" y="46" class="small" fill="#dbeeff">Now</text>
+    <text class="header-title" x="0" y="0">COMPLIANCE DASHBOARD</text>
+    <text class="header-sub" x="0" y="22">Live coverage snapshot — engines and rule counts</text>
+  </g>
+
+  <g transform="translate(40,70)">
+
+    <g transform="translate(0,0)">
+      <rect class="card card-glow" width="260" height="220" rx="14" ry="14"/>
+      <rect x="-1" y="-1" width="262" height="222" rx="15" ry="15" fill="none" stroke="url(#grad1)" stroke-width="2" opacity="0.9"/>
+      <g transform="translate(22,28)" class="pulse" aria-hidden="true">
+        <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.02)"/>
+        <path d="M-8,-2 L-2,-8 L6,4 L-6,12 z" class="badge" transform="scale(1.6) translate(2,2)"/>
+      </g>
+      <text class="framework" x="22" y="110">HIPAA Security Rule</text>
+      <text class="engine" x="22" y="130">ShieldLaw <tspan class="small">(59/59)</tspan></text>
+      <rect x="22" y="144" width="110" height="28" class="chip"/>
+      <text x="28" y="163" class="small">Updated: Now</text>
+      <g transform="translate(190,110)" aria-hidden="true">
+        <circle class="ring-bg" cx="0" cy="0" r="50"/>
+        <circle class="ring g1" cx="0" cy="0" r="50" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90)" style="animation: ringFill 1.6s ease-out forwards; stroke:url(#grad1);"/>
+        <text class="percent" x="-12" y="10">100.0<tspan font-size="14">%</tspan></text>
+      </g>
     </g>
-  </g>
 
-  <g transform="translate(40,130)">
-    <text x="18" y="0" class="label-muted">Framework</text>
-    <text x="420" y="0" class="label-muted">Coverage</text>
-    <text x="720" y="0" class="label-muted">Engine</text>
-  </g>
-
-  <g transform="translate(40,160)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">🏥 HIPAA Security Rule</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">ShieldLaw (59/59)</text>
+    <g transform="translate(320,0)">
+      <rect class="card card-glow" width="260" height="220" rx="14" ry="14"/>
+      <rect x="-1" y="-1" width="262" height="222" rx="15" ry="15" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.95"/>
+      <g transform="translate(22,28)" class="pulse" aria-hidden="true">
+        <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.02)"/>
+        <rect x="-6" y="-8" width="12" height="16" rx="2" ry="2" class="badge" transform="scale(1.2)"/>
+      </g>
+      <text class="framework" x="22" y="110">SOC 2 Type II</text>
+      <text class="engine" x="22" y="130">AuditIron <tspan class="small">(34/35)</tspan></text>
+      <rect x="22" y="144" width="110" height="28" class="chip"/>
+      <text x="28" y="163" class="small">Updated: Now</text>
+      <g transform="translate(190,110)" aria-hidden="true">
+        <circle class="ring-bg" cx="0" cy="0" r="50"/>
+        <circle class="ring g2" cx="0" cy="0" r="50" stroke-dasharray="314" stroke-dashoffset="4.34" transform="rotate(-90)" style="animation: ringFill 1.8s ease-out forwards; stroke:url(#grad2);"/>
+        <text class="percent" x="-22" y="10">
+          <tspan id="soc2-val">0.0</tspan><tspan font-size="14">%</tspan>
+          <animate xlink:href="#soc2-val" attributeName="textContent" begin="0.2s" dur="1.6s" values="0.0;98.6" fill="freeze" calcMode="linear"/>
+        </text>
+      </g>
     </g>
-  </g>
 
-  <g transform="translate(40,246)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">🔒 HITRUST CSF v11</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">TrustForge (32/32)</text>
+    <g transform="translate(640,0)">
+      <rect class="card card-glow" width="260" height="220" rx="14" ry="14"/>
+      <rect x="-1" y="-1" width="262" height="222" rx="15" ry="15" fill="none" stroke="url(#grad3)" stroke-width="2" opacity="0.95"/>
+      <g transform="translate(22,28)" class="pulse" aria-hidden="true">
+        <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.02)"/>
+        <path d="M-6,-6 L6,-6 L6,6 L-6,6 z" class="badge" transform="scale(1.2)"/>
+      </g>
+      <text class="framework" x="22" y="110">HITRUST CSF v11</text>
+      <text class="engine" x="22" y="130">TrustForge <tspan class="small">(32/32)</tspan></text>
+      <rect x="22" y="144" width="110" height="28" class="chip"/>
+      <text x="28" y="163" class="small">Updated: Now</text>
+      <g transform="translate(190,110)" aria-hidden="true">
+        <circle class="ring-bg" cx="0" cy="0" r="50"/>
+        <circle class="ring g3" cx="0" cy="0" r="50" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90)" style="animation: ringFill 1.6s ease-out forwards; stroke:url(#grad3);"/>
+        <text class="percent" x="-12" y="10">100.0<tspan font-size="14">%</tspan></text>
+      </g>
     </g>
+
   </g>
 
-  <g transform="translate(40,332)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">📋 SOC 2 Type II</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="512.72" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">98.6%</text>
-      <text x="720" y="0" class="engine">AuditIron (34/35)</text>
-    </g>
+  <g transform="translate(40,310)">
+    <text class="small" x="0" y="0" fill="#9FBEDB">Snapshot — rings reflect coverage percentage; engines show passed/total checks.</text>
   </g>
 
-  <g transform="translate(40,418)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">🇺🇸 FedRAMP Low</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">IronFlag (54/54)</text>
-    </g>
+  <g opacity="0.12" class="shimmer" aria-hidden="true">
+    <circle cx="120" cy="40" r="1.2" fill="#06D6A0"/>
+    <circle cx="220" cy="80" r="1.6" fill="#7C4DFF"/>
+    <circle cx="420" cy="30" r="1.1" fill="#FF4D6D"/>
+    <circle cx="760" cy="60" r="1.4" fill="#FFD166"/>
   </g>
 
-  <g transform="translate(40,504)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">🇺🇸 FedRAMP Moderate</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">IronFlag (60/60)</text>
-    </g>
-  </g>
-
-  <g transform="translate(40,590)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">🇺🇸 FedRAMP High</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">IronFlag (60/60)</text>
-    </g>
-  </g>
-
-  <g transform="translate(40,676)">
-    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
-    <text x="22" y="44" class="framework">📜 HITRUST e1 Ready</text>
-    <g transform="translate(320,22)">
-      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
-      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
-      <text x="540" y="0" class="percent">100.0%</text>
-      <text x="720" y="0" class="engine">CertForge (44/44)</text>
-    </g>
-  </g>
-
-  <g transform="translate(40,760)">
-    <text class="small" x="0" y="0">Snapshot — bars reflect coverage percentage; engines show passed/total checks.</text>
-  </g>
 </svg>
