@@ -1,157 +1,135 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Compliance Dashboard">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="100%" height="auto" role="img" aria-labelledby="cdTitle cdDesc">
+  <title id="cdTitle">Compliance Dashboard</title>
+  <desc id="cdDesc">Coverage percentages for multiple compliance frameworks with engine counts and animated coverage bars.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" x2="1">
-      <stop offset="0" stop-color="#0f1724"/>
-      <stop offset="1" stop-color="#071026"/>
+    <linearGradient id="gBg" x1="0" x2="1">
+      <stop offset="0" stop-color="#071428"/>
+      <stop offset="1" stop-color="#081827"/>
     </linearGradient>
-    <linearGradient id="barGrad" x1="0" x2="1">
+    <linearGradient id="gBar" x1="0" x2="1">
       <stop offset="0" stop-color="#00d4ff"/>
       <stop offset="1" stop-color="#7b61ff"/>
     </linearGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="18" flood-color="#000" flood-opacity="0.45"/>
     </filter>
     <style>
-      .title { font: 700 22px/1 "Inter", "Segoe UI", Roboto, sans-serif; fill:#e6eefc; }
-      .subtitle { font: 500 13px/1 "Inter", sans-serif; fill:#9fb0d6; }
-      .card-title { font: 700 14px/1 "Inter", sans-serif; fill:#0b1220; }
-      .engine { font: 600 12px/1 "Inter", sans-serif; fill:#0b1220; }
-      .percent { font: 800 18px/1 "Inter", sans-serif; fill:#0b1220; }
-      .label { font: 600 12px/1 "Inter", sans-serif; fill:#cbd7ee; }
-      .small { font: 400 11px/1 "Inter", sans-serif; fill:#9fb0d6; }
-      .muted { fill:#7f98bf; }
+      :root { --bg:#071428; --card:#0f1a2a; --muted:#9fb0d6; --text:#e6eefc; --accent:#00d4ff; }
+      .title { font: 700 22px/1 "Inter", "Segoe UI", Roboto, sans-serif; fill:var(--text); }
+      .subtitle { font: 500 13px/1 "Inter", sans-serif; fill:var(--muted); }
+      .framework { font: 700 14px/1 "Inter", sans-serif; fill:#eaf3ff; }
+      .engine { font: 600 12px/1 "Inter", sans-serif; fill:#cfe3ff; }
+      .percent { font: 800 16px/1 "Inter", sans-serif; fill:#eaf3ff; }
+      .small { font: 400 11px/1 "Inter", sans-serif; fill:var(--muted); }
+      .card { fill:var(--card); rx:12; ry:12; opacity:0.95; filter:url(#shadow); }
+      .bar-bg { fill:#071428; opacity:0.45; rx:9; ry:9; }
+      .bar-fill { fill:url(#gBar); rx:9; ry:9; transform-origin: 0 0; }
+      .label-muted { fill:#7f98bf; font:500 12px/1 "Inter", sans-serif; }
+      .fill-anim { animation: fillWidth 1.2s ease-out forwards; }
+      @keyframes fillWidth {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+      }
     </style>
   </defs>
 
-  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <rect width="100%" height="100%" fill="url(#gBg)"/>
 
   <g transform="translate(40,28)">
-    <rect x="0" y="0" rx="12" ry="12" width="1120" height="84" fill="#071428" opacity="0.85" filter="url(#softShadow)"/>
-    <text x="28" y="34" class="title">COMPLIANCE DASHBOARD</text>
-    <text x="28" y="58" class="subtitle">Live coverage snapshot — engines and rule counts</text>
+    <rect x="0" y="0" width="1120" height="84" rx="12" fill="#071428" opacity="0.9"/>
+    <text x="28" y="36" class="title">COMPLIANCE DASHBOARD</text>
+    <text x="28" y="60" class="subtitle">Live coverage snapshot — engines and rule counts</text>
     <g transform="translate(980,12)">
-      <rect x="0" y="0" rx="8" ry="8" width="120" height="60" fill="#0b1220" opacity="0.6"/>
+      <rect x="0" y="0" width="120" height="60" rx="8" fill="#0b1220" opacity="0.6"/>
       <text x="12" y="28" class="small">Updated</text>
       <text x="12" y="46" class="small" fill="#dbeeff">Now</text>
     </g>
   </g>
 
   <g transform="translate(40,130)">
-    <text x="18" y="0" class="label">Framework</text>
-    <text x="420" y="0" class="label">Coverage</text>
-    <text x="620" y="0" class="label">Engine</text>
-
-    <!-- Row 1 -->
-    <g transform="translate(0,18)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">🏥 HIPAA Security Rule</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">ShieldLaw (59/59)</text>
-      </g>
-    </g>
-
-    <!-- Row 2 -->
-    <g transform="translate(0,106)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">🔒 HITRUST CSF v11</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">TrustForge (32/32)</text>
-      </g>
-    </g>
-
-    <!-- Row 3 -->
-    <g transform="translate(0,194)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">📋 SOC 2 Type II</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="256.36" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">98.6%</text>
-        <text x="720" y="0" class="engine">AuditIron (34/35)</text>
-      </g>
-    </g>
-
-    <!-- Row 4 -->
-    <g transform="translate(0,282)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">🇺🇸 FedRAMP Low</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">IronFlag (54/54)</text>
-      </g>
-    </g>
-
-    <!-- Row 5 -->
-    <g transform="translate(0,370)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">🇺🇸 FedRAMP Moderate</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">IronFlag (60/60)</text>
-      </g>
-    </g>
-
-    <!-- Row 6 -->
-    <g transform="translate(0,458)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">🇺🇸 FedRAMP High</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">IronFlag (60/60)</text>
-      </g>
-    </g>
-
-    <!-- Row 7 -->
-    <g transform="translate(0,546)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">📜 HITRUST e1 Ready</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">CertForge (44/44)</text>
-      </g>
-    </g>
-
-    <!-- Row 8 -->
-    <g transform="translate(0,634)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">📜 HITRUST i1 Ready</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">CertForge (94/94)</text>
-      </g>
-    </g>
-
-    <!-- Row 9 -->
-    <g transform="translate(0,722)">
-      <rect x="0" y="8" rx="12" ry="12" width="1120" height="72" fill="#0f1a2a" opacity="0.85"/>
-      <g transform="translate(18,36)">
-        <text class="card-title" x="0" y="0">📜 HITRUST r2 Ready</text>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="#0b1220" opacity="0.6"/>
-        <rect x="320" y="-14" width="260" height="18" rx="9" fill="url(#barGrad)" />
-        <text x="600" y="0" class="percent">100.0%</text>
-        <text x="720" y="0" class="engine">CertForge (136/136)</text>
-      </g>
-    </g>
-
+    <text x="18" y="0" class="label-muted">Framework</text>
+    <text x="420" y="0" class="label-muted">Coverage</text>
+    <text x="720" y="0" class="label-muted">Engine</text>
   </g>
 
-  <g transform="translate(40,690)">
-    <text class="small" x="0" y="0">Data snapshot — engines show passed/total checks. Bars reflect coverage percentage.</text>
+  <g transform="translate(40,160)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">🏥 HIPAA Security Rule</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">ShieldLaw (59/59)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,246)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">🔒 HITRUST CSF v11</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">TrustForge (32/32)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,332)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">📋 SOC 2 Type II</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="512.72" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">98.6%</text>
+      <text x="720" y="0" class="engine">AuditIron (34/35)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,418)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">🇺🇸 FedRAMP Low</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">IronFlag (54/54)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,504)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">🇺🇸 FedRAMP Moderate</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">IronFlag (60/60)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,590)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">🇺🇸 FedRAMP High</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">IronFlag (60/60)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,676)">
+    <rect class="card" x="0" y="0" width="1120" height="72" rx="12"/>
+    <text x="22" y="44" class="framework">📜 HITRUST e1 Ready</text>
+    <g transform="translate(320,22)">
+      <rect class="bar-bg" x="0" y="-14" width="520" height="18"/>
+      <rect class="bar-fill fill-anim" x="0" y="-14" width="520" height="18" style="transform:scaleX(1)"/>
+      <text x="540" y="0" class="percent">100.0%</text>
+      <text x="720" y="0" class="engine">CertForge (44/44)</text>
+    </g>
+  </g>
+
+  <g transform="translate(40,760)">
+    <text class="small" x="0" y="0">Snapshot — bars reflect coverage percentage; engines show passed/total checks.</text>
   </g>
 </svg>
