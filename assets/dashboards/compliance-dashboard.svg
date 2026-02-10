@@ -170,10 +170,10 @@
   <text x="60" y="175" class="engine">ShieldLaw Engine</text>
 
   <circle cx="160" cy="240" r="50" class="ring-bg"/>
-  <circle cx="160" cy="240" r="50" class="ring" stroke="url(#grad1)" stroke-dasharray="314"/>
-  <circle cx="160" cy="240" r="38" class="ring inner" stroke="url(#grad1)" stroke-dasharray="239"/>
-
-  <text x="160" y="250" text-anchor="middle" class="percent">98.6%</text>
+  <circle cx="160" cy="240" r="50" class="ring" stroke="url(#grad1)" stroke-dasharray="314" stroke-dashoffset="0"/>
+  <circle cx="160" cy="240" r="38" class="ring inner" stroke="url(#grad1)" stroke-dasharray="239" stroke-dashoffset="0"/>
+  
+  <text x="160" y="250" text-anchor="middle" class="percent">100%</text>
 
   <!-- ================= CARD 2 ================= -->
   <rect x="330" y="110" width="240" height="200" class="card"/>
@@ -194,7 +194,6 @@
   <circle cx="740" cy="240" r="50" class="ring-bg"/>
   <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314"/>
   <circle cx="740" cy="240" r="38" class="ring inner" stroke="url(#grad3)" stroke-dasharray="239"/>
-
-  <text x="740" y="250" text-anchor="middle" class="percent">96.1%</text>
+  <text x="740" y="250" text-anchor="middle" class="percent">100%</text>
 
 </svg>
