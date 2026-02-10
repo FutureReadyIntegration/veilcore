@@ -3,7 +3,7 @@
      height="360"
      viewBox="0 0 900 360"
      role="img"
-     aria-labelledby="title desc">>
+     aria-labelledby="title desc">
 
   <title id="title">Compliance Dashboard</title>
   <desc id="desc">VeilCore-grade animated holographic compliance dashboard.</desc>
@@ -160,13 +160,10 @@
   <rect width="900" height="360" class="vignette"/>
   <rect class="scanline" x="0" y="0" width="900" height="3" fill="rgba(0,229,255,0.45)"/>
 
-
-<text x="740" y="105" text-anchor="middle" class="percent">100%</text>
   <!-- ================= HEADER ================= -->
   <text x="40" y="50" class="header-title">Compliance Coverage</text>
   <text x="40" y="75" class="header-sub">HIPAA · SOC 2 · HITRUST</text>
- 
-  <rect x="40" y="110" width="240" height="200" class="card"/>
+
   <!-- ================= CARD 1 ================= -->
   <rect x="40" y="110" width="240" height="200" class="card"/>
   <text x="60" y="150" class="framework">HIPAA Security Rule</text>
@@ -178,7 +175,6 @@
 
   <text x="160" y="250" text-anchor="middle" class="percent">98.6%</text>
 
-  <rect x="330" y="110" width="240" height="200" class="card"/>
   <!-- ================= CARD 2 ================= -->
   <rect x="330" y="110" width="240" height="200" class="card"/>
   <text x="350" y="150" class="framework">SOC 2 Type II</text>
@@ -190,11 +186,10 @@
 
   <text x="450" y="250" text-anchor="middle" class="percent">97.4%</text>
 
-  <rect x="620" y="110" width="240" height="200" class="card"/>
   <!-- ================= CARD 3 ================= -->
   <rect x="620" y="110" width="240" height="200" class="card"/>
-  <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314" stroke-dashoffset="0"/>
-  <circle cx="740" cy="240" r="38" class="ring inner" stroke="url(#grad3)" stroke-dashoffset="0"
+  <text x="640" y="150" class="framework">HITRUST CSF v11</text>
+  <text x="640" y="175" class="engine">AuditIron Engine</text>
 
   <circle cx="740" cy="240" r="50" class="ring-bg"/>
   <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314"/>
