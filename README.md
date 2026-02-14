@@ -409,6 +409,65 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
   <strong>82 organs · 17 subsystems · 4 compliance frameworks · Zero gaps</strong>
 </p>
 
+## 🔐 Security Standards & Audit Evidence
+
+---
+
+### 🧱 Security Standard Block
+
+**Standard**  
+OWASP Application Security Verification Standard (ASVS) 5.0.0
+
+**Total Controls**  
+345
+
+**Security Domains**  
+17
+
+---
+
+### 🧱 Verification Block
+
+**Generation Method**  
+Local, deterministic generation from source
+
+**Verification**  
+Automated control parsing and validation
+
+---
+
+### 🧱 Evidence Artifact Block
+
+Security evidence is generated using the official OWASP ASVS 5.0 tooling and includes the following machine‑readable formats:
+
+- JSON  
+- Flattened JSON  
+- XML  
+- CSV  
+
+All artifacts are produced in a controlled environment and preserved with cryptographic hashes to ensure integrity and reproducibility.
+
+---
+
+### 🧱 Integrity & Reproducibility Block
+
+- Evidence is generated locally (no external services required)  
+- Tooling and content are version‑pinned  
+- Outputs are hashed and stored as immutable audit artifacts  
+- Generation fails loudly if required inputs or dependencies are missing  
+
+---
+
+### 🧱 Intended Use Block
+
+These artifacts support:
+
+- Internal security reviews  
+- Third‑party audits  
+- Regulated‑environment assessments  
+- Procurement and due‑diligence evaluations  
+
+> **Note:** Alignment with OWASP ASVS demonstrates adherence to a government‑accepted application security standard. Formal certification or regulatory approval requires independent assessment.
 
 
 
