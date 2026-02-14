@@ -51,3 +51,24 @@ node_modules/
 .venv
 /run/
 README.md.bak
+# Python packaging metadata
+*.egg-info/
+*.egg-info/**
+
+# Local runtime data
+data/ledger.json
+
+# Local development scripts
+scripts/check_organs.py
+
+# Local cockpit development
+veil/cockpit/
+
+# Local organ development (not yet staged)
+veil/organs/
+veil/organs/**
+
+# Standalone local tools
+veil_arbitrate.py
+veil_key_writer.py
+veil_writer.py
