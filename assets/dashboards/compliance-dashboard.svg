@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="900"
-     height="360"
-     viewBox="0 0 900 360"
+     height="560"
+     viewBox="0 0 900 560"
      role="img"
      aria-labelledby="title desc">
 
@@ -93,7 +93,7 @@
         0% { transform: translateY(0); opacity:0; }
         10% { opacity:0.25; }
         90% { opacity:0.25; }
-        100% { transform: translateY(360px); opacity:0; }
+        100% { transform: translateY(560px); opacity:0; }
       }
     </style>
 
@@ -156,13 +156,13 @@
   </defs>
 
   <!-- ================= BACKGROUND ================= -->
-  <rect width="900" height="360" class="bg"/>
-  <rect width="900" height="360" class="vignette"/>
+  <rect width="900" height="560" class="bg"/>
+  <rect width="900" height="560" class="vignette"/>
   <rect class="scanline" x="0" y="0" width="900" height="3" fill="rgba(0,229,255,0.45)"/>
 
   <!-- ================= HEADER ================= -->
   <text x="40" y="50" class="header-title">Compliance Coverage</text>
-  <text x="40" y="75" class="header-sub">HIPAA · SOC 2 · HITRUST</text>
+  <text x="40" y="75" class="header-sub">HIPAA · HITRUST · SOC 2 · FedRAMP · ASVS</text>
 
   <!-- ================= CARD 1 ================= -->
   <rect x="40" y="110" width="240" height="200" class="card"/>
@@ -195,5 +195,38 @@
   <circle cx="740" cy="240" r="50" class="ring" stroke="url(#grad3)" stroke-dasharray="314"/>
   <circle cx="740" cy="240" r="38" class="ring inner" stroke="url(#grad3)" stroke-dasharray="239"/>
   <text x="740" y="250" text-anchor="middle" class="percent">100%</text>
+
+  <!-- ═══ ROW 2: FedRAMP · ASVS 5.0 ═══ -->
+
+  <linearGradient id="fedrampGrad" x1="0%" x2="100%" xmlns="http://www.w3.org/2000/svg">
+    <stop offset="0%" stop-color="#FF4D6D"/>
+    <stop offset="50%" stop-color="#FFFFFF"/>
+    <stop offset="100%" stop-color="#3388FF"/>
+  </linearGradient>
+
+  <linearGradient id="asvsGrad" x1="0%" x2="100%" xmlns="http://www.w3.org/2000/svg">
+    <stop offset="0%" stop-color="#00FF6A"/>
+    <stop offset="100%" stop-color="#00E5FF"/>
+  </linearGradient>
+
+  <!-- FedRAMP Card -->
+  <rect x="185" y="340" width="240" height="200" class="card"/>
+  <text x="305" y="380" text-anchor="middle" class="framework">FedRAMP NIST 800-53</text>
+  <text x="305" y="405" text-anchor="middle" class="engine">IronFlag Engine</text>
+
+  <circle cx="305" cy="470" r="50" class="ring-bg"/>
+  <circle cx="305" cy="470" r="50" class="ring" stroke="url(#fedrampGrad)" stroke-dasharray="314" stroke-dashoffset="0"/>
+  <circle cx="305" cy="470" r="38" class="ring inner" stroke="url(#fedrampGrad)" stroke-dasharray="239" stroke-dashoffset="0"/>
+  <text x="305" y="480" text-anchor="middle" class="percent">100%</text>
+
+  <!-- ASVS 5.0 Card -->
+  <rect x="475" y="340" width="240" height="200" class="card"/>
+  <text x="595" y="380" text-anchor="middle" class="framework">OWASP ASVS 5.0</text>
+  <text x="595" y="405" text-anchor="middle" class="engine">345 Controls · 17 Domains</text>
+
+  <circle cx="595" cy="470" r="50" class="ring-bg"/>
+  <circle cx="595" cy="470" r="50" class="ring" stroke="url(#asvsGrad)" stroke-dasharray="314" stroke-dashoffset="0"/>
+  <circle cx="595" cy="470" r="38" class="ring inner" stroke="url(#asvsGrad)" stroke-dasharray="239" stroke-dashoffset="0"/>
+  <text x="595" y="480" text-anchor="middle" class="percent">100%</text>
 
 </svg>

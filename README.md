@@ -406,7 +406,7 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 <p align="center">
   <strong>🔱 Protected by VeilCore 🔱</strong><br/><br/>
   <em>"I stand between chaos and those I protect"</em><br/><br/>
-  <strong>82 organs · 17 subsystems · 4 compliance frameworks · Zero gaps</strong>
+  <strong>82 organs · 17 subsystems · 5 compliance frameworks · Zero gaps</strong>
 </p>
 
 ## 🔐 Security Standards & Audit Evidence
