@@ -4,7 +4,6 @@ veil-api = veil.api.__main__:main
 veil-auto-lockdown = veil.organs.auto_lockdown.runner:main
 veil-compile = veil.compiler:compile_all
 veil-hospital = veil.hospital.__main__:main
-veil-insider-threat = veil.organs.insider_threat.runner:main
 veil-intrusion = veil.intrusion.__main__:main
 veil-sentinel = veil.organs.sentinel.runner:main
 veil-zero-trust = veil.organs.zero_trust.runner:main
