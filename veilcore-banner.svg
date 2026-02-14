@@ -1,0 +1,126 @@
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1f2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+    </linearGradient>
+    <filter id="glow-filter">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="pulse">
+      <stop offset="0%" style="stop-color:#00ff6a;stop-opacity:0.8">
+        <animate attributeName="stop-opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#00ff6a;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  
+  <g opacity="0.1" stroke="#00e5ff" stroke-width="1">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="1000" y1="0" x2="1000" y2="400"/>
+  </g>
+  
+  <rect x="0" y="0" width="1200" height="3" fill="url(#glow)">
+    <animate attributeName="y" from="-10" to="410" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  
+  <g transform="translate(600, 200)">
+    <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" 
+             fill="none" stroke="#00e5ff" stroke-width="3" filter="url(#glow-filter)">
+      <animateTransform attributeName="transform" type="rotate" 
+                        from="0" to="360" dur="20s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="0,-40 35,-20 35,20 0,40 -35,20 -35,-20" 
+             fill="none" stroke="#00ff6a" stroke-width="2" opacity="0.6">
+      <animateTransform attributeName="transform" type="rotate" 
+                        from="360" to="0" dur="15s" repeatCount="indefinite"/>
+    </polygon>
+    <circle cx="0" cy="0" r="20" fill="url(#pulse)"/>
+    <text x="0" y="8" font-family="monospace" font-size="20" font-weight="bold" 
+          fill="#00e5ff" text-anchor="middle">⬡</text>
+  </g>
+  
+  <g transform="translate(600, 200)">
+    <g opacity="0.9">
+      <circle cx="0" cy="-120" r="15" fill="#1a1f2e" stroke="#00e5ff" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="0 0 0" to="360 0 0" dur="12s" repeatCount="indefinite"/>
+      </circle>
+      <text x="0" y="-115" font-size="18" text-anchor="middle">
+        🛡️
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="0 0 -120" to="360 0 -120" dur="12s" repeatCount="indefinite"/>
+      </text>
+    </g>
+    <g opacity="0.9">
+      <circle cx="0" cy="-120" r="15" fill="#1a1f2e" stroke="#ffaa00" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="120 0 0" to="480 0 0" dur="12s" repeatCount="indefinite"/>
+      </circle>
+      <text x="0" y="-115" font-size="18" text-anchor="middle">
+        👁️
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="120 0 -120" to="480 0 -120" dur="12s" repeatCount="indefinite"/>
+      </text>
+    </g>
+    <g opacity="0.9">
+      <circle cx="0" cy="-120" r="15" fill="#1a1f2e" stroke="#a855f7" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="240 0 0" to="600 0 0" dur="12s" repeatCount="indefinite"/>
+      </circle>
+      <text x="0" y="-115" font-size="18" text-anchor="middle">
+        🧠
+        <animateTransform attributeName="transform" type="rotate" 
+                          from="240 0 -120" to="600 0 -120" dur="12s" repeatCount="indefinite"/>
+      </text>
+    </g>
+  </g>
+  
+  <g opacity="0.3" stroke="#00ff6a" stroke-width="1" fill="none">
+    <path d="M 200,100 Q 400,200 600,200">
+      <animate attributeName="stroke-dasharray" values="0,500;500,0" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 1000,100 Q 800,200 600,200">
+      <animate attributeName="stroke-dasharray" values="500,0;0,500" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <text x="600" y="350" font-family="'Courier New', monospace" font-size="48" 
+        font-weight="bold" fill="#00e5ff" text-anchor="middle" filter="url(#glow-filter)">
+    VEILCORE
+  </text>
+  
+  <text x="600" y="380" font-family="monospace" font-size="16" 
+        fill="#8b949e" text-anchor="middle">
+    Hospital Cybersecurity Defense System
+  </text>
+  
+  <g font-family="monospace" font-size="14" fill="#00ff6a">
+    <text x="50" y="30">⬡ 90 Active Organs</text>
+    <text x="50" y="50">⬡ Real-time Detection</text>
+    <text x="50" y="70">⬡ Live Dashboard</text>
+  </g>
+  
+  <g font-family="monospace" font-size="14" fill="#00ff6a" text-anchor="end">
+    <text x="1150" y="30">0 Active Threats ⬡</text>
+    <text x="1150" y="50">HIPAA Compliant ⬡</text>
+    <text x="1150" y="70">Production Ready ⬡</text>
+  </g>
+</svg>
