@@ -52,11 +52,12 @@ VeilCore operates as **90 specialized security organs**, each running as an inde
 <p align="center">
   <img src="./assets/banners/architecture.gif" width="900"/>
 </p>
+
 ---
 
 <br/>
 
-## 🧬 The 82 Organs
+## 🧬 The 80 Organs
 
 Every organ runs as an independent systemd service. Every organ is monitored. Every organ reports to the orchestrator.
 
@@ -311,7 +312,7 @@ Hospitals currently run **5 to 15 separate security products** from different ve
 ### ✅ Completed
 
 **Foundation**
-- [x] 82 security organs operational
+- [x] 80 security organs operational
 - [x] systemd service integration
 - [x] Real-time web dashboard with dual themes
 - [x] 3D threat visualization (Three.js)
@@ -362,7 +363,7 @@ Hospitals currently run **5 to 15 separate security products** from different ve
 ```
 veilcore/
 ├── core/
-│   ├── organs/           # 82 security organs
+│   ├── organs/           # 80 security organs
 │   ├── mesh/             # NerveBridge communication
 │   ├── ml/               # DeepSentinel ML engine
 │   ├── federation/       # AllianceNet multi-site
