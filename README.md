@@ -26,8 +26,6 @@
 
 <p align="center"><em>"I stand between chaos and those I protect"</em></p>
 
-<br/>
-
 ---
 
 <br/>/>
