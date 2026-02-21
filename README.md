@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
+  <img src="./assets/banners/readme-header.svg?v=1" alt="VeilCore Banner" width="900"/>
 </p>
 
 <p align="center">
-  <img src="./assets/badges/invariant-plaque.png" alt="Veil Invariant Plaque" width="820"/>
+  <img src="./assets/badges/invariant-plaque.svg?v=1" alt="Veil Invariant Plaque" width="900"/>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="./assets/badges/security-plaque.png" alt="VeilCore Security Plaque" width="820"/>
+  <img src="./assets/badges/security-plaque.svg?v=1" alt="VeilCore Security Plaque" width="900"/>
 </p>
 
 <p align="center">
