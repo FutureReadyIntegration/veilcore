@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
+  <img src="./assets/banners/readme-header-v2.svg" alt="VeilCore Banner" width="900"/>
 </p>
 
 <p align="center">
