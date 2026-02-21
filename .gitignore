@@ -76,3 +76,6 @@ veil_writer.py
 # local render frames
 assets/banners/.frames/
 assets/banners/.frames_png/
+
+# exports (generated artifacts)
+assets/exports/
