@@ -42,6 +42,10 @@
     <rect x="1220" y="54" width="520" height="64" rx="32" fill="none" stroke="#00ffa6" stroke-width="4"/>
     <circle cx="1260" cy="86" r="10" fill="#00ffa6"/>
     <text x="1290" y="93" class="mono chip">INVARIANT: PRESERVED</text>
+
+    <!-- LIVE inside chip -->
+    <circle cx="1696" cy="86" r="7" fill="#00ffa6"/>
+    <text x="1726" y="92" class="mono tiny" fill="#00ffa6" text-anchor="end">LIVE</text>
   </g>
 
   <!-- trace line -->
@@ -58,13 +62,8 @@
     <text x="260" y="255" class="mono nodeL">ADMISSION</text>
     <text x="652" y="255" class="mono nodeL">GUARDIAN</text>
     <text x="1060" y="255" class="mono nodeL">FIREWALL</text>
-    <text x="1468" y="255" class="mono nodeL">ORGANS</text>
+    <text x="1468" y="270" class="mono nodeL">ORGANS</text>
     <text x="1160" y="246" class="mono tiny" opacity="0.7">audit-first • replay-safe • explicit resource</text>
   </g>
 
-  <!-- live mark -->
-  <g>
-    <circle cx="1710" cy="86" r="8" fill="#00ffa6"/>
-    <text x="1728" y="92" class="mono tiny" fill="#00ffa6">LIVE</text>
-  </g>
 </svg>
