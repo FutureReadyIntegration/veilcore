@@ -53,7 +53,7 @@ VeilCore operates as **80 specialized security organs**, each running as an inde
 ## 🏗️ Architecture
 
 <p align="center">
-  <img src="assets/banners/architecture.svg" alt="VeilCore Architecture" width="900"/>
+  <img src="./assets/banners/architecture.svg" alt="VeilCore Architecture" width="900"/>
 </p>
 
 <br/>
@@ -215,7 +215,7 @@ Wi-Fi rogue AP detection, evil twin identification, Bluetooth device enumeration
 Camera tamper detection, motion/door/temperature/humidity/vibration sensors, and sensor fusion that correlates physical events with cyber events.
 
 ### 🚀 Genesis — Deployment Engine
-Production-grade Ubuntu installer that deploys all 90 organs in priority order, generates systemd service files with security hardening, runs preflight checks, and supports backup/rollback.
+Production-grade Ubuntu installer that deploys all 80 organs in priority order, generates systemd service files with security hardening, runs preflight checks, and supports backup/rollback.
 
 ### 📊 Prism — Unified Dashboard API
 Single API aggregating all subsystems. Real-time status for every organ and subsystem, threat summaries, compliance metrics, and 16+ REST endpoints.
@@ -263,7 +263,7 @@ Guardian          RUNNING  ●  pid=1234  P0
 Sentinel          RUNNING  ●  pid=1235  P0
 Cortex            RUNNING  ●  pid=1236  P0
 ...
-90/90 organs online · 17 subsystems · Threat Level: NOMINAL
+80/80 organs online · 17 subsystems · Threat Level: NOMINAL
 ```
 
 <br/>
@@ -278,7 +278,7 @@ Hospitals currently run **5 to 15 separate security products** from different ve
 
 | What they sell you | What VeilCore does |
 |:---|:---|
-| ❌ 8-15 separate vendor products | ✅ **1 unified system, 90 organs** |
+| ❌ 8-15 separate vendor products | ✅ **1 unified system, 80 organs** |
 | ❌ $500K-$2M/year in licensing | ✅ **Open source (Apache 2.0)** |
 | ❌ Bolted-on healthcare support | ✅ **Healthcare-native** (Epic, FHIR, HL7, DICOM) |
 | ❌ Siloed tools that don't talk | ✅ **Organ mesh** — every component talks to every other |
