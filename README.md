@@ -56,8 +56,8 @@ VeilCore operates as **90 specialized security organs**, each running as an inde
 ---
 
 <br/>
-
-## 🧬 The 80 Organs
+<!-- ORGANS:BEGIN -->
+## 🧬 The 90 Organs
 
 Every organ runs as an independent systemd service. Every organ is monitored. Every organ reports to the orchestrator.
 
@@ -168,7 +168,7 @@ Every organ runs as an independent systemd service. Every organ is monitored. Ev
 | 🔀 **Failover Controller** | Automated failover orchestration |
 | ✅ **Backup Validator** | Backup integrity and restore testing |
 | 📊 **Compliance Tracker** | Compliance status dashboard and reporting |
-
+<!-- ORGANS:END -->
 </details>
 
 <br/>
