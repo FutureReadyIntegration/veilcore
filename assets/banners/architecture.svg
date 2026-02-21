@@ -1,215 +1,239 @@
 <svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <!-- Safe glow (renders on GitHub) -->
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="3" result="b"/>
-      <feColorMatrix in="b" type="matrix"
-        values="0 0 0 0 0
-                0 0 0 0 0.90
-                0 0 0 0 1
-                0 0 0 0.85 0" result="c"/>
       <feMerge>
-        <feMergeNode in="c"/>
+        <feMergeNode in="b"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <filter id="softGlow" x="-55%" y="-55%" width="210%" height="210%">
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="7" result="b"/>
-      <feColorMatrix in="b" type="matrix"
-        values="0 0 0 0 0.00
-                0 0 0 0 0.55
-                0 0 0 0 0.65
-                0 0 0 0.55 0" result="c"/>
       <feMerge>
-        <feMergeNode in="c"/>
+        <feMergeNode in="b"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#00e5ff"/>
-    </marker>
-
-    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.0"/>
-      <stop offset="35%" stop-color="#00e5ff" stop-opacity="0.85"/>
-      <stop offset="65%" stop-color="#00ff9a" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.0"/>
-    </linearGradient>
-
+    <!-- Background grid -->
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
       <path d="M36 0H0V36" fill="none" stroke="#0b2a33" stroke-width="1"/>
     </pattern>
 
+    <!-- Beam gradient (static “pulse” styling) -->
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.0"/>
+      <stop offset="35%" stop-color="#00e5ff" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#00ff9a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <linearGradient id="beam2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00ff9a" stop-opacity="0.0"/>
+      <stop offset="50%" stop-color="#00ff9a" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Decision badges -->
+    <linearGradient id="allowG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00ff9a" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.06"/>
+    </linearGradient>
+
+    <linearGradient id="denyG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff4d4d" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ff4d4d" stop-opacity="0.06"/>
+    </linearGradient>
+
+    <!-- Scanline highlight (static, GitHub-safe) -->
     <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#00e5ff" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.085"/>
+      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.09"/>
       <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
   <style>
-    :root{
-      --bg:#070b12;
-      --panel:#0b1220;
-      --panel2:#08101c;
-      --stroke:#00e5ff;
-      --stroke2:#00ff9a;
-      --text:#e6f1ff;
-      --muted:#9fb4c7;
-      --warn:#fbbf24;
-    }
-    .bg{fill:var(--bg);}
-    .grid{fill:url(#grid);opacity:.25;}
-    .title{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:20px;fill:var(--stroke);letter-spacing:.5px;}
-    .subtitle{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--muted);}
+    .bg { fill:#070b12; }
+    .grid { fill:url(#grid); opacity:0.25; }
 
-    .node{fill:var(--panel);stroke:var(--stroke);stroke-width:2;rx:14;filter:url(#softGlow);}
-    .nodeInner{fill:var(--panel2);opacity:.45;rx:12;}
-    .label{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;fill:var(--text);}
-    .small{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--muted);}
+    .title { font-family:ui-monospace, Menlo, Consolas, monospace; font-weight:800; font-size:20px; fill:#00e5ff; letter-spacing:0.5px; }
+    .subtitle { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#9fb4c7; }
 
-    .pill{fill:rgba(0,229,255,.10);stroke:rgba(0,229,255,.60);stroke-width:1.5;rx:999;filter:url(#glow);}
-    .pillText{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--stroke);}
+    .pill { fill:rgba(0,229,255,0.10); stroke:rgba(0,229,255,0.60); stroke-width:1.5; rx:999; filter:url(#glow); }
+    .pillText { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#00e5ff; }
 
-    .linkBase{stroke:rgba(0,229,255,.35);stroke-width:2.2;fill:none;}
-    .linkDash{stroke:rgba(0,255,154,.95);stroke-width:2.6;fill:none;stroke-dasharray:6 10;animation:dash 1.15s linear infinite;filter:url(#glow);marker-end:url(#arrow);}
-    @keyframes dash{to{stroke-dashoffset:-32;}}
+    .node { fill:#0b1220; stroke:#00e5ff; stroke-width:2; rx:14; filter:url(#softGlow); }
+    .nodeInner { fill:#08101c; opacity:0.45; rx:12; }
 
-    .beam{stroke:url(#beam);stroke-width:5.5;fill:none;stroke-linecap:round;opacity:.35;animation:beamPulse 1.8s ease-in-out infinite;}
-    @keyframes beamPulse{0%,100%{opacity:.18;}50%{opacity:.45;}}
+    .label { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:16px; fill:#e6f1ff; }
+    .small { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#9fb4c7; }
 
-    .breath{animation:breath 2.4s ease-in-out infinite;transform-origin:center;}
-    @keyframes breath{0%,100%{filter:url(#softGlow);}50%{filter:url(#glow);}}
+    .linkBase { stroke:rgba(0,229,255,0.28); stroke-width:2.2; fill:none; }
+    .linkBeam { stroke:url(#beam); stroke-width:6; fill:none; stroke-linecap:round; opacity:0.30; }
+    .linkBeam2 { stroke:url(#beam2); stroke-width:3.5; fill:none; stroke-linecap:round; opacity:0.55; }
+    .linkDash { stroke:rgba(0,255,154,0.85); stroke-width:2.6; fill:none; stroke-dasharray:6 10; opacity:0.75; }
 
-    .led{filter:url(#glow);}
-    .ledA{fill:var(--stroke);animation:blinkA 1.6s ease-in-out infinite;}
-    .ledB{fill:var(--stroke2);animation:blinkB 1.15s ease-in-out infinite;}
-    .ledW{fill:var(--warn);animation:blinkW 2.2s ease-in-out infinite;}
-    @keyframes blinkA{0%,100%{opacity:.35;}50%{opacity:1;}}
-    @keyframes blinkB{0%,100%{opacity:.2;}45%{opacity:1;}}
-    @keyframes blinkW{0%,100%{opacity:.15;}35%{opacity:.9;}}
+    /* LED styles (static but “live”) */
+    .led { filter:url(#glow); }
+    .ledGreen { fill:#00ff9a; }
+    .ledCyan { fill:#00e5ff; }
+    .ledAmber { fill:#fbbf24; }
+    .ledRed { fill:#ff4d4d; }
 
-    .scanline{fill:url(#scan);opacity:0;animation:scan 3.8s linear infinite;mix-blend-mode:screen;}
-    @keyframes scan{
-      0%{opacity:0;transform:translateY(-140px);}
-      10%{opacity:.65;}
-      30%{opacity:.35;}
-      55%{opacity:.55;}
-      70%{opacity:.2;}
-      100%{opacity:0;transform:translateY(660px);}
-    }
+    /* SOC panel chrome */
+    .frame { fill:none; stroke:rgba(0,229,255,0.20); stroke-width:2; }
+    .scanbar { fill:url(#scan); opacity:0.55; }
+    .legendTitle { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#00e5ff; opacity:0.9; }
+    .legendText { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:11px; fill:#9fb4c7; opacity:0.95; }
   </style>
 
   <!-- Background -->
   <rect x="0" y="0" width="900" height="520" class="bg"/>
   <rect x="0" y="0" width="900" height="520" class="grid"/>
+  <rect x="18" y="18" width="864" height="484" class="frame" rx="16"/>
+  <rect x="18" y="38" width="864" height="34" class="scanbar"/>
 
   <!-- Title -->
-  <text x="35" y="42" class="title">VeilCore — Live Control Plane</text>
-  <text x="35" y="64" class="subtitle">Admission ➜ Guardian (authorization oracle) ➜ MSOS ➜ Organs · explicit resource authority · audit-first</text>
+  <text x="35" y="48" class="title">VeilCore — SOC Live Control Plane</text>
+  <text x="35" y="70" class="subtitle">Admission → Guardian (authorization oracle) → MSOS → Organs · explicit resource authority · audit-first</text>
 
   <!-- Pills -->
-  <g transform="translate(35,82)">
-    <rect x="0" y="0" width="190" height="28" class="pill"/>
-    <text x="14" y="19" class="pillText">MODE: ENFORCE</text>
+  <!-- Centered SOC status bubbles -->
+<g transform="translate(150,90)">
 
-    <rect x="205" y="0" width="220" height="28" class="pill"/>
-    <text x="219" y="19" class="pillText">NONCE: REPLAY SAFE</text>
+  <!-- MODE -->
+  <rect x="0" y="0" width="180" height="28" class="pill"/>
+  <text x="90" y="19" class="pillText" text-anchor="middle">
+    MODE: ENFORCE
+  </text>
 
-    <rect x="440" y="0" width="240" height="28" class="pill"/>
-    <text x="454" y="19" class="pillText">RESOURCE: EXPLICIT</text>
+  <!-- NONCE -->
+  <rect x="200" y="0" width="220" height="28" class="pill"/>
+  <text x="310" y="19" class="pillText" text-anchor="middle">
+    NONCE: REPLAY SAFE
+  </text>
+
+  <!-- POLICY -->
+  <rect x="440" y="0" width="240" height="28" class="pill"/>
+  <text x="560" y="19" class="pillText" text-anchor="middle">
+    POLICY: VERIFIED
+  </text>
+
+</g>
+
+  <!-- Layout coordinates (grid aligned) -->
+  <!-- Client -->
+  <g>
+    <rect x="350" y="135" width="200" height="54" class="node"/>
+    <rect x="360" y="145" width="180" height="34" class="nodeInner"/>
+    <text x="450" y="168" class="label" text-anchor="middle">Client / Operator</text>
+    <circle cx="535" cy="162" r="4" class="led ledCyan"/>
   </g>
 
-  <!-- Grid-aligned layout coordinates -->
-  <!-- Client (center column) -->
-  <g class="breath">
-    <rect x="350" y="125" width="200" height="54" class="node"/>
-    <rect x="360" y="135" width="180" height="34" class="nodeInner"/>
-    <text x="450" y="158" class="label" text-anchor="middle">Client / Operator</text>
-    <circle cx="535" cy="152" r="4" class="led ledA"/>
+  <!-- API -->
+  <g>
+    <rect x="300" y="220" width="300" height="74" class="node"/>
+    <rect x="312" y="235" width="276" height="44" class="nodeInner"/>
+    <text x="450" y="264" class="label" text-anchor="middle">VeilCore API</text>
+    <text x="324" y="289" class="small">validate · normalize · audit · forward</text>
+    <circle cx="572" cy="255" r="4" class="led ledGreen"/>
+    <circle cx="588" cy="255" r="4" class="led ledCyan"/>
   </g>
 
-  <!-- API (center column) -->
-  <g class="breath">
-    <rect x="300" y="210" width="300" height="70" class="node"/>
-    <rect x="312" y="224" width="276" height="42" class="nodeInner"/>
-    <text x="450" y="252" class="label" text-anchor="middle">VeilCore API</text>
-    <text x="324" y="276" class="small">validate · normalize · audit · forward</text>
-    <circle cx="575" cy="245" r="4" class="led ledB"/>
-    <circle cx="590" cy="245" r="4" class="led ledA"/>
+  <!-- Admission -->
+  <g>
+    <rect x="80" y="325" width="220" height="74" class="node"/>
+    <rect x="92" y="340" width="196" height="44" class="nodeInner"/>
+    <text x="190" y="369" class="label" text-anchor="middle">Admission</text>
+    <text x="190" y="392" class="small" text-anchor="middle">structure · integrity</text>
+    <circle cx="282" cy="360" r="4" class="led ledCyan"/>
   </g>
 
-  <!-- Admission / Guardian / MSOS (straight row) -->
-  <g class="breath">
-    <rect x="80" y="320" width="220" height="70" class="node"/>
-    <rect x="92" y="334" width="196" height="42" class="nodeInner"/>
-    <text x="190" y="362" class="label" text-anchor="middle">Admission</text>
-    <text x="190" y="386" class="small" text-anchor="middle">structure · integrity</text>
-    <circle cx="285" cy="355" r="4" class="led ledA"/>
+  <!-- Guardian -->
+  <g>
+    <rect x="340" y="325" width="220" height="74" class="node"/>
+    <rect x="352" y="340" width="196" height="44" class="nodeInner"/>
+    <text x="450" y="369" class="label" text-anchor="middle">Guardian</text>
+    <text x="450" y="392" class="small" text-anchor="middle">decide: allow | deny</text>
+
+    <!-- Live decision panel (static rendering) -->
+    <rect x="372" y="404" width="92" height="22" rx="10" fill="url(#allowG)" stroke="rgba(0,255,154,0.65)" stroke-width="1.2" filter="url(#glow)"/>
+    <text x="418" y="419" class="legendTitle" text-anchor="middle" fill="#00ff9a">ALLOW</text>
+
+    <rect x="470" y="404" width="92" height="22" rx="10" fill="url(#denyG)" stroke="rgba(255,77,77,0.50)" stroke-width="1.2" opacity="0.35"/>
+    <text x="516" y="419" class="legendTitle" text-anchor="middle" fill="#ff4d4d" opacity="0.35">DENY</text>
+
+    <circle cx="540" cy="360" r="4" class="led ledGreen"/>
+    <circle cx="525" cy="360" r="4" class="led ledCyan"/>
   </g>
 
-  <g class="breath">
-    <rect x="340" y="320" width="220" height="70" class="node"/>
-    <rect x="352" y="334" width="196" height="42" class="nodeInner"/>
-    <text x="450" y="362" class="label" text-anchor="middle">Guardian</text>
-    <text x="450" y="386" class="small" text-anchor="middle">decide: allow | deny</text>
-    <circle cx="540" cy="355" r="4" class="led ledB"/>
-    <circle cx="525" cy="355" r="4" class="led ledA"/>
+  <!-- MSOS -->
+  <g>
+    <rect x="600" y="325" width="220" height="74" class="node"/>
+    <rect x="612" y="340" width="196" height="44" class="nodeInner"/>
+    <text x="710" y="369" class="label" text-anchor="middle">MSOS</text>
+    <text x="710" y="392" class="small" text-anchor="middle">invoke organs safely</text>
+    <circle cx="805" cy="360" r="4" class="led ledCyan"/>
   </g>
 
-  <g class="breath">
-    <rect x="600" y="320" width="220" height="70" class="node"/>
-    <rect x="612" y="334" width="196" height="42" class="nodeInner"/>
-    <text x="710" y="362" class="label" text-anchor="middle">MSOS</text>
-    <text x="710" y="386" class="small" text-anchor="middle">invoke organs safely</text>
-    <circle cx="805" cy="355" r="4" class="led ledA"/>
+  <!-- Organs -->
+  <g>
+    <rect x="210" y="425" width="480" height="78" class="node"/>
+    <rect x="222" y="439" width="456" height="50" class="nodeInner"/>
+    <text x="255" y="467" class="label">Organs</text>
+    <text x="450" y="467" class="small" text-anchor="middle">firewall · sentinel · cortex · audit · …</text>
+    <text x="450" y="489" class="small" text-anchor="middle">execution only after authorization</text>
+
+    <!-- Live status LEDs (Green / Amber / Red) -->
+    <circle cx="655" cy="460" r="4" class="led ledGreen"/>
+    <circle cx="670" cy="460" r="4" class="led ledAmber"/>
+    <circle cx="685" cy="460" r="4" class="led ledRed" opacity="0.25"/>
   </g>
 
-  <!-- Organs (centered under MSOS) -->
-  <g class="breath">
-    <rect x="210" y="420" width="480" height="80" class="node"/>
-    <rect x="222" y="434" width="456" height="52" class="nodeInner"/>
-    <text x="260" y="462" class="label">Organs</text>
-    <text x="450" y="462" class="small" text-anchor="middle">firewall · sentinel · cortex · audit · …</text>
-    <text x="450" y="486" class="small" text-anchor="middle">execution only after authorization</text>
-    <circle cx="665" cy="455" r="4" class="led ledB"/>
-    <circle cx="650" cy="455" r="4" class="led ledA"/>
-    <circle cx="635" cy="455" r="4" class="led ledW"/>
+  <!-- Data pulses between nodes (GitHub-safe “pulse styling” + dashed overlay) -->
+  <!-- Client -> API -->
+  <path d="M450 189 L450 220" class="linkBase"/>
+  <path d="M450 189 L450 220" class="linkBeam"/>
+  <path d="M450 189 L450 220" class="linkBeam2"/>
+  <path d="M450 189 L450 220" class="linkDash"/>
+
+  <!-- API -> Admission -->
+  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBase"/>
+  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBeam"/>
+  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBeam2"/>
+  <path d="M450 294 L450 314 L190 314 L190 325" class="linkDash"/>
+
+  <!-- API -> Guardian -->
+  <path d="M450 294 L450 325" class="linkBase"/>
+  <path d="M450 294 L450 325" class="linkBeam"/>
+  <path d="M450 294 L450 325" class="linkBeam2"/>
+  <path d="M450 294 L450 325" class="linkDash"/>
+
+  <!-- API -> MSOS -->
+  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBase"/>
+  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBeam"/>
+  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBeam2"/>
+  <path d="M450 294 L450 314 L710 314 L710 325" class="linkDash"/>
+
+  <!-- MSOS -> Organs -->
+  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBase"/>
+  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBeam"/>
+  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBeam2"/>
+  <path d="M710 399 L710 412 L450 412 L450 425" class="linkDash"/>
+
+  <!-- Policy flow trace visualization (dotted “audit/policy” lane + legend) -->
+  <path d="M190 399 L190 412 L450 412" stroke="rgba(0,229,255,0.25)" stroke-width="2" fill="none" stroke-dasharray="3 9"/>
+  <text x="210" y="418" class="small" fill="#00e5ff" opacity="0.55">policy/audit trace</text>
+
+  <!-- Legend panel -->
+  <g>
+    <rect x="35" y="442" width="155" height="58" rx="12" fill="rgba(11,18,32,0.88)" stroke="rgba(0,229,255,0.30)" stroke-width="1.5"/>
+    <text x="47" y="462" class="legendTitle">SOC Legend</text>
+    <circle cx="52" cy="478" r="4" class="led ledGreen"/><text x="64" y="482" class="legendText">healthy</text>
+    <circle cx="112" cy="478" r="4" class="led ledAmber"/><text x="124" y="482" class="legendText">degraded</text>
+    <circle cx="52" cy="494" r="4" class="led ledRed"/><text x="64" y="498" class="legendText">blocked</text>
   </g>
-
-  <!-- Straight links (no bezier) -->
-  <!-- Client -> API (vertical) -->
-  <path d="M450 179 L450 210" class="linkBase"/>
-  <path d="M450 179 L450 210" class="beam"/>
-  <path d="M450 179 L450 210" class="linkDash"/>
-
-  <!-- API -> Admission (straight down then left) -->
-  <path d="M450 280 L450 300 L190 300 L190 320" class="linkBase"/>
-  <path d="M450 280 L450 300 L190 300 L190 320" class="beam"/>
-  <path d="M450 280 L450 300 L190 300 L190 320" class="linkDash"/>
-
-  <!-- API -> Guardian (vertical) -->
-  <path d="M450 280 L450 320" class="linkBase"/>
-  <path d="M450 280 L450 320" class="beam"/>
-  <path d="M450 280 L450 320" class="linkDash"/>
-
-  <!-- API -> MSOS (straight down then right) -->
-  <path d="M450 280 L450 300 L710 300 L710 320" class="linkBase"/>
-  <path d="M450 280 L450 300 L710 300 L710 320" class="beam"/>
-  <path d="M450 280 L450 300 L710 300 L710 320" class="linkDash"/>
-
-  <!-- MSOS -> Organs (vertical down from MSOS center) -->
-  <path d="M710 390 L710 405 L450 405 L450 420" class="linkBase"/>
-  <path d="M710 390 L710 405 L450 405 L450 420" class="beam"/>
-  <path d="M710 390 L710 405 L450 405 L450 420" class="linkDash"/>
-
-  <!-- Audit trace (straight, subtle) -->
-  <path d="M190 390 L190 405 L450 405" stroke="rgba(0,229,255,0.22)" stroke-width="2" fill="none" stroke-dasharray="3 9">
-    <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="2.2s" repeatCount="indefinite"/>
-  </path>
-  <text x="210" y="413" class="small" fill="#00e5ff" opacity="0.55">audit trace</text>
-
-  <!-- Scanline overlay -->
-  <rect x="0" y="0" width="900" height="170" class="scanline"/>
 </svg>
