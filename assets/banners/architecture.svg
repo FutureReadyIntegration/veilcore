@@ -1,21 +1,19 @@
 <svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Neon glow -->
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="3.2" result="blur"/>
-      <feColorMatrix in="blur" type="matrix"
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feColorMatrix in="b" type="matrix"
         values="0 0 0 0 0
                 0 0 0 0 0.90
                 0 0 0 0 1
-                0 0 0 0.85 0" result="neon"/>
+                0 0 0 0.85 0" result="c"/>
       <feMerge>
-        <feMergeNode in="neon"/>
+        <feMergeNode in="c"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <!-- Softer ambient glow -->
-    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="softGlow" x="-55%" y="-55%" width="210%" height="210%">
       <feGaussianBlur stdDeviation="7" result="b"/>
       <feColorMatrix in="b" type="matrix"
         values="0 0 0 0 0.00
@@ -28,141 +26,78 @@
       </feMerge>
     </filter>
 
-    <!-- Arrowhead -->
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
       <path d="M0,0 L10,5 L0,10 Z" fill="#00e5ff"/>
     </marker>
 
-    <!-- Beam gradient -->
     <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.0"/>
-      <stop offset="35%" stop-color="#00e5ff" stop-opacity="0.9"/>
-      <stop offset="65%" stop-color="#00ff9a" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#00e5ff" stop-opacity="0.85"/>
+      <stop offset="65%" stop-color="#00ff9a" stop-opacity="0.85"/>
       <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.0"/>
     </linearGradient>
 
-    <!-- Background grid -->
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
       <path d="M36 0H0V36" fill="none" stroke="#0b2a33" stroke-width="1"/>
     </pattern>
 
-    <!-- Scanline shimmer -->
     <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#00e5ff" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.08"/>
+      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.085"/>
       <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
   <style>
-    :root {
-      --bg: #070b12;
-      --panel: #0b1220;
-      --panel2: #08101c;
-      --stroke: #00e5ff;
-      --stroke2: #00ff9a;
-      --text: #e6f1ff;
-      --muted: #9fb4c7;
-      --warn: #fbbf24;
-      --shadow: rgba(0,229,255,0.25);
+    :root{
+      --bg:#070b12;
+      --panel:#0b1220;
+      --panel2:#08101c;
+      --stroke:#00e5ff;
+      --stroke2:#00ff9a;
+      --text:#e6f1ff;
+      --muted:#9fb4c7;
+      --warn:#fbbf24;
     }
+    .bg{fill:var(--bg);}
+    .grid{fill:url(#grid);opacity:.25;}
+    .title{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:20px;fill:var(--stroke);letter-spacing:.5px;}
+    .subtitle{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--muted);}
 
-    .bg { fill: var(--bg); }
-    .grid { fill: url(#grid); opacity: 0.25; }
-    .title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 800; font-size: 20px; fill: var(--stroke); letter-spacing: 0.5px; }
-    .subtitle { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--muted); }
+    .node{fill:var(--panel);stroke:var(--stroke);stroke-width:2;rx:14;filter:url(#softGlow);}
+    .nodeInner{fill:var(--panel2);opacity:.45;rx:12;}
+    .label{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;fill:var(--text);}
+    .small{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--muted);}
 
-    .node {
-      fill: var(--panel);
-      stroke: var(--stroke);
-      stroke-width: 2;
-      rx: 14;
-      filter: url(#softGlow);
-    }
-    .nodeInner {
-      fill: var(--panel2);
-      opacity: 0.45;
-    }
+    .pill{fill:rgba(0,229,255,.10);stroke:rgba(0,229,255,.60);stroke-width:1.5;rx:999;filter:url(#glow);}
+    .pillText{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;fill:var(--stroke);}
 
-    .label { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 16px; fill: var(--text); }
-    .small { font-size: 12px; fill: var(--muted); }
+    .linkBase{stroke:rgba(0,229,255,.35);stroke-width:2.2;fill:none;}
+    .linkDash{stroke:rgba(0,255,154,.95);stroke-width:2.6;fill:none;stroke-dasharray:6 10;animation:dash 1.15s linear infinite;filter:url(#glow);marker-end:url(#arrow);}
+    @keyframes dash{to{stroke-dashoffset:-32;}}
 
-    .pill {
-      fill: rgba(0,229,255,0.10);
-      stroke: rgba(0,229,255,0.60);
-      stroke-width: 1.5;
-      rx: 999;
-      filter: url(#glow);
-    }
-    .pillText { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--stroke); }
+    .beam{stroke:url(#beam);stroke-width:5.5;fill:none;stroke-linecap:round;opacity:.35;animation:beamPulse 1.8s ease-in-out infinite;}
+    @keyframes beamPulse{0%,100%{opacity:.18;}50%{opacity:.45;}}
 
-    /* Static base links */
-    .linkBase {
-      stroke: rgba(0,229,255,0.35);
-      stroke-width: 2.2;
-      fill: none;
-    }
+    .breath{animation:breath 2.4s ease-in-out infinite;transform-origin:center;}
+    @keyframes breath{0%,100%{filter:url(#softGlow);}50%{filter:url(#glow);}}
 
-    /* Moving dash "data" */
-    .linkDash {
-      stroke: rgba(0,255,154,0.95);
-      stroke-width: 2.6;
-      fill: none;
-      stroke-dasharray: 6 10;
-      animation: dash 1.15s linear infinite;
-      filter: url(#glow);
-      marker-end: url(#arrow);
-    }
-    @keyframes dash { to { stroke-dashoffset: -32; } }
+    .led{filter:url(#glow);}
+    .ledA{fill:var(--stroke);animation:blinkA 1.6s ease-in-out infinite;}
+    .ledB{fill:var(--stroke2);animation:blinkB 1.15s ease-in-out infinite;}
+    .ledW{fill:var(--warn);animation:blinkW 2.2s ease-in-out infinite;}
+    @keyframes blinkA{0%,100%{opacity:.35;}50%{opacity:1;}}
+    @keyframes blinkB{0%,100%{opacity:.2;}45%{opacity:1;}}
+    @keyframes blinkW{0%,100%{opacity:.15;}35%{opacity:.9;}}
 
-    /* Beam overlay */
-    .beam {
-      stroke: url(#beam);
-      stroke-width: 5.5;
-      fill: none;
-      stroke-linecap: round;
-      opacity: 0.35;
-      animation: beamPulse 1.8s ease-in-out infinite;
-    }
-    @keyframes beamPulse {
-      0%,100% { opacity: 0.18; }
-      50% { opacity: 0.45; }
-    }
-
-    /* Node breathing glow */
-    .breath {
-      animation: breath 2.4s ease-in-out infinite;
-      transform-origin: center;
-    }
-    @keyframes breath {
-      0%,100% { filter: url(#softGlow); }
-      50% { filter: url(#glow); }
-    }
-
-    /* Tiny status LEDs */
-    .led { filter: url(#glow); }
-    .ledA { fill: var(--stroke); animation: blinkA 1.6s ease-in-out infinite; }
-    .ledB { fill: var(--stroke2); animation: blinkB 1.15s ease-in-out infinite; }
-    .ledW { fill: var(--warn); animation: blinkW 2.2s ease-in-out infinite; }
-
-    @keyframes blinkA { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
-    @keyframes blinkB { 0%,100% { opacity: 0.2; } 45% { opacity: 1; } }
-    @keyframes blinkW { 0%,100% { opacity: 0.15; } 35% { opacity: 0.9; } }
-
-    /* Scanline */
-    .scanline {
-      fill: url(#scan);
-      opacity: 0.0;
-      animation: scan 3.8s linear infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes scan {
-      0%   { opacity: 0; transform: translateY(-120px); }
-      10%  { opacity: 0.65; }
-      30%  { opacity: 0.35; }
-      55%  { opacity: 0.55; }
-      70%  { opacity: 0.2; }
-      100% { opacity: 0; transform: translateY(640px); }
+    .scanline{fill:url(#scan);opacity:0;animation:scan 3.8s linear infinite;mix-blend-mode:screen;}
+    @keyframes scan{
+      0%{opacity:0;transform:translateY(-140px);}
+      10%{opacity:.65;}
+      30%{opacity:.35;}
+      55%{opacity:.55;}
+      70%{opacity:.2;}
+      100%{opacity:0;transform:translateY(660px);}
     }
   </style>
 
@@ -174,7 +109,7 @@
   <text x="35" y="42" class="title">VeilCore — Live Control Plane</text>
   <text x="35" y="64" class="subtitle">Admission ➜ Guardian (authorization oracle) ➜ MSOS ➜ Organs · explicit resource authority · audit-first</text>
 
-  <!-- Badge pills -->
+  <!-- Pills -->
   <g transform="translate(35,82)">
     <rect x="0" y="0" width="190" height="28" class="pill"/>
     <text x="14" y="19" class="pillText">MODE: ENFORCE</text>
@@ -186,96 +121,95 @@
     <text x="454" y="19" class="pillText">RESOURCE: EXPLICIT</text>
   </g>
 
-  <!-- Nodes -->
-  <!-- Client -->
+  <!-- Grid-aligned layout coordinates -->
+  <!-- Client (center column) -->
   <g class="breath">
     <rect x="350" y="125" width="200" height="54" class="node"/>
-    <rect x="360" y="135" width="180" height="34" class="nodeInner" rx="10"/>
-    <text x="410" y="158" class="label">Client / Operator</text>
-    <circle cx="530" cy="152" r="4" class="led ledA"/>
+    <rect x="360" y="135" width="180" height="34" class="nodeInner"/>
+    <text x="450" y="158" class="label" text-anchor="middle">Client / Operator</text>
+    <circle cx="535" cy="152" r="4" class="led ledA"/>
   </g>
 
-  <!-- VeilCore API -->
+  <!-- API (center column) -->
   <g class="breath">
     <rect x="300" y="210" width="300" height="70" class="node"/>
-    <rect x="312" y="224" width="276" height="42" class="nodeInner" rx="12"/>
-    <text x="410" y="252" class="label">VeilCore API</text>
+    <rect x="312" y="224" width="276" height="42" class="nodeInner"/>
+    <text x="450" y="252" class="label" text-anchor="middle">VeilCore API</text>
     <text x="324" y="276" class="small">validate · normalize · audit · forward</text>
-    <circle cx="570" cy="245" r="4" class="led ledB"/>
-    <circle cx="585" cy="245" r="4" class="led ledA"/>
+    <circle cx="575" cy="245" r="4" class="led ledB"/>
+    <circle cx="590" cy="245" r="4" class="led ledA"/>
   </g>
 
-  <!-- Admission -->
+  <!-- Admission / Guardian / MSOS (straight row) -->
   <g class="breath">
-    <rect x="85" y="320" width="220" height="70" class="node"/>
-    <rect x="97" y="334" width="196" height="42" class="nodeInner" rx="12"/>
-    <text x="132" y="362" class="label">Admission</text>
-    <text x="110" y="386" class="small">structure · integrity</text>
+    <rect x="80" y="320" width="220" height="70" class="node"/>
+    <rect x="92" y="334" width="196" height="42" class="nodeInner"/>
+    <text x="190" y="362" class="label" text-anchor="middle">Admission</text>
+    <text x="190" y="386" class="small" text-anchor="middle">structure · integrity</text>
     <circle cx="285" cy="355" r="4" class="led ledA"/>
   </g>
 
-  <!-- Guardian -->
   <g class="breath">
     <rect x="340" y="320" width="220" height="70" class="node"/>
-    <rect x="352" y="334" width="196" height="42" class="nodeInner" rx="12"/>
-    <text x="404" y="362" class="label">Guardian</text>
-    <text x="368" y="386" class="small">decide: allow | deny</text>
+    <rect x="352" y="334" width="196" height="42" class="nodeInner"/>
+    <text x="450" y="362" class="label" text-anchor="middle">Guardian</text>
+    <text x="450" y="386" class="small" text-anchor="middle">decide: allow | deny</text>
     <circle cx="540" cy="355" r="4" class="led ledB"/>
     <circle cx="525" cy="355" r="4" class="led ledA"/>
   </g>
 
-  <!-- MSOS -->
   <g class="breath">
-    <rect x="595" y="320" width="220" height="70" class="node"/>
-    <rect x="607" y="334" width="196" height="42" class="nodeInner" rx="12"/>
-    <text x="680" y="362" class="label">MSOS</text>
-    <text x="628" y="386" class="small">invoke organs safely</text>
-    <circle cx="795" cy="355" r="4" class="led ledA"/>
+    <rect x="600" y="320" width="220" height="70" class="node"/>
+    <rect x="612" y="334" width="196" height="42" class="nodeInner"/>
+    <text x="710" y="362" class="label" text-anchor="middle">MSOS</text>
+    <text x="710" y="386" class="small" text-anchor="middle">invoke organs safely</text>
+    <circle cx="805" cy="355" r="4" class="led ledA"/>
   </g>
 
-  <!-- Organs -->
+  <!-- Organs (centered under MSOS) -->
   <g class="breath">
     <rect x="210" y="420" width="480" height="80" class="node"/>
-    <rect x="222" y="434" width="456" height="52" class="nodeInner" rx="12"/>
-    <text x="240" y="462" class="label">Organs</text>
-    <text x="320" y="462" class="small">firewall · sentinel · cortex · audit · …</text>
-    <text x="240" y="486" class="small">execution only after authorization</text>
+    <rect x="222" y="434" width="456" height="52" class="nodeInner"/>
+    <text x="260" y="462" class="label">Organs</text>
+    <text x="450" y="462" class="small" text-anchor="middle">firewall · sentinel · cortex · audit · …</text>
+    <text x="450" y="486" class="small" text-anchor="middle">execution only after authorization</text>
     <circle cx="665" cy="455" r="4" class="led ledB"/>
     <circle cx="650" cy="455" r="4" class="led ledA"/>
     <circle cx="635" cy="455" r="4" class="led ledW"/>
   </g>
 
-  <!-- Links: Client -> API -->
+  <!-- Straight links (no bezier) -->
+  <!-- Client -> API (vertical) -->
   <path d="M450 179 L450 210" class="linkBase"/>
   <path d="M450 179 L450 210" class="beam"/>
   <path d="M450 179 L450 210" class="linkDash"/>
 
-  <!-- Links: API -> Admission -->
-  <path d="M410 280 C360 300, 290 305, 195 320" class="linkBase"/>
-  <path d="M410 280 C360 300, 290 305, 195 320" class="beam"/>
-  <path d="M410 280 C360 300, 290 305, 195 320" class="linkDash"/>
+  <!-- API -> Admission (straight down then left) -->
+  <path d="M450 280 L450 300 L190 300 L190 320" class="linkBase"/>
+  <path d="M450 280 L450 300 L190 300 L190 320" class="beam"/>
+  <path d="M450 280 L450 300 L190 300 L190 320" class="linkDash"/>
 
-  <!-- Links: API -> Guardian -->
+  <!-- API -> Guardian (vertical) -->
   <path d="M450 280 L450 320" class="linkBase"/>
   <path d="M450 280 L450 320" class="beam"/>
   <path d="M450 280 L450 320" class="linkDash"/>
 
-  <!-- Links: API -> MSOS -->
-  <path d="M490 280 C560 300, 625 305, 705 320" class="linkBase"/>
-  <path d="M490 280 C560 300, 625 305, 705 320" class="beam"/>
-  <path d="M490 280 C560 300, 625 305, 705 320" class="linkDash"/>
+  <!-- API -> MSOS (straight down then right) -->
+  <path d="M450 280 L450 300 L710 300 L710 320" class="linkBase"/>
+  <path d="M450 280 L450 300 L710 300 L710 320" class="beam"/>
+  <path d="M450 280 L450 300 L710 300 L710 320" class="linkDash"/>
 
-  <!-- Links: MSOS -> Organs -->
-  <path d="M705 390 C690 405, 650 415, 600 420" class="linkBase"/>
-  <path d="M705 390 C690 405, 650 415, 600 420" class="beam"/>
-  <path d="M705 390 C690 405, 650 415, 600 420" class="linkDash"/>
+  <!-- MSOS -> Organs (vertical down from MSOS center) -->
+  <path d="M710 390 L710 405 L450 405 L450 420" class="linkBase"/>
+  <path d="M710 390 L710 405 L450 405 L450 420" class="beam"/>
+  <path d="M710 390 L710 405 L450 405 L450 420" class="linkDash"/>
 
-  <!-- Subtle "audit" tracer line -->
-  <path d="M195 390 C250 445, 320 460, 450 460" stroke="rgba(0,229,255,0.22)" stroke-width="2" fill="none" stroke-dasharray="3 9">
+  <!-- Audit trace (straight, subtle) -->
+  <path d="M190 390 L190 405 L450 405" stroke="rgba(0,229,255,0.22)" stroke-width="2" fill="none" stroke-dasharray="3 9">
     <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="2.2s" repeatCount="indefinite"/>
   </path>
-  <text x="250" y="410" class="small" fill="#00e5ff" opacity="0.55">audit trace</text>
+  <text x="210" y="413" class="small" fill="#00e5ff" opacity="0.55">audit trace</text>
 
   <!-- Scanline overlay -->
-  <rect x="0" y="0" width="900" height="160" class="scanline"/>
+  <rect x="0" y="0" width="900" height="170" class="scanline"/>
 </svg>
