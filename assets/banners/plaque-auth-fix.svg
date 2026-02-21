@@ -1,0 +1,42 @@
+<svg width="900" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="plaqueGrad2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#00ffa6"/>
+    </linearGradient>
+
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <rect x="5" y="5" width="890" height="170" rx="14"
+        fill="#0d1117"
+        stroke="url(#plaqueGrad2)"
+        stroke-width="2"
+        filter="url(#glow2)"/>
+
+  <text x="50%" y="60" text-anchor="middle"
+        fill="#00e5ff"
+        font-size="26"
+        font-family="monospace"
+        font-weight="bold">
+    AUTHORIZATION BOUNDARY HARDENED
+  </text>
+
+  <text x="50%" y="100" text-anchor="middle"
+        fill="#8b949e"
+        font-size="18"
+        font-family="monospace">
+    Missing resource context now fails closed.
+  </text>
+
+  <text x="50%" y="130" text-anchor="middle"
+        fill="#00ffa6"
+        font-size="18"
+        font-family="monospace">
+    Classification bypass class eliminated.
+  </text>
+
+</svg>
