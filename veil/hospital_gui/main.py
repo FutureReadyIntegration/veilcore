@@ -12,7 +12,8 @@ from fastapi.templating import Jinja2Templates
 
 BASE = Path("/opt/veil_os/backend/veil/hospital_gui")
 TEMPLATES_DIR = BASE / "templates"
-STATIC_DIR = BASE / "static"
+BASE_DIR = Path(__file__).resolve().parents[2]
+STATIC_DIR = BASE_DIR / "backend" / "veil" / "hospital_gui" / "static"
 DATA_DIR = BASE / "data"
 PATIENTS_FILE = DATA_DIR / "patients.json"
 FRONTEND_DIST = BASE / "frontend" / "dist"

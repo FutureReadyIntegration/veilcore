@@ -12,6 +12,7 @@ import random
 import logging
 from pathlib import Path
 from datetime import datetime
+import os
 
 from veil.organs.analytics_engine.engine import AnalyticsEngine, AnalyticsConfig, MetricType
 
@@ -79,6 +80,8 @@ def main():
             time.sleep(10)
         write_status({"running": False, "healthy": True, "message": "Shutdown complete"})
         log.info("Stopped.")
+        os._exit(0)
+
         return 0
     except Exception as e:
         log.error(f"Fatal error: {e}")

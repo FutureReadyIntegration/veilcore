@@ -3,8 +3,9 @@
 Sentinel Organ - Standalone Service
 "I watch. I learn. I protect."
 """
-
 import time
+import os
+import threading
 import signal
 import sys
 import json
@@ -21,12 +22,14 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+stop_event = threading.Event()
 running = True
 sentinel = None
 
 def shutdown(signum, frame):
     global running
     log.info("Shutdown signal received")
+    stop_event.set()
     running = False
 
 def write_status(status: dict):
@@ -81,11 +84,14 @@ def main():
             except Exception as e:
                 log.error(f"Error in loop: {e}")
 
-            time.sleep(check_interval)
+            if stop_event.is_set():
+                break
+            stop_event.wait(check_interval)
 
         write_status({"running": False, "healthy": True, "message": "Shutdown complete"})
         log.info("Stopped.")
-        return 0
+        os._exit(0)
+return 0
 
     except Exception as e:
         log.error(f"Fatal error: {e}")

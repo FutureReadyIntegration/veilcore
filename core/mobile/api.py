@@ -299,10 +299,11 @@ class MobileAPI:
         # If no systemd services found, return catalog
         if not organs:
             from core.mesh.discovery import ORGAN_CATALOG
-            for org_id, info in ORGAN_CATALOG.items():
+            for info in ORGAN_CATALOG:
+                org_name = info.get("name", "unknown")
                 organs.append({
-                    "name": info.get("name", org_id),
-                    "unit": f"veilcore-{org_id}.service",
+                    "name": info.get("display", org_name),
+                    "unit": f"veilcore-{org_name}.service",
                     "load": "loaded",
                     "active": "inactive",
                     "status": "dead",
@@ -315,8 +316,8 @@ class MobileAPI:
         """Look up organ tier."""
         try:
             from core.mesh.discovery import ORGAN_CATALOG
-            for org_id, info in ORGAN_CATALOG.items():
-                if org_id == name or info.get("name", "").lower() == name.lower():
+            for info in ORGAN_CATALOG:
+                if info.get("name", "").lower() == name.lower() or info.get("display", "").lower() == name.lower():
                     return info.get("tier", "P2")
         except Exception:
             pass
