@@ -47,7 +47,7 @@ VeilCore operates as **80 specialized security organs**, each running as an inde
 > 💡 **Why "organs"?** Just like a human body has specialized organs working together to keep you alive, VeilCore has specialized security components working together to keep your hospital alive. If one organ detects a threat, the entire system responds. Remove The Veil and you go blind.
 
 **Built solo by Marlon Ástin Williams in 2025.**
-
+Founder and architect of VeilCore — a unified cybersecurity immune system for hospitals. Created to ensure hospitals never stand defenseless against ransomware, insider threats, or system compromise.
 <br/>
 
 ---
