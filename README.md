@@ -57,7 +57,7 @@ VeilCore operates as **80 specialized security organs**, each running as an inde
 
 <br/>
 <!-- ORGANS:BEGIN -->
-## 🧬 The 90 Organs
+## 🧬 The 80 Organs
 
 Every organ runs as an independent systemd service. Every organ is monitored. Every organ reports to the orchestrator.
 
