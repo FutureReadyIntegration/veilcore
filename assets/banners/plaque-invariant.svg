@@ -1,46 +1,55 @@
-<svg width="900" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
 
-  <defs>
-    <linearGradient id="plaqueGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#00ffa6"/>
-    </linearGradient>
+<style>
+.title { font-family: monospace; font-size: 34px; fill: #00f0ff; font-weight: bold; }
+.subtitle { font-family: monospace; font-size: 20px; fill: #8aa0b5; }
+.label { font-family: monospace; font-size: 18px; fill: #00ffa6; }
+.small { font-family: monospace; font-size: 16px; fill: #9fb3c8; }
+.status { font-family: monospace; font-size: 20px; fill: #00ffa6; font-weight: bold; }
+</style>
 
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
+<!-- background -->
+<rect x="2" y="2" width="1196" height="256" rx="18"
+fill="#050b16"
+stroke="#00f0ff"
+stroke-width="3"/>
 
-  <rect x="5" y="5" width="890" height="170" rx="14"
-        fill="#0d1117"
-        stroke="url(#plaqueGrad)"
-        stroke-width="2"
-        filter="url(#glow)"/>
+<!-- title -->
+<text x="40" y="70" class="title">VEILCORE · INVARIANT PLAQUE</text>
 
-  <text x="50%" y="60" text-anchor="middle"
-        fill="#00e5ff"
-        font-size="28"
-        font-family="monospace"
-        font-weight="bold">
-    VEIL SECURITY INVARIANT
-  </text>
+<text x="40" y="110" class="subtitle">
+Authorization integrity invariant restored and enforced
+</text>
 
-  <text x="50%" y="100" text-anchor="middle"
-        fill="#8b949e"
-        font-size="18"
-        font-family="monospace">
-    Authorization decisions must never be inferred.
-  </text>
+<!-- invariant status -->
+<rect x="880" y="40" width="280" height="60" rx="30"
+fill="none"
+stroke="#00ffa6"
+stroke-width="3"/>
 
-  <text x="50%" y="130" text-anchor="middle"
-        fill="#00ffa6"
-        font-size="18"
-        font-family="monospace">
-    Authority must be explicit — or denied.
-  </text>
+<text x="920" y="78" class="status">
+INVARIANT: PRESERVED
+</text>
+
+<!-- trace line -->
+<line x1="40" y1="170" x2="1160" y2="170"
+stroke="#00f0ff"
+stroke-width="2"/>
+
+<!-- nodes -->
+<circle cx="180" cy="170" r="10" fill="#00ffa6"/>
+<circle cx="480" cy="170" r="10" fill="#00ffa6"/>
+<circle cx="780" cy="170" r="10" fill="#00ffa6"/>
+<circle cx="1080" cy="170" r="10" fill="#00ffa6"/>
+
+<!-- labels -->
+<text x="120" y="210" class="small">Admission</text>
+<text x="420" y="210" class="small">Guardian</text>
+<text x="720" y="210" class="small">Firewall</text>
+<text x="1020" y="210" class="small">Organs</text>
+
+<!-- live indicator -->
+<circle cx="1120" cy="80" r="7" fill="#00ffa6"/>
+<text x="1140" y="86" class="label">LIVE</text>
 
 </svg>

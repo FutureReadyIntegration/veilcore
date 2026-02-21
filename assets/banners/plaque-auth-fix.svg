@@ -1,42 +1,55 @@
-<svg width="900" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
 
-  <defs>
-    <linearGradient id="plaqueGrad2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#00ffa6"/>
-    </linearGradient>
+<style>
+.title { font-family: monospace; font-size: 34px; fill: #00f0ff; font-weight: bold; }
+.subtitle { font-family: monospace; font-size: 20px; fill: #8aa0b5; }
+.label { font-family: monospace; font-size: 18px; fill: #ffd166; }
+.small { font-family: monospace; font-size: 16px; fill: #9fb3c8; }
+.status { font-family: monospace; font-size: 20px; fill: #ffd166; font-weight: bold; }
+</style>
 
-    <filter id="glow2">
-      <feGaussianBlur stdDeviation="4"/>
-    </filter>
-  </defs>
+<!-- background -->
+<rect x="2" y="2" width="1196" height="256" rx="18"
+fill="#050b16"
+stroke="#ffd166"
+stroke-width="3"/>
 
-  <rect x="5" y="5" width="890" height="170" rx="14"
-        fill="#0d1117"
-        stroke="url(#plaqueGrad2)"
-        stroke-width="2"
-        filter="url(#glow2)"/>
+<!-- title -->
+<text x="40" y="70" class="title">VEILCORE · SECURITY PLAQUE</text>
 
-  <text x="50%" y="60" text-anchor="middle"
-        fill="#00e5ff"
-        font-size="26"
-        font-family="monospace"
-        font-weight="bold">
-    AUTHORIZATION BOUNDARY HARDENED
-  </text>
+<text x="40" y="110" class="subtitle">
+Invocation resource classification flaw resolved
+</text>
 
-  <text x="50%" y="100" text-anchor="middle"
-        fill="#8b949e"
-        font-size="18"
-        font-family="monospace">
-    Missing resource context now fails closed.
-  </text>
+<!-- status -->
+<rect x="860" y="40" width="300" height="60" rx="30"
+fill="none"
+stroke="#ffd166"
+stroke-width="3"/>
 
-  <text x="50%" y="130" text-anchor="middle"
-        fill="#00ffa6"
-        font-size="18"
-        font-family="monospace">
-    Classification bypass class eliminated.
-  </text>
+<text x="900" y="78" class="status">
+BOUNDARY: RESTORED
+</text>
+
+<!-- trace -->
+<line x1="40" y1="170" x2="1160" y2="170"
+stroke="#ffd166"
+stroke-width="2"/>
+
+<!-- nodes -->
+<circle cx="180" cy="170" r="10" fill="#ffd166"/>
+<circle cx="480" cy="170" r="10" fill="#ffd166"/>
+<circle cx="780" cy="170" r="10" fill="#ffd166"/>
+<circle cx="1080" cy="170" r="10" fill="#ffd166"/>
+
+<!-- labels -->
+<text x="90" y="210" class="small">Invoke Request</text>
+<text x="410" y="210" class="small">Resource Declared</text>
+<text x="710" y="210" class="small">Guardian Authorization</text>
+<text x="1020" y="210" class="small">Execution Allowed</text>
+
+<!-- live indicator -->
+<circle cx="1120" cy="80" r="7" fill="#ffd166"/>
+<text x="1140" y="86" class="label">SECURED</text>
 
 </svg>
