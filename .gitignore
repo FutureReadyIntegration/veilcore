@@ -72,3 +72,7 @@ veil/organs/**
 veil_arbitrate.py
 veil_key_writer.py
 veil_writer.py
+
+# local render frames
+assets/banners/.frames/
+assets/banners/.frames_png/
