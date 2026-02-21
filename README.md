@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/🛡️_Protected_By-VeilCore-00e5ff?style=for-the-badge" alt="Protected by VeilCore"/>
-  <img src="https://img.shields.io/badge/Organs-90_Active-00e5ff?style=for-the-badge" alt="90 Active Organs"/>
+  <img src="https://img.shields.io/badge/Organs-80_Active-00e5ff?style=for-the-badge" alt="90 Active Organs"/>
   <img src="https://img.shields.io/badge/HIPAA-100%25_Compliant-00ff6a?style=for-the-badge" alt="HIPAA Compliant"/>
   <img src="https://img.shields.io/badge/FedRAMP-100%25-00ff6a?style=for-the-badge" alt="FedRAMP 100%"/>
   <img src="https://img.shields.io/badge/HITRUST-100%25-00ff6a?style=for-the-badge" alt="HITRUST 100%"/>
@@ -29,7 +29,7 @@
 
 It doesn't replace your hospital systems. **It becomes their immune system.**
 
-VeilCore operates as **90 specialized security organs**, each running as an independent systemd service on Ubuntu, organized into three priority tiers. **17 advanced subsystems** extend the organs with mesh communication, machine learning, cross-hospital federation, automated penetration testing, remote monitoring, accessibility, wireless protection, physical security fusion, bare-metal deployment, hospital onboarding, compliance certification, and federal authorization mapping.
+VeilCore operates as **80 specialized security organs**, each running as an independent systemd service on Ubuntu, organized into three priority tiers. **17 advanced subsystems** extend the organs with mesh communication, machine learning, cross-hospital federation, automated penetration testing, remote monitoring, accessibility, wireless protection, physical security fusion, bare-metal deployment, hospital onboarding, compliance certification, and federal authorization mapping.
 
 > 💡 **Why "organs"?** Just like a human body has specialized organs working together to keep you alive, VeilCore has specialized security components working together to keep your hospital alive. If one organ detects a threat, the entire system responds. Remove The Veil and you go blind.
 
@@ -182,7 +182,7 @@ Every organ runs as an independent systemd service. Every organ is monitored. Ev
 <br/>
 
 ### 🔗 NerveBridge — Organ Mesh Communication
-Real-time organ-to-organ communication via Unix domain sockets. HMAC-SHA256 signed messaging, priority dispatch queues, and topic-based pub/sub. All 90 organs talk to each other in real time.
+Real-time organ-to-organ communication via Unix domain sockets. HMAC-SHA256 signed messaging, priority dispatch queues, and topic-based pub/sub. All 80 organs talk to each other in real time.
 
 ### 🤖 DeepSentinel — ML Threat Prediction
 48-feature, 10-class machine learning classifier that predicts threats before they strike. Trains on hospital traffic patterns, detects zero-day behavior, and integrates with all organs for feature extraction.
@@ -410,7 +410,7 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 <p align="center">
   <strong>🔱 Protected by VeilCore 🔱</strong><br/><br/>
   <em>"I stand between chaos and those I protect"</em><br/><br/>
-  <strong>90 organs · 17 subsystems · 5 compliance frameworks · Zero gaps</strong>
+  <strong>80 organs · 17 subsystems · 5 compliance frameworks · Zero gaps</strong>
 </p>
 
 ## 🔐 Security Standards & Audit Evidence
