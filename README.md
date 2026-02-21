@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
+  <img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/🛡️_Protected_By-VeilCore-00e5ff?style=for-the-badge" alt="Protected by VeilCore"/>
-  <img src="https://img.shields.io/badge/Organs-82_Active-00e5ff?style=for-the-badge" alt="90 Active Organs"/>
+  <img src="https://img.shields.io/badge/Organs-90_Active-00e5ff?style=for-the-badge" alt="90 Active Organs"/>
   <img src="https://img.shields.io/badge/HIPAA-100%25_Compliant-00ff6a?style=for-the-badge" alt="HIPAA Compliant"/>
   <img src="https://img.shields.io/badge/FedRAMP-100%25-00ff6a?style=for-the-badge" alt="FedRAMP 100%"/>
   <img src="https://img.shields.io/badge/HITRUST-100%25-00ff6a?style=for-the-badge" alt="HITRUST 100%"/>
@@ -29,7 +29,7 @@
 
 It doesn't replace your hospital systems. **It becomes their immune system.**
 
-VeilCore operates as **82 specialized security organs**, each running as an independent systemd service on Ubuntu, organized into three priority tiers. **17 advanced subsystems** extend the organs with mesh communication, machine learning, cross-hospital federation, automated penetration testing, remote monitoring, accessibility, wireless protection, physical security fusion, bare-metal deployment, hospital onboarding, compliance certification, and federal authorization mapping.
+VeilCore operates as **90 specialized security organs**, each running as an independent systemd service on Ubuntu, organized into three priority tiers. **17 advanced subsystems** extend the organs with mesh communication, machine learning, cross-hospital federation, automated penetration testing, remote monitoring, accessibility, wireless protection, physical security fusion, bare-metal deployment, hospital onboarding, compliance certification, and federal authorization mapping.
 
 > 💡 **Why "organs"?** Just like a human body has specialized organs working together to keep you alive, VeilCore has specialized security components working together to keep your hospital alive. If one organ detects a threat, the entire system responds. Remove The Veil and you go blind.
 
@@ -178,7 +178,7 @@ Every organ runs as an independent systemd service. Every organ is monitored. Ev
 <br/>
 
 ### 🔗 NerveBridge — Organ Mesh Communication
-Real-time organ-to-organ communication via Unix domain sockets. HMAC-SHA256 signed messaging, priority dispatch queues, and topic-based pub/sub. All 82 organs talk to each other in real time.
+Real-time organ-to-organ communication via Unix domain sockets. HMAC-SHA256 signed messaging, priority dispatch queues, and topic-based pub/sub. All 90 organs talk to each other in real time.
 
 ### 🤖 DeepSentinel — ML Threat Prediction
 48-feature, 10-class machine learning classifier that predicts threats before they strike. Trains on hospital traffic patterns, detects zero-day behavior, and integrates with all organs for feature extraction.
@@ -202,7 +202,7 @@ Wi-Fi rogue AP detection, evil twin identification, Bluetooth device enumeration
 Camera tamper detection, motion/door/temperature/humidity/vibration sensors, and sensor fusion that correlates physical events with cyber events.
 
 ### 🚀 Genesis — Deployment Engine
-Production-grade Ubuntu installer that deploys all 82 organs in priority order, generates systemd service files with security hardening, runs preflight checks, and supports backup/rollback.
+Production-grade Ubuntu installer that deploys all 90 organs in priority order, generates systemd service files with security hardening, runs preflight checks, and supports backup/rollback.
 
 ### 📊 Prism — Unified Dashboard API
 Single API aggregating all subsystems. Real-time status for every organ and subsystem, threat summaries, compliance metrics, and 16+ REST endpoints.
@@ -250,7 +250,7 @@ Guardian          RUNNING  ●  pid=1234  P0
 Sentinel          RUNNING  ●  pid=1235  P0
 Cortex            RUNNING  ●  pid=1236  P0
 ...
-82/82 organs online · 17 subsystems · Threat Level: NOMINAL
+90/90 organs online · 17 subsystems · Threat Level: NOMINAL
 ```
 
 <br/>
@@ -265,7 +265,7 @@ Hospitals currently run **5 to 15 separate security products** from different ve
 
 | What they sell you | What VeilCore does |
 |:---|:---|
-| ❌ 8-15 separate vendor products | ✅ **1 unified system, 82 organs** |
+| ❌ 8-15 separate vendor products | ✅ **1 unified system, 90 organs** |
 | ❌ $500K-$2M/year in licensing | ✅ **Open source (Apache 2.0)** |
 | ❌ Bolted-on healthcare support | ✅ **Healthcare-native** (Epic, FHIR, HL7, DICOM) |
 | ❌ Siloed tools that don't talk | ✅ **Organ mesh** — every component talks to every other |
@@ -406,7 +406,7 @@ You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
 <p align="center">
   <strong>🔱 Protected by VeilCore 🔱</strong><br/><br/>
   <em>"I stand between chaos and those I protect"</em><br/><br/>
-  <strong>82 organs · 17 subsystems · 5 compliance frameworks · Zero gaps</strong>
+  <strong>90 organs · 17 subsystems · 5 compliance frameworks · Zero gaps</strong>
 </p>
 
 ## 🔐 Security Standards & Audit Evidence
