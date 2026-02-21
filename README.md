@@ -32,7 +32,7 @@
 
 ---
 
-<br/>
+
 
 ## 🔱 What is VeilCore?
 
