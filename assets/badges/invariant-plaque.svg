@@ -1,96 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="260" viewBox="0 0 1800 260">
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="320" viewBox="0 0 1800 320">
   <defs>
-    <linearGradient id="bg" x1="0" x2="1">
-      <stop offset="0" stop-color="#05070c"/>
-      <stop offset="1" stop-color="#070b14"/>
-    </linearGradient>
-
-    <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="glowCyan" x="-30%" y="-50%" width="160%" height="200%">
       <feGaussianBlur stdDeviation="6" result="b"/>
       <feMerge>
         <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="5" result="b"/>
-      <feMerge>
         <feMergeNode in="b"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-      <path d="M60 0H0V60" fill="none" stroke="#0b1530" stroke-width="1" opacity="0.55"/>
-    </pattern>
+    <linearGradient id="bgInv" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050b16"/>
+      <stop offset="0.55" stop-color="#060a14"/>
+      <stop offset="1" stop-color="#030711"/>
+    </linearGradient>
+
+    <linearGradient id="strokeInv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00e5ff"/>
+      <stop offset="1" stop-color="#00ffa6"/>
+    </linearGradient>
+
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+      .title { font-size: 40px; font-weight: 800; fill: #cfefff; letter-spacing: 2px; }
+      .sub   { font-size: 22px; fill: #92a7bb; letter-spacing: 0.6px; }
+      .tiny  { font-size: 18px; fill: #8aa0b5; }
+      .chip  { font-size: 22px; font-weight: 800; fill: #00ffa6; letter-spacing: 1px; }
+      .nodeL { font-size: 18px; fill: #b7c7d8; letter-spacing: 1px; }
+    </style>
   </defs>
 
-  <!-- frame -->
-  <rect x="10" y="10" width="1780" height="240" rx="22" fill="url(#bg)"/>
-  <rect x="10" y="10" width="1780" height="240" rx="22" fill="url(#grid)" opacity="0.55"/>
-  <rect x="10" y="10" width="1780" height="240" rx="22" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.95" filter="url(#glowCyan)"/>
+  <!-- panel -->
+  <rect x="14" y="14" width="1772" height="292" rx="22" fill="url(#bgInv)" stroke="url(#strokeInv)" stroke-width="4" filter="url(#glowCyan)"/>
 
   <!-- header -->
-  <text x="50" y="68" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-        font-size="34" fill="#b7f7ff" letter-spacing="1.5" opacity="0.95">
-    VEILCORE • INVARIANT PLAQUE
-  </text>
+  <text x="56" y="84" class="mono title">VEILCORE • INVARIANT PLAQUE</text>
+  <text x="56" y="124" class="mono sub">/invoke resource classification invariant • explicit authority • deny-by-default</text>
 
-  <!-- right pill -->
-  <g transform="translate(1280,34)">
-    <rect x="0" y="0" width="470" height="54" rx="27" fill="none" stroke="#00ff6a" stroke-width="3" filter="url(#glowGreen)"/>
-    <circle cx="34" cy="27" r="7" fill="#00ff6a" filter="url(#glowGreen)"/>
-    <text x="62" y="35" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-          font-size="26" fill="#baffd1" letter-spacing="1.2">
-      INVARIANT: PRESERVED
-    </text>
+  <!-- status chip -->
+  <g filter="url(#glowCyan)">
+    <rect x="1220" y="54" width="520" height="64" rx="32" fill="none" stroke="#00ffa6" stroke-width="4"/>
+    <circle cx="1260" cy="86" r="10" fill="#00ffa6"/>
+    <text x="1290" y="93" class="mono chip">INVARIANT: PRESERVED</text>
   </g>
 
-  <!-- subtitle -->
-  <text x="50" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-        font-size="22" fill="#8aa6c6" opacity="0.95">
-    /invoke resource classification invariant • explicit authority • deny-by-default
-  </text>
-
-  <!-- chain line -->
-  <g transform="translate(60,150)">
-    <path d="M0 40H1620" stroke="#16304a" stroke-width="6" opacity="0.9"/>
-    <path d="M0 40H1620" stroke="#00e5ff" stroke-width="2" opacity="0.45" filter="url(#glowCyan)"/>
-
+  <!-- trace line -->
+  <g>
+    <line x1="56" y1="216" x2="1744" y2="216" stroke="#00e5ff" stroke-width="3" opacity="0.65"/>
     <!-- nodes -->
-    <g>
-      <circle cx="180" cy="40" r="18" fill="#07131f" stroke="#00e5ff" stroke-width="3" filter="url(#glowCyan)"/>
-      <circle cx="180" cy="40" r="6" fill="#00e5ff" opacity="0.95"/>
-      <text x="180" y="88" text-anchor="middle" font-size="22" fill="#b7f7ff"
-            font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">ADMISSION</text>
+    <g filter="url(#glowCyan)">
+      <circle cx="320" cy="216" r="14" fill="#00e5ff"/>
+      <circle cx="720" cy="216" r="14" fill="#00e5ff"/>
+      <circle cx="1120" cy="216" r="14" fill="#00e5ff"/>
+      <circle cx="1520" cy="216" r="14" fill="#00ffa6"/>
     </g>
+    <!-- labels -->
+    <text x="260" y="255" class="mono nodeL">ADMISSION</text>
+    <text x="652" y="255" class="mono nodeL">GUARDIAN</text>
+    <text x="1060" y="255" class="mono nodeL">FIREWALL</text>
+    <text x="1468" y="255" class="mono nodeL">ORGANS</text>
+    <text x="1160" y="246" class="mono tiny" opacity="0.7">audit-first • replay-safe • explicit resource</text>
+  </g>
 
-    <g>
-      <circle cx="540" cy="40" r="18" fill="#07131f" stroke="#00e5ff" stroke-width="3" filter="url(#glowCyan)"/>
-      <circle cx="540" cy="40" r="6" fill="#00e5ff" opacity="0.95"/>
-      <text x="540" y="88" text-anchor="middle" font-size="22" fill="#b7f7ff"
-            font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">GUARDIAN</text>
-    </g>
-
-    <g>
-      <circle cx="900" cy="40" r="18" fill="#07131f" stroke="#00e5ff" stroke-width="3" filter="url(#glowCyan)"/>
-      <circle cx="900" cy="40" r="6" fill="#00e5ff" opacity="0.95"/>
-      <text x="900" y="88" text-anchor="middle" font-size="22" fill="#b7f7ff"
-            font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">FIREWALL</text>
-    </g>
-
-    <g>
-      <circle cx="1260" cy="40" r="18" fill="#07131f" stroke="#00ff6a" stroke-width="3" filter="url(#glowGreen)"/>
-      <circle cx="1260" cy="40" r="6" fill="#00ff6a" opacity="0.95"/>
-      <text x="1260" y="88" text-anchor="middle" font-size="22" fill="#baffd1"
-            font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">ORGANS</text>
-    </g>
-
-    <!-- footer label -->
-    <text x="1620" y="88" text-anchor="end" font-size="20" fill="#8aa6c6"
-          font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">
-      audit-first • replay-safe • explicit resource
-    </text>
+  <!-- live mark -->
+  <g>
+    <circle cx="1710" cy="86" r="8" fill="#00ffa6"/>
+    <text x="1728" y="92" class="mono tiny" fill="#00ffa6">LIVE</text>
   </g>
 </svg>
