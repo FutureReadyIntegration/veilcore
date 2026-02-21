@@ -3,6 +3,7 @@
 </p>
 
 <p align="center">
+  <img src="./assets/badges/invariant-plaque.svg" alt="Veil Invariant Plaque"/>
   <img src="https://img.shields.io/badge/🛡️_Protected_By-VeilCore-00e5ff?style=for-the-badge" alt="Protected by VeilCore"/>
   <img src="https://img.shields.io/badge/Organs-80_Active-00e5ff?style=for-the-badge" alt="90 Active Organs"/>
   <img src="https://img.shields.io/badge/HIPAA-100%25_Compliant-00ff6a?style=for-the-badge" alt="HIPAA Compliant"/>
@@ -10,6 +11,7 @@
   <img src="https://img.shields.io/badge/HITRUST-100%25-00ff6a?style=for-the-badge" alt="HITRUST 100%"/>
 </p>
 <p align="center">
+  <img src="./assets/badges/invariant-plaque.svg" alt="VeilCore Security Plaque" width="260"/>
   <img src="https://img.shields.io/badge/🖥️_Platform-Ubuntu_24.04-7B42BC?style=for-the-badge" alt="Ubuntu 24.04"/>
   <img src="https://img.shields.io/badge/Defense-24%2F7_Active-fbbf24?style=for-the-badge" alt="24/7 Active"/>
   <img src="https://img.shields.io/badge/License-Apache_2.0-008cff?style=for-the-badge" alt="Apache 2.0"/>
