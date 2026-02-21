@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="160" viewBox="0 0 900 160">
+  <defs>
+    <!-- subtle neon -->
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#071018"/>
+    </linearGradient>
+
+    <linearGradient id="neon" x1="0" x2="1">
+      <stop offset="0" stop-color="#00e5ff"/>
+      <stop offset="1" stop-color="#00ff6a"/>
+    </linearGradient>
+
+    <filter id="glow" x="-40%" y="-60%" width="180%" height="220%">
+      <feGaussianBlur stdDeviation="2.8" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          0 0 0 0.9 0" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- moving packet dot -->
+    <circle id="pkt" r="2.8" fill="#00e5ff"/>
+
+    <!-- sweep gradient -->
+    <linearGradient id="sweep" x1="0" x2="1">
+      <stop offset="0" stop-color="rgba(0,229,255,0)"/>
+      <stop offset="0.5" stop-color="rgba(0,229,255,0.55)"/>
+      <stop offset="1" stop-color="rgba(0,229,255,0)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background panel -->
+  <rect x="10" y="10" width="880" height="140" rx="20" fill="url(#bg)" stroke="url(#neon)" stroke-width="2" filter="url(#glow)"/>
+
+  <!-- title -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    <text x="42" y="52" font-size="18" fill="#c8d6ff" opacity="0.95">VEILCORE • SECURITY PLAQUE</text>
+    <text x="42" y="78" font-size="14" fill="#9fb3ff" opacity="0.92">/invoke resource classification invariant</text>
+  </g>
+
+  <!-- right status pill -->
+  <g filter="url(#glow)">
+    <rect x="648" y="32" width="220" height="42" rx="21" fill="#0d1117" stroke="url(#neon)" stroke-width="1.5"/>
+    <text x="758" y="58" text-anchor="middle"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+      font-size="14" fill="#00ff6a">INVARIANT: PRESERVED</text>
+  </g>
+
+  <!-- node map -->
+  <g transform="translate(42,98)">
+    <!-- links -->
+    <path id="l1" d="M70,18 L210,18" stroke="#1a2a3a" stroke-width="2"/>
+    <path id="l2" d="M270,18 L410,18" stroke="#1a2a3a" stroke-width="2"/>
+    <path id="l3" d="M470,18 L610,18" stroke="#1a2a3a" stroke-width="2"/>
+
+    <!-- glowing pulse on links -->
+    <path d="M70,18 L210,18" stroke="#00e5ff" stroke-width="2" opacity="0.25">
+      <animate attributeName="opacity" values="0.12;0.35;0.12" dur="1.6s" repeatCount="indefinite"/>
+    </path>
+    <path d="M270,18 L410,18" stroke="#00ff6a" stroke-width="2" opacity="0.22">
+      <animate attributeName="opacity" values="0.10;0.33;0.10" dur="1.9s" repeatCount="indefinite"/>
+    </path>
+    <path d="M470,18 L610,18" stroke="#a78bfa" stroke-width="2" opacity="0.18">
+      <animate attributeName="opacity" values="0.08;0.28;0.08" dur="2.1s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- nodes -->
+    <g>
+      <!-- Admission -->
+      <circle cx="40" cy="18" r="18" fill="#0d1117" stroke="#00e5ff" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="40" y="23" text-anchor="middle" font-size="10" fill="#c8d6ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">ADM</text>
+
+      <!-- Guardian -->
+      <circle cx="240" cy="18" r="18" fill="#0d1117" stroke="#00ff6a" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="240" y="23" text-anchor="middle" font-size="10" fill="#c8d6ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">GRD</text>
+
+      <!-- Firewall -->
+      <circle cx="440" cy="18" r="18" fill="#0d1117" stroke="#a78bfa" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="440" y="23" text-anchor="middle" font-size="10" fill="#c8d6ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">FW</text>
+
+      <!-- Execute -->
+      <circle cx="640" cy="18" r="18" fill="#0d1117" stroke="#00e5ff" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="640" y="23" text-anchor="middle" font-size="10" fill="#c8d6ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">RUN</text>
+    </g>
+
+    <!-- live heartbeat LEDs -->
+    <g transform="translate(705,0)">
+      <circle cx="0" cy="18" r="4.5" fill="#00ff6a">
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="16" cy="18" r="4.5" fill="#fbbf24">
+        <animate attributeName="opacity" values="0.2;0.6;0.2" dur="1.7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="32" cy="18" r="4.5" fill="#ff4d6d">
+        <animate attributeName="opacity" values="0.1;0.25;0.1" dur="2.3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="52" y="22" font-size="10" fill="#9fb3ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">LIVE</text>
+    </g>
+
+    <!-- moving packet dots along links -->
+    <g>
+      <use href="#pkt">
+        <animateMotion dur="1.4s" repeatCount="indefinite" path="M70,18 L210,18"/>
+      </use>
+      <use href="#pkt" fill="#00ff6a">
+        <animateMotion dur="1.6s" repeatCount="indefinite" path="M270,18 L410,18"/>
+      </use>
+      <use href="#pkt" fill="#a78bfa">
+        <animateMotion dur="1.8s" repeatCount="indefinite" path="M470,18 L610,18"/>
+      </use>
+    </g>
+
+    <!-- allow/deny decision loop near Guardian -->
+    <g transform="translate(240,52)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="10">
+      <text x="-42" y="0" fill="#00ff6a" opacity="0">
+        ALLOW
+        <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+      </text>
+      <text x="10" y="0" fill="#ff4d6d" opacity="0">
+        DENY
+        <animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.5;0.75;1" dur="2.4s" repeatCount="indefinite"/>
+      </text>
+      <circle cx="0" cy="-12" r="2.5" fill="#00ff6a" opacity="0.2">
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="1.0s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- animated audit trace sweep -->
+    <g opacity="0.55">
+      <rect x="20" y="34" width="640" height="6" rx="3" fill="url(#sweep)">
+        <animate attributeName="x" values="-640;20;660" dur="2.2s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="56" font-size="10" fill="#9fb3ff"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">AUDIT TRACE</text>
+    </g>
+  </g>
+
+  <!-- bottom caption -->
+  <text x="42" y="138" font-size="11" fill="#9fb3ff"
+    font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    Admission → Guardian → Firewall → Execute  •  Fail-closed  •  No inferred authority
+  </text>
+</svg>
