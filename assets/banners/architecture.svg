@@ -1,239 +1,272 @@
-<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
   <defs>
-    <!-- Safe glow (renders on GitHub) -->
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <!-- Background -->
+    <radialGradient id="bgRad" cx="50%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#0b1b2b"/>
+      <stop offset="55%" stop-color="#07131f"/>
+      <stop offset="100%" stop-color="#050b13"/>
+    </radialGradient>
 
-    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="7" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Background grid -->
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M36 0H0V36" fill="none" stroke="#0b2a33" stroke-width="1"/>
+    <!-- Grid -->
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#0e2233" stroke-width="1" opacity="0.45"/>
+      <path d="M24 0V48M0 24H48" fill="none" stroke="#0e2233" stroke-width="1" opacity="0.18"/>
     </pattern>
 
-    <!-- Beam gradient (static “pulse” styling) -->
-    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.0"/>
-      <stop offset="35%" stop-color="#00e5ff" stop-opacity="0.95"/>
-      <stop offset="65%" stop-color="#00ff9a" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.0"/>
+    <!-- Neon -->
+    <linearGradient id="neon" x1="0" x2="1">
+      <stop offset="0" stop-color="#00e5ff"/>
+      <stop offset="1" stop-color="#00ffb3"/>
     </linearGradient>
 
-    <linearGradient id="beam2" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00ff9a" stop-opacity="0.0"/>
-      <stop offset="50%" stop-color="#00ff9a" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.0"/>
+    <filter id="glow" x="-40%" y="-60%" width="180%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.85 0" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.25"/>
+    </filter>
+
+    <!-- Sweep -->
+    <linearGradient id="sweep" x1="0" x2="1">
+      <stop offset="0" stop-color="rgba(0,229,255,0)"/>
+      <stop offset="0.5" stop-color="rgba(0,229,255,0.55)"/>
+      <stop offset="1" stop-color="rgba(0,229,255,0)"/>
     </linearGradient>
 
-    <!-- Decision badges -->
-    <linearGradient id="allowG" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00ff9a" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#00ff9a" stop-opacity="0.06"/>
-    </linearGradient>
-
-    <linearGradient id="denyG" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#ff4d4d" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#ff4d4d" stop-opacity="0.06"/>
-    </linearGradient>
-
-    <!-- Scanline highlight (static, GitHub-safe) -->
-    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.09"/>
-      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
-    </linearGradient>
+    <!-- tiny packet dot -->
+    <circle id="pkt" r="3.2" fill="#00e5ff" filter="url(#soft)"/>
   </defs>
 
-  <style>
-    .bg { fill:#070b12; }
-    .grid { fill:url(#grid); opacity:0.25; }
-
-    .title { font-family:ui-monospace, Menlo, Consolas, monospace; font-weight:800; font-size:20px; fill:#00e5ff; letter-spacing:0.5px; }
-    .subtitle { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#9fb4c7; }
-
-    .pill { fill:rgba(0,229,255,0.10); stroke:rgba(0,229,255,0.60); stroke-width:1.5; rx:999; filter:url(#glow); }
-    .pillText { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#00e5ff; }
-
-    .node { fill:#0b1220; stroke:#00e5ff; stroke-width:2; rx:14; filter:url(#softGlow); }
-    .nodeInner { fill:#08101c; opacity:0.45; rx:12; }
-
-    .label { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:16px; fill:#e6f1ff; }
-    .small { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#9fb4c7; }
-
-    .linkBase { stroke:rgba(0,229,255,0.28); stroke-width:2.2; fill:none; }
-    .linkBeam { stroke:url(#beam); stroke-width:6; fill:none; stroke-linecap:round; opacity:0.30; }
-    .linkBeam2 { stroke:url(#beam2); stroke-width:3.5; fill:none; stroke-linecap:round; opacity:0.55; }
-    .linkDash { stroke:rgba(0,255,154,0.85); stroke-width:2.6; fill:none; stroke-dasharray:6 10; opacity:0.75; }
-
-    /* LED styles (static but “live”) */
-    .led { filter:url(#glow); }
-    .ledGreen { fill:#00ff9a; }
-    .ledCyan { fill:#00e5ff; }
-    .ledAmber { fill:#fbbf24; }
-    .ledRed { fill:#ff4d4d; }
-
-    /* SOC panel chrome */
-    .frame { fill:none; stroke:rgba(0,229,255,0.20); stroke-width:2; }
-    .scanbar { fill:url(#scan); opacity:0.55; }
-    .legendTitle { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px; fill:#00e5ff; opacity:0.9; }
-    .legendText { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:11px; fill:#9fb4c7; opacity:0.95; }
-  </style>
-
-  <!-- Background -->
-  <rect x="0" y="0" width="900" height="520" class="bg"/>
-  <rect x="0" y="0" width="900" height="520" class="grid"/>
-  <rect x="18" y="18" width="864" height="484" class="frame" rx="16"/>
-  <rect x="18" y="38" width="864" height="34" class="scanbar"/>
+  <!-- Panel -->
+  <rect x="30" y="30" width="1140" height="840" rx="24" fill="url(#bgRad)"/>
+  <rect x="30" y="30" width="1140" height="840" rx="24" fill="url(#grid)" opacity="0.65"/>
+  <rect x="30" y="30" width="1140" height="840" rx="24" fill="none" stroke="url(#neon)" stroke-width="2.5" filter="url(#glow)"/>
 
   <!-- Title -->
-  <text x="35" y="48" class="title">VeilCore — SOC Live Control Plane</text>
-  <text x="35" y="70" class="subtitle">Admission → Guardian (authorization oracle) → MSOS → Organs · explicit resource authority · audit-first</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    <text x="70" y="110" font-size="34" fill="#00e5ff" filter="url(#glow)">VeilCore — SOC Live Control Plane</text>
+    <text x="70" y="145" font-size="18" fill="#a9c0d7" opacity="0.92">
+      Admission → Guardian (authorization oracle) → MSOS → Organs · explicit resource authority · audit-first
+    </text>
+  </g>
 
-  <!-- Pills -->
-  <!-- Centered SOC status bubbles -->
-<g transform="translate(150,90)">
+  <!-- TOP BUBBLES (centered & equal widths) -->
+  <g transform="translate(0,0)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18" text-anchor="middle">
+    <!-- bubble helper -->
+    <g filter="url(#glow)">
+      <path d="M250,215 h260 l22,18 -22,18 h-260 l-22,-18 z" fill="#07131f" stroke="url(#neon)" stroke-width="2"/>
+      <path d="M470,215 h260 l22,18 -22,18 h-260 l-22,-18 z" fill="#07131f" stroke="url(#neon)" stroke-width="2"/>
+      <path d="M690,215 h260 l22,18 -22,18 h-260 l-22,-18 z" fill="#07131f" stroke="url(#neon)" stroke-width="2"/>
+    </g>
 
-  <!-- MODE -->
-  <rect x="0" y="0" width="180" height="28" class="pill"/>
-  <text x="90" y="19" class="pillText" text-anchor="middle">
-    MODE: ENFORCE
-  </text>
+    <text x="380" y="240" fill="#00e5ff">MODE: ENFORCE</text>
+    <text x="600" y="240" fill="#00e5ff">NONCE: REPLAY SAFE</text>
+    <text x="820" y="240" fill="#00e5ff">POLICY: VERIFIED</text>
 
-  <!-- NONCE -->
-  <rect x="200" y="0" width="220" height="28" class="pill"/>
-  <text x="310" y="19" class="pillText" text-anchor="middle">
-    NONCE: REPLAY SAFE
-  </text>
+    <!-- subtle pulsing glow -->
+    <g opacity="0.28">
+      <path d="M250,215 h260 l22,18 -22,18 h-260 l-22,-18 z" stroke="#00e5ff" stroke-width="3" fill="none">
+        <animate attributeName="opacity" values="0.12;0.42;0.12" dur="2.2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M470,215 h260 l22,18 -22,18 h-260 l-22,-18 z" stroke="#00e5ff" stroke-width="3" fill="none">
+        <animate attributeName="opacity" values="0.10;0.36;0.10" dur="2.6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M690,215 h260 l22,18 -22,18 h-260 l-22,-18 z" stroke="#00e5ff" stroke-width="3" fill="none">
+        <animate attributeName="opacity" values="0.10;0.40;0.10" dur="2.4s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
 
-  <!-- POLICY -->
-  <rect x="440" y="0" width="240" height="28" class="pill"/>
-  <text x="560" y="19" class="pillText" text-anchor="middle">
-    POLICY: VERIFIED
-  </text>
+  <!-- Node style -->
+  <defs>
+    <g id="node">
+      <rect x="-180" y="-46" width="360" height="92" rx="18" fill="#0d1117" opacity="0.92"/>
+      <rect x="-180" y="-46" width="360" height="92" rx="18" fill="none" stroke="url(#neon)" stroke-width="2.4" filter="url(#glow)"/>
+    </g>
+  </defs>
 
-</g>
-
-  <!-- Layout coordinates (grid aligned) -->
-  <!-- Client -->
-  <g>
-    <rect x="350" y="135" width="200" height="54" class="node"/>
-    <rect x="360" y="145" width="180" height="34" class="nodeInner"/>
-    <text x="450" y="168" class="label" text-anchor="middle">Client / Operator</text>
-    <circle cx="535" cy="162" r="4" class="led ledCyan"/>
+  <!-- CLIENT -->
+  <g transform="translate(600,320)">
+    <use href="#node"/>
+    <text x="0" y="6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="24" fill="#d7e6ff">Client / Operator</text>
+    <circle cx="155" cy="-2" r="6" fill="#00ff6a">
+      <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
   <!-- API -->
-  <g>
-    <rect x="300" y="220" width="300" height="74" class="node"/>
-    <rect x="312" y="235" width="276" height="44" class="nodeInner"/>
-    <text x="450" y="264" class="label" text-anchor="middle">VeilCore API</text>
-    <text x="324" y="289" class="small">validate · normalize · audit · forward</text>
-    <circle cx="572" cy="255" r="4" class="led ledGreen"/>
-    <circle cx="588" cy="255" r="4" class="led ledCyan"/>
+  <g transform="translate(600,455)">
+    <use href="#node"/>
+    <text x="0" y="0" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="24" fill="#d7e6ff">VeilCore API</text>
+    <text x="0" y="28" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16" fill="#9fb3ff" opacity="0.9">
+      validate · normalize · audit · forward
+    </text>
+
+    <!-- Live LEDs -->
+    <circle cx="145" cy="-10" r="6" fill="#00ff6a">
+      <animate attributeName="opacity" values="0.25;1;0.25" dur="1.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="168" cy="-10" r="6" fill="#00e5ff">
+      <animate attributeName="opacity" values="0.2;0.9;0.2" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
-  <!-- Admission -->
-  <g>
-    <rect x="80" y="325" width="220" height="74" class="node"/>
-    <rect x="92" y="340" width="196" height="44" class="nodeInner"/>
-    <text x="190" y="369" class="label" text-anchor="middle">Admission</text>
-    <text x="190" y="392" class="small" text-anchor="middle">structure · integrity</text>
-    <circle cx="282" cy="360" r="4" class="led ledCyan"/>
+  <!-- CONNECTOR LINES -->
+  <g stroke-linecap="round">
+    <!-- client -> api -->
+    <path d="M600,366 L600,409" stroke="#123047" stroke-width="3"/>
+    <path d="M600,366 L600,409" stroke="#00e5ff" stroke-width="3" opacity="0.25">
+      <animate attributeName="opacity" values="0.1;0.45;0.1" dur="1.7s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- api -> admission / guardian / msos -->
+    <path id="p_adm" d="M600,501 C520,520 430,535 330,548" fill="none" stroke="#123047" stroke-width="3"/>
+    <path id="p_grd" d="M600,501 C600,520 600,535 600,548" fill="none" stroke="#123047" stroke-width="3"/>
+    <path id="p_msos" d="M600,501 C680,520 770,535 870,548" fill="none" stroke="#123047" stroke-width="3"/>
+
+    <!-- pulsing data glow -->
+    <path d="M600,501 C520,520 430,535 330,548" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.18">
+      <animate attributeName="opacity" values="0.08;0.32;0.08" dur="2.0s" repeatCount="indefinite"/>
+    </path>
+    <path d="M600,501 C600,520 600,535 600,548" fill="none" stroke="#00ff6a" stroke-width="3" opacity="0.16">
+      <animate attributeName="opacity" values="0.06;0.30;0.06" dur="2.2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M600,501 C680,520 770,535 870,548" fill="none" stroke="#a78bfa" stroke-width="3" opacity="0.14">
+      <animate attributeName="opacity" values="0.06;0.26;0.06" dur="2.4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- moving packet dots -->
+    <use href="#pkt">
+      <animateMotion dur="1.4s" repeatCount="indefinite" path="M600,501 C520,520 430,535 330,548"/>
+    </use>
+    <use href="#pkt" fill="#00ff6a">
+      <animateMotion dur="1.6s" repeatCount="indefinite" path="M600,501 C600,520 600,535 600,548"/>
+    </use>
+    <use href="#pkt" fill="#a78bfa">
+      <animateMotion dur="1.8s" repeatCount="indefinite" path="M600,501 C680,520 770,535 870,548"/>
+    </use>
   </g>
 
-  <!-- Guardian -->
-  <g>
-    <rect x="340" y="325" width="220" height="74" class="node"/>
-    <rect x="352" y="340" width="196" height="44" class="nodeInner"/>
-    <text x="450" y="369" class="label" text-anchor="middle">Guardian</text>
-    <text x="450" y="392" class="small" text-anchor="middle">decide: allow | deny</text>
+  <!-- ADM / GRD / MSOS nodes row -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    <!-- Admission -->
+    <g transform="translate(330,600)">
+      <use href="#node"/>
+      <text x="0" y="-2" text-anchor="middle" font-size="24" fill="#d7e6ff">Admission</text>
+      <text x="0" y="28" text-anchor="middle" font-size="16" fill="#9fb3ff" opacity="0.9">structure · integrity</text>
+      <circle cx="150" cy="-10" r="6" fill="#00e5ff">
+        <animate attributeName="opacity" values="0.15;1;0.15" dur="1.3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
 
-    <!-- Live decision panel (static rendering) -->
-    <rect x="372" y="404" width="92" height="22" rx="10" fill="url(#allowG)" stroke="rgba(0,255,154,0.65)" stroke-width="1.2" filter="url(#glow)"/>
-    <text x="418" y="419" class="legendTitle" text-anchor="middle" fill="#00ff9a">ALLOW</text>
+    <!-- Guardian -->
+    <g transform="translate(600,600)">
+      <use href="#node"/>
+      <text x="0" y="-2" text-anchor="middle" font-size="24" fill="#d7e6ff">Guardian</text>
+      <text x="0" y="28" text-anchor="middle" font-size="16" fill="#9fb3ff" opacity="0.9">decide: allow | deny</text>
 
-    <rect x="470" y="404" width="92" height="22" rx="10" fill="url(#denyG)" stroke="rgba(255,77,77,0.50)" stroke-width="1.2" opacity="0.35"/>
-    <text x="516" y="419" class="legendTitle" text-anchor="middle" fill="#ff4d4d" opacity="0.35">DENY</text>
+      <!-- Guardian live LEDs -->
+      <circle cx="130" cy="-10" r="6" fill="#00ff6a">
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="1.0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="154" cy="-10" r="6" fill="#00ff6a">
+        <animate attributeName="opacity" values="0.1;0.9;0.1" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
 
-    <circle cx="540" cy="360" r="4" class="led ledGreen"/>
-    <circle cx="525" cy="360" r="4" class="led ledCyan"/>
+      <!-- ALLOW / DENY loop -->
+      <g transform="translate(0,72)" font-size="18" text-anchor="middle">
+        <text x="-70" y="0" fill="#00ff6a" opacity="0">
+          ALLOW
+          <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+        </text>
+        <text x="70" y="0" fill="#ff4d6d" opacity="0">
+          DENY
+          <animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.5;0.75;1" dur="2.4s" repeatCount="indefinite"/>
+        </text>
+      </g>
+    </g>
+
+    <!-- MSOS -->
+    <g transform="translate(870,600)">
+      <use href="#node"/>
+      <text x="0" y="-2" text-anchor="middle" font-size="24" fill="#d7e6ff">MSOS</text>
+      <text x="0" y="28" text-anchor="middle" font-size="16" fill="#9fb3ff" opacity="0.9">invoke organs safely</text>
+
+      <!-- MSOS status LEDs (green + red like your screenshot) -->
+      <circle cx="140" cy="-10" r="6" fill="#ff4d6d">
+        <animate attributeName="opacity" values="0.15;0.5;0.15" dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
   </g>
 
-  <!-- MSOS -->
-  <g>
-    <rect x="600" y="325" width="220" height="74" class="node"/>
-    <rect x="612" y="340" width="196" height="44" class="nodeInner"/>
-    <text x="710" y="369" class="label" text-anchor="middle">MSOS</text>
-    <text x="710" y="392" class="small" text-anchor="middle">invoke organs safely</text>
-    <circle cx="805" cy="360" r="4" class="led ledCyan"/>
+  <!-- Organs bar -->
+  <g transform="translate(600,760)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    <rect x="-430" y="-58" width="860" height="116" rx="18" fill="#0d1117" opacity="0.92"/>
+    <rect x="-430" y="-58" width="860" height="116" rx="18" fill="none" stroke="url(#neon)" stroke-width="2.4" filter="url(#glow)"/>
+
+    <text x="-360" y="-6" font-size="26" fill="#d7e6ff">Organs</text>
+    <text x="-230" y="-6" font-size="18" fill="#9fb3ff" opacity="0.92">firewall · sentinel · cortex · audit · …</text>
+    <text x="-230" y="28" font-size="16" fill="#9fb3ff" opacity="0.92">execution only after authorization</text>
+
+    <!-- Organs LEDs -->
+    <circle cx="360" cy="-22" r="7" fill="#00ff6a">
+      <animate attributeName="opacity" values="0.25;1;0.25" dur="1.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="384" cy="-22" r="7" fill="#fbbf24">
+      <animate attributeName="opacity" values="0.18;0.7;0.18" dur="1.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="408" cy="-22" r="7" fill="#ff4d6d">
+      <animate attributeName="opacity" values="0.10;0.35;0.10" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- AUDIT TRACE SWEEP -->
+    <rect x="-400" y="54" width="800" height="8" rx="4" fill="url(#sweep)" opacity="0.55">
+      <animate attributeName="x" values="-1200;-400;800" dur="2.2s" repeatCount="indefinite"/>
+    </rect>
+    <text x="-400" y="46" font-size="12" fill="#9fb3ff" opacity="0.9">audit trace</text>
   </g>
 
-  <!-- Organs -->
-  <g>
-    <rect x="210" y="425" width="480" height="78" class="node"/>
-    <rect x="222" y="439" width="456" height="50" class="nodeInner"/>
-    <text x="255" y="467" class="label">Organs</text>
-    <text x="450" y="467" class="small" text-anchor="middle">firewall · sentinel · cortex · audit · …</text>
-    <text x="450" y="489" class="small" text-anchor="middle">execution only after authorization</text>
+  <!-- links down to Organs -->
+  <g stroke-linecap="round">
+    <path d="M330,646 C390,700 450,720 520,735" fill="none" stroke="#123047" stroke-width="3"/>
+    <path d="M600,646 C600,700 600,720 600,735" fill="none" stroke="#123047" stroke-width="3"/>
+    <path d="M870,646 C810,700 750,720 680,735" fill="none" stroke="#123047" stroke-width="3"/>
 
-    <!-- Live status LEDs (Green / Amber / Red) -->
-    <circle cx="655" cy="460" r="4" class="led ledGreen"/>
-    <circle cx="670" cy="460" r="4" class="led ledAmber"/>
-    <circle cx="685" cy="460" r="4" class="led ledRed" opacity="0.25"/>
+    <!-- moving packet dots to Organs -->
+    <use href="#pkt">
+      <animateMotion dur="1.7s" repeatCount="indefinite" path="M330,646 C390,700 450,720 520,735"/>
+    </use>
+    <use href="#pkt" fill="#00ff6a">
+      <animateMotion dur="1.9s" repeatCount="indefinite" path="M600,646 C600,700 600,720 600,735"/>
+    </use>
+    <use href="#pkt" fill="#a78bfa">
+      <animateMotion dur="2.1s" repeatCount="indefinite" path="M870,646 C810,700 750,720 680,735"/>
+    </use>
   </g>
 
-  <!-- Data pulses between nodes (GitHub-safe “pulse styling” + dashed overlay) -->
-  <!-- Client -> API -->
-  <path d="M450 189 L450 220" class="linkBase"/>
-  <path d="M450 189 L450 220" class="linkBeam"/>
-  <path d="M450 189 L450 220" class="linkBeam2"/>
-  <path d="M450 189 L450 220" class="linkDash"/>
+  <!-- SOC Legend -->
+  <g transform="translate(90,790)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+    <rect x="0" y="0" width="260" height="110" rx="16" fill="#0d1117" opacity="0.92"/>
+    <rect x="0" y="0" width="260" height="110" rx="16" fill="none" stroke="url(#neon)" stroke-width="2.2" filter="url(#glow)"/>
+    <text x="18" y="32" font-size="18" fill="#00e5ff">SOC Legend</text>
 
-  <!-- API -> Admission -->
-  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBase"/>
-  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBeam"/>
-  <path d="M450 294 L450 314 L190 314 L190 325" class="linkBeam2"/>
-  <path d="M450 294 L450 314 L190 314 L190 325" class="linkDash"/>
+    <circle cx="26" cy="58" r="7" fill="#00ff6a"/>
+    <text x="44" y="63" font-size="16" fill="#9fb3ff">healthy</text>
 
-  <!-- API -> Guardian -->
-  <path d="M450 294 L450 325" class="linkBase"/>
-  <path d="M450 294 L450 325" class="linkBeam"/>
-  <path d="M450 294 L450 325" class="linkBeam2"/>
-  <path d="M450 294 L450 325" class="linkDash"/>
+    <circle cx="126" cy="58" r="7" fill="#fbbf24"/>
+    <text x="144" y="63" font-size="16" fill="#9fb3ff">degraded</text>
 
-  <!-- API -> MSOS -->
-  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBase"/>
-  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBeam"/>
-  <path d="M450 294 L450 314 L710 314 L710 325" class="linkBeam2"/>
-  <path d="M450 294 L450 314 L710 314 L710 325" class="linkDash"/>
-
-  <!-- MSOS -> Organs -->
-  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBase"/>
-  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBeam"/>
-  <path d="M710 399 L710 412 L450 412 L450 425" class="linkBeam2"/>
-  <path d="M710 399 L710 412 L450 412 L450 425" class="linkDash"/>
-
-  <!-- Policy flow trace visualization (dotted “audit/policy” lane + legend) -->
-  <path d="M190 399 L190 412 L450 412" stroke="rgba(0,229,255,0.25)" stroke-width="2" fill="none" stroke-dasharray="3 9"/>
-  <text x="210" y="418" class="small" fill="#00e5ff" opacity="0.55">policy/audit trace</text>
-
-  <!-- Legend panel -->
-  <g>
-    <rect x="35" y="442" width="155" height="58" rx="12" fill="rgba(11,18,32,0.88)" stroke="rgba(0,229,255,0.30)" stroke-width="1.5"/>
-    <text x="47" y="462" class="legendTitle">SOC Legend</text>
-    <circle cx="52" cy="478" r="4" class="led ledGreen"/><text x="64" y="482" class="legendText">healthy</text>
-    <circle cx="112" cy="478" r="4" class="led ledAmber"/><text x="124" y="482" class="legendText">degraded</text>
-    <circle cx="52" cy="494" r="4" class="led ledRed"/><text x="64" y="498" class="legendText">blocked</text>
+    <circle cx="26" cy="86" r="7" fill="#ff4d6d"/>
+    <text x="44" y="91" font-size="16" fill="#9fb3ff">blocked</text>
   </g>
 </svg>
