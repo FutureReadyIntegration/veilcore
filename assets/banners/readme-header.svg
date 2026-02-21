@@ -1,74 +1,31 @@
 <svg width="900" height="200" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg">
-
-<defs>
-
-<filter id="glow">
-  <feGaussianBlur stdDeviation="4" result="blur"/>
-  <feMerge>
-    <feMergeNode in="blur"/>
-    <feMergeNode in="SourceGraphic"/>
-  </feMerge>
-</filter>
-
-<linearGradient id="pulse" x1="0%" y1="0%" x2="100%" y2="0%">
-  <stop offset="0%" stop-color="#00e5ff">
-    <animate attributeName="stop-opacity"
-             values="0.2;1;0.2"
-             dur="2s"
-             repeatCount="indefinite"/>
-  </stop>
-  <stop offset="50%" stop-color="#00ff9a">
-    <animate attributeName="stop-opacity"
-             values="1;0.2;1"
-             dur="2s"
-             repeatCount="indefinite"/>
-  </stop>
-  <stop offset="100%" stop-color="#00e5ff">
-    <animate attributeName="stop-opacity"
-             values="0.2;1;0.2"
-             dur="2s"
-             repeatCount="indefinite"/>
-  </stop>
-</linearGradient>
-
-</defs>
-
-<rect width="900" height="200" fill="#070b12"/>
-
-<text x="450" y="90"
-      text-anchor="middle"
-      font-family="monospace"
-      font-size="48"
-      fill="url(#pulse)"
-      filter="url(#glow)">
-
-VEILCORE
-
-<animate attributeName="opacity"
-         values="0.6;1;0.6"
-         dur="2.5s"
-         repeatCount="indefinite"/>
-
-</text>
-
-<text x="450" y="140"
-      text-anchor="middle"
-      font-family="monospace"
-      font-size="18"
-      fill="#00e5ff"
-      opacity="0.7">
-
-LIVE SECURITY CONTROL PLANE
-
-<animate attributeName="opacity"
-         values="0.3;0.9;0.3"
-         dur="3s"
-         repeatCount="indefinite"/>
-
-</text>
-
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="50%" stop-color="#00ff9a"/>
+      <stop offset="100%" stop-color="#00e5ff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="200" fill="#070b12"/>
+  <text x="450" y="92" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="52" font-weight="800"
+        fill="url(#g)" filter="url(#glow)">VEILCORE</text>
+  <text x="450" y="142" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="16" fill="#9fb4c7" opacity="0.9">
+        LIVE SECURITY CONTROL PLANE
+  </text>
 </svg>
-
+<img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
+[View animated banner](./assets/banners/readme-header-animated.svg)
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380">
   <defs>
     <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
