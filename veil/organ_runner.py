@@ -1,42 +1,52 @@
-import importlib
-import sys
+from __future__ import annotations
+import importlib, inspect, sys
 
-from veil.organ_base import OrganConfig
+ORGANS = {
+    "sentinel": "veil.organs.sentinel.runner",
+    "insider_threat": "veil.organs.insider_threat.runner",
+    "auto_lockdown": "veil.organs.auto_lockdown.runner",
+    "zero_trust": "veil.organs.zero_trust.runner",
+}
 
+CANDIDATE_FUNCS = ["main","run","start","serve","entrypoint","run_service","run_server"]
 
-def load_organ_module(organ_name: str):
-    module_name = f"veil.organs.{organ_name}"
-    return importlib.import_module(module_name)
+def _call(fn):
+    try:
+        sig = inspect.signature(fn)
+        if len(sig.parameters) == 0:
+            return fn()
+        if len(sig.parameters) == 1:
+            return fn(sys.argv[2:])
+    except Exception:
+        pass
+    return fn()
+def run_module(modname: str) -> int:
+    mod = importlib.import_module(modname)
 
+    for name in CANDIDATE_FUNCS:
+        fn = getattr(mod, name, None)
+        if callable(fn):
+            rv = _call(fn)
 
-def build_config(organ_name: str) -> OrganConfig:
-    log_file = f"/var/log/veil/{organ_name}.log"
-    storage_path = f"/var/lib/veil/{organ_name}"
-    # Default health interval; organs can override internally if needed
-    return OrganConfig(
-        name=organ_name,
-        log_file=log_file,
-        storage_path=storage_path,
-        health_interval=30,
-    )
+            # If the function returned immediately,
+            # assume it is a setup function and keep process alive
+            import time
+            while True:
+                time.sleep(60)
 
+    raise SystemExit(f"{modname} has no callable entrypoint")
 
-def main():
+def main() -> int:
     if len(sys.argv) < 2:
-        print("Usage: python -m veil.organ_runner <organ_name>")
-        sys.exit(1)
+        print("Usage: python -m veil.organ_runner <sentinel|insider_threat|auto_lockdown|zero_trust|module.path>")
+        return 2
 
-    organ_name = sys.argv[1]
-    config = build_config(organ_name)
+    organ = sys.argv[1].strip()
+    modname = ORGANS.get(organ, organ if organ.startswith("veil.") else None)
+    if not modname:
+        raise SystemExit(f"Unknown organ '{organ}'. Known: {', '.join(sorted(ORGANS.keys()))}")
 
-    module = load_organ_module(organ_name)
-    if not hasattr(module, "create_organ"):
-        print(f"Organ module {module.__name__} missing create_organ(config) factory")
-        sys.exit(1)
-
-    organ = module.create_organ(config)
-    organ.main()
-
+    return run_module(modname)
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

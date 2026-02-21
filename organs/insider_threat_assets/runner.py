@@ -11,6 +11,7 @@ import json
 import logging
 from pathlib import Path
 from datetime import datetime
+import os
 
 from veil.organs.insider_threat.detector import (
     InsiderThreatDetector,
@@ -149,6 +150,8 @@ def main():
             "message": "Shutdown complete"
         })
         log.info("Stopped.")
+        os._exit(0)
+
         return 0
 
     except Exception as e:

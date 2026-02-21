@@ -591,7 +591,7 @@ class Sentinel:
         severity: Optional[AlertSeverity] = None,
         unresolved_only: bool = False,
         limit: int = 100,
-    ) -> List[Alert]:
+    , **kwargs) -> List[Alert]:
         """Get alerts with optional filtering."""
         alerts = list(self._alerts.values())
         

@@ -11,6 +11,7 @@ import json
 import logging
 from pathlib import Path
 from datetime import datetime
+import os
 
 from veil.organs.telemetry_engine.telemetry import TelemetryEngine, TelemetryConfig
 
@@ -74,6 +75,8 @@ def main():
             time.sleep(5)
         write_status({"running": False, "healthy": True, "message": "Shutdown complete"})
         log.info("Stopped.")
+        os._exit(0)
+
         return 0
     except Exception as e:
         log.error(f"Fatal error: {e}")

@@ -15,6 +15,7 @@ import json
 import logging
 from pathlib import Path
 from datetime import datetime
+import os
 
 # Setup path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
@@ -123,6 +124,8 @@ def main():
             "message": "Shutdown complete"
         })
         log.info("Stopped.")
+        os._exit(0)
+
         return 0
         
     except Exception as e:
