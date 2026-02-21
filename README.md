@@ -1,9 +1,13 @@
 <p align="center">
-  <img src="./assets/banners/readme-header.svg?v=1" alt="VeilCore Banner" width="900"/>
+  <img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
 </p>
 
 <p align="center">
-  <img src="./assets/badges/invariant-plaque.svg?v=1" alt="Veil Invariant Plaque" width="900"/>
+  <img src="./assets/badges/invariant-plaque.svg" alt="Veil Invariant Plaque" width="720"/>
+</p>
+
+<p align="center">
+  <img src="./assets/badges/security-plaque.svg" alt="VeilCore Security Plaque" width="720"/>
 </p>
 
 <p align="center">
@@ -12,10 +16,6 @@
   <img src="https://img.shields.io/badge/HIPAA-100%25_Compliant-00ff6a?style=for-the-badge" alt="HIPAA Compliant"/>
   <img src="https://img.shields.io/badge/FedRAMP-100%25-00ff6a?style=for-the-badge" alt="FedRAMP 100%"/>
   <img src="https://img.shields.io/badge/HITRUST-100%25-00ff6a?style=for-the-badge" alt="HITRUST 100%"/>
-</p>
-
-<p align="center">
-  <img src="./assets/badges/security-plaque.svg?v=1" alt="VeilCore Security Plaque" width="900"/>
 </p>
 
 <p align="center">
