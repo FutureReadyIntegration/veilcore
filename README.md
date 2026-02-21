@@ -3,11 +3,11 @@
 </p>
 
 <p align="center">
-  <img src="./assets/badges/invariant-plaque.svg" alt="Veil Invariant Plaque" width="720"/>
+  <img src="./assets/badges/invariant-plaque.svg" alt="Veil Invariant Plaque" width="820"/>
 </p>
 
 <p align="center">
-  <img src="./assets/badges/security-plaque.svg" alt="VeilCore Security Plaque" width="720"/>
+  <img src="./assets/badges/security-plaque.svg" alt="VeilCore Security Plaque" width="820"/>
 </p>
 
 <p align="center">
@@ -27,6 +27,10 @@
 <p align="center"><em>"I stand between chaos and those I protect"</em></p>
 
 <br/>
+
+---
+
+<br/>/>
 
 ---
 
