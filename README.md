@@ -1,8 +1,6 @@
 <p align="center">
   <img src="./assets/banners/readme-header.svg" alt="VeilCore Banner" width="900"/>
-  <img src="assets/banners/plaque-invariant.svg" width="900"/>
 </p>
-  <img src="assets/banners/plaque-auth-fix.svg" width="900"/>
 <p align="center">
   <img src="./assets/badges/invariant-plaque.svg" alt="Veil Invariant Plaque"/>
   <img src="https://img.shields.io/badge/🛡️_Protected_By-VeilCore-00e5ff?style=for-the-badge" alt="Protected by VeilCore"/>
