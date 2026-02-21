@@ -49,6 +49,9 @@ VeilCore operates as **90 specialized security organs**, each running as an inde
 
 <br/>
 
+<p align="center">
+  <img src="./assets/banners/architecture.gif" width="900"/>
+</p>
 ---
 
 <br/>
