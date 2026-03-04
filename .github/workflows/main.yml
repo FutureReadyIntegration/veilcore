@@ -1,5 +1,1 @@
-cd ~/veilcore
-mv .github/workflows/main.yml .github/workflows/veilcore-ci.yml
-git add .github/workflows/
-git commit -m "Rename workflow to veilcore-ci.yml"
-git push
+[![VeilCore CI](https://github.com/FutureReadyIntegration/veilcore/actions/workflows/main.yml/badge.svg)](https://github.com/FutureReadyIntegration/veilcore/actions/workflows/main.yml)
