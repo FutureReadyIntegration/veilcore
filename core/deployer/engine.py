@@ -1,7 +1,5 @@
 """
 VeilCore Deployment Engine — Genesis
-=======================================
-Production-grade Ubuntu installer and deployment orchestrator.
 """
 from __future__ import annotations
 import json, logging, os, platform, shutil, subprocess, time
@@ -186,7 +184,7 @@ class DeploymentEngine:
         result.duration_seconds = time.monotonic() - start
         return result
 
-    def _create_directories(self, manifest: DeploymentManifest) -> None:
+    def _create_directories(self, manifest):
         for d in [manifest.install_path,f"{manifest.install_path}/organs/p0_critical",f"{manifest.install_path}/organs/p1_important",f"{manifest.install_path}/organs/p2_standard",f"{manifest.install_path}/core",f"{manifest.install_path}/dashboard",f"{manifest.install_path}/scripts",f"{manifest.install_path}/specs",f"{manifest.install_path}/services",manifest.data_path,f"{manifest.data_path}/mesh",f"{manifest.data_path}/ml",f"{manifest.data_path}/federation",f"{manifest.data_path}/wireless",f"{manifest.data_path}/physical",f"{manifest.data_path}/accessibility",f"{manifest.data_path}/deploy-backups",manifest.log_path,manifest.config_path]:
             os.makedirs(d, exist_ok=True)
 
@@ -261,3 +259,4 @@ class DeploymentEngine:
 
     def summary(self):
         return {"engine":"DeploymentEngine","codename":"Genesis","total_organs":len(P0_ORGANS)+len(P1_ORGANS)+len(P2_ORGANS),"subsystems":len(SUBSYSTEM_MAP),"p0":len(P0_ORGANS),"p1":len(P1_ORGANS),"p2":len(P2_ORGANS)}
+EOF

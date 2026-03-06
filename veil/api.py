@@ -476,3 +476,8 @@ def policy_enforce(req: PolicyEnforceReq):
     except Exception as e:
         _audit("policy_enforce_error", user=req.subject.user, error=str(e))
         raise HTTPException(status_code=503, detail=str(e))
+
+
+# --- VeilCore Signed Signature Endpoints ---
+from veil.veilcore_signature_routes import router as veilcore_signature_router
+app.include_router(veilcore_signature_router)

@@ -1,6 +1,7 @@
 # 🔱 Veil API - Main Application
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from veil_os.app.veilcore_signature_routes import router as veilcore_signature_router
 import logging
 import json
 from pathlib import Path
@@ -101,7 +102,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
-
+app.include_router(veilcore_signature_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

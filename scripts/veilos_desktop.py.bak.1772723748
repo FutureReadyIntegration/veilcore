@@ -23,7 +23,7 @@ import traceback
 import urllib.request
 from datetime import datetime
 from pathlib import Path
-
+from PyQt6.QtGui import QColor, QPalette, QPainter, QBrush, QPen, QFont, QRadialGradient, QPainterPath, QKeySequence, QShortcut, QTextCursor, QIcon
 # ─────────────────────────────────────────────────────────────────────
 # PyQt6 Imports
 # ─────────────────────────────────────────────────────────────────────
@@ -40,8 +40,9 @@ try:
         Qt, QTimer, QThread, pyqtSignal, QPoint, QPointF, QObject
     )
     from PyQt6.QtGui import (
-        QColor, QPalette, QPainter, QBrush, QPen, QFont, QRadialGradient,
-        QPainterPath, QKeySequence, QShortcut, QTextCursor
+QColor, QPalette, QPainter, QBrush, QPen, QFont, QRadialGradient,
+        QPainterPath, QKeySequence, QShortcut, QTextCursor,
+        QIcon
     )
 except ImportError:
     print("PyQt6 required: pip install PyQt6 --break-system-packages")
@@ -426,7 +427,7 @@ class SplashScreen(QWidget):
             tc.setAlphaF(self.text_alpha)
             p.setPen(tc)
             p.setFont(QFont("Monospace", 42, QFont.Weight.Bold))
-            p.drawText(self.rect().adjusted(0, -60, 0, 0), Qt.AlignmentFlag.AlignCenter, "V E I L O S")
+            p.drawText(self.rect().adjusted(0, -60, 0, 0), Qt.AlignmentFlag.AlignCenter, "V E I L C O R E")
 
             sc = QColor(C["text2"])
             sc.setAlphaF(self.text_alpha * 0.9)
@@ -697,7 +698,7 @@ class HomeScreen(QWidget):
         logo_text.setStyleSheet(f"color: {C['cyan']}; font-size: 48px; background: transparent;")
         title_col = QVBoxLayout()
         title_col.setSpacing(0)
-        t1 = QLabel("VEILOS")
+        t1 = QLabel("VEILCORE")
         t1.setStyleSheet(f"color: {C['cyan']}; font-size: 28px; font-weight: bold; letter-spacing: 6px;")
         t2 = QLabel("Hospital Cybersecurity Defense Platform")
         t2.setStyleSheet(f"color: {C['text2']}; font-size: 12px;")
@@ -1428,7 +1429,7 @@ class VeilOSDesktop(QMainWindow):
     def __init__(self, gsm):
         super().__init__()
         self.gsm = gsm
-        self.setWindowTitle("VeilOS - Hospital Cybersecurity Platform")
+        self.setWindowTitle("VeilCore - Hospital Cybersecurity Platform")
         self.setMinimumSize(900, 650)
 
         self.menu_open = False
@@ -1865,7 +1866,6 @@ class VeilOSDesktop(QMainWindow):
             x = 4
             y = self.centralWidget().height() - 42 - self.start_menu.height() - 4
             self.start_menu.move(x, y)
-            self.start_menu.show()
             self.start_menu.raise_()
         self.menu_open = not self.menu_open
 
@@ -1890,6 +1890,16 @@ class VeilOSApp:
         log(f"LOG_PATH={LOG_PATH}")
 
         self.app = QApplication(sys.argv)
+        icon_path = Path.home() / ".local" / "share" / "icons" / "veilcore.png"
+if icon_path.exists(): self.app.setWindowIcon(QIcon(str(icon_path)))
+        self.app.setWindowIcon(QIcon(str(icon_path)))
+
+        # ── VeilCore Icon (app + windows)
+        self._icon_path = Path.home() / ".local/share/icons/hicolor/256x256/apps/veilcore.png"
+        self._app_icon = None
+        if self._icon_path.exists():
+        self.app.setWindowIcon(QIcon(str(icon_path)))
+            self.app.setWindowIcon(self._app_icon)
         self.app.setQuitOnLastWindowClosed(False)
         self.app.setStyle("Fusion")
 
@@ -1917,12 +1927,14 @@ class VeilOSApp:
 
         # Splash window
         self.splash_win = QMainWindow()
-        self.splash_win.setWindowTitle("VeilOS")
+        self.splash_win.setWindowTitle("VeilCore")
         self.splash_win.resize(self._sw, self._sh)
 
         self.splash = SplashScreen()
         self.splash.finished.connect(self._on_splash_done)
         self.splash_win.setCentralWidget(self.splash)
+        if getattr(self, '_app_icon', None):
+            self.splash_win.setWindowIcon(self._app_icon)
         self.splash_win.show()
 
         log("Splash shown.")
@@ -1931,6 +1943,8 @@ class VeilOSApp:
         log("Splash finished -> launching desktop.")
         try:
             self.desktop = VeilOSDesktop(self.gsm)
+            if getattr(self, '_app_icon', None):
+                self.desktop.setWindowIcon(self._app_icon)
             self.desktop.resize(self._sw, self._sh)
             self.desktop.show()
 
@@ -2405,7 +2419,7 @@ class SplashScreen(QWidget):
             tc.setAlphaF(self.text_alpha)
             p.setPen(tc)
             p.setFont(QFont("Monospace", 42, QFont.Weight.Bold))
-            p.drawText(self.rect().adjusted(0, -60, 0, 0), Qt.AlignmentFlag.AlignCenter, "V E I L O S")
+            p.drawText(self.rect().adjusted(0, -60, 0, 0), Qt.AlignmentFlag.AlignCenter, "V E I L C O R E")
 
             sc = QColor(C["text2"])
             sc.setAlphaF(self.text_alpha * 0.9)
@@ -2676,7 +2690,7 @@ class HomeScreen(QWidget):
         logo_text.setStyleSheet(f"color: {C['cyan']}; font-size: 48px; background: transparent;")
         title_col = QVBoxLayout()
         title_col.setSpacing(0)
-        t1 = QLabel("VEILOS")
+        t1 = QLabel("VEILCORE")
         t1.setStyleSheet(f"color: {C['cyan']}; font-size: 28px; font-weight: bold; letter-spacing: 6px;")
         t2 = QLabel("Hospital Cybersecurity Defense Platform")
         t2.setStyleSheet(f"color: {C['text2']}; font-size: 12px;")
@@ -3407,7 +3421,7 @@ class VeilOSDesktop(QMainWindow):
     def __init__(self, gsm):
         super().__init__()
         self.gsm = gsm
-        self.setWindowTitle("VeilOS - Hospital Cybersecurity Platform")
+        self.setWindowTitle("VeilCore - Hospital Cybersecurity Platform")
         self.setMinimumSize(900, 650)
 
         self.menu_open = False
@@ -3896,7 +3910,7 @@ class VeilOSApp:
 
         # Splash window
         self.splash_win = QMainWindow()
-        self.splash_win.setWindowTitle("VeilOS")
+        self.splash_win.setWindowTitle("VeilCore")
         self.splash_win.resize(self._sw, self._sh)
 
         self.splash = SplashScreen()
