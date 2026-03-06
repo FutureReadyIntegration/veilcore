@@ -20,6 +20,11 @@ C = {
 }
 
 from pathlib import Path
+import os
+import sys
+import urllib.request
+import json
+from veilcore_secure_terminal import VeilCoreSecureTerminal
 
 
 # ─────────────────────────────────────────────────────
@@ -31,66 +36,25 @@ LOG_PATH = Path.home() / ".config" / "veilcore" / "veilui.log"
 def log(msg: str):
     ts = datetime.now().isoformat(timespec="seconds")
     line = f"[{ts}] {msg}"
-    try:
-        LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with open(LOG_PATH, "a", encoding="utf-8") as f:
-            f.write(line + "\n")
-    except Exception:
-        pass
-    print(line, flush=True)
-
-
-
-def log_exc(prefix: str) -> None:
-    try:
-        log(prefix)
-        import traceback as _tb
-        for ln in _tb.format_exc().rstrip().splitlines():
-            log(ln)
-    except Exception:
-        pass
-
-# ─────────────────────────────────────────────────────────────────────
-# Imports (FFR: stable + complete)
-# ─────────────────────────────────────────────────────────────────────
-import sys
-import os
-from veilcore_secure_terminal import VeilCoreSecureTerminal
-import json
-import math
-import random
-import subprocess
-import traceback
-import urllib.request
-from datetime import datetime
-from pathlib import Path
-from time import monotonic
-
+    
 try:
-    # Qt Core
-    from PyQt6.QtCore import (
-        Qt, QTimer, QThread, QObject, pyqtSignal, QPoint, QPointF
-    )
-
-    # Qt GUI
-    from PyQt6.QtGui import (
-        QColor, QPalette, QPainter, QBrush, QPen, QFont,
-        QRadialGradient, QPainterPath, QIcon, QGuiApplication,
-        QKeySequence, QShortcut, QTextCursor
-    )
-
-    # Qt Widgets
-    from PyQt6.QtWidgets import (
-        QApplication, QWidget, QMainWindow, QLabel, QFrame, QPushButton,
-        QVBoxLayout, QHBoxLayout, QGridLayout, QTextEdit, QLineEdit,
-        QMdiArea, QMdiSubWindow, QScrollArea,
-        QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView,
-        QMenu, QDialog, QFormLayout, QSpinBox, QCheckBox, QDialogButtonBox,
-        QTabWidget
-    )
+    from PyQt6.QtCore import *
+    from PyQt6.QtGui import *
+    from PyQt6.QtWidgets import *
 except Exception:
     print("PyQt6 required: pip install PyQt6 --break-system-packages")
     raise
+
+def log_exc(prefix: str = "Exception:"):
+    import traceback
+    try:
+        log(prefix)
+        for line in traceback.format_exc().splitlines():
+            log(line)
+    except Exception:
+        pass
+
+
 
 # ─────────────────────────────────────────────────────────────────────
 # Splash Particles (2026: time-based, cached, no stutter)
@@ -538,10 +502,15 @@ class Terminal(QWidget):
         )
 
         self.input = QLineEdit()
+        self.history = []
+        self.hist_pos = -1
+        self.history = []
+        self.hist_pos = -1
         self.input.setStyleSheet(
             f"background:{C['bg2']}; color:{C['text']}; border:1px solid {C['border']}; padding:6px;"
         )
         self.input.returnPressed.connect(self._enter)
+
 
         layout.addWidget(self.term)
         layout.addWidget(self.input)
@@ -558,8 +527,32 @@ class Terminal(QWidget):
         self._write(f"VEIL_API: {self.gsm.api_base()}", C["text2"])
         self._write("", C["text2"])
 
+    
+    def keyPressEvent(self, event):
+        key = event.key()
+
+        if key == Qt.Key.Key_Up:
+            if self.history:
+                self.hist_pos = max(0, self.hist_pos - 1 if self.hist_pos != -1 else len(self.history)-1)
+                self.input.setText(self.history[self.hist_pos])
+            return
+
+        if key == Qt.Key.Key_Down:
+            if self.history:
+                self.hist_pos = min(len(self.history)-1, self.hist_pos + 1)
+                self.input.setText(self.history[self.hist_pos])
+            return
+
+        super().keyPressEvent(event)
+
     def _enter(self):
         cmd = self.input.text().strip()
+        if cmd:
+            self.history.append(cmd)
+            self.hist_pos = len(self.history)
+        if cmd:
+            self.history.append(cmd)
+            self.hist_pos = len(self.history)
         if not cmd:
             return
 
