@@ -301,6 +301,8 @@ class AnimatedBar(QProgressBar):
         self._anim.start()
 
 class SubsystemCard(QFrame):
+    _depth_phase = 0.0
+
     def getScale(self):
         return self._scale
 
@@ -311,8 +313,8 @@ class SubsystemCard(QFrame):
     scale = pyqtProperty(float, fget=getScale, fset=setScale)
 
     def __init__(self, info, parent=None):
-        super().__init__(parent); self.setFixedSize(220, 120)
-        self.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;}}")
+        super().__init__(parent); self._module = info.get("module", ""); self.setFixedSize(220, 120)
+        self.setStyleSheet(f"QFrame{{background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 {C['bg3']},stop:0.55 {C['bg2']},stop:1 {C['bg']});border:1px solid {C['border']};border-radius:10px;}}")
         v = QVBoxLayout(self); v.setContentsMargins(8,6,8,6); v.setSpacing(2)
         top = QHBoxLayout()
         icon = QLabel(info["icon"]); icon.setStyleSheet(f"color:{C['cyan']};font-size:22px;")
@@ -331,8 +333,8 @@ class SubsystemCard(QFrame):
         self._pulse.start(700)
 
         self._glow = QGraphicsDropShadowEffect(self)
-        self._glow.setBlurRadius(18)
-        self._glow.setOffset(0, 0)
+        self._glow.setBlurRadius(26)
+        self._glow.setOffset(0, 4)
         self._glow.setColor(QColor(C["green"]))
         self.setGraphicsEffect(self._glow)
 
@@ -340,6 +342,24 @@ class SubsystemCard(QFrame):
         self._glow_timer = QTimer(self)
         self._glow_timer.timeout.connect(self._tick_glow)
         self._glow_timer.start(120)
+
+        self._base_w = 220
+        self._base_h = 120
+        self._pop_scale = 1.0
+        self._pop_anim = QPropertyAnimation(self, b"popScale", self)
+        self._pop_anim.setDuration(240)
+        self._pop_anim.setEasingCurve(QEasingCurve.Type.OutCubic)
+        self._pop_anim.finished.connect(self._pop_back)
+
+        self._base_shadow_blur = 26
+        self._base_shadow_y = 4
+
+        self._sheen = 0.0
+        self._sheen_dir = 1
+        self._edge_phase = 0.0
+        self._fx_timer = QTimer(self)
+        self._fx_timer.timeout.connect(self._tick_fx)
+        self._fx_timer.start(70)
 
         self._scale = 1.0
         self._scale_anim = QPropertyAnimation(self, b"scale")
@@ -369,16 +389,62 @@ class SubsystemCard(QFrame):
                 f"color:{col};font-size:{10 if self._pulse_on else 9}px;"
             )
 
+    def getPopScale(self):
+        return self._pop_scale
+
+    def setPopScale(self, v):
+        self._pop_scale = float(v)
+        w = int(round(self._base_w * self._pop_scale))
+        h = int(round(self._base_h * self._pop_scale))
+        self.setFixedSize(w, h)
+
+        extra = max(0.0, self._pop_scale - 1.0)
+        if hasattr(self, "_glow"):
+            self._glow.setBlurRadius(self._base_shadow_blur + extra * 140)
+            self._glow.setOffset(0, self._base_shadow_y + extra * 18)
+
+    popScale = pyqtProperty(float, fget=getPopScale, fset=setPopScale)
+
+    def _trigger_pop(self):
+        self._pop_anim.stop()
+        self._pop_anim.setStartValue(1.0)
+        self._pop_anim.setEndValue(1.05)
+        self._pop_anim.start()
+
+    def _pop_back(self):
+        if abs(self._pop_scale - 1.0) < 0.001:
+            self.setPopScale(1.0)
+            return
+        self._pop_anim.stop()
+        self._pop_anim.setStartValue(self._pop_scale)
+        self._pop_anim.setEndValue(1.0)
+        self._pop_anim.start()
+
+    def _tick_fx(self):
+        self._edge_phase = (self._edge_phase + self._edge_profile()["speed"]) % 1.0
+        self._depth_phase = (self._depth_phase + 0.02) % 6.28
+        self._sheen += 0.03 * self._sheen_dir
+        if self._sheen >= 1.0:
+            self._sheen = 1.0
+            self._sheen_dir = -1
+        elif self._sheen <= 0.0:
+            self._sheen = 0.0
+            self._sheen_dir = 1
+        self.update()
+
     def _tick_glow(self):
+        prof = self._edge_profile()
+        lift = prof.get("lift", 1.0)
+
         if self._status == "operational":
-            lo, hi = 10, 22
-            col = QColor(C["green"])
+            lo, hi = int(12 * lift), int(26 * lift)
+            col = QColor(prof["base"])
         elif self._status == "degraded":
-            lo, hi = 18, 34
-            col = QColor(C["orange"])
+            lo, hi = int(18 * lift), int(34 * lift)
+            col = QColor(prof["base"])
         else:
-            lo, hi = 6, 36
-            col = QColor(C["red"])
+            lo, hi = int(8 * lift), int(40 * lift)
+            col = QColor(prof["base"])
 
         cur = self._glow.blurRadius()
         step = 2.0 if self._status != "operational" else 1.2
@@ -429,6 +495,184 @@ class SubsystemCard(QFrame):
 
         self.health_bar.setStyleSheet(grad)
 
+    def _edge_profile(self):
+        m = self._module
+
+        # defaults = restrained, professional motion
+        profile = {
+            "base": C["green"],
+            "trail": C["green"],
+            "width": 2,
+            "seg": 0.15,
+            "speed": 0.016,
+            "lift": 1.0,
+            "urgent": False,
+        }
+
+        # module/job-specific accents
+        if m == "ml":               # DeepSentinel
+            profile.update({"base": C["red"], "trail": C["orange"], "width": 4, "seg": 0.26, "speed": 0.030, "lift": 1.18, "urgent": True})
+        elif m == "mesh":           # NerveBridge
+            profile.update({"base": C["cyan"], "trail": C["blue"], "width": 3, "seg": 0.18, "speed": 0.019, "lift": 1.06})
+        elif m == "federation":     # AllianceNet
+            profile.update({"base": C["purple"], "trail": C["cyan"], "width": 2, "seg": 0.18, "speed": 0.014, "lift": 1.04})
+        elif m == "pentest":        # RedVeil
+            profile.update({"base": C["red"], "trail": C["pink"], "width": 4, "seg": 0.24, "speed": 0.028, "lift": 1.16, "urgent": True})
+        elif m == "mobile":         # Watchtower
+            profile.update({"base": C["cyan"], "trail": C["green"], "width": 2, "seg": 0.16, "speed": 0.018, "lift": 1.05})
+        elif m == "accessibility":  # EqualShield
+            profile.update({"base": C["gold"], "trail": C["cyan"], "width": 2, "seg": 0.13, "speed": 0.011, "lift": 1.03})
+        elif m == "wireless":       # AirShield
+            profile.update({"base": C["blue"], "trail": C["cyan"], "width": 3, "seg": 0.18, "speed": 0.020, "lift": 1.06})
+        elif m == "physical":       # IronWatch
+            profile.update({"base": C["orange"], "trail": C["red"], "width": 3, "seg": 0.17, "speed": 0.013, "lift": 1.07})
+        elif m == "deployer":       # Genesis
+            profile.update({"base": C["green"], "trail": C["cyan"], "width": 2, "seg": 0.16, "speed": 0.017, "lift": 1.05})
+        elif m == "hitrust":        # TrustForge
+            profile.update({"base": C["gold"], "trail": C["green"], "width": 2, "seg": 0.14, "speed": 0.010, "lift": 1.03})
+        elif m == "soc2":           # AuditIron
+            profile.update({"base": C["cyan"], "trail": C["gold"], "width": 2, "seg": 0.14, "speed": 0.011, "lift": 1.03})
+        elif m == "cloud":          # SkyVeil
+            profile.update({"base": C["purple"], "trail": C["blue"], "width": 3, "seg": 0.19, "speed": 0.016, "lift": 1.06})
+        elif m == "dashboard":      # Prism
+            profile.update({"base": C["cyan"], "trail": C["purple"], "width": 2, "seg": 0.17, "speed": 0.015, "lift": 1.04})
+
+        # status modulation
+        if self._status == "operational":
+            profile["alpha_head"] = 72
+            profile["alpha_trail"] = 24
+            profile["seg"] *= 0.82
+            profile["speed"] *= 0.82
+        elif self._status == "degraded":
+            if profile["urgent"]:
+                profile["alpha_head"] = 215
+                profile["alpha_trail"] = 84
+                profile["speed"] *= 1.10
+            else:
+                profile["alpha_head"] = 165
+                profile["alpha_trail"] = 54
+        else:
+            if profile["urgent"]:
+                profile["alpha_head"] = 255
+                profile["alpha_trail"] = 120
+                profile["speed"] *= 1.18
+                profile["seg"] *= 1.06
+            else:
+                profile["alpha_head"] = 190
+                profile["alpha_trail"] = 68
+                profile["speed"] *= 1.04
+
+        return profile
+
+    def paintEvent(self, e):
+        super().paintEvent(e)
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        r = self.rect().adjusted(1, 1, -2, -2)
+
+        # soft top highlight
+        top_col = QColor(C["cyan"])
+        top_col.setAlpha(22 if self._status == "operational" else (28 if self._status == "degraded" else 34))
+        p.setPen(QPen(top_col, 1))
+        p.drawLine(r.left() + 8, r.top() + 4, r.right() - 8, r.top() + 4)
+
+        # inner bevel / lip
+        bevel = QColor(255, 255, 255, 14)
+        p.setPen(QPen(bevel, 1))
+        p.drawRoundedRect(r.adjusted(2, 2, -2, -2), 8, 8)
+
+        shadow_lip = QColor(0, 0, 0, 42)
+        p.setPen(QPen(shadow_lip, 1))
+        p.drawLine(r.left() + 10, r.bottom() - 3, r.right() - 10, r.bottom() - 3)
+
+        
+        # subtle 3D depth shadow
+        depth = int(2 + 2 * abs(__import__("math").sin(self._depth_phase)))
+        shadow = QColor(0,0,0,120)
+        p.setPen(Qt.PenStyle.NoPen)
+        p.setBrush(shadow)
+        p.drawRoundedRect(r.adjusted(depth, depth, depth, depth), 10, 10)
+
+        # inner glow
+        glow = QRadialGradient(QPointF(r.center()), float(r.width()) * 0.6)
+        glow.setColorAt(0, QColor(C["cyan"]))
+        glow.setColorAt(1, QColor(0,0,0,0))
+        p.setBrush(glow)
+        p.setOpacity(0.08)
+        p.drawRoundedRect(r.adjusted(2,2,-2,-2), 10, 10)
+
+        # internal threat scan pulse
+        if getattr(self, "_module", "") in ("ml","pentest") and self._status != "operational":
+            import math
+            pulse_r = abs(math.sin(self._depth_phase*2))*r.width()*0.35
+            col = QColor(C["red"])
+            col.setAlpha(55)
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(col)
+            p.drawEllipse(r.center(), int(pulse_r), int(pulse_r))
+
+        p.setOpacity(1)
+
+        # module-aware perimeter sweep
+        prof = self._edge_profile()
+
+        siren_col = QColor(prof["base"])
+        siren_col.setAlpha(prof["alpha_head"])
+
+        trail_col = QColor(prof["trail"])
+        trail_col.setAlpha(prof["alpha_trail"])
+
+        width = prof["width"]
+
+        path = QPainterPath()
+        rr = QRectF(r.adjusted(1, 1, -1, -1))
+        path.addRoundedRect(rr, 10, 10)
+
+        plen = max(1.0, path.length())
+        head = self._edge_phase * plen
+        seg = plen * prof["seg"]
+        trail = plen * 0.08
+
+        def draw_segment(offset, length, color, pen_w):
+            a = max(0.0, offset)
+            b = min(plen, offset + length)
+            if b <= a:
+                return
+            sub = path.toSubpathPolygons()
+            # fallback using percent sampling
+            pts = []
+            steps = max(8, int(length / 6))
+            for i in range(steps + 1):
+                d = a + (b - a) * (i / steps)
+                pct = 0.0 if plen == 0 else d / plen
+                pts.append(path.pointAtPercent(pct))
+            if len(pts) >= 2:
+                pp = QPainterPath()
+                pp.moveTo(pts[0])
+                for pt in pts[1:]:
+                    pp.lineTo(pt)
+                p.setPen(QPen(color, pen_w, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin))
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.drawPath(pp)
+
+        # wrap-around drawing
+        for base in (head - seg, head):
+            a = base
+            b = base + seg
+            if a < 0:
+                draw_segment(plen + a, -a, trail_col, width)
+                draw_segment(0, b, siren_col, width)
+            elif b > plen:
+                draw_segment(a, plen - a, siren_col, width)
+                draw_segment(0, b - plen, trail_col, width)
+            else:
+                draw_segment(a, trail, trail_col, width)
+                draw_segment(a + trail, max(0.0, seg - trail), siren_col, width)
+
+        p.end()
+
+
     def set_status(self, status, health=100):
         colors = {"operational":C["green"],"degraded":C["orange"],"offline":C["red"]}
         col = colors.get(status, C["dim"])
@@ -436,6 +680,108 @@ class SubsystemCard(QFrame):
         self.health_bar.setValue(int(health))
         bc = C["green"] if health >= 85 else (C["orange"] if health >= 70 else C["red"])
         self.health_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{bc};border-radius:2px;}}")
+
+class NeuralOverlay(QWidget):
+    def __init__(self, host, cards):
+        super().__init__(host)
+        self._cards = cards
+        self._phase = 0.0
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        self.setStyleSheet("background:transparent;")
+        self.setGeometry(host.rect())
+        host.installEventFilter(self)
+
+        self._links = [
+            ("mesh", "ml", "cyan"),
+            ("ml", "federation", "red"),
+            ("mesh", "dashboard", "blue"),
+            ("pentest", "dashboard", "pink"),
+            ("cloud", "dashboard", "purple"),
+            ("mobile", "mesh", "green"),
+            ("wireless", "physical", "blue"),
+            ("deployer", "cloud", "green"),
+            ("hitrust", "soc2", "gold"),
+            ("accessibility", "dashboard", "gold"),
+        ]
+
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._tick)
+        self._timer.start(50)
+
+    def eventFilter(self, obj, ev):
+        if obj is self.parent():
+            if ev.type() in (QEvent.Type.Resize, QEvent.Type.Show, QEvent.Type.Move):
+                self.setGeometry(self.parent().rect())
+        return False
+
+    def _tick(self):
+        self._phase = (self._phase + 0.018) % 1.0
+        self.update()
+
+    def _card_center(self, module):
+        card = self._cards.get(module)
+        if not card:
+            return None
+        g = card.geometry()
+        return QPointF(g.center())
+
+    def paintEvent(self, _e):
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        for i, (a, b, accent) in enumerate(self._links):
+            p1 = self._card_center(a)
+            p2 = self._card_center(b)
+            if p1 is None or p2 is None:
+                continue
+
+            dx = p2.x() - p1.x()
+            dy = p2.y() - p1.y()
+            dist = max(1.0, (dx * dx + dy * dy) ** 0.5)
+
+            nx = -dy / dist
+            ny = dx / dist
+            bend = 12 + (i % 3) * 6
+
+            c1 = QPointF(p1.x() + dx * 0.33 + nx * bend, p1.y() + dy * 0.33 + ny * bend)
+            c2 = QPointF(p1.x() + dx * 0.66 + nx * bend, p1.y() + dy * 0.66 + ny * bend)
+
+            path = QPainterPath()
+            path.moveTo(p1)
+            path.cubicTo(c1, c2, p2)
+
+            base = QColor(C.get(accent, C["cyan"]))
+            line_col = QColor(base)
+            line_col.setAlpha(34)
+            p.setPen(QPen(line_col, 1.5, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.drawPath(path)
+
+            # trailing soft wave
+            t = (self._phase + i * 0.09) % 1.0
+            tail = max(0.0, t - 0.08)
+
+            pt_tail = path.pointAtPercent(tail)
+            pt_head = path.pointAtPercent(t)
+
+            trail_col = QColor(base)
+            trail_col.setAlpha(65)
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(QBrush(trail_col))
+            p.drawEllipse(pt_tail, 4, 4)
+
+            head_col = QColor(base)
+            head_col.setAlpha(180)
+            p.setBrush(QBrush(head_col))
+            p.drawEllipse(pt_head, 6, 6)
+
+            glow_col = QColor(base)
+            glow_col.setAlpha(50)
+            p.setBrush(QBrush(glow_col))
+            p.drawEllipse(pt_head, 11, 11)
+
+        p.end()
 
 # ── Dashboard V2 with Live Metrics ──
 class DashboardV2(QWidget):
@@ -461,6 +807,8 @@ class DashboardV2(QWidget):
             card = SubsystemCard(info); card.set_status("operational", 100); self.cards[info["module"]] = card
             grid.addWidget(card, row, col); col += 1
             if col >= 7: col = 0; row += 1
+        self.overlay = NeuralOverlay(gw, self.cards)
+        self.overlay.raise_()
         scroll.setWidget(gw); root.addWidget(scroll, 1)
         self.threat_label = QLabel(""); self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;"); root.addWidget(self.threat_label)
         poller.health.connect(self.on_health)
