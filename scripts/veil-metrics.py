@@ -120,6 +120,14 @@ def main():
             }
         }
 
+        # Write local snapshot for dashboard
+        try:
+            snap_dir = Path("/home/user/.config/veilcore")
+            snap_dir.mkdir(parents=True, exist_ok=True)
+            (snap_dir / "metrics.json").write_text(json.dumps(payload, indent=2))
+        except Exception:
+            pass
+
         ok = publish(payload)
         status = "OK" if ok else "FAIL"
         print(f"[veil-metrics] #{cycle} cpu={cpu}% ram={ram['used_pct']}% disk={disk['used_pct']}% organs={organs['enabled']}/{organs['total']} svcs={svcs['active']}/{svcs['total']} -> {status}")
