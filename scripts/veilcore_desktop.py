@@ -1,42 +1,34 @@
 from __future__ import annotations
 
-# THEME (VeilCore) — required before VeilCoreApp uses C
 C = {
-    "bg": "#0a0e17",
-    "bg2": "#111827",
-    "bg3": "#1a2332",
-    "cyan": "#00e5ff",
-    "green": "#00ff6a",
-    "gold": "#fbbf24",
-    "orange": "#ff8c00",
-    "red": "#ff4444",
-    "blue": "#3b82f6",
-    "purple": "#a855f7",
-    "pink": "#ec4899",
-    "text": "#e6f7ff",
-    "text2": "#7baac4",
-    "dim": "#4a6a7a",
-    "border": "#1e3a4a",
+    "bg": "#0a0e17", "bg2": "#111827", "bg3": "#1a2332",
+    "cyan": "#00e5ff", "green": "#00ff6a", "gold": "#fbbf24",
+    "orange": "#ff8c00", "red": "#ff4444", "blue": "#3b82f6",
+    "purple": "#a855f7", "pink": "#ec4899", "text": "#e6f7ff",
+    "text2": "#7baac4", "dim": "#4a6a7a", "border": "#1e3a4a",
 }
 
 from pathlib import Path
-import os
-import sys
-import urllib.request
-import json
-from veilcore_secure_terminal import VeilCoreSecureTerminal
-
-
-# ─────────────────────────────────────────────────────
-# Logging
-# ─────────────────────────────────────────────────────
+import os, sys, json, urllib.request
 from datetime import datetime
-LOG_PATH = Path.home() / ".config" / "veilcore" / "veilui.log"
 
-def log(msg: str):
+LOG_PATH = Path.home() / ".config" / "veilcore" / "veilui.log"
+LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+def log(msg):
     ts = datetime.now().isoformat(timespec="seconds")
-    line = f"[{ts}] {msg}"
-    
+    try:
+        with open(LOG_PATH, "a") as f:
+            f.write(f"[{ts}] {msg}\n")
+    except Exception:
+        pass
+
+def log_exc(prefix="Exception:"):
+    import traceback
+    log(prefix)
+    for line in traceback.format_exc().splitlines():
+        log(line)
+
 try:
     from PyQt6.QtCore import *
     from PyQt6.QtGui import *
@@ -45,22 +37,11 @@ except Exception:
     print("PyQt6 required: pip install PyQt6 --break-system-packages")
     raise
 
-def log_exc(prefix: str = "Exception:"):
-    import traceback
-    try:
-        log(prefix)
-        for line in traceback.format_exc().splitlines():
-            log(line)
-    except Exception:
-        pass
-
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Splash Particles (2026: time-based, cached, no stutter)
-# ─────────────────────────────────────────────────────────────────────
+from PyQt6.QtWidgets import QCompleter
 from time import monotonic
+from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, pyqtProperty
 
+# ── Splash ──
 class _P:
     __slots__ = ("x","y","vx","vy","life","decay","size","col")
     def __init__(self, x, y, vx, vy, life, decay, size, col):
@@ -69,1226 +50,603 @@ class _P:
 
 class Splash(QWidget):
     finished = pyqtSignal()
-
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
-        self._t = 0.0
-        self._fail_text = ""
+        self._t = 0.0; self._fail_text = ""; self._phase = 0; self._phase_t = 0.0
+        self._particles = []; self._ring_r = 0.0; self._ring_a = 0.0
+        self._eye_lock = 0.0; self._fade = 0.0
+        self._timer = QTimer(self); self._timer.timeout.connect(self._tick); self._timer.start(16)
+        QTimer.singleShot(140, self._start); QTimer.singleShot(750, self._explode)
+        QTimer.singleShot(1050, self._after_burst); QTimer.singleShot(1650, self._gather)
+        QTimer.singleShot(2650, self._lock_in); QTimer.singleShot(3750, self._fade_out)
 
-        # phases: 0 pre-eye, 1 explode, 2 gather-to-eye, 3 lock-in, 4 fade
-        self._phase = 0
-        self._phase_t = 0.0
+    def set_fail(self, text): self._fail_text = text; self._phase = 3; self._eye_lock = 1.0; self._fade = 0.0; self.update()
+    def _start(self): self._phase = 0; self._phase_t = 0.0
 
-        self._particles: list[_P] = []
-        self._ring_r = 0.0
-        self._ring_a = 0.0
-
-        self._eye_lock = 0.0  # 0..1 how strong the final eye is
-        self._fade = 0.0
-
-        self._timer = QTimer(self)
-        self._timer.timeout.connect(self._tick)
-        self._timer.start(16)
-
-        # schedule the “story”
-        QTimer.singleShot(140, self._start)
-        QTimer.singleShot(750, self._explode)
-        QTimer.singleShot(1050, self._after_burst)
-        QTimer.singleShot(1650, self._gather)
-        QTimer.singleShot(2650, self._lock_in)
-        QTimer.singleShot(3750, self._fade_out)
-
-    def set_fail(self, text: str) -> None:
-        self._fail_text = text
-        # stop finishing sequence so error stays readable
-        self._phase = 3
-        self._eye_lock = 1.0
-        self._fade = 0.0
-        self.update()
-
-    def _start(self) -> None:
-        self._phase = 0
-        self._phase_t = 0.0
-
-    def _explode(self) -> None:
-        if self._fail_text:
-            return
-        self._phase = 1
-        self._phase_t = 0.0
-
-        w, h = max(1, self.width()), max(1, self.height())
-        cx, cy = w * 0.5, h * 0.5
-
+    def _explode(self):
+        if self._fail_text: return
+        self._phase = 1; self._phase_t = 0.0
         import random, math
+        w, h = max(1, self.width()), max(1, self.height()); cx, cy = w*0.5, h*0.5
         cols = [C["cyan"], C["green"], C["gold"], C["blue"], C["purple"], C["pink"]]
         self._particles.clear()
         for _ in range(720):
-            ang = random.random() * math.tau
-            spd = 7.0 + random.random() * 22.0
-            vx, vy = math.cos(ang) * spd, math.sin(ang) * spd
-            life = 1.1 + random.random() * 0.9
-            decay = 0.010 + random.random() * 0.020
-            size = 2.0 + random.random() * 5.0
-            self._particles.append(_P(cx, cy, vx, vy, life, decay, size, random.choice(cols)))
+            ang = random.random()*math.tau; spd = 7+random.random()*22
+            self._particles.append(_P(cx, cy, math.cos(ang)*spd, math.sin(ang)*spd, 1.1+random.random()*0.9, 0.01+random.random()*0.02, 2+random.random()*5, random.choice(cols)))
+        self._ring_r = 0.0; self._ring_a = 1.0
 
-        self._ring_r = 0.0
-        self._ring_a = 1.0
-
-
-    def _after_burst(self) -> None:
-        if self._fail_text:
-            return
-        # second pop: smaller, faster sparks
+    def _after_burst(self):
+        if self._fail_text: return
         import random, math
-        w, h = max(1, self.width()), max(1, self.height())
-        cx, cy = w * 0.5, h * 0.5
+        w, h = max(1, self.width()), max(1, self.height()); cx, cy = w*0.5, h*0.5
         cols = [C["cyan"], C["green"], C["gold"], C["blue"], C["purple"], C["pink"]]
         for _ in range(240):
-            ang = random.random() * math.tau
-            spd = 10.0 + random.random() * 26.0
-            vx, vy = math.cos(ang) * spd, math.sin(ang) * spd
-            life = 0.55 + random.random() * 0.55
-            decay = 0.016 + random.random() * 0.028
-            size = 1.5 + random.random() * 4.0
-            self._particles.append(_P(cx, cy, vx, vy, life, decay, size, random.choice(cols)))
-        # punch ring back up briefly
+            ang = random.random()*math.tau; spd = 10+random.random()*26
+            self._particles.append(_P(cx, cy, math.cos(ang)*spd, math.sin(ang)*spd, 0.55+random.random()*0.55, 0.016+random.random()*0.028, 1.5+random.random()*4, random.choice(cols)))
         self._ring_a = max(self._ring_a, 0.85)
 
-    def _gather(self) -> None:
-        if self._fail_text:
-            return
-        self._phase = 2
-        self._phase_t = 0.0
+    def _gather(self):
+        if self._fail_text: return
+        self._phase = 2; self._phase_t = 0.0
+    def _lock_in(self):
+        if self._fail_text: return
+        self._phase = 3; self._phase_t = 0.0
+    def _fade_out(self):
+        if self._fail_text: return
+        self._phase = 4; self._phase_t = 0.0
 
-    def _lock_in(self) -> None:
-        if self._fail_text:
-            return
-        self._phase = 3
-        self._phase_t = 0.0
-
-    def _fade_out(self) -> None:
-        if self._fail_text:
-            return
-        self._phase = 4
-        self._phase_t = 0.0
-
-    def _tick(self) -> None:
-        dt = 0.016
-        self._t += dt
-        self._phase_t += dt
-
-        w, h = max(1, self.width()), max(1, self.height())
-        cx, cy = w * 0.5, h * 0.5
-
-        # ring expands during explosion then tightens during gather
-        if self._phase == 1:
-            self._ring_r += 34.0
-            self._ring_a = max(0.0, self._ring_a - 0.014)
-        elif self._phase == 2:
-            # tighten back in to “form” the eye
-            self._ring_r = max(0.0, self._ring_r - 28.0)
-            self._ring_a = min(0.9, self._ring_a + 0.030)
-
-        # particle physics
+    def _tick(self):
+        dt = 0.016; self._t += dt; self._phase_t += dt
+        w, h = max(1, self.width()), max(1, self.height()); cx, cy = w*0.5, h*0.5
+        if self._phase == 1: self._ring_r += 34; self._ring_a = max(0, self._ring_a - 0.014)
+        elif self._phase == 2: self._ring_r = max(0, self._ring_r - 28); self._ring_a = min(0.9, self._ring_a + 0.03)
         if self._particles:
             for p in self._particles:
                 if self._phase == 1:
-                    # outward burst
-                    p.x += p.vx
-                    p.y += p.vy
-                    p.vx *= 0.992
-                    p.vy *= 0.992
-                    p.life -= p.decay
+                    p.x += p.vx; p.y += p.vy; p.vx *= 0.992; p.vy *= 0.992; p.life -= p.decay
                 else:
-                    # gather: pull particles toward center to “build” eye
-                    dx = cx - p.x
-                    dy = cy - p.y
-                    p.x += dx * 0.085
-                    p.y += dy * 0.085
-                    p.vx *= 0.90
-                    p.vy *= 0.90
-                    p.life -= p.decay * 0.75
-
-            self._particles = [p for p in self._particles if p.life > 0.0]
-
-        # eye lock-in strength
-        if self._phase == 0:
-            self._eye_lock = min(0.45, self._eye_lock + 0.020)
-        elif self._phase == 2:
-            self._eye_lock = min(1.0, self._eye_lock + 0.030)
-        elif self._phase == 3:
-            self._eye_lock = min(1.0, self._eye_lock + 0.040)
-
-        # fade
+                    dx, dy = cx - p.x, cy - p.y; p.x += dx*0.085; p.y += dy*0.085; p.vx *= 0.9; p.vy *= 0.9; p.life -= p.decay*0.75
+            self._particles = [p for p in self._particles if p.life > 0]
+        if self._phase == 0: self._eye_lock = min(0.45, self._eye_lock + 0.02)
+        elif self._phase == 2: self._eye_lock = min(1, self._eye_lock + 0.03)
+        elif self._phase == 3: self._eye_lock = min(1, self._eye_lock + 0.04)
         if self._phase == 4:
-            self._fade = min(1.0, self._fade + 0.020)
-            if self._fade >= 1.0:
-                self._timer.stop()
-                self.finished.emit()
-                return
-
+            self._fade = min(1, self._fade + 0.02)
+            if self._fade >= 1: self._timer.stop(); self.finished.emit(); return
         self.update()
 
-    def paintEvent(self, _ev) -> None:
-        p = QPainter(self)
-        p.setRenderHint(QPainter.RenderHint.Antialiasing)
-        bg = QColor(C["bg"])
-        bg.setAlphaF(0.22)  # trails strength
-        p.fillRect(self.rect(), bg)
-
-        w, h = self.width(), self.height()
-        cx, cy = w // 2, h // 2
-
-        # particles (behind eye)
+    def paintEvent(self, _):
+        p = QPainter(self); p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        bg = QColor(C["bg"]); bg.setAlphaF(0.22); p.fillRect(self.rect(), bg)
+        w, h = self.width(), self.height(); cx, cy = w//2, h//2
         for pt in self._particles:
-            col = QColor(pt.col)
-            col.setAlphaF(max(0.0, min(1.0, pt.life)))
-            p.setPen(Qt.PenStyle.NoPen)
-            p.setBrush(QBrush(col))
+            col = QColor(pt.col); col.setAlphaF(max(0, min(1, pt.life)))
+            p.setPen(Qt.PenStyle.NoPen); p.setBrush(QBrush(col))
             p.drawEllipse(int(pt.x), int(pt.y), int(pt.size), int(pt.size))
-
-        # ring
-        if self._ring_a > 0.0:
-            rc = QColor(C["cyan"])
-            rc.setAlphaF(max(0.0, min(1.0, self._ring_a * 0.7)))
-            p.setPen(QPen(rc, 6))
-            p.setBrush(Qt.BrushStyle.NoBrush)
-            p.drawEllipse(cx - int(self._ring_r), cy - int(self._ring_r), int(self._ring_r * 2), int(self._ring_r * 2))
-
-        # final eye (grows in intensity)
-        strength = max(0.0, min(1.0, self._eye_lock))
-        if strength > 0.0:
-            # glow
-            r = int(110 + 60 * strength)
-            g = QRadialGradient(cx, cy, r)
-            g.setColorAt(0.0, QColor(C["cyan"]))
-            g.setColorAt(0.55, QColor(C["blue"]))
-            g.setColorAt(1.0, QColor(C["bg"]))
-            p.setBrush(QBrush(g))
-            p.setPen(Qt.PenStyle.NoPen)
-            p.setOpacity(0.22 + 0.70 * strength)
-            p.drawEllipse(cx - r, cy - r, r * 2, r * 2)
-            p.setOpacity(1.0)
-
-            # outline
-            oc = QColor(C["cyan"])
-            oc.setAlphaF(0.35 + 0.65 * strength)
-            p.setPen(QPen(oc, 4))
-            p.setBrush(Qt.BrushStyle.NoBrush)
-            p.drawRoundedRect(cx - 260, cy - 95, 520, 190, 140, 140)
-
-            # pupil
-            pc = QColor(C["bg"])
-            pc.setAlphaF(0.7 + 0.3 * strength)
-            p.setBrush(QBrush(pc))
-            p.setPen(QPen(QColor(C["cyan"]), 3))
-            p.drawEllipse(cx - 45, cy - 45, 90, 90)
-
-        # text
-        p.setPen(QColor(C["cyan"]))
-        p.setFont(QFont("Monospace", 34, QFont.Weight.Bold))
-        p.drawText(0, cy + 160, w, 60, int(Qt.AlignmentFlag.AlignHCenter), "VEILCORE")
-
-        p.setPen(QColor(C["text2"]))
-        p.setFont(QFont("Monospace", 12))
-        p.drawText(0, cy + 210, w, 40, int(Qt.AlignmentFlag.AlignHCenter), "Cyber Defense Platform")
-
+        if self._ring_a > 0:
+            rc = QColor(C["cyan"]); rc.setAlphaF(max(0, min(1, self._ring_a*0.7)))
+            p.setPen(QPen(rc, 6)); p.setBrush(Qt.BrushStyle.NoBrush)
+            p.drawEllipse(cx-int(self._ring_r), cy-int(self._ring_r), int(self._ring_r*2), int(self._ring_r*2))
+        s = max(0, min(1, self._eye_lock))
+        if s > 0:
+            r = int(110+60*s); g = QRadialGradient(cx, cy, r)
+            g.setColorAt(0, QColor(C["cyan"])); g.setColorAt(0.55, QColor(C["blue"])); g.setColorAt(1, QColor(C["bg"]))
+            p.setBrush(QBrush(g)); p.setPen(Qt.PenStyle.NoPen); p.setOpacity(0.22+0.7*s)
+            p.drawEllipse(cx-r, cy-r, r*2, r*2); p.setOpacity(1)
+            oc = QColor(C["cyan"]); oc.setAlphaF(0.35+0.65*s)
+            p.setPen(QPen(oc, 4)); p.setBrush(Qt.BrushStyle.NoBrush)
+            p.drawRoundedRect(cx-260, cy-95, 520, 190, 140, 140)
+            pc = QColor(C["bg"]); pc.setAlphaF(0.7+0.3*s)
+            p.setBrush(QBrush(pc)); p.setPen(QPen(QColor(C["cyan"]), 3))
+            p.drawEllipse(cx-45, cy-45, 90, 90)
+        p.setPen(QColor(C["cyan"])); p.setFont(QFont("Monospace", 34, QFont.Weight.Bold))
+        p.drawText(0, cy+160, w, 60, int(Qt.AlignmentFlag.AlignHCenter), "VEILCORE")
+        p.setPen(QColor(C["text2"])); p.setFont(QFont("Monospace", 12))
+        p.drawText(0, cy+210, w, 40, int(Qt.AlignmentFlag.AlignHCenter), "Cyber Defense Platform")
         if self._fail_text:
-            p.setPen(QColor(C["red"]))
-            p.setFont(QFont("Monospace", 11))
-            p.drawText(60, 60, w - 120, h - 120, int(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop), self._fail_text)
-
-        # fade overlay
-        if self._fade > 0.0 and not self._fail_text:
-            ov = QColor(C["bg"])
-            ov.setAlphaF(self._fade)
-            p.fillRect(self.rect(), ov)
-
+            p.setPen(QColor(C["red"])); p.setFont(QFont("Monospace", 11))
+            p.drawText(60, 60, w-120, h-120, int(Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop), self._fail_text)
+        if self._fade > 0 and not self._fail_text:
+            ov = QColor(C["bg"]); ov.setAlphaF(self._fade); p.fillRect(self.rect(), ov)
         p.end()
 
-
-# ─────────────────────────────────────────────────────────────────────
-# Apps (Dashboard / Organs / Terminal)
-# ─────────────────────────────────────────────────────────────────────
-
-# ─────────────────────────────────────────────────────────────────────
-# API Poller (restored) — provides /health and /organs updates to the UI
-# ─────────────────────────────────────────────────────────────────────
-def api_get(base: str, path: str, api_key: str, timeout_s: float = 2.0) -> dict:
+# ── API Poller ──
+def api_get(base, path, api_key, timeout_s=2.0):
     url = f"{base}/{path.lstrip('/')}"
     req = urllib.request.Request(url)
-    if api_key:
-        req.add_header("X-API-Key", api_key)
+    if api_key: req.add_header("X-API-Key", api_key)
     try:
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            raw = resp.read().decode("utf-8", errors="replace")
-        return json.loads(raw)
+            return json.loads(resp.read().decode("utf-8", errors="replace"))
     except Exception as e:
         return {"_error": str(e)}
 
 class Fetcher(QThread):
-    health = pyqtSignal(dict)
-    organs = pyqtSignal(list)
-
-    def __init__(self, base: str, key: str) -> None:
-        super().__init__()
-        self.base = base
-        self.key = key
-
-    def run(self) -> None:
+    health = pyqtSignal(dict); organs = pyqtSignal(list)
+    def __init__(self, base, key): super().__init__(); self.base = base; self.key = key
+    def run(self):
         self.health.emit(api_get(self.base, "health", self.key))
         o = api_get(self.base, "organs", self.key)
-        if "_error" in o:
-            self.organs.emit([])
-            return
-        orgs = o.get("organs", [])
-        self.organs.emit(orgs if isinstance(orgs, list) else [])
+        self.organs.emit(o.get("organs", []) if "_error" not in o else [])
 
 class ApiPoller(QObject):
-    health = pyqtSignal(dict)
-    organs = pyqtSignal(list)
-
-    def __init__(self, gs) -> None:
-        super().__init__()
-        self.gs = gs
-        self._fetcher = None
-
-        self._timer = QTimer(self)
-        self._timer.timeout.connect(self.poll)
-        self._timer.start(self.gs.refresh_ms())
-
-        # refresh interval changes
-        if hasattr(self.gs, "changed"):
-            self.gs.changed.connect(self._on_settings)
-
+    health = pyqtSignal(dict); organs = pyqtSignal(list)
+    def __init__(self, gs):
+        super().__init__(); self.gs = gs; self._fetcher = None
+        self._timer = QTimer(self); self._timer.timeout.connect(self.poll); self._timer.start(self.gs.refresh_ms())
+        if hasattr(self.gs, "changed"): self.gs.changed.connect(self._on_settings)
         QTimer.singleShot(250, self.poll)
-
-    def _on_settings(self, _d: dict) -> None:
-        self._timer.setInterval(self.gs.refresh_ms())
-        self.poll()
-
-    def poll(self) -> None:
-        if self._fetcher and self._fetcher.isRunning():
-            return
+    def _on_settings(self, _): self._timer.setInterval(self.gs.refresh_ms()); self.poll()
+    def poll(self):
+        if self._fetcher and self._fetcher.isRunning(): return
         self._fetcher = Fetcher(self.gs.api_base(), self.gs.api_key())
-        self._fetcher.health.connect(self.health.emit)
-        self._fetcher.organs.connect(self.organs.emit)
+        self._fetcher.health.connect(self.health.emit); self._fetcher.organs.connect(self.organs.emit)
         self._fetcher.start()
 
-class Dashboard(QWidget):
-    def __init__(self, gs: GlobalSettings, poller: ApiPoller) -> None:
-        super().__init__()
-        self.gs = gs
-        self.poller = poller
-
-        root = QVBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(10)
-
-        hdr = QHBoxLayout()
-        title = QLabel("SECURITY COMMAND CENTER")
-        title.setStyleSheet(f"color:{C['cyan']}; font-size:16px; font-weight:bold; letter-spacing:2px;")
-        self.conn = QLabel("● CONNECTING")
-        self.conn.setStyleSheet(f"color:{C['orange']}; font-size:10px; font-weight:bold;")
-        btn = QPushButton("Settings")
-        btn.setStyleSheet(f"QPushButton{{background:{C['bg3']};color:{C['text2']};border:1px solid {C['border']};border-radius:12px;padding:6px 12px;font-size:10px;}}"
-                          f"QPushButton:hover{{background:{C['border']};color:{C['text']};border-color:{C['cyan']};}}")
-        btn.clicked.connect(lambda: SettingsDialog(self.gs, self).exec())
-        hdr.addWidget(title)
-        hdr.addStretch()
-        hdr.addWidget(self.conn)
-        hdr.addWidget(btn)
-        root.addLayout(hdr)
-
-        self.kv = QLabel("Waiting for /health ...")
-        self.kv.setStyleSheet(f"color:{C['text2']}; font-family: monospace; font-size: 12px;")
-        self.kv.setWordWrap(True)
-        root.addWidget(self.kv)
-
-        root.addStretch()
-
-        poller.health.connect(self.on_health)
-
-        # Live metrics reader
-        self._metrics_timer = QTimer(self)
-        self._metrics_timer.timeout.connect(self._read_metrics)
-        self._metrics_timer.start(5000)
-        QTimer.singleShot(1000, self._read_metrics)
-
-    def on_health(self, d: dict) -> None:
-        if "_error" in d:
-            self.conn.setText("● OFFLINE")
-            self.conn.setStyleSheet(f"color:{C['red']}; font-size:10px; font-weight:bold;")
-            self.kv.setText(f"health error: {d['_error']}")
-            return
-        self.conn.setText("● CONNECTED")
-        self.conn.setStyleSheet(f"color:{C['green']}; font-size:10px; font-weight:bold;")
-        self.kv.setText(json.dumps(d, indent=2))
-
+# ── Organs Tab ──
 class Organs(QWidget):
-    def __init__(self, gs: GlobalSettings, poller: ApiPoller) -> None:
-        super().__init__()
-        self.gs = gs
-
-        root = QVBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(10)
-
+    def __init__(self, gs, poller):
+        super().__init__(); self.gs = gs
+        root = QVBoxLayout(self); root.setContentsMargins(14,12,14,12); root.setSpacing(10)
         hdr = QHBoxLayout()
-        title = QLabel("ORGANS")
-        title.setStyleSheet(f"color:{C['gold']}; font-size:16px; font-weight:bold; letter-spacing:2px;")
-        self.count = QLabel("Loading...")
-        self.count.setStyleSheet(f"color:{C['dim']}; font-size:10px;")
-        btn = QPushButton("Refresh")
-        btn.setStyleSheet(f"QPushButton{{background:{C['bg3']};color:{C['text2']};border:1px solid {C['border']};border-radius:12px;padding:6px 12px;font-size:10px;}}"
-                          f"QPushButton:hover{{background:{C['border']};color:{C['text']};}}")
+        title = QLabel("ORGANS"); title.setStyleSheet(f"color:{C['gold']};font-size:16px;font-weight:bold;letter-spacing:2px;")
+        self.count = QLabel("Loading..."); self.count.setStyleSheet(f"color:{C['dim']};font-size:10px;")
+        btn = QPushButton("Refresh"); btn.setStyleSheet(f"QPushButton{{background:{C['bg3']};color:{C['text2']};border:1px solid {C['border']};border-radius:12px;padding:6px 12px;font-size:10px;}}QPushButton:hover{{background:{C['border']};color:{C['text']};}}")
         btn.clicked.connect(poller.poll)
-        hdr.addWidget(title)
-        hdr.addStretch()
-        hdr.addWidget(self.count)
-        hdr.addWidget(btn)
+        hdr.addWidget(title); hdr.addStretch(); hdr.addWidget(self.count); hdr.addWidget(btn)
         root.addLayout(hdr)
-
-        self.scroll = QScrollArea()
-        self.scroll.setWidgetResizable(True)
+        self.scroll = QScrollArea(); self.scroll.setWidgetResizable(True)
         self.scroll.setStyleSheet(f"QScrollArea{{background:{C['bg2']};border:1px solid {C['border']};border-radius:12px;}}")
-        self.inner = QWidget()
-        self.v = QVBoxLayout(self.inner)
-        self.v.setContentsMargins(10, 10, 10, 10)
-        self.v.setSpacing(2)
-        self.scroll.setWidget(self.inner)
-        root.addWidget(self.scroll, 1)
-
+        self.inner = QWidget(); self.v = QVBoxLayout(self.inner); self.v.setContentsMargins(10,10,10,10); self.v.setSpacing(2)
+        self.scroll.setWidget(self.inner); root.addWidget(self.scroll, 1)
         poller.organs.connect(self.on_organs)
-
-    def on_organs(self, organs: list) -> None:
-        # clear
+    def on_organs(self, organs):
         while self.v.count():
             it = self.v.takeAt(0)
-            if it.widget():
-                it.widget().deleteLater()
-
+            if it.widget(): it.widget().deleteLater()
         if not organs:
-            self.count.setText("0 (offline/no data)")
-            lab = QLabel("No organs returned.")
-            lab.setStyleSheet(f"color:{C['orange']}; font-family: monospace;")
-            self.v.addWidget(lab)
-            self.v.addStretch()
-            return
-
+            self.count.setText("0"); lab = QLabel("No organs returned."); lab.setStyleSheet(f"color:{C['orange']};font-family:monospace;")
+            self.v.addWidget(lab); self.v.addStretch(); return
         active = 0
         for o in organs[:200]:
-            name = str(o.get("name", "?"))
-            status = str(o.get("active", o.get("status", o.get("enabled", "")))).lower()
-            is_active = status in ("true", "active", "running", "1", "enabled")
-            if is_active:
-                active += 1
+            name = str(o.get("name","?")); status = str(o.get("active", o.get("enabled",""))).lower()
+            is_active = status in ("true","active","running","1","enabled")
+            if is_active: active += 1
             lab = QLabel(f"{name:<28} {'ACTIVE' if is_active else 'INACTIVE'}")
-            lab.setStyleSheet(f"color:{C['text'] if is_active else C['orange']}; font-family: monospace; font-size: 11px;")
+            lab.setStyleSheet(f"color:{C['text'] if is_active else C['orange']};font-family:monospace;font-size:11px;")
             self.v.addWidget(lab)
-        self.v.addStretch()
-        self.count.setText(f"{active}/{len(organs)} active")
+        self.v.addStretch(); self.count.setText(f"{active}/{len(organs)} active")
 
-
+# ── Terminal Tab ──
+from veilcore_secure_terminal import VeilCoreSecureTerminal
 
 class Terminal(QWidget):
     def __init__(self, gsm):
-        super().__init__()
-        self.gsm = gsm
-        os.environ["VEIL_API"] = self.gsm.api_base()
-        os.environ["VEIL_API_KEY"] = self.gsm.api_key()
+        super().__init__(); self.gsm = gsm
+        os.environ["VEIL_API"] = self.gsm.api_base(); os.environ["VEIL_API_KEY"] = self.gsm.api_key()
         self.secure_term = VeilCoreSecureTerminal()
-
         layout = QVBoxLayout(self)
-
-        self.term = QTextEdit()
-        self.term.setReadOnly(True)
-        self.term.setStyleSheet(
-            f"background:{C['bg']}; color:{C['text']}; border:1px solid {C['border']};"
-        )
-
-        self.input = QLineEdit()
-        self.history = []
-        self.hist_pos = -1
-        self.history = []
-        self.hist_pos = -1
-        self.input.setStyleSheet(
-            f"background:{C['bg2']}; color:{C['text']}; border:1px solid {C['border']}; padding:6px;"
-        )
+        self.term = QTextEdit(); self.term.setReadOnly(True)
+        self.term.setStyleSheet(f"background:{C['bg']};color:{C['text']};border:1px solid {C['border']};")
+        self.input = QLineEdit(); self.history = []; self.hist_pos = -1
+        self.input.setStyleSheet(f"background:{C['bg2']};color:{C['text']};border:1px solid {C['border']};padding:6px;")
         self.input.returnPressed.connect(self._enter)
-
-
-        layout.addWidget(self.term)
-        layout.addWidget(self.input)
-
+        layout.addWidget(self.term); layout.addWidget(self.input)
         self._banner()
-
     def _write(self, text, color):
-        self.term.setTextColor(QColor(color))
-        self.term.append(str(text))
-        self.term.moveCursor(QTextCursor.MoveOperation.End)
-
+        self.term.setTextColor(QColor(color)); self.term.append(str(text)); self.term.moveCursor(QTextCursor.MoveOperation.End)
     def _banner(self):
-        self._write("VEILCORE TERMINAL", C["cyan"])
-        self._write(f"VEIL_API: {self.gsm.api_base()}", C["text2"])
-        self._write("", C["text2"])
-
-    
+        self._write("VEILCORE TERMINAL", C["cyan"]); self._write(f"VEIL_API: {self.gsm.api_base()}", C["text2"]); self._write("", C["text2"])
     def keyPressEvent(self, event):
         key = event.key()
-
         if key == Qt.Key.Key_Up:
-            if self.history:
-                self.hist_pos = max(0, self.hist_pos - 1 if self.hist_pos != -1 else len(self.history)-1)
-                self.input.setText(self.history[self.hist_pos])
+            if self.history: self.hist_pos = max(0, self.hist_pos-1 if self.hist_pos != -1 else len(self.history)-1); self.input.setText(self.history[self.hist_pos])
             return
-
         if key == Qt.Key.Key_Down:
-            if self.history:
-                self.hist_pos = min(len(self.history)-1, self.hist_pos + 1)
-                self.input.setText(self.history[self.hist_pos])
+            if self.history: self.hist_pos = min(len(self.history)-1, self.hist_pos+1); self.input.setText(self.history[self.hist_pos])
             return
-
         super().keyPressEvent(event)
-
     def _enter(self):
         cmd = self.input.text().strip()
-        if cmd:
-            self.history.append(cmd)
-            self.hist_pos = len(self.history)
-        if cmd:
-            self.history.append(cmd)
-            self.hist_pos = len(self.history)
-        if not cmd:
-            return
-
-        self._write(f"{self.secure_term.prompt()}{cmd}", C["cyan"])
-        self.input.clear()
-
+        if cmd: self.history.append(cmd); self.hist_pos = len(self.history)
+        if not cmd: return
+        self._write(f"{self.secure_term.prompt()}{cmd}", C["cyan"]); self.input.clear()
         try:
-            result = self.secure_term.execute(cmd)
-            out = getattr(result, "output", result)
-
-            if out == "__CLEAR__":
-                self.term.clear()
-                self._banner()
-                return
-
+            result = self.secure_term.execute(cmd); out = getattr(result, "output", result)
+            if out == "__CLEAR__": self.term.clear(); self._banner(); return
             text = str(out) if out is not None else ""
             if text.strip():
-                for line in text.splitlines():
-                    self._write(line, C["text"])
+                for line in text.splitlines(): self._write(line, C["text"])
         except Exception as e:
             self._write(f"Error: {e}", C["red"])
 
-# ─────────────────────────────────────────────────────────────────────
-# Desktop
-# ─────────────────────────────────────────────────────────────────────
-def pick_veilcore_icon() -> QIcon | None:
-    candidates = [
-        Path.home() / ".local" / "share" / "icons" / "veilcore.png",
-        Path.home() / ".local" / "share" / "icons" / "hicolor" / "256x256" / "apps" / "veilcore.png",
-    ]
-    for p in candidates:
-        if p.exists():
-            return QIcon(str(p))
-    return None
-
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Phase 3 UI: Subsystem Grid, Compliance, Cloud Topology
-# ─────────────────────────────────────────────────────────────────────
-
+# ── Phase 3: Subsystem Cards ──
 PHASE3_SUBSYSTEMS = [
-    {"name":"NerveBridge","module":"mesh","icon":"⬡","desc":"Organ Mesh"},
-    {"name":"DeepSentinel","module":"ml","icon":"◉","desc":"ML Threat AI"},
-    {"name":"AllianceNet","module":"federation","icon":"⊕","desc":"Federation"},
-    {"name":"RedVeil","module":"pentest","icon":"⚔","desc":"Auto Pentest"},
-    {"name":"Watchtower","module":"mobile","icon":"📡","desc":"Mobile API"},
-    {"name":"EqualShield","module":"accessibility","icon":"♿","desc":"Accessibility"},
-    {"name":"AirShield","module":"wireless","icon":"📶","desc":"Wireless Guard"},
-    {"name":"IronWatch","module":"physical","icon":"🏛","desc":"Physical Sec"},
-    {"name":"Genesis","module":"deployer","icon":"⚙","desc":"Deploy Engine"},
-    {"name":"TrustForge","module":"hitrust","icon":"🛡","desc":"HITRUST CSF"},
-    {"name":"AuditIron","module":"soc2","icon":"📋","desc":"SOC 2 Type II"},
-    {"name":"SkyVeil","module":"cloud","icon":"☁","desc":"Cloud Hybrid"},
-    {"name":"Prism","module":"dashboard","icon":"◈","desc":"Unified Dash"},
+    {"name":"NerveBridge","module":"mesh","icon":"\u2b21","desc":"Organ Mesh"},
+    {"name":"DeepSentinel","module":"ml","icon":"\u25c9","desc":"ML Threat AI"},
+    {"name":"AllianceNet","module":"federation","icon":"\u2295","desc":"Federation"},
+    {"name":"RedVeil","module":"pentest","icon":"\u2694","desc":"Auto Pentest"},
+    {"name":"Watchtower","module":"mobile","icon":"\ud83d\udce1","desc":"Mobile API"},
+    {"name":"EqualShield","module":"accessibility","icon":"\u267f","desc":"Accessibility"},
+    {"name":"AirShield","module":"wireless","icon":"\ud83d\udcf6","desc":"Wireless Guard"},
+    {"name":"IronWatch","module":"physical","icon":"\ud83c\udfdb","desc":"Physical Sec"},
+    {"name":"Genesis","module":"deployer","icon":"\u2699","desc":"Deploy Engine"},
+    {"name":"TrustForge","module":"hitrust","icon":"\ud83d\udee1","desc":"HITRUST CSF"},
+    {"name":"AuditIron","module":"soc2","icon":"\ud83d\udccb","desc":"SOC 2 Type II"},
+    {"name":"SkyVeil","module":"cloud","icon":"\u2601","desc":"Cloud Hybrid"},
+    {"name":"Prism","module":"dashboard","icon":"\u25c8","desc":"Unified Dash"},
 ]
+
+class AnimatedBar(QProgressBar):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._v = 100.0
+        self._anim = QPropertyAnimation(self, b"animatedValue", self)
+        self._anim.setDuration(450)
+        self._anim.setEasingCurve(QEasingCurve.Type.OutCubic)
+
+    def getAnimatedValue(self):
+        return self._v
+
+    def setAnimatedValue(self, v):
+        self._v = float(v)
+        self.setValue(int(round(v)))
+
+    animatedValue = pyqtProperty(float, fget=getAnimatedValue, fset=setAnimatedValue)
+
+    def animate_to(self, v):
+        self._anim.stop()
+        self._anim.setStartValue(self._v)
+        self._anim.setEndValue(float(v))
+        self._anim.start()
 
 class SubsystemCard(QFrame):
     def __init__(self, info, parent=None):
-        super().__init__(parent)
-        self.setFixedSize(220, 120)
+        super().__init__(parent); self.setFixedSize(220, 120)
         self.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;}}")
-        v = QVBoxLayout(self)
-        v.setContentsMargins(8, 6, 8, 6)
-        v.setSpacing(2)
+        v = QVBoxLayout(self); v.setContentsMargins(8,6,8,6); v.setSpacing(2)
         top = QHBoxLayout()
-        icon = QLabel(info["icon"])
-        icon.setStyleSheet(f"color:{C['cyan']};font-size:22px;")
-        self.status_dot = QLabel("●")
-        self.status_dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
-        top.addWidget(icon)
-        top.addStretch()
-        top.addWidget(self.status_dot)
-        v.addLayout(top)
-        name = QLabel(info["name"])
-        name.setStyleSheet(f"color:{C['text']};font-size:13px;font-weight:bold;")
-        v.addWidget(name)
-        desc = QLabel(info["desc"])
-        desc.setStyleSheet(f"color:{C['dim']};font-size:10px;")
-        v.addWidget(desc)
-        self.health_bar = QProgressBar()
-        self.health_bar.setFixedHeight(6)
-        self.health_bar.setValue(100)
-        self.health_bar.setTextVisible(False)
+        icon = QLabel(info["icon"]); icon.setStyleSheet(f"color:{C['cyan']};font-size:22px;")
+        self.status_dot = QLabel("\u25cf"); self.status_dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
+        top.addWidget(icon); top.addStretch(); top.addWidget(self.status_dot); v.addLayout(top)
+        name = QLabel(info["name"]); name.setStyleSheet(f"color:{C['text']};font-size:13px;font-weight:bold;"); v.addWidget(name)
+        desc = QLabel(info["desc"]); desc.setStyleSheet(f"color:{C['dim']};font-size:10px;"); v.addWidget(desc)
+        self.health_bar = AnimatedBar(); self.health_bar.setFixedHeight(6); self.health_bar.setValue(100); self.health_bar.setTextVisible(False)
         self.health_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{C['green']};border-radius:2px;}}")
         v.addWidget(self.health_bar)
+
+        self._status = "operational"
+        self._pulse_on = False
+        self._pulse = QTimer(self)
+        self._pulse.timeout.connect(self._tick_pulse)
+        self._pulse.start(700)
+
+        self._glow = QGraphicsDropShadowEffect(self)
+        self._glow.setBlurRadius(18)
+        self._glow.setOffset(0, 0)
+        self._glow.setColor(QColor(C["green"]))
+        self.setGraphicsEffect(self._glow)
+
+        self._glow_up = True
+        self._glow_timer = QTimer(self)
+        self._glow_timer.timeout.connect(self._tick_glow)
+        self._glow_timer.start(120)
+
+    def _tick_pulse(self):
+        colors = {"operational":C["green"], "degraded":C["orange"], "offline":C["red"]}
+        col = colors.get(self._status, C["dim"])
+        self._pulse_on = not self._pulse_on
+
+        if self._status == "offline":
+            self.status_dot.setStyleSheet(
+                f"color:{col if self._pulse_on else C['dim']};font-size:{12 if self._pulse_on else 10}px;"
+            )
+        elif self._status == "degraded":
+            self.status_dot.setStyleSheet(
+                f"color:{col};font-size:{11 if self._pulse_on else 10}px;"
+            )
+        else:
+            self.status_dot.setStyleSheet(
+                f"color:{col};font-size:{10 if self._pulse_on else 9}px;"
+            )
+
+    def _tick_glow(self):
+        if self._status == "operational":
+            lo, hi = 10, 22
+            col = QColor(C["green"])
+        elif self._status == "degraded":
+            lo, hi = 18, 34
+            col = QColor(C["orange"])
+        else:
+            lo, hi = 6, 36
+            col = QColor(C["red"])
+
+        cur = self._glow.blurRadius()
+        step = 2.0 if self._status != "operational" else 1.2
+
+        if self._glow_up:
+            cur += step
+            if cur >= hi:
+                cur = hi
+                self._glow_up = False
+        else:
+            cur -= step
+            if cur <= lo:
+                cur = lo
+                self._glow_up = True
+
+        self._glow.setBlurRadius(cur)
+
+        if self._status == "operational":
+            col.setAlpha(90)
+        elif self._status == "degraded":
+            col.setAlpha(150 if self._glow_up else 110)
+        else:
+            col.setAlpha(220 if self._glow_up else 80)
+
+        self._glow.setColor(col)
 
     def set_status(self, status, health=100):
         colors = {"operational":C["green"],"degraded":C["orange"],"offline":C["red"]}
         col = colors.get(status, C["dim"])
         self.status_dot.setStyleSheet(f"color:{col};font-size:10px;")
         self.health_bar.setValue(int(health))
-        if health >= 90:
-            bc = C["green"]
-        elif health >= 70:
-            bc = C["orange"]
-        else:
-            bc = C["red"]
+        bc = C["green"] if health >= 85 else (C["orange"] if health >= 70 else C["red"])
         self.health_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{bc};border-radius:2px;}}")
 
-
+# ── Dashboard V2 with Live Metrics ──
 class DashboardV2(QWidget):
     def __init__(self, gs, poller):
-        super().__init__()
-        self.gs = gs
-        self.poller = poller
-        self.cards = {}
-
-        root = QVBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(10)
-
+        super().__init__(); self.gs = gs; self.poller = poller; self.cards = {}
+        root = QVBoxLayout(self); root.setContentsMargins(14,12,14,12); root.setSpacing(10)
         hdr = QHBoxLayout()
-        title = QLabel("SECURITY COMMAND CENTER")
-        title.setStyleSheet(f"color:{C['cyan']};font-size:16px;font-weight:bold;letter-spacing:2px;")
-        self.conn = QLabel("● CONNECTING")
-        self.conn.setStyleSheet(f"color:{C['orange']};font-size:10px;font-weight:bold;")
-        hdr.addWidget(title)
-        hdr.addStretch()
-        hdr.addWidget(self.conn)
-        root.addLayout(hdr)
-
-        # Stats row
+        title = QLabel("SECURITY COMMAND CENTER"); title.setStyleSheet(f"color:{C['cyan']};font-size:16px;font-weight:bold;letter-spacing:2px;")
+        self.conn = QLabel("\u25cf CONNECTING"); self.conn.setStyleSheet(f"color:{C['orange']};font-size:10px;font-weight:bold;")
+        hdr.addWidget(title); hdr.addStretch(); hdr.addWidget(self.conn); root.addLayout(hdr)
         stats = QHBoxLayout()
         self.stat_organs = self._make_stat("82", "ORGANS")
         self.stat_subs = self._make_stat("13", "SUBSYSTEMS")
         self.stat_health = self._make_stat("100%", "HEALTH")
-        self.stat_alerts = self._make_stat("0", "ALERTS")
-        stats.addWidget(self.stat_organs)
-        stats.addWidget(self.stat_subs)
-        stats.addWidget(self.stat_health)
-        stats.addWidget(self.stat_alerts)
-        stats.addStretch()
+        self.stat_alerts = self._make_stat("0", "CYCLES")
+        stats.addWidget(self.stat_organs); stats.addWidget(self.stat_subs); stats.addWidget(self.stat_health); stats.addWidget(self.stat_alerts); stats.addStretch()
         root.addLayout(stats)
-
-        # Subsystem grid
-        grid_label = QLabel("SUBSYSTEM STATUS")
-        grid_label.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;margin-top:6px;")
-        root.addWidget(grid_label)
-
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll.setStyleSheet(f"QScrollArea{{background:{C['bg']};border:none;}}")
-        grid_w = QWidget()
-        grid = QGridLayout(grid_w)
-        grid.setSpacing(10)
-        grid.setContentsMargins(10, 10, 10, 10)
+        gl = QLabel("SUBSYSTEM STATUS"); gl.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;margin-top:6px;"); root.addWidget(gl)
+        scroll = QScrollArea(); scroll.setWidgetResizable(True); scroll.setStyleSheet(f"QScrollArea{{background:{C['bg']};border:none;}}")
+        gw = QWidget(); grid = QGridLayout(gw); grid.setSpacing(10); grid.setContentsMargins(10,10,10,10)
         row, col = 0, 0
         for info in PHASE3_SUBSYSTEMS:
-            card = SubsystemCard(info)
-            card.set_status("operational", 100)
-            self.cards[info["module"]] = card
-            grid.addWidget(card, row, col)
-            col += 1
-            if col >= 7:
-                col = 0; row += 1
-        scroll.setWidget(grid_w)
-        root.addWidget(scroll, 1)
-
-        # Threat summary
-        self.threat_label = QLabel("")
-        self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;")
-        root.addWidget(self.threat_label)
-
+            card = SubsystemCard(info); card.set_status("operational", 100); self.cards[info["module"]] = card
+            grid.addWidget(card, row, col); col += 1
+            if col >= 7: col = 0; row += 1
+        scroll.setWidget(gw); root.addWidget(scroll, 1)
+        self.threat_label = QLabel(""); self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;"); root.addWidget(self.threat_label)
         poller.health.connect(self.on_health)
+        self._metrics_timer = QTimer(self); self._metrics_timer.timeout.connect(self._read_metrics); self._metrics_timer.start(5000)
+        QTimer.singleShot(1000, self._read_metrics)
 
     def _make_stat(self, val, label):
-        w = QFrame()
-        w.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;padding:4px;}}")
-        v = QVBoxLayout(w)
-        v.setContentsMargins(12, 6, 12, 6)
-        v.setSpacing(0)
-        vl = QLabel(val)
-        vl.setStyleSheet(f"color:{C['cyan']};font-size:22px;font-weight:bold;")
-        vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        ll = QLabel(label)
-        ll.setStyleSheet(f"color:{C['dim']};font-size:9px;font-weight:bold;letter-spacing:1px;")
-        ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        v.addWidget(vl)
-        v.addWidget(ll)
-        w._val = vl
-        return w
+        w = QFrame(); w.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;padding:4px;}}")
+        v = QVBoxLayout(w); v.setContentsMargins(12,6,12,6); v.setSpacing(0)
+        vl = QLabel(val); vl.setStyleSheet(f"color:{C['cyan']};font-size:22px;font-weight:bold;"); vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        ll = QLabel(label); ll.setStyleSheet(f"color:{C['dim']};font-size:9px;font-weight:bold;letter-spacing:1px;"); ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        v.addWidget(vl); v.addWidget(ll); w._val = vl; return w
 
     def on_health(self, d):
         if "_error" in d:
-            self.conn.setText("● OFFLINE")
-            self.conn.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;")
-            return
-        self.conn.setText("● NOMINAL")
-        self.conn.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
+            self.conn.setText("\u25cf OFFLINE"); self.conn.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;"); return
+        self.conn.setText("\u25cf NOMINAL"); self.conn.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
 
     def _read_metrics(self):
         try:
-            mp = Path.home() / ".config" / "veilcore" / "metrics.json"
-            if not mp.exists():
-                return
+            mp = Path("/home/user/.config/veilcore/metrics.json")
+            if not mp.exists(): return
             data = json.loads(mp.read_text())
-
-            # Update stat cards
-            cpu = data.get("cpu_pct", 0)
-            ram = data.get("ram", {}).get("used_pct", 0)
+            cpu = data.get("cpu_pct", 0); ram = data.get("ram", {}).get("used_pct", 0)
             disk = data.get("disk", {}).get("used_pct", 0)
-            organs = data.get("organs", {})
-            svcs = data.get("services", {})
-            comp = data.get("compliance", {})
-
-            self.stat_organs._val.setText(f"{organs.get('enabled', 0)}/{organs.get('total', 0)}")
+            organs = data.get("organs", {}); svcs = data.get("services", {}); comp = data.get("compliance", {})
+            self.stat_organs._val.setText(f"{organs.get('enabled',0)}/{organs.get('total',0)}")
             self.stat_subs._val.setText("13")
-
-            # Health = average of inverse cpu/ram/disk pressure
-            health = round(100 - (cpu * 0.4 + ram * 0.3 + disk * 0.3), 1)
-            health = max(0, min(100, health))
+            health = round(100 - (cpu*0.4 + ram*0.3 + disk*0.3), 1); health = max(0, min(100, health))
             self.stat_health._val.setText(f"{health}%")
-            if health >= 90:
-                self.stat_health._val.setStyleSheet(f"color:{C['green']};font-size:22px;font-weight:bold;")
-            elif health >= 70:
-                self.stat_health._val.setStyleSheet(f"color:{C['orange']};font-size:22px;font-weight:bold;")
-            else:
-                self.stat_health._val.setStyleSheet(f"color:{C['red']};font-size:22px;font-weight:bold;")
-
+            hcol = C['green'] if health >= 85 else (C['orange'] if health >= 70 else C['red'])
+            self.stat_health._val.setStyleSheet(f"color:{hcol};font-size:22px;font-weight:bold;")
             self.stat_alerts._val.setText(str(data.get("cycle", 0)))
-
-            # Update subsystem cards with real data
-            sub_health = {
-                "mesh": 100 if svcs.get("active", 0) >= 2 else 60,
-                "ml": 100 if svcs.get("active", 0) >= 3 else 70,
-                "federation": 95,
-                "pentest": 95,
-                "mobile": 100,
-                "accessibility": 100,
-                "wireless": 100,
-                "physical": 100,
-                "deployer": 100,
-                "hitrust": comp.get("hitrust_pct", 98.4),
-                "soc2": comp.get("soc2_pct", 98.6),
-                "cloud": 100,
-                "dashboard": health,
-            }
+            sub_health = {"mesh":100 if svcs.get("active",0)>=2 else 60,"ml":100 if svcs.get("active",0)>=3 else 70,"federation":95,"pentest":95,"mobile":100,"accessibility":100,"wireless":100,"physical":100,"deployer":100,"hitrust":comp.get("hitrust_pct",98.4),"soc2":comp.get("soc2_pct",98.6),"cloud":100,"dashboard":100 if svcs.get("active",0)>=4 else 80}
             for module, h in sub_health.items():
                 if module in self.cards:
                     st = "operational" if h >= 80 else ("degraded" if h >= 50 else "offline")
                     self.cards[module].set_status(st, h)
-
-            # Threat summary
-            self.threat_label.setText(
-                f"CPU: {cpu}%  |  RAM: {ram}%  |  DISK: {disk}%  |  "
-                f"Services: {svcs.get('active', 0)}/{svcs.get('total', 0)}  |  "
-                f"HITRUST: {comp.get('hitrust_pct', 0)}%  |  SOC2: {comp.get('soc2_pct', 0)}%  |  "
-                f"Cycle: #{data.get('cycle', 0)}  |  {data.get('ts', '')[:19]}"
-            )
+            self.threat_label.setText(f"CPU: {cpu}%  |  RAM: {ram}%  |  DISK: {disk}%  |  Services: {svcs.get('active',0)}/{svcs.get('total',0)}  |  HITRUST: {comp.get('hitrust_pct',0)}%  |  SOC2: {comp.get('soc2_pct',0)}%  |  Cycle: #{data.get('cycle',0)}")
         except Exception:
             pass
 
-
+# ── Compliance Tab ──
 class ComplianceTab(QWidget):
     def __init__(self, gs):
         super().__init__()
-        root = QVBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(14)
-
-        title = QLabel("COMPLIANCE COMMAND")
-        title.setStyleSheet(f"color:{C['gold']};font-size:16px;font-weight:bold;letter-spacing:2px;")
-        root.addWidget(title)
-
-        # HITRUST
-        hf = QFrame()
-        hf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
-        hv = QVBoxLayout(hf)
-        hv.setContentsMargins(16, 12, 16, 12)
-        hv.setSpacing(6)
-        ht = QLabel("🛡  HITRUST CSF v11 — TrustForge")
-        ht.setStyleSheet(f"color:{C['cyan']};font-size:14px;font-weight:bold;")
-        hv.addWidget(ht)
-        self.hitrust_bar = QProgressBar()
-        self.hitrust_bar.setFixedHeight(20)
-        self.hitrust_bar.setValue(98)
-        self.hitrust_bar.setFormat("98.4% Coverage")
-        self.hitrust_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:1px solid {C['border']};border-radius:6px;color:{C['text']};font-size:11px;font-weight:bold;}}QProgressBar::chunk{{background:qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 {C['cyan']},stop:1 {C['green']});border-radius:5px;}}")
-        hv.addWidget(self.hitrust_bar)
-        hstats = QHBoxLayout()
-        for label, val, col in [("Domains","19/19",C["green"]),("Controls","32",C["cyan"]),("Full Coverage","31",C["green"]),("Gaps","0",C["green"])]:
-            f = QFrame()
-            f.setStyleSheet(f"QFrame{{background:{C['bg2']};border-radius:8px;padding:4px;}}")
-            fv = QVBoxLayout(f)
-            fv.setContentsMargins(10,4,10,4)
-            fv.setSpacing(0)
-            vl = QLabel(val)
-            vl.setStyleSheet(f"color:{col};font-size:18px;font-weight:bold;")
-            vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            ll = QLabel(label)
-            ll.setStyleSheet(f"color:{C['dim']};font-size:9px;")
-            ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            fv.addWidget(vl)
-            fv.addWidget(ll)
-            hstats.addWidget(f)
-        hv.addLayout(hstats)
-        root.addWidget(hf)
-
-        # SOC 2
-        sf = QFrame()
-        sf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
-        sv = QVBoxLayout(sf)
-        sv.setContentsMargins(16, 12, 16, 12)
-        sv.setSpacing(6)
-        st = QLabel("📋  SOC 2 Type II — AuditIron")
-        st.setStyleSheet(f"color:{C['cyan']};font-size:14px;font-weight:bold;")
-        sv.addWidget(st)
-        self.soc2_bar = QProgressBar()
-        self.soc2_bar.setFixedHeight(20)
-        self.soc2_bar.setValue(99)
-        self.soc2_bar.setFormat("98.6% Coverage — TYPE II READY")
-        self.soc2_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:1px solid {C['border']};border-radius:6px;color:{C['text']};font-size:11px;font-weight:bold;}}QProgressBar::chunk{{background:qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 {C['gold']},stop:1 {C['green']});border-radius:5px;}}")
-        sv.addWidget(self.soc2_bar)
-        sstats = QHBoxLayout()
-        for label, val, col in [("Categories","5/5",C["green"]),("Criteria","35",C["cyan"]),("Automated","100%",C["green"]),("Type II Ready","YES",C["green"])]:
-            f = QFrame()
-            f.setStyleSheet(f"QFrame{{background:{C['bg2']};border-radius:8px;padding:4px;}}")
-            fv = QVBoxLayout(f)
-            fv.setContentsMargins(10,4,10,4)
-            fv.setSpacing(0)
-            vl = QLabel(val)
-            vl.setStyleSheet(f"color:{col};font-size:18px;font-weight:bold;")
-            vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            ll = QLabel(label)
-            ll.setStyleSheet(f"color:{C['dim']};font-size:9px;")
-            ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            fv.addWidget(vl)
-            fv.addWidget(ll)
-            sstats.addWidget(f)
-        sv.addLayout(sstats)
-        root.addWidget(sf)
-
-        # Category breakdown
-        cats = QFrame()
-        cats.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
-        cv = QVBoxLayout(cats)
-        cv.setContentsMargins(16, 12, 16, 12)
-        cv.setSpacing(4)
-        ct = QLabel("SOC 2 TRUST SERVICES CATEGORIES")
-        ct.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;")
-        cv.addWidget(ct)
-        for cat, full, total in [("Security","27","27"),("Availability","3","3"),("Processing Integrity","1","1"),("Confidentiality","2","2"),("Privacy","2","2")]:
-            row = QHBoxLayout()
-            nl = QLabel(cat)
-            nl.setStyleSheet(f"color:{C['text']};font-size:11px;")
-            nl.setFixedWidth(180)
-            bar = QProgressBar()
-            bar.setFixedHeight(12)
-            bar.setValue(100)
-            bar.setFormat(f"{full}/{total}")
-            bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:4px;color:{C['text']};font-size:9px;}}QProgressBar::chunk{{background:{C['green']};border-radius:4px;}}")
-            row.addWidget(nl)
-            row.addWidget(bar)
-            cv.addLayout(row)
-        root.addWidget(cats)
+        root = QVBoxLayout(self); root.setContentsMargins(14,12,14,12); root.setSpacing(14)
+        title = QLabel("COMPLIANCE COMMAND"); title.setStyleSheet(f"color:{C['gold']};font-size:16px;font-weight:bold;letter-spacing:2px;"); root.addWidget(title)
+        for fname, pct, fmt, stats_data in [
+            ("\ud83d\udee1  HITRUST CSF v11 \u2014 TrustForge", 98, "98.4% Coverage", [("Domains","19/19"),("Controls","32"),("Full Coverage","31"),("Gaps","0")]),
+            ("\ud83d\udccb  SOC 2 Type II \u2014 AuditIron", 99, "98.6% Coverage \u2014 TYPE II READY", [("Categories","5/5"),("Criteria","35"),("Automated","100%"),("Type II Ready","YES")]),
+        ]:
+            f = QFrame(); f.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+            fv = QVBoxLayout(f); fv.setContentsMargins(16,12,16,12); fv.setSpacing(6)
+            ft = QLabel(fname); ft.setStyleSheet(f"color:{C['cyan']};font-size:14px;font-weight:bold;"); fv.addWidget(ft)
+            bar = QProgressBar(); bar.setFixedHeight(20); bar.setValue(pct); bar.setFormat(fmt)
+            bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:1px solid {C['border']};border-radius:6px;color:{C['text']};font-size:11px;font-weight:bold;}}QProgressBar::chunk{{background:qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 {C['cyan']},stop:1 {C['green']});border-radius:5px;}}")
+            fv.addWidget(bar)
+            sr = QHBoxLayout()
+            for label, val in stats_data:
+                sf = QFrame(); sf.setStyleSheet(f"QFrame{{background:{C['bg2']};border-radius:8px;padding:4px;}}")
+                sv = QVBoxLayout(sf); sv.setContentsMargins(10,4,10,4); sv.setSpacing(0)
+                vl = QLabel(val); vl.setStyleSheet(f"color:{C['green']};font-size:18px;font-weight:bold;"); vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                ll = QLabel(label); ll.setStyleSheet(f"color:{C['dim']};font-size:9px;"); ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                sv.addWidget(vl); sv.addWidget(ll); sr.addWidget(sf)
+            fv.addLayout(sr); root.addWidget(f)
         root.addStretch()
 
-
+# ── Cloud Tab ──
 class CloudTab(QWidget):
     def __init__(self, gs):
         super().__init__()
-        root = QVBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(14)
-
-        title = QLabel("CLOUD-HYBRID TOPOLOGY — SkyVeil")
-        title.setStyleSheet(f"color:{C['purple']};font-size:16px;font-weight:bold;letter-spacing:2px;")
-        root.addWidget(title)
-
-        # PHI compliance banner
-        phi = QFrame()
-        phi.setStyleSheet(f"QFrame{{background:{C['bg3']};border:2px solid {C['green']};border-radius:12px;}}")
-        pv = QHBoxLayout(phi)
-        pv.setContentsMargins(16, 10, 16, 10)
-        pl = QLabel("🔒  PHI RESIDENCY: COMPLIANT")
-        pl.setStyleSheet(f"color:{C['green']};font-size:14px;font-weight:bold;")
-        pd = QLabel("PHI/PII data classes enforced on-prem only • 13 organs locked to on-prem")
-        pd.setStyleSheet(f"color:{C['text2']};font-size:10px;")
-        pv.addWidget(pl)
-        pv.addStretch()
-        pv.addWidget(pd)
-        root.addWidget(phi)
-
-        # Nodes
-        nodes_data = [
-            {"id":"ONPREM-PRIMARY","provider":"On-Prem","role":"Primary","organs":6,"data":["PHI","PII","Operational"],"color":C["cyan"],"status":"ACTIVE"},
-            {"id":"AWS-ANALYTICS","provider":"AWS","role":"Analytics","organs":3,"data":["Threat Intel","Metrics"],"color":C["orange"],"status":"ACTIVE"},
-            {"id":"AZURE-FAILOVER","provider":"Azure","role":"Failover","organs":2,"data":["Logs","Metrics"],"color":C["blue"],"status":"STANDBY"},
-        ]
-
+        root = QVBoxLayout(self); root.setContentsMargins(14,12,14,12); root.setSpacing(14)
+        title = QLabel("CLOUD-HYBRID TOPOLOGY \u2014 SkyVeil"); title.setStyleSheet(f"color:{C['purple']};font-size:16px;font-weight:bold;letter-spacing:2px;"); root.addWidget(title)
+        phi = QFrame(); phi.setStyleSheet(f"QFrame{{background:{C['bg3']};border:2px solid {C['green']};border-radius:12px;}}")
+        pv = QHBoxLayout(phi); pv.setContentsMargins(16,10,16,10)
+        pl = QLabel("\ud83d\udd12  PHI RESIDENCY: COMPLIANT"); pl.setStyleSheet(f"color:{C['green']};font-size:14px;font-weight:bold;")
+        pd = QLabel("PHI/PII enforced on-prem \u2022 13 organs locked"); pd.setStyleSheet(f"color:{C['text2']};font-size:10px;")
+        pv.addWidget(pl); pv.addStretch(); pv.addWidget(pd); root.addWidget(phi)
         nodes_row = QHBoxLayout()
-        for nd in nodes_data:
-            nf = QFrame()
-            nf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {nd['color']};border-radius:12px;}}")
-            nv = QVBoxLayout(nf)
-            nv.setContentsMargins(14, 10, 14, 10)
-            nv.setSpacing(4)
-            nt = QLabel(f"{nd['id']}")
-            nt.setStyleSheet(f"color:{nd['color']};font-size:13px;font-weight:bold;")
-            nv.addWidget(nt)
-            for label, val in [("Provider",nd["provider"]),("Role",nd["role"]),("Organs",str(nd["organs"])),("Status",nd["status"])]:
-                r = QHBoxLayout()
-                lbl = QLabel(label + ":")
-                lbl.setStyleSheet(f"color:{C['dim']};font-size:10px;")
-                lbl.setFixedWidth(60)
-                vl = QLabel(val)
-                sc = C["green"] if val == "ACTIVE" else (C["orange"] if val == "STANDBY" else C["text"])
-                vl.setStyleSheet(f"color:{sc};font-size:10px;font-weight:bold;")
-                r.addWidget(lbl)
-                r.addWidget(vl)
-                r.addStretch()
-                nv.addLayout(r)
-            dl = QLabel("Data: " + ", ".join(nd["data"]))
-            dl.setStyleSheet(f"color:{C['text2']};font-size:9px;")
-            dl.setWordWrap(True)
-            nv.addWidget(dl)
+        for nd in [{"id":"ONPREM-PRIMARY","provider":"On-Prem","role":"Primary","organs":"6","data":"PHI, PII, Ops","color":C["cyan"],"status":"ACTIVE"},{"id":"AWS-ANALYTICS","provider":"AWS","role":"Analytics","organs":"3","data":"Threat Intel, Metrics","color":C["orange"],"status":"ACTIVE"},{"id":"AZURE-FAILOVER","provider":"Azure","role":"Failover","organs":"2","data":"Logs, Metrics","color":C["blue"],"status":"STANDBY"}]:
+            nf = QFrame(); nf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {nd['color']};border-radius:12px;}}")
+            nv = QVBoxLayout(nf); nv.setContentsMargins(14,10,14,10); nv.setSpacing(4)
+            nt = QLabel(nd["id"]); nt.setStyleSheet(f"color:{nd['color']};font-size:13px;font-weight:bold;"); nv.addWidget(nt)
+            for lbl, val in [("Provider",nd["provider"]),("Role",nd["role"]),("Organs",nd["organs"]),("Status",nd["status"])]:
+                r = QHBoxLayout(); ll = QLabel(lbl+":"); ll.setStyleSheet(f"color:{C['dim']};font-size:10px;"); ll.setFixedWidth(60)
+                sc = C["green"] if val=="ACTIVE" else (C["orange"] if val=="STANDBY" else C["text"])
+                vl = QLabel(val); vl.setStyleSheet(f"color:{sc};font-size:10px;font-weight:bold;")
+                r.addWidget(ll); r.addWidget(vl); r.addStretch(); nv.addLayout(r)
+            dl = QLabel("Data: "+nd["data"]); dl.setStyleSheet(f"color:{C['text2']};font-size:9px;"); dl.setWordWrap(True); nv.addWidget(dl)
             nodes_row.addWidget(nf)
         root.addLayout(nodes_row)
-
-        # Sync policies
-        spf = QFrame()
-        spf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
-        spv = QVBoxLayout(spf)
-        spv.setContentsMargins(16, 12, 16, 12)
-        spv.setSpacing(4)
-        spt = QLabel("SYNC POLICIES")
-        spt.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;")
-        spv.addWidget(spt)
+        spf = QFrame(); spf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        spv = QVBoxLayout(spf); spv.setContentsMargins(16,12,16,12); spv.setSpacing(4)
+        spt = QLabel("SYNC POLICIES"); spt.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;"); spv.addWidget(spt)
         for name, freq, direction in [("Threat Intelligence","60s","Bidirectional"),("Metrics Offload","5m","Push"),("Log Archive","15m","Push"),("Backup Verification","1h","Push")]:
             r = QHBoxLayout()
-            nl = QLabel(name)
-            nl.setStyleSheet(f"color:{C['text']};font-size:11px;")
-            nl.setFixedWidth(180)
-            fl = QLabel(freq)
-            fl.setStyleSheet(f"color:{C['cyan']};font-size:11px;font-weight:bold;")
-            fl.setFixedWidth(50)
-            dl = QLabel(direction)
-            dl.setStyleSheet(f"color:{C['text2']};font-size:11px;")
-            dot = QLabel("● ACTIVE")
-            dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
-            r.addWidget(nl)
-            r.addWidget(fl)
-            r.addWidget(dl)
-            r.addStretch()
-            r.addWidget(dot)
-            spv.addLayout(r)
+            nl = QLabel(name); nl.setStyleSheet(f"color:{C['text']};font-size:11px;"); nl.setFixedWidth(180)
+            fl = QLabel(freq); fl.setStyleSheet(f"color:{C['cyan']};font-size:11px;font-weight:bold;"); fl.setFixedWidth(50)
+            ddl = QLabel(direction); ddl.setStyleSheet(f"color:{C['text2']};font-size:11px;")
+            dot = QLabel("\u25cf ACTIVE"); dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
+            r.addWidget(nl); r.addWidget(fl); r.addWidget(ddl); r.addStretch(); r.addWidget(dot); spv.addLayout(r)
         root.addWidget(spf)
+        pof = QFrame(); pof.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        pov = QVBoxLayout(pof); pov.setContentsMargins(16,12,16,12); pov.setSpacing(4)
+        pot = QLabel("ON-PREM LOCKED ORGANS (PHI)"); pot.setStyleSheet(f"color:{C['red']};font-size:11px;font-weight:bold;letter-spacing:1px;"); pov.addWidget(pot)
+        ll = QLabel("guardian \u2022 phi_classifier \u2022 phi_guard \u2022 vault \u2022 encryption_enforcer \u2022 epic_connector \u2022 imprivata_bridge \u2022 hl7_filter \u2022 fhir_gateway \u2022 dicom_shield \u2022 insider_threat \u2022 forensic_collector \u2022 dlp_engine")
+        ll.setStyleSheet(f"color:{C['text2']};font-size:10px;"); ll.setWordWrap(True); pov.addWidget(ll)
+        root.addWidget(pof); root.addStretch()
 
-        # Protected organs list
-        pof = QFrame()
-        pof.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
-        pov = QVBoxLayout(pof)
-        pov.setContentsMargins(16, 12, 16, 12)
-        pov.setSpacing(4)
-        pot = QLabel("ON-PREM LOCKED ORGANS (PHI)")
-        pot.setStyleSheet(f"color:{C['red']};font-size:11px;font-weight:bold;letter-spacing:1px;")
-        pov.addWidget(pot)
-        locked = "guardian • phi_classifier • phi_guard • vault • encryption_enforcer • epic_connector • imprivata_bridge • hl7_filter • fhir_gateway • dicom_shield • insider_threat • forensic_collector • dlp_engine"
-        ll = QLabel(locked)
-        ll.setStyleSheet(f"color:{C['text2']};font-size:10px;")
-        ll.setWordWrap(True)
-        pov.addWidget(ll)
-        root.addWidget(pof)
+# ── Settings ──
+CONF_DIR = Path.home() / ".config" / "veilcore"; CONF_DIR.mkdir(parents=True, exist_ok=True)
+GLOBAL_SETTINGS_PATH = CONF_DIR / "global.json"
+DEFAULT_API_BASE = os.environ.get("VEIL_API", "http://127.0.0.1:9444").rstrip("/")
 
-        root.addStretch()
+def _load_gs():
+    if not GLOBAL_SETTINGS_PATH.exists(): return {"api_base":DEFAULT_API_BASE,"api_key":os.environ.get("VEIL_API_KEY",""),"refresh_ms":4000}
+    try: d = json.loads(GLOBAL_SETTINGS_PATH.read_text() or "{}")
+    except Exception: d = {}
+    d.setdefault("api_base", DEFAULT_API_BASE); d.setdefault("api_key",""); d.setdefault("refresh_ms",4000); return d
 
+def _save_gs(d):
+    d["saved_at"] = datetime.now().isoformat(timespec="seconds")
+    GLOBAL_SETTINGS_PATH.write_text(json.dumps(d, indent=2))
+
+class GlobalSettings(QObject):
+    changed = pyqtSignal(dict)
+    def __init__(self): super().__init__(); self._s = _load_gs()
+    def get(self): return dict(self._s)
+    def api_base(self): return str(self._s.get("api_base") or DEFAULT_API_BASE).strip().rstrip("/") or DEFAULT_API_BASE
+    def api_key(self): return str(self._s.get("api_key") or "").strip()
+    def refresh_ms(self): return max(500, min(60000, int(self._s.get("refresh_ms") or 4000)))
+    def update(self, api_base, api_key, refresh_ms):
+        self._s["api_base"] = (api_base or "").strip().rstrip("/") or DEFAULT_API_BASE
+        self._s["api_key"] = (api_key or "").strip()
+        self._s["refresh_ms"] = int(refresh_ms)
+        try: _save_gs(self._s)
+        except Exception: pass
+        self.changed.emit(self.get())
+
+class SettingsDialog(QDialog):
+    def __init__(self, gs, parent=None):
+        super().__init__(parent); self.gs = gs; self.setWindowTitle("VeilCore Settings"); self.resize(520,220)
+        layout = QVBoxLayout(self); form = QFormLayout()
+        self.api_base = QLineEdit(self.gs.api_base()); self.api_key = QLineEdit(self.gs.api_key())
+        self.refresh_ms = QSpinBox(); self.refresh_ms.setRange(500,60000); self.refresh_ms.setValue(self.gs.refresh_ms())
+        form.addRow("API Base", self.api_base); form.addRow("API Key", self.api_key); form.addRow("Refresh (ms)", self.refresh_ms)
+        layout.addLayout(form)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Save | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(self._save); buttons.rejected.connect(self.reject); layout.addWidget(buttons)
+    def _save(self):
+        self.gs.update(self.api_base.text(), self.api_key.text(), self.refresh_ms.value()); self.accept()
+
+# ── Desktop ──
+def pick_icon():
+    for p in [Path.home()/".local"/"share"/"icons"/"veilcore.png", Path.home()/".local"/"share"/"icons"/"hicolor"/"256x256"/"apps"/"veilcore.png"]:
+        if p.exists(): return QIcon(str(p))
+    return None
 
 class VeilCoreDesktop(QMainWindow):
-    def __init__(self, gs: GlobalSettings) -> None:
-        super().__init__()
-        self.gs = gs
-        self.poller = ApiPoller(self.gs)
-
-        self.setWindowTitle("VeilCore Desktop")
-        self.setMinimumSize(1000, 680)
+    def __init__(self, gs):
+        super().__init__(); self.gs = gs; self.poller = ApiPoller(self.gs)
+        self.setWindowTitle("VeilCore Desktop"); self.setMinimumSize(1000,680)
         self.setStyleSheet(f"QMainWindow{{background:{C['bg']};}}")
-
-        root = QWidget()
-        self.setCentralWidget(root)
-        rl = QVBoxLayout(root)
-        rl.setContentsMargins(10, 10, 10, 10)
-        rl.setSpacing(10)
-
+        root = QWidget(); self.setCentralWidget(root); rl = QVBoxLayout(root); rl.setContentsMargins(10,10,10,10); rl.setSpacing(10)
         top = QHBoxLayout()
-        brand = QLabel("VEILCORE")
-        brand.setStyleSheet(f"color:{C['cyan']};font-size:18px;font-weight:bold;letter-spacing:3px;")
-        self.status = QLabel("● CONNECTING")
-        self.status.setStyleSheet(f"color:{C['orange']};font-size:10px;font-weight:bold;")
-        btn_settings = QPushButton("Settings")
-        btn_settings.setStyleSheet(f"QPushButton{{background:{C['bg3']};color:{C['text2']};border:1px solid {C['border']};border-radius:12px;padding:6px 12px;font-size:10px;}}"
-                                   f"QPushButton:hover{{background:{C['border']};color:{C['text']};border-color:{C['cyan']};}}")
-        btn_settings.clicked.connect(lambda: SettingsDialog(self.gs, self).exec())
-        top.addWidget(brand)
-        top.addStretch()
-        top.addWidget(self.status)
-        top.addWidget(btn_settings)
-        rl.addLayout(top)
-
+        brand = QLabel("VEILCORE"); brand.setStyleSheet(f"color:{C['cyan']};font-size:18px;font-weight:bold;letter-spacing:3px;")
+        self.status = QLabel("\u25cf CONNECTING"); self.status.setStyleSheet(f"color:{C['orange']};font-size:10px;font-weight:bold;")
+        btn = QPushButton("Settings"); btn.setStyleSheet(f"QPushButton{{background:{C['bg3']};color:{C['text2']};border:1px solid {C['border']};border-radius:12px;padding:6px 12px;font-size:10px;}}QPushButton:hover{{background:{C['border']};color:{C['text']};border-color:{C['cyan']};}}")
+        btn.clicked.connect(lambda: SettingsDialog(self.gs, self).exec())
+        top.addWidget(brand); top.addStretch(); top.addWidget(self.status); top.addWidget(btn); rl.addLayout(top)
         tabs = QTabWidget()
-        tabs.setStyleSheet(f"""
-            QTabWidget::pane {{ border: 1px solid {C['border']}; border-radius: 12px; }}
-            QTabBar::tab {{
-                background: {C['bg3']}; color: {C['text2']}; padding: 8px 12px;
-                border-top-left-radius: 10px; border-top-right-radius: 10px; margin-right: 4px;
-            }}
-            QTabBar::tab:selected {{
-                background: {C['bg2']}; color: {C['cyan']};
-                border: 1px solid {C['border']}; border-bottom: none;
-            }}
-        """)
-
+        tabs.setStyleSheet(f"QTabWidget::pane{{border:1px solid {C['border']};border-radius:12px;}}QTabBar::tab{{background:{C['bg3']};color:{C['text2']};padding:8px 12px;border-top-left-radius:10px;border-top-right-radius:10px;margin-right:4px;}}QTabBar::tab:selected{{background:{C['bg2']};color:{C['cyan']};border:1px solid {C['border']};border-bottom:none;}}")
         tabs.addTab(DashboardV2(self.gs, self.poller), "Dashboard")
         tabs.addTab(Organs(self.gs, self.poller), "Organs")
         tabs.addTab(ComplianceTab(self.gs), "Compliance")
         tabs.addTab(CloudTab(self.gs), "Cloud")
         tabs.addTab(Terminal(self.gs), "Terminal")
         rl.addWidget(tabs, 1)
-
-        # hook status to /health
         self.poller.health.connect(self._on_health)
-
-    def _on_health(self, d: dict) -> None:
+    def _on_health(self, d):
         if "_error" in d:
-            self.status.setText("● OFFLINE")
-            self.status.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;")
+            self.status.setText("\u25cf OFFLINE"); self.status.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;")
         else:
-            self.status.setText("● NOMINAL")
-            self.status.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
+            self.status.setText("\u25cf NOMINAL"); self.status.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
 
-# ─────────────────────────────────────────────────────────────────────
-# App wrapper (Splash -> Desktop)
-# ─────────────────────────────────────────────────────────────────────
-
-# ─────────────────────────────────────────────────────────────────────
-# GlobalSettings (restored) — required by VeilCoreApp + poller
-# ─────────────────────────────────────────────────────────────────────
-CONF_DIR = Path.home() / ".config" / "veilcore"
-CONF_DIR.mkdir(parents=True, exist_ok=True)
-GLOBAL_SETTINGS_PATH = CONF_DIR / "global.json"
-
-DEFAULT_API_BASE = os.environ.get("VEIL_API", "http://127.0.0.1:9444").rstrip("/")
-DEFAULT_REFRESH_MS = 4000
-
-def _load_global_settings() -> dict:
-    if not GLOBAL_SETTINGS_PATH.exists():
-        return {
-            "api_base": DEFAULT_API_BASE,
-            "api_key": os.environ.get("VEIL_API_KEY", ""),
-            "refresh_ms": DEFAULT_REFRESH_MS,
-        }
-    try:
-        data = json.loads(GLOBAL_SETTINGS_PATH.read_text(encoding="utf-8") or "{}")
-    except Exception:
-        data = {}
-    data.setdefault("api_base", DEFAULT_API_BASE)
-    data.setdefault("api_key", os.environ.get("VEIL_API_KEY", ""))
-    data.setdefault("refresh_ms", DEFAULT_REFRESH_MS)
-    return data
-
-def _save_global_settings(d: dict) -> None:
-    out = dict(d)
-    out["saved_at"] = datetime.now().isoformat(timespec="seconds")
-    GLOBAL_SETTINGS_PATH.write_text(json.dumps(out, indent=2), encoding="utf-8")
-
-class GlobalSettings(QObject):
-    changed = pyqtSignal(dict)
-
-    def __init__(self) -> None:
-        super().__init__()
-        self._s = _load_global_settings()
-
-    def get(self) -> dict:
-        return dict(self._s)
-
-    def api_base(self) -> str:
-        v = str(self._s.get("api_base") or DEFAULT_API_BASE).strip().rstrip("/")
-        return v or DEFAULT_API_BASE
-
-    def api_key(self) -> str:
-        return str(self._s.get("api_key") or "").strip()
-
-    def refresh_ms(self) -> int:
-        try:
-            v = int(self._s.get("refresh_ms") or DEFAULT_REFRESH_MS)
-        except Exception:
-            v = DEFAULT_REFRESH_MS
-        return max(500, min(60000, v))
-
-    def update(self, api_base: str, api_key: str, refresh_ms: int) -> None:
-        self._s["api_base"] = (api_base or "").strip().rstrip("/") or DEFAULT_API_BASE
-        self._s["api_key"] = (api_key or "").strip()
-        try:
-            self._s["refresh_ms"] = int(refresh_ms)
-        except Exception:
-            self._s["refresh_ms"] = DEFAULT_REFRESH_MS
-        try:
-            _save_global_settings(self._s)
-        except Exception:
-            pass
-        self.changed.emit(self.get())
-
-
+# ── App ──
 class VeilCoreApp:
-    def __init__(self) -> None:
+    def __init__(self):
         log("=== VeilCore starting ===")
-        log(f"DISPLAY={os.environ.get('DISPLAY','')}, WAYLAND_DISPLAY={os.environ.get('WAYLAND_DISPLAY','')}, QT_QPA_PLATFORM={os.environ.get('QT_QPA_PLATFORM','')}")
-        log(f"LOG_PATH={LOG_PATH}")
-
-        self.app = QApplication(sys.argv)
-        self.app.setQuitOnLastWindowClosed(True)
-        self.app.setStyle("Fusion")
-
-        # palette
+        log(f"DISPLAY={os.environ.get('DISPLAY','')}, WAYLAND={os.environ.get('WAYLAND_DISPLAY','')}")
+        self.app = QApplication(sys.argv); self.app.setQuitOnLastWindowClosed(True); self.app.setStyle("Fusion")
         pal = QPalette()
-        pal.setColor(QPalette.ColorRole.Window, QColor(C["bg"]))
-        pal.setColor(QPalette.ColorRole.WindowText, QColor(C["text"]))
-        pal.setColor(QPalette.ColorRole.Base, QColor(C["bg"]))
-        pal.setColor(QPalette.ColorRole.Text, QColor(C["text"]))
-        pal.setColor(QPalette.ColorRole.Highlight, QColor(C["cyan"]))
-        pal.setColor(QPalette.ColorRole.HighlightedText, QColor(C["bg"]))
-        pal.setColor(QPalette.ColorRole.Button, QColor(C["bg2"]))
-        pal.setColor(QPalette.ColorRole.ButtonText, QColor(C["text"]))
+        pal.setColor(QPalette.ColorRole.Window, QColor(C["bg"])); pal.setColor(QPalette.ColorRole.WindowText, QColor(C["text"]))
+        pal.setColor(QPalette.ColorRole.Base, QColor(C["bg"])); pal.setColor(QPalette.ColorRole.Text, QColor(C["text"]))
+        pal.setColor(QPalette.ColorRole.Highlight, QColor(C["cyan"])); pal.setColor(QPalette.ColorRole.Button, QColor(C["bg2"]))
         self.app.setPalette(pal)
-
-        # Wayland/GNOME: match ~/.local/share/applications/veilcore.desktop to kill the penguin
-        try:
-            QGuiApplication.setDesktopFileName("veilcore")
-        except Exception:
-            pass
-
-        # icon
-        self._icon = pick_veilcore_icon()
-        if self._icon is not None and not self._icon.isNull():
-            self.app.setWindowIcon(self._icon)
-
+        try: QGuiApplication.setDesktopFileName("veilcore")
+        except Exception: pass
+        self._icon = pick_icon()
+        if self._icon and not self._icon.isNull(): self.app.setWindowIcon(self._icon)
         self.gs = GlobalSettings()
-
-        # splash window
-        self.splash_win = QMainWindow()
-        self.splash_win.setWindowTitle("VeilCore")
-        self.splash = Splash()
-        self.splash.finished.connect(self._launch_desktop)
+        self.splash_win = QMainWindow(); self.splash_win.setWindowTitle("VeilCore")
+        self.splash = Splash(); self.splash.finished.connect(self._launch)
         self.splash_win.setCentralWidget(self.splash)
-        if self._icon is not None and not self._icon.isNull():
-            self.splash_win.setWindowIcon(self._icon)
-
-        self.splash_win.showMaximized()
-        self.splash_win.raise_()
-        self.splash_win.activateWindow()
-
+        if self._icon and not self._icon.isNull(): self.splash_win.setWindowIcon(self._icon)
+        self.splash_win.showMaximized(); self.splash_win.raise_(); self.splash_win.activateWindow()
         log("Splash shown.")
-
-    def _launch_desktop(self) -> None:
+    def _launch(self):
         log("Splash finished -> launching desktop.")
         try:
             self.desktop = VeilCoreDesktop(self.gs)
-            if self._icon is not None and not self._icon.isNull():
-                self.desktop.setWindowIcon(self._icon)
-            self.desktop.showMaximized()
-            self.splash_win.hide()
+            if self._icon and not self._icon.isNull(): self.desktop.setWindowIcon(self._icon)
+            self.desktop.showMaximized(); self.splash_win.hide()
             QTimer.singleShot(50, self.splash_win.close)
         except Exception:
             log_exc("Desktop creation failed:")
-            self.splash.set_fail(
-                "DESKTOP FAILED TO START.\n\n"
-                "Check:\n~/.config/veilcore/veilui.log\n\n"
-                "Leaving splash open so you aren't stuck."
-            )
+            self.splash.set_fail("DESKTOP FAILED TO START.\n\nCheck:\n~/.config/veilcore/veilui.log\n\nLeaving splash open so you aren't stuck.")
+    def run(self):
+        rc = self.app.exec(); log(f"VeilCore exit rc={rc}"); raise SystemExit(rc)
 
-    def run(self) -> None:
-        rc = self.app.exec()
-        log(f"VeilCore exit rc={rc}")
-        raise SystemExit(rc)
-
-# ─────────────────────────────────────────────────────────────────────
-# Entrypoint
-# ─────────────────────────────────────────────────────────────────────
-def main() -> None:
-    # Make Qt behave on minimal GPU setups
+def main():
     os.environ.setdefault("LIBGL_ALWAYS_SOFTWARE", "1")
     os.environ.setdefault("GALLIUM_DRIVER", "llvmpipe")
     os.environ.setdefault("QT_QUICK_BACKEND", "software")
-
-    # Prefer Wayland if present, else xcb (X11)
     if not os.environ.get("QT_QPA_PLATFORM"):
         os.environ["QT_QPA_PLATFORM"] = "wayland" if os.environ.get("WAYLAND_DISPLAY") else "xcb"
-
-    log(f"QT_QPA_PLATFORM(selected)={os.environ.get('QT_QPA_PLATFORM','')}")
+    log(f"QT_QPA_PLATFORM={os.environ.get('QT_QPA_PLATFORM','')}")
     VeilCoreApp().run()
-
-
-class SettingsDialog(QDialog):
-    def __init__(self, gs, parent=None):
-        super().__init__(parent)
-        self.gs = gs
-        self.setWindowTitle("VeilCore Settings")
-        self.resize(520, 220)
-
-        layout = QVBoxLayout(self)
-        form = QFormLayout()
-
-        self.api_base = QLineEdit(self.gs.api_base())
-        self.api_key = QLineEdit(self.gs.api_key())
-        self.refresh_ms = QSpinBox()
-        self.refresh_ms.setRange(500, 60000)
-        self.refresh_ms.setValue(self.gs.refresh_ms())
-
-        form.addRow("API Base", self.api_base)
-        form.addRow("API Key", self.api_key)
-        form.addRow("Refresh (ms)", self.refresh_ms)
-        layout.addLayout(form)
-
-        buttons = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Save |
-            QDialogButtonBox.StandardButton.Cancel
-        )
-        buttons.accepted.connect(self.save_and_close)
-        buttons.rejected.connect(self.reject)
-        layout.addWidget(buttons)
-
-    def save_and_close(self):
-        if hasattr(self.gs, "update_global"):
-            self.gs.update_global(
-                api_base=self.api_base.text(),
-                api_key=self.api_key.text(),
-                refresh_ms=self.refresh_ms.value(),
-            )
-        self.accept()
-
 
 if __name__ == "__main__":
     main()
