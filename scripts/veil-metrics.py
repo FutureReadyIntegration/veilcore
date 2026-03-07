@@ -64,16 +64,43 @@ def get_services():
     return {"active": active, "total": total}
 
 def get_organs():
+    total = 0; enabled = 0
     try:
         import urllib.request
         with urllib.request.urlopen("http://127.0.0.1:9444/organs", timeout=3) as resp:
             data = json.loads(resp.read())
         organs = data.get("organs", [])
-        enabled = sum(1 for o in organs if o.get("enabled"))
-        return {"total": len(organs), "enabled": enabled}
+        total = len(organs); enabled = sum(1 for o in organs if o.get("enabled"))
     except Exception:
-        return {"total": 0, "enabled": 0}
-
+        pass
+    try:
+        import subprocess
+        r = subprocess.run(["systemctl", "list-units", "--type=service", "--state=running", "--no-legend"], capture_output=True, text=True, timeout=5)
+        engines = [l for l in r.stdout.splitlines() if "veilcore-" in l and "engine" not in l.split()[0] == False]
+        svc_count = len([l for l in r.stdout.splitlines() if "veilcore-" in l])
+        total = max(total, svc_count); enabled = max(enabled, svc_count)
+    except Exception:
+        pass
+    return {"total": total, "enabled": enabled}
+def get_organs():
+    total = 0; enabled = 0
+    try:
+        import urllib.request
+        with urllib.request.urlopen("http://127.0.0.1:9444/organs", timeout=3) as resp:
+            data = json.loads(resp.read())
+        organs = data.get("organs", [])
+        total = len(organs); enabled = sum(1 for o in organs if o.get("enabled"))
+    except Exception:
+        pass
+    try:
+        import subprocess
+        r = subprocess.run(["systemctl", "list-units", "--type=service", "--state=running", "--no-legend"], capture_output=True, text=True, timeout=5)
+        engines = [l for l in r.stdout.splitlines() if "veilcore-" in l and "engine" not in l.split()[0] == False]
+        svc_count = len([l for l in r.stdout.splitlines() if "veilcore-" in l])
+        total = max(total, svc_count); enabled = max(enabled, svc_count)
+    except Exception:
+        pass
+    return {"total": total, "enabled": enabled}
 def publish(payload):
     """Publish via NerveBridge using veil-nb CLI"""
     try:
@@ -119,6 +146,14 @@ def main():
                 "type2_ready": True
             }
         }
+
+        # Write local snapshot for dashboard
+        try:
+            snap_dir = Path("/home/user/.config/veilcore")
+            snap_dir.mkdir(parents=True, exist_ok=True)
+            (snap_dir / "metrics.json").write_text(json.dumps(payload, indent=2))
+        except Exception:
+            pass
 
         # Write local snapshot for dashboard
         try:

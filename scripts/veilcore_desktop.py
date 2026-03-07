@@ -301,6 +301,15 @@ class AnimatedBar(QProgressBar):
         self._anim.start()
 
 class SubsystemCard(QFrame):
+    def getScale(self):
+        return self._scale
+
+    def setScale(self, v):
+        self._scale = v
+        self.setFixedSize(int(220*v), int(120*v))
+
+    scale = pyqtProperty(float, fget=getScale, fset=setScale)
+
     def __init__(self, info, parent=None):
         super().__init__(parent); self.setFixedSize(220, 120)
         self.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;}}")
@@ -331,6 +340,16 @@ class SubsystemCard(QFrame):
         self._glow_timer = QTimer(self)
         self._glow_timer.timeout.connect(self._tick_glow)
         self._glow_timer.start(120)
+
+        self._scale = 1.0
+        self._scale_anim = QPropertyAnimation(self, b"scale")
+        self._scale_anim.setDuration(220)
+        self._scale_anim.setEasingCurve(QEasingCurve.Type.OutBack)
+
+        self._shimmer_offset = 0
+        self._shimmer = QTimer(self)
+        self._shimmer.timeout.connect(self._tick_shimmer)
+        self._shimmer.start(90)
 
     def _tick_pulse(self):
         colors = {"operational":C["green"], "degraded":C["orange"], "offline":C["red"]}
@@ -386,6 +405,30 @@ class SubsystemCard(QFrame):
 
         self._glow.setColor(col)
 
+    def _tick_shimmer(self):
+        if self._status == "operational":
+            return
+
+        self._shimmer_offset = (self._shimmer_offset + 0.08) % 1.0
+
+        bc = C["orange"] if self._status == "degraded" else C["red"]
+
+        grad = f'''
+        QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}
+        QProgressBar::chunk{{
+            background:qlineargradient(
+                x1:{self._shimmer_offset},y1:0,
+                x2:{self._shimmer_offset+0.3},y2:0,
+                stop:0 {bc},
+                stop:0.5 {C['gold']},
+                stop:1 {bc}
+            );
+            border-radius:2px;
+        }}
+        '''
+
+        self.health_bar.setStyleSheet(grad)
+
     def set_status(self, status, health=100):
         colors = {"operational":C["green"],"degraded":C["orange"],"offline":C["red"]}
         col = colors.get(status, C["dim"])
@@ -421,6 +464,18 @@ class DashboardV2(QWidget):
         scroll.setWidget(gw); root.addWidget(scroll, 1)
         self.threat_label = QLabel(""); self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;"); root.addWidget(self.threat_label)
         poller.health.connect(self.on_health)
+
+        # Live metrics reader
+        self._metrics_timer = QTimer(self)
+        self._metrics_timer.timeout.connect(self._read_metrics)
+        self._metrics_timer.start(5000)
+        QTimer.singleShot(1000, self._read_metrics)
+
+        # Live metrics reader
+        self._metrics_timer = QTimer(self)
+        self._metrics_timer.timeout.connect(self._read_metrics)
+        self._metrics_timer.start(5000)
+        QTimer.singleShot(1000, self._read_metrics)
         self._metrics_timer = QTimer(self); self._metrics_timer.timeout.connect(self._read_metrics); self._metrics_timer.start(5000)
         QTimer.singleShot(1000, self._read_metrics)
 
