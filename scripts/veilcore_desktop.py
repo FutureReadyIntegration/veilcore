@@ -1,4 +1,5 @@
 from __future__ import annotations
+from prism_events import PrismEvents
 
 C = {
     "bg": "#0a0e17", "bg2": "#111827", "bg3": "#1a2332",
@@ -386,7 +387,7 @@ class SubsystemCard(QFrame):
             )
         else:
             self.status_dot.setStyleSheet(
-                f"color:{col};font-size:{10 if self._pulse_on else 9}px;"
+                f"color:{col};font-size:10px;"
             )
 
     def getPopScale(self):
@@ -421,7 +422,11 @@ class SubsystemCard(QFrame):
         self._pop_anim.start()
 
     def _tick_fx(self):
-        self._edge_phase = (self._edge_phase + self._edge_profile()["speed"]) % 1.0
+        prof = self._edge_profile()
+        if self._status == "operational":
+            self._edge_phase = (self._edge_phase + prof["speed"] * 0.18) % 1.0
+        else:
+            self._edge_phase = (self._edge_phase + prof["speed"]) % 1.0
         self._depth_phase = (self._depth_phase + 0.02) % 6.28
         self._sheen += 0.03 * self._sheen_dir
         if self._sheen >= 1.0:
@@ -437,8 +442,8 @@ class SubsystemCard(QFrame):
         lift = prof.get("lift", 1.0)
 
         if self._status == "operational":
-            lo, hi = int(12 * lift), int(26 * lift)
-            col = QColor(prof["base"])
+            lo, hi = int(6 * lift), int(12 * lift)
+            col = QColor(C["border"])
         elif self._status == "degraded":
             lo, hi = int(18 * lift), int(34 * lift)
             col = QColor(prof["base"])
@@ -539,10 +544,10 @@ class SubsystemCard(QFrame):
 
         # status modulation
         if self._status == "operational":
-            profile["alpha_head"] = 72
-            profile["alpha_trail"] = 24
-            profile["seg"] *= 0.82
-            profile["speed"] *= 0.82
+            profile["alpha_head"] = 20
+            profile["alpha_trail"] = 6
+            profile["seg"] *= 0.38
+            profile["speed"] *= 0.25
         elif self._status == "degraded":
             if profile["urgent"]:
                 profile["alpha_head"] = 215
@@ -797,6 +802,8 @@ class DashboardV2(QWidget):
         self.stat_subs = self._make_stat("13", "SUBSYSTEMS")
         self.stat_health = self._make_stat("100%", "HEALTH")
         self.stat_alerts = self._make_stat("0", "CYCLES")
+        self.events = PrismEvents()
+        root.addWidget(self.events)
         stats.addWidget(self.stat_organs); stats.addWidget(self.stat_subs); stats.addWidget(self.stat_health); stats.addWidget(self.stat_alerts); stats.addStretch()
         root.addLayout(stats)
         gl = QLabel("SUBSYSTEM STATUS"); gl.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;margin-top:6px;"); root.addWidget(gl)
@@ -812,6 +819,7 @@ class DashboardV2(QWidget):
         scroll.setWidget(gw); root.addWidget(scroll, 1)
         self.threat_label = QLabel(""); self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;"); root.addWidget(self.threat_label)
         poller.health.connect(self.on_health)
+        poller.organs.connect(self._read_engines)
 
         # Live metrics reader
         self._metrics_timer = QTimer(self)
@@ -838,6 +846,43 @@ class DashboardV2(QWidget):
         if "_error" in d:
             self.conn.setText("\u25cf OFFLINE"); self.conn.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;"); return
         self.conn.setText("\u25cf NOMINAL"); self.conn.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
+
+
+    def _read_engines(self, _=None):
+        try:
+            url = f"{self.gs.api_base()}/engines"
+            req = urllib.request.Request(url)
+            api_key = self.gs.api_key()
+            if api_key:
+                req.add_header("X-API-Key", api_key)
+
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                data = json.loads(resp.read().decode("utf-8", errors="replace"))
+
+            engines = data.get("engines", [])
+            running = 0
+
+            for eng in engines:
+                module = eng.get("id")
+                state = str(eng.get("state", "unknown")).lower()
+                health = int(eng.get("health", 0) or 0)
+
+                if module not in self.cards:
+                    continue
+
+                if state == "running":
+                    status = "operational"
+                    running += 1
+                elif state == "degraded":
+                    status = "degraded"
+                else:
+                    status = "offline"
+
+                self.cards[module].set_status(status, health)
+
+            self.stat_subs._val.setText(str(running))
+        except Exception:
+            pass
 
     def _read_metrics(self):
         try:

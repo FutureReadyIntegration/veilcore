@@ -1,0 +1,283 @@
+{
+  "events": [
+    {
+      "id": "75d04aa7-a9e9-4eab-8b45-fa27671d64ac",
+      "ts": "2026-03-07T15:11:35",
+      "type": "engine.started",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel started",
+      "payload": {
+        "state": "running",
+        "health": 100
+      }
+    },
+    {
+      "id": "34819869-99c2-4f8d-92fb-eff926be9e1b",
+      "ts": "2026-03-07T16:00:26",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "bridge test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "bridge test breach",
+        "updated_at": "2026-03-07T16:00:26"
+      }
+    },
+    {
+      "id": "9e494884-6446-44e8-8482-4969e0afad13",
+      "ts": "2026-03-07T16:00:26",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:00:26"
+      }
+    },
+    {
+      "id": "b135fcc4-3f73-4604-9c78-c10894120479",
+      "ts": "2026-03-07T16:01:27",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "bridge test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "bridge test breach",
+        "updated_at": "2026-03-07T16:01:27"
+      }
+    },
+    {
+      "id": "537aa089-1837-4fa7-9f60-ff1dd8967152",
+      "ts": "2026-03-07T16:01:27",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:01:27"
+      }
+    },
+    {
+      "id": "111c7c7a-b828-4e35-8659-33d275cc2cc3",
+      "ts": "2026-03-07T16:02:48",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:02:48"
+      }
+    },
+    {
+      "id": "c77bcc78-0de9-40be-a027-850bb04db38c",
+      "ts": "2026-03-07T16:02:50",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "bridge test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "bridge test breach",
+        "updated_at": "2026-03-07T16:02:50"
+      }
+    },
+    {
+      "id": "a7ac43d9-c9cc-4bd5-a3c7-999d77b3be89",
+      "ts": "2026-03-07T16:02:50",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:02:50"
+      }
+    },
+    {
+      "id": "08cce021-d767-40e5-a3a9-86404289ab7f",
+      "ts": "2026-03-07T16:03:07",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "bridge test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "bridge test breach",
+        "updated_at": "2026-03-07T16:03:07"
+      }
+    },
+    {
+      "id": "4e02ba20-08ac-401e-973f-eb4e0497cdef",
+      "ts": "2026-03-07T16:03:07",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:03:07"
+      }
+    },
+    {
+      "id": "448aad4d-1f5a-4f2c-88a2-fd005503444f",
+      "ts": "2026-03-07T16:03:30",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "bridge test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "bridge test breach",
+        "updated_at": "2026-03-07T16:03:30"
+      }
+    },
+    {
+      "id": "b4d6b8d9-3f9d-4ccc-826e-615536f26940",
+      "ts": "2026-03-07T16:03:30",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T16:03:30"
+      }
+    },
+    {
+      "id": "7ca15e23-e706-4f7a-9fc8-6de09060d0ca",
+      "ts": "2026-03-07T16:19:42",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "live test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "live test breach",
+        "updated_at": "2026-03-07T16:19:42"
+      }
+    },
+    {
+      "id": "521a960f-20ef-4b26-bfd3-94ed5b12d364",
+      "ts": "2026-03-07T16:21:11",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "live test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "live test breach",
+        "updated_at": "2026-03-07T16:21:11"
+      }
+    },
+    {
+      "id": "c69099a6-3aaf-4879-af60-1ea58f37996d",
+      "ts": "2026-03-07T16:24:51",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "live test breach",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "live test breach",
+        "updated_at": "2026-03-07T16:24:51"
+      }
+    }
+  ]
+}

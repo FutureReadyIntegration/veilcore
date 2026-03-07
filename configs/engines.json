@@ -1,17 +1,97 @@
 {
   "engines": [
-    {"id": "mesh", "name": "NerveBridge", "desc": "Organ Mesh Communication", "state": "running", "health": 100},
-    {"id": "ml", "name": "DeepSentinel", "desc": "ML Threat Prediction", "state": "running", "health": 100},
-    {"id": "federation", "name": "AllianceNet", "desc": "Multi-Site Federation", "state": "running", "health": 100},
-    {"id": "pentest", "name": "RedVeil", "desc": "Automated Penetration Testing", "state": "running", "health": 100},
-    {"id": "mobile", "name": "Watchtower", "desc": "Mobile Security API", "state": "running", "health": 100},
-    {"id": "accessibility", "name": "EqualShield", "desc": "Accessibility Engine", "state": "running", "health": 100},
-    {"id": "wireless", "name": "AirShield", "desc": "Wireless Guardian", "state": "running", "health": 100},
-    {"id": "physical", "name": "IronWatch", "desc": "Physical Security", "state": "running", "health": 100},
-    {"id": "deployer", "name": "Genesis", "desc": "Deployment Engine", "state": "running", "health": 100},
-    {"id": "hitrust", "name": "TrustForge", "desc": "HITRUST CSF Mapper", "state": "running", "health": 100},
-    {"id": "soc2", "name": "AuditIron", "desc": "SOC 2 Type II Mapper", "state": "running", "health": 100},
-    {"id": "cloud", "name": "SkyVeil", "desc": "Cloud-Hybrid Engine", "state": "running", "health": 100},
-    {"id": "dashboard", "name": "Prism", "desc": "Unified Dashboard API", "state": "running", "health": 100}
+    {
+      "id": "mesh",
+      "name": "NerveBridge",
+      "desc": "Organ Mesh Communication",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "ml",
+      "name": "DeepSentinel",
+      "desc": "ML Threat Prediction",
+      "state": "degraded",
+      "health": 42,
+      "last_error": "live test breach",
+      "updated_at": "2026-03-07T16:24:51"
+    },
+    {
+      "id": "federation",
+      "name": "AllianceNet",
+      "desc": "Multi-Site Federation",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "pentest",
+      "name": "RedVeil",
+      "desc": "Automated Penetration Testing",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "mobile",
+      "name": "Watchtower",
+      "desc": "Mobile Security API",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "accessibility",
+      "name": "EqualShield",
+      "desc": "Accessibility Engine",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "wireless",
+      "name": "AirShield",
+      "desc": "Wireless Guardian",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "physical",
+      "name": "IronWatch",
+      "desc": "Physical Security",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "deployer",
+      "name": "Genesis",
+      "desc": "Deployment Engine",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "hitrust",
+      "name": "TrustForge",
+      "desc": "HITRUST CSF Mapper",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "soc2",
+      "name": "AuditIron",
+      "desc": "SOC 2 Type II Mapper",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "cloud",
+      "name": "SkyVeil",
+      "desc": "Cloud-Hybrid Engine",
+      "state": "running",
+      "health": 100
+    },
+    {
+      "id": "dashboard",
+      "name": "Prism",
+      "desc": "Unified Dashboard API",
+      "state": "running",
+      "health": 100
+    }
   ]
 }
