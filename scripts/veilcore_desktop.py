@@ -588,6 +588,377 @@ def pick_veilcore_icon() -> QIcon | None:
             return QIcon(str(p))
     return None
 
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Phase 3 UI: Subsystem Grid, Compliance, Cloud Topology
+# ─────────────────────────────────────────────────────────────────────
+
+PHASE3_SUBSYSTEMS = [
+    {"name":"NerveBridge","module":"mesh","icon":"⬡","desc":"Organ Mesh"},
+    {"name":"DeepSentinel","module":"ml","icon":"◉","desc":"ML Threat AI"},
+    {"name":"AllianceNet","module":"federation","icon":"⊕","desc":"Federation"},
+    {"name":"RedVeil","module":"pentest","icon":"⚔","desc":"Auto Pentest"},
+    {"name":"Watchtower","module":"mobile","icon":"📡","desc":"Mobile API"},
+    {"name":"EqualShield","module":"accessibility","icon":"♿","desc":"Accessibility"},
+    {"name":"AirShield","module":"wireless","icon":"📶","desc":"Wireless Guard"},
+    {"name":"IronWatch","module":"physical","icon":"🏛","desc":"Physical Sec"},
+    {"name":"Genesis","module":"deployer","icon":"⚙","desc":"Deploy Engine"},
+    {"name":"TrustForge","module":"hitrust","icon":"🛡","desc":"HITRUST CSF"},
+    {"name":"AuditIron","module":"soc2","icon":"📋","desc":"SOC 2 Type II"},
+    {"name":"SkyVeil","module":"cloud","icon":"☁","desc":"Cloud Hybrid"},
+    {"name":"Prism","module":"dashboard","icon":"◈","desc":"Unified Dash"},
+]
+
+class SubsystemCard(QFrame):
+    def __init__(self, info, parent=None):
+        super().__init__(parent)
+        self.setFixedSize(220, 120)
+        self.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;}}")
+        v = QVBoxLayout(self)
+        v.setContentsMargins(8, 6, 8, 6)
+        v.setSpacing(2)
+        top = QHBoxLayout()
+        icon = QLabel(info["icon"])
+        icon.setStyleSheet(f"color:{C['cyan']};font-size:22px;")
+        self.status_dot = QLabel("●")
+        self.status_dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
+        top.addWidget(icon)
+        top.addStretch()
+        top.addWidget(self.status_dot)
+        v.addLayout(top)
+        name = QLabel(info["name"])
+        name.setStyleSheet(f"color:{C['text']};font-size:13px;font-weight:bold;")
+        v.addWidget(name)
+        desc = QLabel(info["desc"])
+        desc.setStyleSheet(f"color:{C['dim']};font-size:10px;")
+        v.addWidget(desc)
+        self.health_bar = QProgressBar()
+        self.health_bar.setFixedHeight(6)
+        self.health_bar.setValue(100)
+        self.health_bar.setTextVisible(False)
+        self.health_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{C['green']};border-radius:2px;}}")
+        v.addWidget(self.health_bar)
+
+    def set_status(self, status, health=100):
+        colors = {"operational":C["green"],"degraded":C["orange"],"offline":C["red"]}
+        col = colors.get(status, C["dim"])
+        self.status_dot.setStyleSheet(f"color:{col};font-size:10px;")
+        self.health_bar.setValue(int(health))
+        if health >= 90:
+            bc = C["green"]
+        elif health >= 70:
+            bc = C["orange"]
+        else:
+            bc = C["red"]
+        self.health_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{bc};border-radius:2px;}}")
+
+
+class DashboardV2(QWidget):
+    def __init__(self, gs, poller):
+        super().__init__()
+        self.gs = gs
+        self.poller = poller
+        self.cards = {}
+
+        root = QVBoxLayout(self)
+        root.setContentsMargins(14, 12, 14, 12)
+        root.setSpacing(10)
+
+        hdr = QHBoxLayout()
+        title = QLabel("SECURITY COMMAND CENTER")
+        title.setStyleSheet(f"color:{C['cyan']};font-size:16px;font-weight:bold;letter-spacing:2px;")
+        self.conn = QLabel("● CONNECTING")
+        self.conn.setStyleSheet(f"color:{C['orange']};font-size:10px;font-weight:bold;")
+        hdr.addWidget(title)
+        hdr.addStretch()
+        hdr.addWidget(self.conn)
+        root.addLayout(hdr)
+
+        # Stats row
+        stats = QHBoxLayout()
+        self.stat_organs = self._make_stat("82", "ORGANS")
+        self.stat_subs = self._make_stat("13", "SUBSYSTEMS")
+        self.stat_health = self._make_stat("100%", "HEALTH")
+        self.stat_alerts = self._make_stat("0", "ALERTS")
+        stats.addWidget(self.stat_organs)
+        stats.addWidget(self.stat_subs)
+        stats.addWidget(self.stat_health)
+        stats.addWidget(self.stat_alerts)
+        stats.addStretch()
+        root.addLayout(stats)
+
+        # Subsystem grid
+        grid_label = QLabel("SUBSYSTEM STATUS")
+        grid_label.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;margin-top:6px;")
+        root.addWidget(grid_label)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setStyleSheet(f"QScrollArea{{background:{C['bg']};border:none;}}")
+        grid_w = QWidget()
+        grid = QGridLayout(grid_w)
+        grid.setSpacing(10)
+        grid.setContentsMargins(10, 10, 10, 10)
+        row, col = 0, 0
+        for info in PHASE3_SUBSYSTEMS:
+            card = SubsystemCard(info)
+            card.set_status("operational", 100)
+            self.cards[info["module"]] = card
+            grid.addWidget(card, row, col)
+            col += 1
+            if col >= 7:
+                col = 0; row += 1
+        scroll.setWidget(grid_w)
+        root.addWidget(scroll, 1)
+
+        # Threat summary
+        self.threat_label = QLabel("")
+        self.threat_label.setStyleSheet(f"color:{C['text2']};font-family:monospace;font-size:11px;")
+        root.addWidget(self.threat_label)
+
+        poller.health.connect(self.on_health)
+
+    def _make_stat(self, val, label):
+        w = QFrame()
+        w.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:10px;padding:4px;}}")
+        v = QVBoxLayout(w)
+        v.setContentsMargins(12, 6, 12, 6)
+        v.setSpacing(0)
+        vl = QLabel(val)
+        vl.setStyleSheet(f"color:{C['cyan']};font-size:22px;font-weight:bold;")
+        vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        ll = QLabel(label)
+        ll.setStyleSheet(f"color:{C['dim']};font-size:9px;font-weight:bold;letter-spacing:1px;")
+        ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        v.addWidget(vl)
+        v.addWidget(ll)
+        w._val = vl
+        return w
+
+    def on_health(self, d):
+        if "_error" in d:
+            self.conn.setText("● OFFLINE")
+            self.conn.setStyleSheet(f"color:{C['red']};font-size:10px;font-weight:bold;")
+            return
+        self.conn.setText("● NOMINAL")
+        self.conn.setStyleSheet(f"color:{C['green']};font-size:10px;font-weight:bold;")
+
+
+class ComplianceTab(QWidget):
+    def __init__(self, gs):
+        super().__init__()
+        root = QVBoxLayout(self)
+        root.setContentsMargins(14, 12, 14, 12)
+        root.setSpacing(14)
+
+        title = QLabel("COMPLIANCE COMMAND")
+        title.setStyleSheet(f"color:{C['gold']};font-size:16px;font-weight:bold;letter-spacing:2px;")
+        root.addWidget(title)
+
+        # HITRUST
+        hf = QFrame()
+        hf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        hv = QVBoxLayout(hf)
+        hv.setContentsMargins(16, 12, 16, 12)
+        hv.setSpacing(6)
+        ht = QLabel("🛡  HITRUST CSF v11 — TrustForge")
+        ht.setStyleSheet(f"color:{C['cyan']};font-size:14px;font-weight:bold;")
+        hv.addWidget(ht)
+        self.hitrust_bar = QProgressBar()
+        self.hitrust_bar.setFixedHeight(20)
+        self.hitrust_bar.setValue(98)
+        self.hitrust_bar.setFormat("98.4% Coverage")
+        self.hitrust_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:1px solid {C['border']};border-radius:6px;color:{C['text']};font-size:11px;font-weight:bold;}}QProgressBar::chunk{{background:qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 {C['cyan']},stop:1 {C['green']});border-radius:5px;}}")
+        hv.addWidget(self.hitrust_bar)
+        hstats = QHBoxLayout()
+        for label, val, col in [("Domains","19/19",C["green"]),("Controls","32",C["cyan"]),("Full Coverage","31",C["green"]),("Gaps","0",C["green"])]:
+            f = QFrame()
+            f.setStyleSheet(f"QFrame{{background:{C['bg2']};border-radius:8px;padding:4px;}}")
+            fv = QVBoxLayout(f)
+            fv.setContentsMargins(10,4,10,4)
+            fv.setSpacing(0)
+            vl = QLabel(val)
+            vl.setStyleSheet(f"color:{col};font-size:18px;font-weight:bold;")
+            vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            ll = QLabel(label)
+            ll.setStyleSheet(f"color:{C['dim']};font-size:9px;")
+            ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            fv.addWidget(vl)
+            fv.addWidget(ll)
+            hstats.addWidget(f)
+        hv.addLayout(hstats)
+        root.addWidget(hf)
+
+        # SOC 2
+        sf = QFrame()
+        sf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        sv = QVBoxLayout(sf)
+        sv.setContentsMargins(16, 12, 16, 12)
+        sv.setSpacing(6)
+        st = QLabel("📋  SOC 2 Type II — AuditIron")
+        st.setStyleSheet(f"color:{C['cyan']};font-size:14px;font-weight:bold;")
+        sv.addWidget(st)
+        self.soc2_bar = QProgressBar()
+        self.soc2_bar.setFixedHeight(20)
+        self.soc2_bar.setValue(99)
+        self.soc2_bar.setFormat("98.6% Coverage — TYPE II READY")
+        self.soc2_bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:1px solid {C['border']};border-radius:6px;color:{C['text']};font-size:11px;font-weight:bold;}}QProgressBar::chunk{{background:qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 {C['gold']},stop:1 {C['green']});border-radius:5px;}}")
+        sv.addWidget(self.soc2_bar)
+        sstats = QHBoxLayout()
+        for label, val, col in [("Categories","5/5",C["green"]),("Criteria","35",C["cyan"]),("Automated","100%",C["green"]),("Type II Ready","YES",C["green"])]:
+            f = QFrame()
+            f.setStyleSheet(f"QFrame{{background:{C['bg2']};border-radius:8px;padding:4px;}}")
+            fv = QVBoxLayout(f)
+            fv.setContentsMargins(10,4,10,4)
+            fv.setSpacing(0)
+            vl = QLabel(val)
+            vl.setStyleSheet(f"color:{col};font-size:18px;font-weight:bold;")
+            vl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            ll = QLabel(label)
+            ll.setStyleSheet(f"color:{C['dim']};font-size:9px;")
+            ll.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            fv.addWidget(vl)
+            fv.addWidget(ll)
+            sstats.addWidget(f)
+        sv.addLayout(sstats)
+        root.addWidget(sf)
+
+        # Category breakdown
+        cats = QFrame()
+        cats.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        cv = QVBoxLayout(cats)
+        cv.setContentsMargins(16, 12, 16, 12)
+        cv.setSpacing(4)
+        ct = QLabel("SOC 2 TRUST SERVICES CATEGORIES")
+        ct.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;")
+        cv.addWidget(ct)
+        for cat, full, total in [("Security","27","27"),("Availability","3","3"),("Processing Integrity","1","1"),("Confidentiality","2","2"),("Privacy","2","2")]:
+            row = QHBoxLayout()
+            nl = QLabel(cat)
+            nl.setStyleSheet(f"color:{C['text']};font-size:11px;")
+            nl.setFixedWidth(180)
+            bar = QProgressBar()
+            bar.setFixedHeight(12)
+            bar.setValue(100)
+            bar.setFormat(f"{full}/{total}")
+            bar.setStyleSheet(f"QProgressBar{{background:{C['bg']};border:none;border-radius:4px;color:{C['text']};font-size:9px;}}QProgressBar::chunk{{background:{C['green']};border-radius:4px;}}")
+            row.addWidget(nl)
+            row.addWidget(bar)
+            cv.addLayout(row)
+        root.addWidget(cats)
+        root.addStretch()
+
+
+class CloudTab(QWidget):
+    def __init__(self, gs):
+        super().__init__()
+        root = QVBoxLayout(self)
+        root.setContentsMargins(14, 12, 14, 12)
+        root.setSpacing(14)
+
+        title = QLabel("CLOUD-HYBRID TOPOLOGY — SkyVeil")
+        title.setStyleSheet(f"color:{C['purple']};font-size:16px;font-weight:bold;letter-spacing:2px;")
+        root.addWidget(title)
+
+        # PHI compliance banner
+        phi = QFrame()
+        phi.setStyleSheet(f"QFrame{{background:{C['bg3']};border:2px solid {C['green']};border-radius:12px;}}")
+        pv = QHBoxLayout(phi)
+        pv.setContentsMargins(16, 10, 16, 10)
+        pl = QLabel("🔒  PHI RESIDENCY: COMPLIANT")
+        pl.setStyleSheet(f"color:{C['green']};font-size:14px;font-weight:bold;")
+        pd = QLabel("PHI/PII data classes enforced on-prem only • 13 organs locked to on-prem")
+        pd.setStyleSheet(f"color:{C['text2']};font-size:10px;")
+        pv.addWidget(pl)
+        pv.addStretch()
+        pv.addWidget(pd)
+        root.addWidget(phi)
+
+        # Nodes
+        nodes_data = [
+            {"id":"ONPREM-PRIMARY","provider":"On-Prem","role":"Primary","organs":6,"data":["PHI","PII","Operational"],"color":C["cyan"],"status":"ACTIVE"},
+            {"id":"AWS-ANALYTICS","provider":"AWS","role":"Analytics","organs":3,"data":["Threat Intel","Metrics"],"color":C["orange"],"status":"ACTIVE"},
+            {"id":"AZURE-FAILOVER","provider":"Azure","role":"Failover","organs":2,"data":["Logs","Metrics"],"color":C["blue"],"status":"STANDBY"},
+        ]
+
+        nodes_row = QHBoxLayout()
+        for nd in nodes_data:
+            nf = QFrame()
+            nf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {nd['color']};border-radius:12px;}}")
+            nv = QVBoxLayout(nf)
+            nv.setContentsMargins(14, 10, 14, 10)
+            nv.setSpacing(4)
+            nt = QLabel(f"{nd['id']}")
+            nt.setStyleSheet(f"color:{nd['color']};font-size:13px;font-weight:bold;")
+            nv.addWidget(nt)
+            for label, val in [("Provider",nd["provider"]),("Role",nd["role"]),("Organs",str(nd["organs"])),("Status",nd["status"])]:
+                r = QHBoxLayout()
+                lbl = QLabel(label + ":")
+                lbl.setStyleSheet(f"color:{C['dim']};font-size:10px;")
+                lbl.setFixedWidth(60)
+                vl = QLabel(val)
+                sc = C["green"] if val == "ACTIVE" else (C["orange"] if val == "STANDBY" else C["text"])
+                vl.setStyleSheet(f"color:{sc};font-size:10px;font-weight:bold;")
+                r.addWidget(lbl)
+                r.addWidget(vl)
+                r.addStretch()
+                nv.addLayout(r)
+            dl = QLabel("Data: " + ", ".join(nd["data"]))
+            dl.setStyleSheet(f"color:{C['text2']};font-size:9px;")
+            dl.setWordWrap(True)
+            nv.addWidget(dl)
+            nodes_row.addWidget(nf)
+        root.addLayout(nodes_row)
+
+        # Sync policies
+        spf = QFrame()
+        spf.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        spv = QVBoxLayout(spf)
+        spv.setContentsMargins(16, 12, 16, 12)
+        spv.setSpacing(4)
+        spt = QLabel("SYNC POLICIES")
+        spt.setStyleSheet(f"color:{C['text2']};font-size:11px;font-weight:bold;letter-spacing:1px;")
+        spv.addWidget(spt)
+        for name, freq, direction in [("Threat Intelligence","60s","Bidirectional"),("Metrics Offload","5m","Push"),("Log Archive","15m","Push"),("Backup Verification","1h","Push")]:
+            r = QHBoxLayout()
+            nl = QLabel(name)
+            nl.setStyleSheet(f"color:{C['text']};font-size:11px;")
+            nl.setFixedWidth(180)
+            fl = QLabel(freq)
+            fl.setStyleSheet(f"color:{C['cyan']};font-size:11px;font-weight:bold;")
+            fl.setFixedWidth(50)
+            dl = QLabel(direction)
+            dl.setStyleSheet(f"color:{C['text2']};font-size:11px;")
+            dot = QLabel("● ACTIVE")
+            dot.setStyleSheet(f"color:{C['green']};font-size:10px;")
+            r.addWidget(nl)
+            r.addWidget(fl)
+            r.addWidget(dl)
+            r.addStretch()
+            r.addWidget(dot)
+            spv.addLayout(r)
+        root.addWidget(spf)
+
+        # Protected organs list
+        pof = QFrame()
+        pof.setStyleSheet(f"QFrame{{background:{C['bg3']};border:1px solid {C['border']};border-radius:12px;}}")
+        pov = QVBoxLayout(pof)
+        pov.setContentsMargins(16, 12, 16, 12)
+        pov.setSpacing(4)
+        pot = QLabel("ON-PREM LOCKED ORGANS (PHI)")
+        pot.setStyleSheet(f"color:{C['red']};font-size:11px;font-weight:bold;letter-spacing:1px;")
+        pov.addWidget(pot)
+        locked = "guardian • phi_classifier • phi_guard • vault • encryption_enforcer • epic_connector • imprivata_bridge • hl7_filter • fhir_gateway • dicom_shield • insider_threat • forensic_collector • dlp_engine"
+        ll = QLabel(locked)
+        ll.setStyleSheet(f"color:{C['text2']};font-size:10px;")
+        ll.setWordWrap(True)
+        pov.addWidget(ll)
+        root.addWidget(pof)
+
+        root.addStretch()
+
+
 class VeilCoreDesktop(QMainWindow):
     def __init__(self, gs: GlobalSettings) -> None:
         super().__init__()
@@ -632,8 +1003,10 @@ class VeilCoreDesktop(QMainWindow):
             }}
         """)
 
-        tabs.addTab(Dashboard(self.gs, self.poller), "Dashboard")
+        tabs.addTab(DashboardV2(self.gs, self.poller), "Dashboard")
         tabs.addTab(Organs(self.gs, self.poller), "Organs")
+        tabs.addTab(ComplianceTab(self.gs), "Compliance")
+        tabs.addTab(CloudTab(self.gs), "Cloud")
         tabs.addTab(Terminal(self.gs), "Terminal")
         rl.addWidget(tabs, 1)
 
