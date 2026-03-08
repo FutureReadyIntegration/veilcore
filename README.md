@@ -1,4 +1,3 @@
-cat > README.md <<'EOF'
 <p align="center">
   <img src="./assets/banners/readme-header-v2.svg" alt="VeilCore Banner" width="900"/>
 </p>
