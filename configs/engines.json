@@ -12,9 +12,9 @@
       "name": "DeepSentinel",
       "desc": "ML Threat Prediction",
       "state": "degraded",
-      "health": 42,
-      "last_error": "live test breach",
-      "updated_at": "2026-03-07T16:24:51"
+      "health": 40,
+      "last_error": "slowstorm3",
+      "updated_at": "2026-03-08T13:41:26"
     },
     {
       "id": "federation",
@@ -55,8 +55,10 @@
       "id": "physical",
       "name": "IronWatch",
       "desc": "Physical Security",
-      "state": "running",
-      "health": 100
+      "state": "degraded",
+      "health": 35,
+      "last_error": "phys2",
+      "updated_at": "2026-03-08T13:42:19"
     },
     {
       "id": "deployer",

@@ -1,5 +1,4 @@
 from __future__ import annotations
-from prism_events import PrismEvents
 
 C = {
     "bg": "#0a0e17", "bg2": "#111827", "bg3": "#1a2332",
@@ -220,6 +219,7 @@ class Organs(QWidget):
 
 # ── Terminal Tab ──
 from veilcore_secure_terminal import VeilCoreSecureTerminal
+from prism_events import PrismEvents
 
 class Terminal(QWidget):
     def __init__(self, gsm):
@@ -302,7 +302,51 @@ class AnimatedBar(QProgressBar):
         self._anim.start()
 
 class SubsystemCard(QFrame):
-    _depth_phase = 0.0
+
+
+    def set_status(self, status, health=100):
+        self._status = status
+
+        # event emphasis when status changes
+        if status != getattr(self, "_last_status", status):
+            self._last_status = status
+
+            if status == "degraded":
+                try:
+                    from PyQt6.QtCore import QPropertyAnimation
+                    g = self.geometry()
+                    self._event_anim = QPropertyAnimation(self, b"geometry")
+                    self._event_anim.setDuration(180)
+                    self._event_anim.setStartValue(g.adjusted(-3, -3, 3, 3))
+                    self._event_anim.setEndValue(g)
+                    self._event_anim.start()
+                except Exception:
+                    pass
+
+        colors = {"operational": C["green"], "degraded": C["orange"], "offline": C["red"]}
+        col = colors.get(status, C["dim"])
+        border = C["border"] if status == "operational" else col
+
+        self.setStyleSheet(
+            f"QFrame{{background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 {C['bg3']},stop:0.55 {C['bg2']},stop:1 {C['bg']});border:1px solid {border};border-radius:10px;}}"
+        )
+
+        if hasattr(self, "status_dot"):
+            self.status_dot.setStyleSheet(f"color:{col};font-size:10px;")
+
+        if hasattr(self, "health_bar"):
+            try:
+                self.health_bar.animate_to(int(health))
+            except Exception:
+                try:
+                    self.health_bar.setValue(int(health))
+                except Exception:
+                    pass
+
+            bc = C["green"] if health >= 90 else (C["orange"] if health >= 70 else C["red"])
+            self.health_bar.setStyleSheet(
+                f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{bc};border-radius:2px;}}"
+            )
 
     def getScale(self):
         return self._scale
@@ -427,7 +471,6 @@ class SubsystemCard(QFrame):
             self._edge_phase = (self._edge_phase + prof["speed"] * 0.18) % 1.0
         else:
             self._edge_phase = (self._edge_phase + prof["speed"]) % 1.0
-        self._depth_phase = (self._depth_phase + 0.02) % 6.28
         self._sheen += 0.03 * self._sheen_dir
         if self._sheen >= 1.0:
             self._sheen = 1.0
@@ -569,223 +612,14 @@ class SubsystemCard(QFrame):
 
         return profile
 
+
     def paintEvent(self, e):
         super().paintEvent(e)
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
-
-        r = self.rect().adjusted(1, 1, -2, -2)
-
-        # soft top highlight
-        top_col = QColor(C["cyan"])
-        top_col.setAlpha(22 if self._status == "operational" else (28 if self._status == "degraded" else 34))
-        p.setPen(QPen(top_col, 1))
-        p.drawLine(r.left() + 8, r.top() + 4, r.right() - 8, r.top() + 4)
-
-        # inner bevel / lip
-        bevel = QColor(255, 255, 255, 14)
-        p.setPen(QPen(bevel, 1))
-        p.drawRoundedRect(r.adjusted(2, 2, -2, -2), 8, 8)
-
-        shadow_lip = QColor(0, 0, 0, 42)
-        p.setPen(QPen(shadow_lip, 1))
-        p.drawLine(r.left() + 10, r.bottom() - 3, r.right() - 10, r.bottom() - 3)
-
-        
-        # subtle 3D depth shadow
-        depth = int(2 + 2 * abs(__import__("math").sin(self._depth_phase)))
-        shadow = QColor(0,0,0,120)
-        p.setPen(Qt.PenStyle.NoPen)
-        p.setBrush(shadow)
-        p.drawRoundedRect(r.adjusted(depth, depth, depth, depth), 10, 10)
-
-        # inner glow
-        glow = QRadialGradient(QPointF(r.center()), float(r.width()) * 0.6)
-        glow.setColorAt(0, QColor(C["cyan"]))
-        glow.setColorAt(1, QColor(0,0,0,0))
-        p.setBrush(glow)
-        p.setOpacity(0.08)
-        p.drawRoundedRect(r.adjusted(2,2,-2,-2), 10, 10)
-
-        # internal threat scan pulse
-        if getattr(self, "_module", "") in ("ml","pentest") and self._status != "operational":
-            import math
-            pulse_r = abs(math.sin(self._depth_phase*2))*r.width()*0.35
-            col = QColor(C["red"])
-            col.setAlpha(55)
-            p.setPen(Qt.PenStyle.NoPen)
-            p.setBrush(col)
-            p.drawEllipse(r.center(), int(pulse_r), int(pulse_r))
-
-        p.setOpacity(1)
-
-        # module-aware perimeter sweep
-        prof = self._edge_profile()
-
-        siren_col = QColor(prof["base"])
-        siren_col.setAlpha(prof["alpha_head"])
-
-        trail_col = QColor(prof["trail"])
-        trail_col.setAlpha(prof["alpha_trail"])
-
-        width = prof["width"]
-
-        path = QPainterPath()
-        rr = QRectF(r.adjusted(1, 1, -1, -1))
-        path.addRoundedRect(rr, 10, 10)
-
-        plen = max(1.0, path.length())
-        head = self._edge_phase * plen
-        seg = plen * prof["seg"]
-        trail = plen * 0.08
-
-        def draw_segment(offset, length, color, pen_w):
-            a = max(0.0, offset)
-            b = min(plen, offset + length)
-            if b <= a:
-                return
-            sub = path.toSubpathPolygons()
-            # fallback using percent sampling
-            pts = []
-            steps = max(8, int(length / 6))
-            for i in range(steps + 1):
-                d = a + (b - a) * (i / steps)
-                pct = 0.0 if plen == 0 else d / plen
-                pts.append(path.pointAtPercent(pct))
-            if len(pts) >= 2:
-                pp = QPainterPath()
-                pp.moveTo(pts[0])
-                for pt in pts[1:]:
-                    pp.lineTo(pt)
-                p.setPen(QPen(color, pen_w, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin))
-                p.setBrush(Qt.BrushStyle.NoBrush)
-                p.drawPath(pp)
-
-        # wrap-around drawing
-        for base in (head - seg, head):
-            a = base
-            b = base + seg
-            if a < 0:
-                draw_segment(plen + a, -a, trail_col, width)
-                draw_segment(0, b, siren_col, width)
-            elif b > plen:
-                draw_segment(a, plen - a, siren_col, width)
-                draw_segment(0, b - plen, trail_col, width)
-            else:
-                draw_segment(a, trail, trail_col, width)
-                draw_segment(a + trail, max(0.0, seg - trail), siren_col, width)
-
-        p.end()
-
-    
-    def set_status(self, status, health=100):
-
-        # event emphasis when status changes
-        if status != getattr(self, "_last_status", status):
-            self._last_status = status
-
-            if status == "degraded":
-                from PyQt6.QtCore import QPropertyAnimation
-
-                g = self.geometry()
-
-                self._event_anim = QPropertyAnimation(self, b"geometry")
-                self._event_anim.setDuration(180)
-                self._event_anim.setStartValue(g.adjusted(-3, -3, 3, 3))
-                self._event_anim.setEndValue(g)
-                self._event_anim.start()
-
-        colors = {"operational":C["green"],"degraded":C["orange"],"offline":C["red"]}
-        col = colors.get(status, C["dim"])
-        border = C["border"] if status == "operational" else col
-
-        self.setStyleSheet(
-            f"QFrame{{background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 {C['bg3']},stop:0.55 {C['bg2']},stop:1 {C['bg']});border:1px solid {border};border-radius:10px;}}"
-        )
-
-        self.status_dot.setStyleSheet(f"color:{col};font-size:10px;")
-
-        self.health_bar.animate_to(int(health))
-
-        bc = C["green"] if health >= 90 else (C["orange"] if health >= 70 else C["red"])
-
-        self.health_bar.setStyleSheet(
-            f"QProgressBar{{background:{C['bg']};border:none;border-radius:2px;}}QProgressBar::chunk{{background:{bc};border-radius:2px;}}"
-        )
-
-class NeuralOverlay(QWidget):
-    def __init__(self, host, cards):
-        super().__init__(host)
-        self._cards = cards
-        self._phase = 0.0
-        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        self.setStyleSheet("background:transparent;")
-        self.setGeometry(host.rect())
-        host.installEventFilter(self)
-
-        self._links = [
-            ("mesh", "ml", "cyan"),
-            ("ml", "federation", "red"),
-            ("mesh", "dashboard", "blue"),
-            ("pentest", "dashboard", "pink"),
-            ("cloud", "dashboard", "purple"),
-            ("mobile", "mesh", "green"),
-            ("wireless", "physical", "blue"),
-            ("deployer", "cloud", "green"),
-            ("hitrust", "soc2", "gold"),
-            ("accessibility", "dashboard", "gold"),
-        ]
-
-        self._timer = QTimer(self)
-        self._timer.timeout.connect(self._tick)
-        self._timer.start(50)
-
-    def eventFilter(self, obj, ev):
-        if obj is self.parent():
-            if ev.type() in (QEvent.Type.Resize, QEvent.Type.Show, QEvent.Type.Move):
-                self.setGeometry(self.parent().rect())
-        return False
-
-    def _tick(self):
-        self._phase = (self._phase + 0.018) % 1.0
-        self.update()
-
-    def _card_center(self, module):
-        card = self._cards.get(module)
-        if not card:
-            return None
-        g = card.geometry()
-        return QPointF(g.center())
-
-    def paintEvent(self, _e):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        for i, (a, b, accent) in enumerate(self._links):
-            p1 = self._card_center(a)
-            p2 = self._card_center(b)
-            if p1 is None or p2 is None:
-                continue
-
-            dx = p2.x() - p1.x()
-            dy = p2.y() - p1.y()
-            dist = max(1.0, (dx * dx + dy * dy) ** 0.5)
-
-            nx = -dy / dist
-            ny = dx / dist
-            bend = 12 + (i % 3) * 6
-
-            c1 = QPointF(p1.x() + dx * 0.33 + nx * bend, p1.y() + dy * 0.33 + ny * bend)
-            c2 = QPointF(p1.x() + dx * 0.66 + nx * bend, p1.y() + dy * 0.66 + ny * bend)
-
-            path = QPainterPath()
-            path.moveTo(p1)
-            path.cubicTo(c1, c2, p2)
-
-            base = QColor(C.get(accent, C["cyan"]))
-            line_col = QColor(base)
-            line_col.setAlpha(34)
             p.setPen(QPen(line_col, 1.5, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
             p.setBrush(Qt.BrushStyle.NoBrush)
             p.drawPath(path)
@@ -829,7 +663,7 @@ class DashboardV2(QWidget):
         self.stat_subs = self._make_stat("13", "SUBSYSTEMS")
         self.stat_health = self._make_stat("100%", "HEALTH")
         self.stat_alerts = self._make_stat("0", "CYCLES")
-        self.events = PrismEvents()
+        self.events = PrismEvents(self.gs)
         root.addWidget(self.events)
         stats.addWidget(self.stat_organs); stats.addWidget(self.stat_subs); stats.addWidget(self.stat_health); stats.addWidget(self.stat_alerts); stats.addStretch()
         root.addLayout(stats)
@@ -983,22 +817,120 @@ class DashboardV2(QWidget):
 
             src = ev.get("source")
             etype = ev.get("type","")
+            target = ev.get("target")
 
-            if src in self.cards:
+            card_key = src
+            if src == "physical":
+                card_key = "physical"
 
-                card = self.cards[src]
+            if card_key in self.cards:
 
-                if "fail" in etype or ev.get("level") == "error":
+                card = self.cards[card_key]
+
+                if etype.startswith("physical."):
+                    card._edge_phase = 0
+                    try:
+                        self.overlay.trigger_path("physical", "ml", 1.6)
+                        self.overlay.trigger_path("ml", "dashboard", 1.9)
+                    except Exception:
+                        pass
+
+                    # stronger physical-security emphasis for IronWatch
+                    try:
+                        from PyQt6.QtCore import QPropertyAnimation, QTimer
+                        g = card.geometry()
+                        card._event_anim = QPropertyAnimation(card, b"geometry")
+                        card._event_anim.setDuration(220)
+                        card._event_anim.setStartValue(g.adjusted(-4, -4, 4, 4))
+                        card._event_anim.setEndValue(g)
+                        card._event_anim.start()
+                    except Exception:
+                        pass
+
+                    if "correlation" in etype:
+                        card.set_status("degraded", 45)
+                    elif "camera_feed_lost" in etype:
+                        card.set_status("degraded", 58)
+                    elif "sensor_triggered" in etype:
+                        card.set_status("degraded", 68)
+                    else:
+                        card.set_status("degraded", 72)
+
+                    # auto-recover IronWatch after a short cooldown
+                    try:
+                        def _recover_physical():
+                            try:
+                                card.set_status("operational", 100)
+                                card._edge_phase = 0
+                            except Exception:
+                                pass
+
+                        QTimer.singleShot(9000, _recover_physical)
+                    except Exception:
+                        pass
+
+                elif "fail" in etype or ev.get("level") == "error":
                     card._edge_phase = 0
                     card._status = "degraded"
+                    try:
+                        if card_key == "ml":
+                            self.overlay.trigger_path("ml", "pentest", 1.7)
+                            self.overlay.trigger_path("pentest", "dashboard", 2.0)
+                    except Exception:
+                        pass
 
-                if "restart" in etype or "started" in etype:
+                elif "restart" in etype or "started" in etype:
                     card._edge_phase = 0
                     card._status = "operational"
+                    try:
+                        if card_key == "ml":
+                            self.overlay.trigger_path("ml", "dashboard", 1.5)
+                    except Exception:
+                        pass
 
         except Exception:
             pass
 
+
+
+
+
+class NeuralOverlay(QWidget):
+    def __init__(self, host, cards):
+        super().__init__(host)
+        self._cards = cards
+        self._phase = 0.0
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
+
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._tick)
+        self._timer.start(50)
+
+    def _tick(self):
+        self._phase = (self._phase + 0.02) % 6.28
+        self.update()
+
+    def trigger_path(self, src_key, dst_key, life=1.8):
+        # safe no-op for now; real path routing comes later
+        self.update()
+
+    def paintEvent(self, e):
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        # ambient neural lines only
+        keys = [k for k in ("physical", "ml", "pentest", "dashboard") if k in self._cards]
+        if len(keys) < 2:
+            return
+
+        pen = QPen(QColor(0, 229, 255, 45), 1)
+        p.setPen(pen)
+
+        for i in range(len(keys) - 1):
+            a = self._cards[keys[i]].geometry().center()
+            b = self._cards[keys[i + 1]].geometry().center()
+            p.drawLine(a, b)
 
 class ComplianceTab(QWidget):
     def __init__(self, gs):

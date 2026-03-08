@@ -278,6 +278,532 @@
         "last_error": "live test breach",
         "updated_at": "2026-03-07T16:24:51"
       }
+    },
+    {
+      "id": "f0e31d15-cc19-47a6-a258-0789a918c7f2",
+      "ts": "2026-03-07T19:44:53",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "Prism feed test",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 42,
+        "enabled": true,
+        "service": "",
+        "last_error": "Prism feed test",
+        "updated_at": "2026-03-07T19:44:53"
+      }
+    },
+    {
+      "id": "d78ebbc3-cefd-42f1-8c9e-cde9fc71240f",
+      "ts": "2026-03-07T19:44:53",
+      "type": "engine.restarted",
+      "source": "ml",
+      "target": null,
+      "level": "info",
+      "message": "DeepSentinel restarted",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "running",
+        "health": 90,
+        "enabled": true,
+        "service": "",
+        "last_error": "",
+        "updated_at": "2026-03-07T19:44:53"
+      }
+    },
+    {
+      "id": "e50a67bc-9f8d-4a02-86f4-9028990a9544",
+      "ts": "2026-03-08T05:48:51",
+      "type": "physical.debug_write",
+      "source": "physical",
+      "target": "debug",
+      "level": "warning",
+      "message": "direct physical write test",
+      "payload": {
+        "ok": true
+      }
+    },
+    {
+      "id": "8c67f6eb-f2ef-42b5-be2c-1f85bb29865b",
+      "ts": "2026-03-08T06:26:57",
+      "type": "physical.sensor_triggered",
+      "source": "physical",
+      "target": "MOTION-SR1",
+      "level": "critical",
+      "message": "motion triggered at Server Room A [server_room]",
+      "payload": {
+        "sensor_id": "MOTION-SR1",
+        "sensor_type": "motion",
+        "zone": "server_room",
+        "location": "Server Room A"
+      }
+    },
+    {
+      "id": "a50e0404-47c7-46ab-81e0-a243dd4ff5b3",
+      "ts": "2026-03-08T06:26:57",
+      "type": "physical.camera_feed_lost",
+      "source": "physical",
+      "target": "CAM-SR01",
+      "level": "critical",
+      "message": "Feed lost from Server Room A",
+      "payload": {
+        "camera_id": "CAM-SR01",
+        "zone": "server_room",
+        "location": "Server Room A"
+      }
+    },
+    {
+      "id": "9f54eb5d-1089-4769-9025-13fdbe6babcf",
+      "ts": "2026-03-08T06:38:52",
+      "type": "physical.sensor_triggered",
+      "source": "physical",
+      "target": "MOTION-SR1",
+      "level": "critical",
+      "message": "motion triggered at Server Room A [server_room]",
+      "payload": {
+        "sensor_id": "MOTION-SR1",
+        "sensor_type": "motion",
+        "zone": "server_room",
+        "location": "Server Room A"
+      }
+    },
+    {
+      "id": "00d37375-e14b-4c59-b690-4861eb4193c4",
+      "ts": "2026-03-08T06:38:52",
+      "type": "physical.camera_feed_lost",
+      "source": "physical",
+      "target": "CAM-SR01",
+      "level": "critical",
+      "message": "Feed lost from Server Room A",
+      "payload": {
+        "camera_id": "CAM-SR01",
+        "zone": "server_room",
+        "location": "Server Room A"
+      }
+    },
+    {
+      "id": "be6909c0-0191-4e23-9130-ea6b41c9325f",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm1",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm1",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "b0f3b6c1-149b-4b6f-b182-82663709a857",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm2",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm2",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "b5b01c10-a44f-41c7-8b75-c9bd3b6dc2ed",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm3",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm3",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "cca9d0e0-073d-4b1e-8528-8dca64747359",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm4",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm4",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "3ae81ad3-f19b-473e-8ecf-d6f5a316c194",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm5",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm5",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "8ee31afe-73bc-43d3-9f1c-30e88c605b06",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm6",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm6",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "aff43a5c-8b37-46d9-a47c-769042ce562e",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm7",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm7",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "08a06ae3-ea7f-4c4a-87e3-0f4cfbb0a7e7",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm8",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm8",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "a92f2122-742e-482a-ae3f-4c82500c6f2c",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm9",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm9",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "ddd4f967-a885-4c79-b7d5-dc100e3f8672",
+      "ts": "2026-03-08T12:54:25",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm10",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm10",
+        "updated_at": "2026-03-08T12:54:25"
+      }
+    },
+    {
+      "id": "108b832e-9bb3-4cf8-a816-8a6af119babf",
+      "ts": "2026-03-08T12:55:18",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "storm10",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "storm10",
+        "updated_at": "2026-03-08T12:55:18"
+      }
+    },
+    {
+      "id": "c92ff292-1a77-4b5a-b20c-d282b415bb2f",
+      "ts": "2026-03-08T13:14:44",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm1",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm1",
+        "updated_at": "2026-03-08T13:14:41"
+      }
+    },
+    {
+      "id": "05a34ed6-c134-46fe-9213-72f9908768bf",
+      "ts": "2026-03-08T13:14:52",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm2",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm2",
+        "updated_at": "2026-03-08T13:14:52"
+      }
+    },
+    {
+      "id": "182ab97f-7543-4e40-a6da-c0cc5dc7c41b",
+      "ts": "2026-03-08T13:14:54",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm3",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm3",
+        "updated_at": "2026-03-08T13:14:54"
+      }
+    },
+    {
+      "id": "3a766793-0841-49e6-8ea8-ebabe9f9a82a",
+      "ts": "2026-03-08T13:41:04",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm1",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm1",
+        "updated_at": "2026-03-08T13:41:04"
+      }
+    },
+    {
+      "id": "8e49d608-e809-4910-a9d3-acf1a794a312",
+      "ts": "2026-03-08T13:41:06",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm2",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm2",
+        "updated_at": "2026-03-08T13:41:06"
+      }
+    },
+    {
+      "id": "58582870-aed8-4eea-8c37-96dfe8cf0ade",
+      "ts": "2026-03-08T13:41:08",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm3",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm3",
+        "updated_at": "2026-03-08T13:41:08"
+      }
+    },
+    {
+      "id": "c5e480a8-01df-4ab7-baf7-81bff7edcc16",
+      "ts": "2026-03-08T13:41:22",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm1",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm1",
+        "updated_at": "2026-03-08T13:41:22"
+      }
+    },
+    {
+      "id": "ae653395-6e86-4493-aac4-2047f6bdd9d4",
+      "ts": "2026-03-08T13:41:24",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm2",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm2",
+        "updated_at": "2026-03-08T13:41:24"
+      }
+    },
+    {
+      "id": "d6ed0d97-a2fc-44f3-bd1a-65cf573a3120",
+      "ts": "2026-03-08T13:41:26",
+      "type": "engine.degraded",
+      "source": "ml",
+      "target": null,
+      "level": "warning",
+      "message": "slowstorm3",
+      "payload": {
+        "name": "DeepSentinel",
+        "desc": "ML Threat Prediction",
+        "state": "degraded",
+        "health": 40,
+        "enabled": true,
+        "service": "",
+        "last_error": "slowstorm3",
+        "updated_at": "2026-03-08T13:41:26"
+      }
+    },
+    {
+      "id": "f195da73-3e4d-4fb0-af22-014b56de2240",
+      "ts": "2026-03-08T13:42:17",
+      "type": "engine.degraded",
+      "source": "physical",
+      "target": null,
+      "level": "warning",
+      "message": "phys1",
+      "payload": {
+        "name": "IronWatch",
+        "desc": "Physical Security",
+        "state": "degraded",
+        "health": 35,
+        "enabled": true,
+        "service": "",
+        "last_error": "phys1",
+        "updated_at": "2026-03-08T13:42:17"
+      }
+    },
+    {
+      "id": "53d959a3-f14e-4900-9c52-42926590114a",
+      "ts": "2026-03-08T13:42:19",
+      "type": "engine.degraded",
+      "source": "physical",
+      "target": null,
+      "level": "warning",
+      "message": "phys2",
+      "payload": {
+        "name": "IronWatch",
+        "desc": "Physical Security",
+        "state": "degraded",
+        "health": 35,
+        "enabled": true,
+        "service": "",
+        "last_error": "phys2",
+        "updated_at": "2026-03-08T13:42:19"
+      }
     }
   ]
 }
