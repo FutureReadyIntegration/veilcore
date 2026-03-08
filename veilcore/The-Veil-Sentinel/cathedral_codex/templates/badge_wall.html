@@ -1,0 +1,8 @@
+<h1>🜅 SVG Badge Wall</h1>
+<div class="badge-wall">
+  {% for e in entries %}
+    <div class="badge tier-{{ e.tier }} {% if e.urgent %}flame-urgent{% endif %}" title="{{ e.phrase }}">
+      {{ e.glyph }}
+    </div>
+  {% endfor %}
+</div>

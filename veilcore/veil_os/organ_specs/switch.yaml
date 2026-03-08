@@ -1,0 +1,24 @@
+name: switch
+version: 1.0
+tier: network
+glyph: "🔲"
+technical_role: virtual_switch
+symbolic_role: crossroads
+description: Virtual network switch for microsegmentation.
+inputs:
+  - source: /opt/veil_os/sockets/switch.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/switch.log
+    format: jsonl
+triggers:
+  - type: frame_received
+  - type: vlan_change
+actions:
+  - type: forward
+  - type: filter
+  - type: tag
+dependencies:
+  - bridge
+  - firewall
+affirmation: I direct traffic at the crossroads.

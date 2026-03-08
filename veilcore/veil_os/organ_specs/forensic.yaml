@@ -1,0 +1,26 @@
+name: forensic
+version: 1.0
+tier: security
+glyph: "🔬"
+technical_role: evidence_collector
+symbolic_role: truth_seeker
+description: Post-incident forensic evidence collection and chain of custody.
+inputs:
+  - source: /opt/veil_os/sockets/forensic.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/forensic/evidence/
+    format: tar.gz.enc
+triggers:
+  - type: incident_declared
+  - type: quarantine_activated
+actions:
+  - type: capture_memory
+  - type: capture_disk
+  - type: capture_network
+  - type: seal_evidence
+dependencies:
+  - quarantine
+  - vault
+  - audit
+affirmation: Truth endures when properly preserved.

@@ -1,0 +1,10 @@
+{
+  "name": "station",
+  "version": 1.0,
+  "description": "Endpoint agent for clinical workstation protection.",
+  "tier": "interface",
+  "glyph": "\ud83d\ude89",
+  "technical_role": "workstation_agent",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.622045+00:00"
+}

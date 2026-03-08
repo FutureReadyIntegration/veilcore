@@ -1,0 +1,23 @@
+name: entropy
+version: 1.0
+tier: security
+glyph: "🎲"
+technical_role: entropy_source
+symbolic_role: chaos_tamer
+description: Cryptographic entropy collection for key generation.
+inputs:
+  - source: /dev/random
+    format: binary
+outputs:
+  - path: /opt/veil_os/ledger/entropy.log
+    format: jsonl
+triggers:
+  - type: entropy_request
+  - type: pool_low
+actions:
+  - type: collect
+  - type: mix
+  - type: distribute
+dependencies:
+  - entropy_pool
+affirmation: From chaos I harvest randomness.

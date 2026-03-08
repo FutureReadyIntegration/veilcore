@@ -1,0 +1,15 @@
+name: analytics-engine
+description: Analytics Engine
+category: Analytics & Foresight
+unit: veil-analytics
+display_name: "Analytics Engine"
+glyph: "🔍"
+tier: P2
+allowed: true
+group: "Analytics & Foresight"
+order: 40
+color: "#FF8F00"
+accent: "#FFECB3"
+health_check: true
+telemetry: true
+purpose: "Performs pattern detection, anomaly scoring, and risk indexing for the cockpit and Guardian Ring."

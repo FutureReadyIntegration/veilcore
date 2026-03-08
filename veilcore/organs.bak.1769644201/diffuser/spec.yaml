@@ -1,0 +1,25 @@
+actions:
+- type: distribute
+- type: balance
+- type: shed
+affirmation: I spread the load so none may break.
+dependencies:
+- router
+- monitor
+description: Load diffusion across organ replicas.
+glyph: "\U0001F4A8"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/diffuser.sock
+name: diffuser
+organ: diffuser
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/diffuser.log
+symbolic_role: spreader
+technical_role: load_diffuser
+tier: core
+triggers:
+- type: load_spike
+- type: replica_added
+version: 1.0

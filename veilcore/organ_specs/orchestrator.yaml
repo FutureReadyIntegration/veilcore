@@ -1,0 +1,26 @@
+name: orchestrator
+version: 1.0
+tier: core
+glyph: "🎭"
+technical_role: workflow_orchestrator
+symbolic_role: conductor
+description: Workflow orchestration and multi-organ coordination.
+inputs:
+  - source: /opt/veil_os/sockets/orchestrator.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/orchestrator.log
+    format: jsonl
+triggers:
+  - type: workflow_start
+  - type: step_complete
+  - type: workflow_error
+actions:
+  - type: coordinate
+  - type: sequence
+  - type: rollback
+dependencies:
+  - scheduler
+  - dispatcher
+  - engine
+affirmation: I conduct the symphony of organs.

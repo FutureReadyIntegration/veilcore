@@ -1,0 +1,10 @@
+{
+  "name": "socket",
+  "version": 1.0,
+  "description": "Unix and network socket lifecycle management.",
+  "tier": "core",
+  "glyph": "\ud83d\udd0c",
+  "technical_role": "socket_manager",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.538085+00:00"
+}

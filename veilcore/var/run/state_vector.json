@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/state_vector.log",
+  "module": "veil.organs.runner",
+  "name": "state_vector",
+  "pid": 128090
+}

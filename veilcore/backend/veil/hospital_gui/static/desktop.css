@@ -1,0 +1,18 @@
+body{
+  margin:0;
+  background:#0b0f13;
+  color:white;
+  font-family:sans-serif;
+}
+.window{
+  position:absolute;
+  width:320px;
+  background:#161b22;
+  border:1px solid #333;
+  border-radius:8px;
+}
+.titlebar{
+  background:#21262d;
+  padding:8px;
+  cursor:move;
+}

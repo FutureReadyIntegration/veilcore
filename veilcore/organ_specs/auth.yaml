@@ -1,0 +1,25 @@
+name: auth
+version: 1.0
+tier: core
+glyph: "🔑"
+technical_role: authentication
+symbolic_role: gatekeeper
+description: Primary authentication service for all Veil OS components.
+inputs:
+  - source: /opt/veil_os/sockets/auth.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/auth.log
+    format: jsonl
+triggers:
+  - type: login_attempt
+  - type: token_request
+  - type: session_validate
+actions:
+  - type: authenticate
+  - type: issue_token
+  - type: revoke
+dependencies:
+  - keystore
+  - audit
+affirmation: Only the worthy may pass.

@@ -1,0 +1,10 @@
+{
+  "name": "canary",
+  "version": 1.0,
+  "description": "Honeypot files and canary tokens to detect ransomware early.",
+  "tier": "security",
+  "glyph": "\ud83d\udc24",
+  "technical_role": "tripwire",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.101823+00:00"
+}

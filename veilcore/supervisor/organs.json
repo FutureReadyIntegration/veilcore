@@ -1,0 +1,884 @@
+{
+  "organs": [
+    {
+      "name": "VeilRealCore",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/VeilRealCore",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "__pycache__",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/__pycache__",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "analytics",
+      "tier": "P1",
+      "glyph": "📊",
+      "summary": "Aggregates and analyzes operational and clinical data for decision support.",
+      "path": "/opt/veil_os/organs/analytics",
+      "unit": "veil-analytics.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "analytics_engine",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/analytics_engine",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "audit",
+      "tier": "P1",
+      "glyph": "📜",
+      "summary": "Maintains immutable audit trails for compliance and forensic review.",
+      "path": "/opt/veil_os/organs/audit",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "auth",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/auth",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "auto_lockdown",
+      "tier": "P0",
+      "glyph": "🛡️",
+      "summary": "Automated lockdown organ that isolates or restricts system components during high-risk events.",
+      "path": "/opt/veil_os/organs/auto_lockdown",
+      "unit": "veil-auto_lockdown.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "auto_lockdown_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/auto_lockdown_assets",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "backup",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/backup",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "bios",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/bios",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "bridge",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/bridge",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "cache",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/cache",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "canary",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/canary",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "clock",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/clock",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "codec",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/codec",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "collector",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/collector",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "console",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/console",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "cortex",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Coordinates multi-organ logic, decision routing, and internal orchestration.",
+      "path": "/opt/veil_os/organs/cortex",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "daemon",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Background service organ responsible for continuous internal tasks.",
+      "path": "/opt/veil_os/organs/daemon",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "daemonizer",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Background service organ responsible for continuous internal tasks.",
+      "path": "/opt/veil_os/organs/daemonizer",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "diffuser",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/diffuser",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "dispatcher",
+      "tier": "P1",
+      "glyph": "🧭",
+      "summary": "Routes internal events and operational messages between organs.",
+      "path": "/opt/veil_os/organs/dispatcher",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "dlp",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/dlp",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "dock",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/dock",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "driver",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/driver",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "emitter",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/emitter",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "engine",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/engine",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "entropy",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Generates cryptographically safe entropy for secure operations.",
+      "path": "/opt/veil_os/organs/entropy",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "entropy_pool",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/entropy_pool",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "epic",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/epic",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "fabric",
+      "tier": "P2",
+      "glyph": "🌐",
+      "summary": "Internal communication fabric enabling structured data exchange.",
+      "path": "/opt/veil_os/organs/fabric",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "fanout",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/fanout",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "fhir",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/fhir",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "fingerprint",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/fingerprint",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "firewall",
+      "tier": "P0",
+      "glyph": "🧱",
+      "summary": "Network boundary protection organ responsible for filtering, blocking, and inspecting traffic.",
+      "path": "/opt/veil_os/organs/firewall",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "flux",
+      "tier": "P2",
+      "glyph": "📊",
+      "summary": "Manages dynamic system state transitions and ensures consistent behavior.",
+      "path": "/opt/veil_os/organs/flux",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "forensic",
+      "tier": "P1",
+      "glyph": "🧪",
+      "summary": "Performs deep inspection and evidence preservation for post-incident analysis.",
+      "path": "/opt/veil_os/organs/forensic",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "gateway",
+      "tier": "P1",
+      "glyph": "🔌",
+      "summary": "Provides controlled ingress and egress points for data exchange with external systems.",
+      "path": "/opt/veil_os/organs/gateway",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "guardian",
+      "tier": "P0",
+      "glyph": "🛡️",
+      "summary": "Core identity and access enforcement organ providing continuous protection of authentication and authorization flows.",
+      "path": "/opt/veil_os/organs/guardian",
+      "unit": "veil-guardian.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "harbor",
+      "tier": "P2",
+      "glyph": "🗄️",
+      "summary": "Secure storage organ for sensitive operational artifacts.",
+      "path": "/opt/veil_os/organs/harbor",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "hatchery",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Initializes and prepares new organ processes for safe startup.",
+      "path": "/opt/veil_os/organs/hatchery",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "hl7",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/hl7",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "hospital",
+      "tier": "P1",
+      "glyph": "🏥",
+      "summary": "Provides clinical context integration for hospital workflows.",
+      "path": "/opt/veil_os/organs/hospital",
+      "unit": "veil-hospital.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "imprivata",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/imprivata",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "indexer",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/indexer",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "init",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/init",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "insider_threat",
+      "tier": "P0",
+      "glyph": "🛡️",
+      "summary": "Behavioral monitoring organ detecting anomalous internal activity and preventing privilege misuse.",
+      "path": "/opt/veil_os/organs/insider_threat",
+      "unit": "veil-insider_threat.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "insider_threat_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/insider_threat_assets",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "interpreter",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/interpreter",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "journal",
+      "tier": "P2",
+      "glyph": "📜",
+      "summary": "Maintains structured logs of internal events.",
+      "path": "/opt/veil_os/organs/journal",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "keystore",
+      "tier": "P2",
+      "glyph": "🔐",
+      "summary": "Stores and manages cryptographic keys for secure communication.",
+      "path": "/opt/veil_os/organs/keystore",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "linker",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/linker",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "loader",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Loads organ modules and configurations into the runtime environment.",
+      "path": "/opt/veil_os/organs/loader",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "logger",
+      "tier": "P2",
+      "glyph": "📜",
+      "summary": "Captures structured logs from organs and forwards them to audit systems.",
+      "path": "/opt/veil_os/organs/logger",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "matrix",
+      "tier": "P2",
+      "glyph": "🌐",
+      "summary": "Provides multidimensional data structures for complex operations.",
+      "path": "/opt/veil_os/organs/matrix",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "metrics",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/metrics",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "mfa",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/mfa",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "mirror",
+      "tier": "P2",
+      "glyph": "🪞",
+      "summary": "Maintains synchronized replicas of critical data for resilience.",
+      "path": "/opt/veil_os/organs/mirror",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "monitor",
+      "tier": "P2",
+      "glyph": "📡",
+      "summary": "Observes organ health and forwards alerts to sentinel and telemetry.",
+      "path": "/opt/veil_os/organs/monitor",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "orchestrator",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/orchestrator",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "patcher",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Applies updates and configuration changes safely.",
+      "path": "/opt/veil_os/organs/patcher",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "phi",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/phi",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "portal",
+      "tier": "P2",
+      "glyph": "🏥",
+      "summary": "Provides clinical-facing interfaces for hospital workflows.",
+      "path": "/opt/veil_os/organs/portal",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "quarantine",
+      "tier": "P2",
+      "glyph": "🚫",
+      "summary": "Isolates compromised components to prevent harmful propagation.",
+      "path": "/opt/veil_os/organs/quarantine",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "queue",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/queue",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "rbac",
+      "tier": "P0",
+      "glyph": "🔐",
+      "summary": "Role-based access control organ defining identity lineage, privilege boundaries, and clinical-grade authorization rules.",
+      "path": "/opt/veil_os/organs/rbac",
+      "unit": "veil-rbac.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "relay",
+      "tier": "P2",
+      "glyph": "🔌",
+      "summary": "Transfers messages and data between organs and external systems.",
+      "path": "/opt/veil_os/organs/relay",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "rollback",
+      "tier": "P2",
+      "glyph": "↩️",
+      "summary": "Restores previous system states after failed updates.",
+      "path": "/opt/veil_os/organs/rollback",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "router",
+      "tier": "P1",
+      "glyph": "🧭",
+      "summary": "Directs internal traffic flows between organs.",
+      "path": "/opt/veil_os/organs/router",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "scheduler",
+      "tier": "P2",
+      "glyph": "⏱️",
+      "summary": "Schedules recurring tasks and maintenance routines.",
+      "path": "/opt/veil_os/organs/scheduler",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "security",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/security",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "sentinel",
+      "tier": "P0",
+      "glyph": "🛡️",
+      "summary": "Primary real-time security enforcement organ responsible for blocking threats and maintaining system integrity.",
+      "path": "/opt/veil_os/organs/sentinel",
+      "unit": "veil-sentinel.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "sentinel_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/sentinel_assets",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "session",
+      "tier": "P2",
+      "glyph": "🔐",
+      "summary": "Manages user and system sessions securely.",
+      "path": "/opt/veil_os/organs/session",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "signal",
+      "tier": "P2",
+      "glyph": "📡",
+      "summary": "Handles internal signaling and event propagation.",
+      "path": "/opt/veil_os/organs/signal",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "socket",
+      "tier": "P2",
+      "glyph": "🔌",
+      "summary": "Provides communication channels for organ interaction.",
+      "path": "/opt/veil_os/organs/socket",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "spooler",
+      "tier": "P2",
+      "glyph": "🗄️",
+      "summary": "Queues and processes deferred tasks.",
+      "path": "/opt/veil_os/organs/spooler",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "station",
+      "tier": "P2",
+      "glyph": "🏥",
+      "summary": "Provides clinical station logic for operational endpoints.",
+      "path": "/opt/veil_os/organs/station",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "switch",
+      "tier": "P2",
+      "glyph": "🧭",
+      "summary": "Handles routing decisions between organ communication paths.",
+      "path": "/opt/veil_os/organs/switch",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "synth",
+      "tier": "P2",
+      "glyph": "⚙️",
+      "summary": "Synthesizes multi-source data into structured outputs.",
+      "path": "/opt/veil_os/organs/synth",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "telemetry",
+      "tier": "P1",
+      "glyph": "📡",
+      "summary": "Collects, streams, and forwards real-time system metrics for monitoring and performance oversight.",
+      "path": "/opt/veil_os/organs/telemetry",
+      "unit": "veil-telemetry.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "telemetry_engine_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/telemetry_engine_assets",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "vault",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/vault",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "veilctl",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/veilctl",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "watchdog",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/watchdog",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "zero_trust",
+      "tier": "P0",
+      "glyph": "🔐",
+      "summary": "Zero Trust enforcement organ ensuring least-privilege access, continuous verification, and boundaryless security posture.",
+      "path": "/opt/veil_os/organs/zero_trust",
+      "unit": "veil-zero_trust.service",
+      "runnable": false
+    }
+,
+    {
+      "name": "zero_trust_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/zero_trust_assets",
+      "unit": null,
+      "runnable": false
+    }
+,
+    {
+      "name": "zombie_sweeper_assets",
+      "tier": "P2",
+      "glyph": "🫀",
+      "summary": "Core operational organ supporting Veil OS functionality.",
+      "path": "/opt/veil_os/organs/zombie_sweeper_assets",
+      "unit": null,
+      "runnable": false
+    }
+
+  ]
+}

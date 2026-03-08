@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Glyph Stats Sidebar</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/glyph_theme.css') }}">
+  <style>
+    .sidebar { background: #1f1f2f; color: #eee; padding: 1em; width: 300px; border-left: 4px solid #b7925d; }
+    h2 { color: #ffd24b; }
+    .alert-critical { background: #330000; padding: 0.5em; border: 1px solid red; margin-bottom: 1em; color: #f88; }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>🜅 Glyph Intelligence Stats</h2>
+    {% if stats.critical_pct >= 30 %}
+      <div class="alert-critical">⚠️ High critical glyph activity: {{ stats.critical_pct }}%</div>
+    {% endif %}
+    <p><strong>Total Entries:</strong> {{ stats.total }}</p>
+    <h3>By Role</h3>
+    <ul>
+      {% for role, count in stats.roles.items() %}
+        <li>{{ role.title() }} → {{ count }}</li>
+      {% endfor %}
+    </ul>
+    <h3>By Tier</h3>
+    <ul>
+      {% for tier, count in stats.tiers.items() %}
+        <li>{{ tier.title() }} → {{ count }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

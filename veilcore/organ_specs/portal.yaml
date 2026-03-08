@@ -1,0 +1,25 @@
+name: portal
+version: 1.0
+tier: interface
+glyph: "🌀"
+technical_role: web_portal
+symbolic_role: window
+description: Secure web portal for Veil OS administration.
+inputs:
+  - source: /opt/veil_os/sockets/portal.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/portal.log
+    format: jsonl
+triggers:
+  - type: user_session
+  - type: action_request
+actions:
+  - type: authenticate
+  - type: render
+  - type: execute
+dependencies:
+  - auth
+  - rbac
+  - gateway
+affirmation: Through me, operators see The Veil.

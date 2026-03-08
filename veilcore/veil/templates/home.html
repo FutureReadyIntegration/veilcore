@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <div class="cards">
+    <div class="card">
+      <div class="label">Quick Links</div>
+      <div><a href="/patients">View Patients</a></div>
+      <div><a href="/patients/new">Add Patient</a></div>
+    </div>
+    <div class="card">
+      <div class="label">Status</div>
+      <div>Server is running ✅</div>
+    </div>
+  </div>
+{% endblock %}

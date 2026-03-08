@@ -1,0 +1,10 @@
+id: "lab_pipeline"
+name: "Lab Result Pipeline"
+type: "integration"
+status: "degraded"
+
+metrics:
+  pending_results: 37
+  average_latency_seconds: 142
+  error_rate_percent: 0.7
+  last_outage: "2026-01-31T03:22:00Z"

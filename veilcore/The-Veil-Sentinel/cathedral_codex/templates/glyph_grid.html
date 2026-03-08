@@ -1,0 +1,12 @@
+<h1>🜅 Glyph Matrix</h1>
+<div class="grid">
+  {% for entry in matrix %}
+    <div class="glyph-card tier-{{ entry.tier }} badge-{{ entry.role }}">
+      <div class="glyph-icon">{{ entry.glyph }} <span class="role-icon">{{ entry.icon }}</span></div>
+      <div>{{ entry.text }}</div>
+      <div class="tier-label">⧉ {{ entry.tier }} • Level {{ entry.level }}</div>
+      <small>{{ entry.file }} [Line {{ entry.line }}]</small><br>
+      <small>{{ entry.timestamp }}</small>
+    </div>
+  {% endfor %}
+</div>

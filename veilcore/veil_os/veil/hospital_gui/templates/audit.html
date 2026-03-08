@@ -1,0 +1,254 @@
+{% extends "base_secure.html" %}
+
+{% block title %}Audit Log - Veil Hospital{% endblock %}
+
+{% block left_panel %}
+<h2>📋 Audit Log</h2>
+<p class="panel-subtitle">Tamper-proof security audit trail</p>
+
+<div class="audit-stats">
+    <div class="stat-card">
+        <span class="stat-value">{{ events|length }}</span>
+        <span class="stat-label">Recent Events</span>
+    </div>
+</div>
+
+<div class="audit-filters">
+    <select id="filter-level" class="filter-select">
+        <option value="">All Levels</option>
+        <option value="info">Info</option>
+        <option value="warning">Warning</option>
+        <option value="error">Error</option>
+        <option value="security">Security</option>
+        <option value="critical">Critical</option>
+    </select>
+    
+    <select id="filter-category" class="filter-select">
+        <option value="">All Categories</option>
+        <option value="auth">Authentication</option>
+        <option value="patient">Patient</option>
+        <option value="organ">Organ</option>
+        <option value="system">System</option>
+        <option value="http">HTTP</option>
+    </select>
+    
+    <input type="text" id="filter-search" class="filter-input" placeholder="Search...">
+</div>
+{% endblock %}
+
+{% block right_panel %}
+<h2>Event Timeline</h2>
+
+<div class="audit-timeline" id="audit-timeline">
+    {% for event in events %}
+    <div class="audit-event level-{{ event.level }}" data-level="{{ event.level }}" data-category="{{ event.category }}">
+        <div class="event-header">
+            <span class="event-level level-badge-{{ event.level }}">{{ event.level|upper }}</span>
+            <span class="event-category">{{ event.category }}</span>
+            <span class="event-time">{{ event.timestamp }}</span>
+        </div>
+        <div class="event-action">{{ event.action }}</div>
+        <div class="event-details">
+            {% if event.username %}
+            <span class="detail-item">👤 {{ event.username }}</span>
+            {% endif %}
+            {% if event.ip_address %}
+            <span class="detail-item">🌐 {{ event.ip_address }}</span>
+            {% endif %}
+            {% if event.resource_type %}
+            <span class="detail-item">📦 {{ event.resource_type }}: {{ event.resource_id }}</span>
+            {% endif %}
+            {% if not event.success %}
+            <span class="detail-item error">❌ {{ event.error_message or 'Failed' }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="no-events">
+        <p>No audit events found.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+.audit-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 600;
+    color: #3b82f6;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.audit-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-select, .filter-input {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.filter-input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.audit-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.audit-event {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.2s;
+}
+
+.audit-event:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.audit-event.level-security {
+    border-left: 3px solid #ef4444;
+}
+
+.audit-event.level-critical {
+    border-left: 3px solid #dc2626;
+}
+
+.audit-event.level-error {
+    border-left: 3px solid #f97316;
+}
+
+.audit-event.level-warning {
+    border-left: 3px solid #eab308;
+}
+
+.audit-event.level-info {
+    border-left: 3px solid #3b82f6;
+}
+
+.event-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.event-level {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.level-badge-security { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+.level-badge-critical { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
+.level-badge-error { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+.level-badge-warning { background: rgba(234, 179, 8, 0.2); color: #fde047; }
+.level-badge-info { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+.level-badge-debug { background: rgba(156, 163, 175, 0.2); color: #d1d5db; }
+
+.event-category {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+
+.event-time {
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    font-family: monospace;
+}
+
+.event-action {
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.event-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.detail-item {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-item.error {
+    color: #fca5a5;
+}
+
+.no-events {
+    text-align: center;
+    padding: 40px;
+    color: rgba(255, 255, 255, 0.5);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const levelFilter = document.getElementById('filter-level');
+    const categoryFilter = document.getElementById('filter-category');
+    const searchFilter = document.getElementById('filter-search');
+    const events = document.querySelectorAll('.audit-event');
+    
+    function applyFilters() {
+        const level = levelFilter.value.toLowerCase();
+        const category = categoryFilter.value.toLowerCase();
+        const search = searchFilter.value.toLowerCase();
+        
+        events.forEach(event => {
+            const eventLevel = event.dataset.level;
+            const eventCategory = event.dataset.category;
+            const eventText = event.textContent.toLowerCase();
+            
+            const matchLevel = !level || eventLevel === level;
+            const matchCategory = !category || eventCategory === category;
+            const matchSearch = !search || eventText.includes(search);
+            
+            event.style.display = (matchLevel && matchCategory && matchSearch) ? 'block' : 'none';
+        });
+    }
+    
+    levelFilter.addEventListener('change', applyFilters);
+    categoryFilter.addEventListener('change', applyFilters);
+    searchFilter.addEventListener('input', applyFilters);
+});
+</script>
+{% endblock %}

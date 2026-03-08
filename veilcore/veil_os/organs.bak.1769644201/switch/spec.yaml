@@ -1,0 +1,25 @@
+actions:
+- type: forward
+- type: filter
+- type: tag
+affirmation: I direct traffic at the crossroads.
+dependencies:
+- bridge
+- firewall
+description: Virtual network switch for microsegmentation.
+glyph: "\U0001F532"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/switch.sock
+name: switch
+organ: switch
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/switch.log
+symbolic_role: crossroads
+technical_role: virtual_switch
+tier: network
+triggers:
+- type: frame_received
+- type: vlan_change
+version: 1.0

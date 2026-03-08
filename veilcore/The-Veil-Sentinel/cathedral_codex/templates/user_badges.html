@@ -1,0 +1,11 @@
+<h1>👤 Glyph Badges for {{ user_id }}</h1>
+<div class="gallery">
+  {% for e in entries %}
+    <div class="badge tier-{{ e.tier }} {% if e.urgent %}flame-urgent{% endif %}" title="{{ e.phrase }}">
+      <div style="font-size: 2em;">{{ e.glyph }}</div>
+      <div style="font-size: 0.8em;">{{ e.method }}</div>
+      <div style="font-size: 0.7em;">{{ e.language }}</div>
+      <div style="font-size: 0.6em;">{{ e.timestamp[:10] }}</div>
+    </div>
+  {% endfor %}
+</div>

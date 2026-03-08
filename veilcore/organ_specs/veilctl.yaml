@@ -1,0 +1,25 @@
+name: veilctl
+version: 1.0
+tier: core
+glyph: "⚔️"
+technical_role: control_cli
+symbolic_role: command
+description: Command-line control interface for Veil OS.
+inputs:
+  - source: /opt/veil_os/sockets/veilctl.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/veilctl.log
+    format: jsonl
+triggers:
+  - type: command_issued
+  - type: query_request
+actions:
+  - type: execute
+  - type: query
+  - type: configure
+dependencies:
+  - auth
+  - console
+  - audit
+affirmation: I translate human will into action.

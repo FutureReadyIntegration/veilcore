@@ -1,0 +1,23 @@
+name: linker
+version: 1.0
+tier: core
+glyph: "🔗"
+technical_role: service_linker
+symbolic_role: binder
+description: Dynamic service discovery and linking between organs.
+inputs:
+  - source: /opt/veil_os/sockets/linker.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/linker.log
+    format: jsonl
+triggers:
+  - type: service_registered
+  - type: lookup_request
+actions:
+  - type: register
+  - type: discover
+  - type: link
+dependencies:
+  - fabric
+affirmation: I bind organs together in purpose.

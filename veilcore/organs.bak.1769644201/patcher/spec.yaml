@@ -1,0 +1,28 @@
+actions:
+- type: assess
+- type: stage
+- type: deploy
+- type: verify
+affirmation: I heal vulnerabilities before they wound.
+dependencies:
+- backup
+- rollback
+- audit
+description: Security patch management and deployment automation.
+glyph: "\U0001FA79"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/patcher.sock
+name: patcher
+organ: patcher
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/patcher.log
+symbolic_role: healer
+technical_role: patch_manager
+tier: security
+triggers:
+- type: cve_published
+- type: patch_available
+- type: maintenance_window
+version: 1.0

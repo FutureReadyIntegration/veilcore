@@ -1,0 +1,24 @@
+name: mirror
+version: 1.0
+tier: recovery
+glyph: "🪞"
+technical_role: data_replicator
+symbolic_role: reflection
+description: Real-time data mirroring for high availability.
+inputs:
+  - source: /opt/veil_os/sockets/mirror.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/mirror.log
+    format: jsonl
+triggers:
+  - type: write_event
+  - type: sync_lag
+actions:
+  - type: replicate
+  - type: verify
+  - type: failover
+dependencies:
+  - backup
+  - vault
+affirmation: What exists here exists there also.

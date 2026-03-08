@@ -1,0 +1,17 @@
+from pathlib import Path
+import yaml
+
+from backend.app.models.state_vector import StateVector
+
+DATA_ROOT = Path("backend/data")
+
+
+def load_state_vector() -> StateVector:
+    path = DATA_ROOT / "state_vector.yaml"
+    if not path.exists():
+        raise FileNotFoundError("backend/data/state_vector.yaml not found")
+
+    with open(path, "r") as f:
+        raw = yaml.safe_load(f) or {}
+
+    return StateVector(**raw)

@@ -1,0 +1,25 @@
+name: phi
+version: 1.0
+tier: compliance
+glyph: "🏷️"
+technical_role: phi_tracker
+symbolic_role: sacred_data
+description: Protected Health Information tracker and tagger for HIPAA.
+inputs:
+  - source: /opt/veil_os/sockets/phi.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/phi.log
+    format: jsonl
+triggers:
+  - type: data_access
+  - type: data_export
+actions:
+  - type: tag
+  - type: track
+  - type: alert
+dependencies:
+  - audit
+  - dlp
+  - epic
+affirmation: Sacred data demands sacred handling.

@@ -1,0 +1,747 @@
+import json
+import hashlib
+import os
+import socket
+import time
+import logging
+from collections import defaultdict
+from typing import Any, Dict, List, Optional, Tuple
+
+
+import importlib.util
+from pathlib import Path as _Path
+
+_PROJECT_ROOT = _Path(__file__).resolve().parents[2]
+_ENGINE_MANAGER_PATH = _PROJECT_ROOT / "core" / "engine_manager.py"
+
+_spec = importlib.util.spec_from_file_location("veilcore_engine_manager", _ENGINE_MANAGER_PATH)
+if _spec is None or _spec.loader is None:
+    raise RuntimeError(f"Could not load EngineManager spec from {_ENGINE_MANAGER_PATH}")
+
+_engine_manager_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_engine_manager_mod)
+
+EngineManager = _engine_manager_mod.EngineManager
+_ENGINE_MGR = EngineManager()
+
+
+from fastapi import FastAPI, HTTPException, Request, Response
+import importlib.util as _importlib_util
+import sys as _sys
+from pathlib import Path as _Path
+
+_api_physical_path = _Path(__file__).resolve().with_name("api_physical.py")
+_api_physical_spec = _importlib_util.spec_from_file_location("veilcore_api_physical", _api_physical_path)
+if _api_physical_spec is None or _api_physical_spec.loader is None:
+    raise RuntimeError(f"Could not load api_physical from {_api_physical_path}")
+_api_physical_mod = _importlib_util.module_from_spec(_api_physical_spec)
+_sys.modules["veilcore_api_physical"] = _api_physical_mod
+_api_physical_spec.loader.exec_module(_api_physical_mod)
+physical_router = _api_physical_mod.router
+from pydantic import BaseModel, Field, field_validator
+
+# ================================================================
+# CONFIG
+# ================================================================
+MSOS_HOST = os.environ.get("VEIL_MSOS_HOST", "127.0.0.1")
+MSOS_PORT = int(os.environ.get("VEIL_MSOS_PORT", "5510"))
+MSOS_TIMEOUT = float(os.environ.get("VEIL_MSOS_TIMEOUT", "2.0"))
+MAX_BODY_BYTES = int(os.environ.get("VEIL_MAX_BODY", "65536"))
+RATE_LIMIT_RPM = int(os.environ.get("VEIL_RATE_LIMIT_RPM", "120"))
+
+log = logging.getLogger("veil.api")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
+
+app = FastAPI(title="Veil API", version="0.2.0")
+
+app.include_router(physical_router)
+
+# ================================================================
+# RESERVED KEYS - stripped from kwargs before organ dispatch
+# These are "gate context" used by admission/guardian chain
+# but never forwarded to the organ method itself.
+# ================================================================
+RESERVED_KEYS = frozenset({"subject", "resource", "_gate", "_nonce", "_ts"})
+
+# ================================================================
+# RESOURCE TAXONOMY - guardian uses this for deny rules
+# ================================================================
+RESOURCE_CLASSES = {
+    "restricted":     {"min_role": "admin"},
+    "control-plane":  {"min_role": "operator"},
+    "policy":         {"min_role": "admin"},
+    "audit":          {"min_role": "operator"},
+    "clinical":       {"min_role": "clinician"},
+    "standard":       {"min_role": "viewer"},
+}
+
+METHOD_RESOURCE_MAP = {
+    ("firewall", "set_policy"):  "policy",
+    ("firewall", "apply"):       "policy",
+    ("firewall", "verify"):      "control-plane",
+    ("guardian", "authorize"):    "control-plane",
+    ("admission", "admit"):      "control-plane",
+    ("audit", "purge"):          "restricted",
+}
+
+# ================================================================
+# RATE LIMITER - per-key sliding window
+# ================================================================
+_rate_buckets: Dict[str, list] = defaultdict(list)
+
+
+def _check_rate(key: str) -> bool:
+    now = time.monotonic()
+    window = _rate_buckets[key]
+    _rate_buckets[key] = [t for t in window if now - t < 60.0]
+    if len(_rate_buckets[key]) >= RATE_LIMIT_RPM:
+        return False
+    _rate_buckets[key].append(now)
+    return True
+
+
+# ================================================================
+# REPLAY RESISTANCE - nonce tracking (10 min window)
+# ================================================================
+_seen_nonces: Dict[str, float] = {}
+NONCE_WINDOW = 600
+
+
+def _check_nonce(nonce: Optional[str]) -> bool:
+    if not nonce:
+        return True
+    now = time.time()
+    stale = [k for k, ts in _seen_nonces.items() if now - ts > NONCE_WINDOW]
+    for k in stale:
+        del _seen_nonces[k]
+    if nonce in _seen_nonces:
+        return False
+    _seen_nonces[nonce] = now
+    return True
+
+
+# ================================================================
+# MSOS TRANSPORT
+# ================================================================
+def _msos_call(req: Dict[str, Any]) -> Dict[str, Any]:
+    data = (json.dumps(req) + "\n").encode("utf-8")
+    try:
+        with socket.create_connection((MSOS_HOST, MSOS_PORT), timeout=MSOS_TIMEOUT) as s:
+            s.sendall(data)
+            s.settimeout(MSOS_TIMEOUT)
+            out = b""
+            while not out.endswith(b"\n"):
+                chunk = s.recv(4096)
+                if not chunk:
+                    break
+                out += chunk
+        return json.loads(out.decode("utf-8").strip() or "{}")
+    except Exception as e:
+        raise RuntimeError(f"msos_unreachable:{e}")
+
+
+# ================================================================
+# AUDIT LOGGER
+# ================================================================
+def _audit(event: str, **fields):
+    entry = {"event": event, "ts": time.time(), **fields}
+    log.info("AUDIT %s", json.dumps(entry, default=str))
+
+
+# ================================================================
+# REQUEST SCHEMAS
+#
+# Gate context:  subject, resource, nonce
+#   Used by guardian/admission chain. NEVER forwarded to organs.
+#
+# Organ payload: name, method, args, kwargs
+#   kwargs is cleaned of RESERVED_KEYS before dispatch.
+# ================================================================
+class SubjectModel(BaseModel):
+    user: str = "anonymous"
+    roles: List[str] = Field(default_factory=lambda: ["viewer"])
+    device: str = ""
+    ip: str = ""
+
+
+class ResourceModel(BaseModel):
+    type: str = "standard"
+    id: str = ""
+    method: str = ""
+
+
+class InvokeReq(BaseModel):
+    name: str
+    method: str
+    args: Optional[List[Any]] = None
+    kwargs: Optional[Dict[str, Any]] = None
+    subject: Optional[SubjectModel] = None
+    resource: Optional[ResourceModel] = None
+    nonce: Optional[str] = None
+
+    @field_validator("name")
+    @classmethod
+    def name_valid(cls, v):
+        if not v or not v.replace("-", "").replace("_", "").isalnum():
+            raise ValueError("invalid organ name")
+        return v
+
+    @field_validator("method")
+    @classmethod
+    def method_valid(cls, v):
+        if not v or not v.replace("_", "").isalnum():
+            raise ValueError("invalid method name")
+        return v
+
+
+class PolicyEnforceReq(BaseModel):
+    subject: SubjectModel
+    action: str
+    resource: ResourceModel
+    policy: Optional[Dict[str, Any]] = None
+    note: str = ""
+    nonce: Optional[str] = None
+
+
+# ================================================================
+# ROLE HIERARCHY + DENY RULES
+# ================================================================
+ROLE_HIERARCHY = {
+    "admin": 100,
+    "operator": 80,
+    "clinician": 60,
+    "viewer": 20,
+    "anonymous": 0,
+}
+
+
+def _max_role_level(roles: List[str]) -> int:
+    return max((ROLE_HIERARCHY.get(r, 0) for r in roles), default=0)
+
+
+def _classify_resource(organ_name: str, method: str, explicit_type: str = "") -> str:
+    if explicit_type and explicit_type in RESOURCE_CLASSES:
+        return explicit_type
+    mapped = METHOD_RESOURCE_MAP.get((organ_name, method))
+    if mapped:
+        return mapped
+    return "standard"
+
+
+# ================================================================
+# GATE - role check + guardian + admission
+# ================================================================
+def _gate(subject: SubjectModel, organ_name: str, method: str,
+          resource: Optional[ResourceModel] = None) -> Dict[str, Any]:
+    resource_type = _classify_resource(
+        organ_name, method,
+        resource.type if resource else ""
+    )
+    min_role = RESOURCE_CLASSES.get(resource_type, {}).get("min_role", "viewer")
+    caller_level = _max_role_level(subject.roles)
+    required_level = ROLE_HIERARCHY.get(min_role, 0)
+
+    if caller_level < required_level:
+        _audit("gate_denied_local",
+               user=subject.user, roles=subject.roles,
+               organ=organ_name, method=method,
+               resource_type=resource_type,
+               reason=f"role_insufficient:need_{min_role}")
+        raise HTTPException(status_code=403, detail={
+            "error": "access_denied",
+            "reason": f"role_insufficient:need_{min_role}",
+            "resource_class": resource_type,
+            "your_max_role_level": caller_level,
+            "required_level": required_level,
+        })
+
+    guardian_resp = _msos_call({
+        "cmd": "invoke", "name": "guardian", "method": "authorize",
+        "args": [],
+        "kwargs": {
+            "subject": subject.model_dump(),
+            "action": f"{organ_name}.{method}",
+            "resource": (resource.model_dump() if resource else {"type": resource_type}),
+        },
+    })
+    guardian_decision = guardian_resp.get("result", guardian_resp)
+
+    admission_resp = _msos_call({
+        "cmd": "invoke", "name": "admission", "method": "admit",
+        "args": [],
+        "kwargs": {
+            "request": {
+                "action": f"{organ_name}.{method}",
+                "resource": {"type": resource_type},
+                "subject": subject.model_dump(),
+            },
+            "guardian_decision": guardian_decision,
+        },
+    })
+    admission_result = admission_resp.get("result", admission_resp)
+
+    if not admission_result.get("admit"):
+        _audit("gate_denied",
+               user=subject.user, roles=subject.roles,
+               organ=organ_name, method=method,
+               resource_type=resource_type,
+               guardian=guardian_decision.get("decision"),
+               admission_reason=admission_result.get("reason"))
+        raise HTTPException(status_code=403, detail={
+            "error": "admission_denied",
+            "reason": admission_result.get("reason", "unknown"),
+            "guardian": guardian_decision,
+            "admission": admission_result,
+        })
+
+    gate_result = {
+        "guardian": guardian_decision,
+        "admission": admission_result,
+        "resource_class": resource_type,
+    }
+    _audit("gate_allowed",
+           user=subject.user, roles=subject.roles,
+           organ=organ_name, method=method,
+           resource_type=resource_type)
+    return gate_result
+
+
+# ================================================================
+# MIDDLEWARE - rate limit + payload size
+# ================================================================
+@app.middleware("http")
+async def security_middleware(request: Request, call_next):
+    cl = int(request.headers.get("content-length", "0"))
+    if cl > MAX_BODY_BYTES:
+        _audit("payload_rejected", ip=request.client.host, size=cl)
+        return Response(
+            content=json.dumps({"error": "payload_too_large", "max": MAX_BODY_BYTES}),
+            status_code=413, media_type="application/json",
+        )
+    rate_key = request.headers.get("x-api-key", request.client.host or "unknown")
+    if not _check_rate(rate_key):
+        _audit("rate_limited", key=rate_key[:8])
+        return Response(
+            content=json.dumps({"error": "rate_limited", "limit_rpm": RATE_LIMIT_RPM}),
+            status_code=429, media_type="application/json",
+        )
+    return await call_next(request)
+
+
+# ================================================================
+# ENDPOINTS
+# ================================================================
+@app.get("/health")
+def health():
+    msos_ok = False
+    msos_resp: Dict[str, Any] = {}
+    try:
+        msos_resp = _msos_call({"cmd": "ping"})
+        msos_ok = bool(msos_resp.get("ok"))
+    except Exception:
+        msos_ok = False
+    return {"ok": True, "ts": time.time(), "msos_ok": msos_ok, "msos": msos_resp}
+
+
+@app.get("/organs")
+def organs():
+    try:
+        return _msos_call({"cmd": "list"})
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+
+# ================================================================
+# EVENTS STREAM
+# ================================================================
+@app.get("/events")
+def get_events(limit: int = 50):
+    """
+    Return most recent VeilCore events.
+    Used by the Prism dashboard + neural overlay.
+    """
+    try:
+        from pathlib import Path
+        import json
+
+        events_path = Path.home() / "veilcore" / "data" / "events.json"
+
+        if not events_path.exists():
+            return {"events": []}
+
+        data = json.loads(events_path.read_text())
+
+        events = data.get("events", [])
+
+        # newest first
+        events = list(reversed(events))[:limit]
+
+        return {"events": events}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/engines/{engine_id}")
+def engine_get(engine_id: str):
+    eng = _ENGINE_MGR.get_engine(engine_id)
+    if not eng:
+        raise HTTPException(status_code=404, detail=f"engine not found: {engine_id}")
+    return eng
+
+
+@app.post("/engines/{engine_id}/start")
+def engine_start(engine_id: str):
+    try:
+        eng = _ENGINE_MGR.start(engine_id)
+        return {"ok": True, "engine": eng}
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.post("/engines/{engine_id}/stop")
+def engine_stop(engine_id: str):
+    try:
+        eng = _ENGINE_MGR.stop(engine_id)
+        return {"ok": True, "engine": eng}
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.post("/engines/{engine_id}/restart")
+def engine_restart(engine_id: str):
+    try:
+        eng = _ENGINE_MGR.restart(engine_id)
+        return {"ok": True, "engine": eng}
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+class EngineFailReq(BaseModel):
+    message: str = "manual failure"
+    health: int = 40
+
+
+@app.post("/engines/{engine_id}/fail")
+def engine_fail(engine_id: str, req: EngineFailReq):
+    try:
+        eng = _ENGINE_MGR.fail(engine_id, req.message, req.health)
+        return {"ok": True, "engine": eng}
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+# ================================================================
+# INVOKE AUTHZ SHAPING (server-owned, Guardian stays pure)
+# ================================================================
+def _canon(s: Optional[str]) -> str:
+    return (s or "").strip().lower()
+
+
+class MethodSpec(BaseModel):
+    mutating: bool = False
+    required_resource_type: Optional[str] = None
+    known: bool = True
+
+
+# Server-owned manifest: expand over time.
+METHOD_MANIFEST: Dict[Tuple[str, str], MethodSpec] = {
+    ("firewall", "apply"): MethodSpec(mutating=True, required_resource_type="policy"),
+    ("firewall", "set_policy"): MethodSpec(mutating=True, required_resource_type="policy"),
+    ("firewall", "flush"): MethodSpec(mutating=True, required_resource_type="firewall"),
+    ("firewall", "verify"): MethodSpec(mutating=False, required_resource_type=None),
+    ("guardian", "status"): MethodSpec(mutating=False, required_resource_type=None),
+}
+
+
+def _method_spec(organ: str, method: str) -> MethodSpec:
+    spec = METHOD_MANIFEST.get((_canon(organ), _canon(method)))
+    if spec is not None:
+        return spec
+    # Fail closed: unknown method is treated as unsafe.
+    return MethodSpec(mutating=True, required_resource_type=None, known=False)
+
+
+def _derive_resource_for_nonmutating(organ: str, method: str) -> "ResourceModel":
+    cap = f"{_canon(organ)}.{_canon(method)}"
+    return ResourceModel(type="capability", id=cap, method=_canon(method))
+
+
+def _normalize_and_validate_invoke(req: "InvokeReq") -> Tuple["SubjectModel", "ResourceModel", MethodSpec]:
+    organ = _canon(req.name)
+    method = _canon(req.method)
+    spec = _method_spec(organ, method)
+
+    # Secure default: never escalate missing subject to admin.
+    subject = req.subject or SubjectModel(user="api", roles=[])
+
+    if not spec.known:
+        raise HTTPException(status_code=400, detail={"error": "unknown_method", "organ": organ, "method": method})
+
+    if spec.mutating:
+        if not req.resource:
+            raise HTTPException(
+                status_code=400,
+                detail={"error": "resource_required", "organ": organ, "method": method,
+                        "required_type": spec.required_resource_type},
+            )
+        resource = req.resource
+        if spec.required_resource_type and resource.type != spec.required_resource_type:
+            raise HTTPException(
+                status_code=400,
+                detail={"error": "wrong_resource_type",
+                        "required_type": spec.required_resource_type,
+                        "got": resource.type,
+                        "organ": organ, "method": method},
+            )
+        return subject, resource, spec
+
+    resource = req.resource or _derive_resource_for_nonmutating(organ, method)
+    return subject, resource, spec
+
+@app.post("/invoke")
+def invoke(req: InvokeReq):
+    try:
+        subject, resource, spec = _normalize_and_validate_invoke(req)
+
+        if not _check_nonce(req.nonce):
+            raise HTTPException(status_code=409, detail="nonce_replayed")
+
+        gate_result = _gate(subject, _canon(req.name), _canon(req.method), resource)
+
+        clean_kwargs = {k: v for k, v in (req.kwargs or {}).items()
+                        if k not in RESERVED_KEYS}
+
+        t0 = time.monotonic()
+        resp = _msos_call({
+            "cmd": "invoke", "name": _canon(req.name), "method": _canon(req.method),
+            "args": req.args or [], "kwargs": clean_kwargs,
+        })
+        elapsed = time.monotonic() - t0
+
+        _audit("invoke",
+               user=subject.user, organ=_canon(req.name), method=_canon(req.method),
+               resource_class=gate_result.get("resource_class"),
+               ok=resp.get("ok", False), elapsed_ms=round(elapsed * 1000, 1))
+
+        resp["_gate"] = gate_result
+        return resp
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        _audit("invoke_error", organ=req.name, method=req.method, error=str(e))
+        raise HTTPException(status_code=503, detail=str(e))
+
+@app.post("/policy/enforce")
+def policy_enforce(req: PolicyEnforceReq):
+    try:
+        resource = ResourceModel(type="policy", id="firewall")
+
+        if not _check_nonce(req.nonce):
+            raise HTTPException(status_code=409, detail="nonce_replayed")
+
+        gate_result = _gate(req.subject, "firewall", "apply", resource)
+
+        set_result = None
+        if req.policy:
+            set_resp = _msos_call({
+                "cmd": "invoke", "name": "firewall", "method": "set_policy",
+                "args": [], "kwargs": {"policy": req.policy, "note": req.note},
+            })
+            set_result = set_resp.get("result", set_resp)
+
+        verify_resp = _msos_call({
+            "cmd": "invoke", "name": "firewall", "method": "verify",
+            "args": [], "kwargs": {},
+        })
+        verify_result = verify_resp.get("result", verify_resp)
+
+        if not verify_result.get("valid"):
+            _audit("policy_enforce_failed", user=req.subject.user,
+                   reason="integrity_failed", verify=verify_result)
+            raise HTTPException(status_code=422, detail={
+                "error": "policy_integrity_failed",
+                "verify": verify_result, "gate": gate_result,
+            })
+
+        apply_resp = _msos_call({
+            "cmd": "invoke", "name": "firewall", "method": "apply",
+            "args": [], "kwargs": {},
+        })
+        apply_result = apply_resp.get("result", apply_resp)
+
+        _audit("policy_enforce_ok", user=req.subject.user,
+               action=req.action, applied=apply_result.get("applied", False))
+
+        return {
+            "ok": True,
+            "chain": "admission -> guardian -> firewall.verify -> firewall.apply",
+            "gate": gate_result, "set_policy": set_result,
+            "verify": verify_result, "apply": apply_result,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        _audit("policy_enforce_error", user=req.subject.user, error=str(e))
+        raise HTTPException(status_code=503, detail=str(e))
+
+
+# ================================================================
+# IRONWATCH DIRECT TEST ROUTE
+# ================================================================
+class IronWatchTestReq(BaseModel):
+    mode: str = "intrusion"
+
+
+def _ironwatch_load(name: str, fp):
+    import importlib.util, sys
+    spec = importlib.util.spec_from_file_location(name, fp)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load {name} from {fp}")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[name] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _ironwatch_publish(event_type: str, message: str, payload: dict, level: str = "warning", target: str | None = None):
+    import json, uuid
+    from datetime import datetime
+    from pathlib import Path
+
+    events_path = Path.home() / "veilcore" / "data" / "events.json"
+    events_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if events_path.exists():
+        try:
+            data = json.loads(events_path.read_text() or "{}")
+        except Exception:
+            data = {"events": []}
+    else:
+        data = {"events": []}
+
+    data.setdefault("events", [])
+    data["events"].append({
+        "id": str(uuid.uuid4()),
+        "ts": datetime.now().isoformat(timespec="seconds"),
+        "type": event_type,
+        "source": "physical",
+        "target": target,
+        "level": level,
+        "message": message,
+        "payload": payload,
+    })
+    data["events"] = data["events"][-1000:]
+    events_path.write_text(json.dumps(data, indent=2))
+
+
+@app.post("/ironwatch/test")
+def ironwatch_test(req: IronWatchTestReq):
+    try:
+        from pathlib import Path
+
+        root = Path(__file__).resolve().parents[2]
+        engine_path = root / "core" / "physical" / "engine.py"
+        mod = _ironwatch_load("veilcore_ironwatch_engine_direct", engine_path)
+        PhysicalSecurityEngine = mod.PhysicalSecurityEngine
+
+        eng = PhysicalSecurityEngine()
+        eng.configure_hospital("Memorial General")
+        eng.add_sensor("MOTION-SR1", "motion", "Server Room A", "server_room")
+        eng.add_sensor("TEMP-SR1", "temperature", "Server Room A", "server_room", threshold_high=85.0)
+        eng.add_camera("CAM-SR01", "Server Room A", "server_room", ip="10.1.1.100")
+
+        mode = (req.mode or "intrusion").strip().lower()
+
+        if mode == "intrusion":
+            sensor_alerts = [a.to_dict() for a in eng.sensor_trigger("MOTION-SR1")]
+            camera_events = [e.to_dict() for e in eng.camera_feed_lost("CAM-SR01")]
+            correlations = [c.to_dict() for c in eng.analyze()]
+
+            _ironwatch_publish(
+                "physical.api_hit",
+                "ironwatch direct intrusion route entered",
+                {"mode": mode},
+                level="warning",
+                target="ironwatch",
+            )
+
+            for a in sensor_alerts:
+                _ironwatch_publish(
+                    "physical.sensor_triggered",
+                    a.get("message", ""),
+                    a,
+                    level="critical" if a.get("severity") == "critical" else "warning",
+                    target=a.get("sensor_id"),
+                )
+
+            for e in camera_events:
+                _ironwatch_publish(
+                    "physical.camera_feed_lost",
+                    e.get("details", ""),
+                    e,
+                    level="critical" if e.get("severity") == "critical" else "warning",
+                    target=e.get("camera_id"),
+                )
+
+            for c in correlations:
+                _ironwatch_publish(
+                    "physical.correlation",
+                    c.get("description", c.get("pattern", "physical correlation")),
+                    c,
+                    level="critical" if c.get("severity") == "critical" else "warning",
+                )
+
+            return {
+                "ok": True,
+                "mode": mode,
+                "sensor_alerts": sensor_alerts,
+                "camera_events": camera_events,
+                "correlations": correlations,
+            }
+
+        if mode == "temperature":
+            alerts = [a.to_dict() for a in eng.sensor_reading("TEMP-SR1", 92.0, "°F")]
+            correlations = [c.to_dict() for c in eng.analyze()]
+
+            _ironwatch_publish(
+                "physical.api_hit",
+                "ironwatch direct temperature route entered",
+                {"mode": mode},
+                level="warning",
+                target="ironwatch",
+            )
+
+            for a in alerts:
+                _ironwatch_publish(
+                    "physical.alert",
+                    a.get("message", ""),
+                    a,
+                    level="critical" if a.get("severity") == "critical" else "warning",
+                    target=a.get("sensor_id"),
+                )
+
+            for c in correlations:
+                _ironwatch_publish(
+                    "physical.correlation",
+                    c.get("description", c.get("pattern", "physical correlation")),
+                    c,
+                    level="critical" if c.get("severity") == "critical" else "warning",
+                )
+
+            return {
+                "ok": True,
+                "mode": mode,
+                "sensor_alerts": alerts,
+                "correlations": correlations,
+            }
+
+        raise HTTPException(status_code=400, detail=f"unknown test mode: {mode}")
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

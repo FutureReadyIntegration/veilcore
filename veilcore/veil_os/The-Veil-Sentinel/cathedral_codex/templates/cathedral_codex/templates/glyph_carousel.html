@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Glyph Carousel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/glyph_theme.css') }}">
+  <style>
+    body { background: #111; color: #eee; font-family: 'Segoe UI', sans-serif; text-align: center; }
+    .carousel { display: flex; overflow-x: auto; gap: 1em; padding: 1em; scroll-snap-type: x mandatory; }
+    .glyph-card {
+      scroll-snap-align: start;
+      flex: 0 0 200px;
+      border-radius: 8px;
+      padding: 1em;
+      border-top: 6px solid;
+      background: #1e1e2f;
+      transition: transform 0.3s ease-in-out;
+    }
+    .glyph-card:hover { transform: scale(1.05); }
+
+    .flame-urgent {
+      box-shadow: 0 0 15px rgba(255, 80, 80, 0.8);
+      animation: urgency-flame 2s infinite ease-in-out;
+    }
+
+    @keyframes urgency-flame {
+      0%, 100% { box-shadow: 0 0 10px red; }
+      50% { box-shadow: 0 0 25px orange; }
+    }
+
+    .glyph-symbol { font-size: 2em; margin-bottom: 0.3em; }
+    .tier-label { font-size: 0.9em; font-style: italic; color: #ccc; }
+  </style>
+</head>
+<body>
+  <h1>🔥 Glyph Override Carousel</h1>
+  <div class="carousel">
+    {% for e in entries %}
+      <div class="glyph-card tier-{{ e.tier }} {% if e.method == 'emergency' %}flame-urgent{% endif %}">
+        <div class="glyph-symbol">{{ e.glyph }}</div>
+        <div class="tier-label">{{ e.tier }} (Level {{ e.level }})</div>
+        <small>{{ e.text }}</small><br>
+        <small>{{ e.timestamp }}</small>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

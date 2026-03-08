@@ -1,0 +1,28 @@
+actions:
+- type: analyze
+- type: correlate
+- type: decide
+- type: dispatch
+affirmation: I think so The Veil may act.
+dependencies:
+- sentinel
+- guardian
+- signal_router
+description: Central decision engine for threat correlation and response.
+glyph: "\U0001F9E0"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/cortex.sock
+name: cortex
+organ: cortex
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/cortex.log
+symbolic_role: mind
+technical_role: decision_engine
+tier: core
+triggers:
+- type: threat_signal
+- type: anomaly_detected
+- type: correlation_match
+version: 1.0

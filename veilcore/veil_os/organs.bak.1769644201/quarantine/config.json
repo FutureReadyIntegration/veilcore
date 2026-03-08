@@ -1,0 +1,10 @@
+{
+  "name": "quarantine",
+  "version": 1.0,
+  "description": "Emergency isolation system for compromised hosts.",
+  "tier": "security",
+  "glyph": "\ud83d\udd12",
+  "technical_role": "isolation",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.756890+00:00"
+}

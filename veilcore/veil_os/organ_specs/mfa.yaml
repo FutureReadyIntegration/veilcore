@@ -1,0 +1,25 @@
+name: mfa
+version: 1.0
+tier: security
+glyph: "🔑"
+technical_role: multi_factor_auth
+symbolic_role: second_gate
+description: Multi-factor authentication enforcer for clinical systems.
+inputs:
+  - source: /opt/veil_os/sockets/mfa.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/mfa.log
+    format: jsonl
+triggers:
+  - type: login_attempt
+  - type: privilege_escalation
+actions:
+  - type: challenge
+  - type: verify
+  - type: deny
+dependencies:
+  - auth
+  - imprivata
+  - guardian
+affirmation: Two keys open the sacred door.

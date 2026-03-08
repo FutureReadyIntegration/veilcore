@@ -1,0 +1,26 @@
+actions:
+- type: route
+- type: balance
+- type: reroute
+affirmation: I find the path through complexity.
+dependencies:
+- fabric
+- monitor
+description: Intelligent traffic routing and load balancing.
+glyph: "\U0001F500"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/router.sock
+name: router
+organ: router
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/router.log
+symbolic_role: pathfinder
+technical_role: traffic_router
+tier: network
+triggers:
+- type: route_request
+- type: path_failure
+- type: load_imbalance
+version: 1.0

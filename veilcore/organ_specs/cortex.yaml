@@ -1,0 +1,27 @@
+name: cortex
+version: 1.0
+tier: core
+glyph: "🧠"
+technical_role: decision_engine
+symbolic_role: mind
+description: Central decision engine for threat correlation and response.
+inputs:
+  - source: /opt/veil_os/sockets/cortex.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/cortex.log
+    format: jsonl
+triggers:
+  - type: threat_signal
+  - type: anomaly_detected
+  - type: correlation_match
+actions:
+  - type: analyze
+  - type: correlate
+  - type: decide
+  - type: dispatch
+dependencies:
+  - sentinel
+  - guardian
+  - signal_router
+affirmation: I think so The Veil may act.

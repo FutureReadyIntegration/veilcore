@@ -1,0 +1,25 @@
+actions:
+- type: collect
+- type: aggregate
+- type: alert
+affirmation: I measure so we may improve.
+dependencies:
+- telemetry
+- analytics
+description: Performance and security metrics collection and aggregation.
+glyph: "\U0001F4CA"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/metrics.sock
+name: metrics
+organ: metrics
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/metrics.log
+symbolic_role: measurer
+technical_role: metrics_collector
+tier: monitoring
+triggers:
+- type: scrape_interval
+- type: threshold_breach
+version: 1.0

@@ -1,0 +1,21 @@
+operators:
+  - id: "veil_operator"
+    name: "Primary Operator"
+    role: "Architect"
+    last_seen: null
+    status: "unknown"
+
+  - id: "charge_nurse"
+    name: "Charge Nurse (Synthetic)"
+    role: "Clinical Supervisor"
+    last_seen: "2026-02-04T17:20:03Z"
+    status: "online"
+
+  - id: "night_shift_admin"
+    name: "Night Shift Admin (Synthetic)"
+    role: "Systems Admin"
+    last_seen: "2026-02-04T06:41:27Z"
+    status: "offline"
+
+config:
+  heartbeat_timeout_seconds: 300

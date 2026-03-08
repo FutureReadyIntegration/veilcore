@@ -1,0 +1,23 @@
+name: zombie_sweeper
+tier: 3
+glyph: "🧹"
+description: |
+  Cleans up orphaned processes, stale state, abandoned tasks, and any
+  zombie-like artifacts that accumulate in the system.
+
+entrypoint: "veil.organs.zombie_sweeper.main"
+
+logging:
+  file: "/var/log/veil/zombie_sweeper.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/zombie_sweeper"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

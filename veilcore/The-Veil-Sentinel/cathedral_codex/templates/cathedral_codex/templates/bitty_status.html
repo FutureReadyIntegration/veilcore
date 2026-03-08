@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/glyph_theme.css') }}"
+>
+  <title>Daemon Status</title>
+</head>
+<body>- bitty_results.html → <body class="search-page">
+  <h1>🩺 Codex Daemon Status</h1>
+  <ul>
+    {% for key, val in status.items() %}
+      <li><strong>{{ key }}:</strong> {{ val }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

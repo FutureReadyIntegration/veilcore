@@ -1,0 +1,15 @@
+name: insider-threat
+description: Insider Threat Detection Engine
+category: Security
+unit: veil-insider-threat
+display_name: "Insider Threat"
+glyph: "🛡️"
+tier: P1
+allowed: true
+group: "Security Guardians"
+order: 10
+color: "#C62828"
+accent: "#FFCDD2"
+health_check: true
+telemetry: true
+purpose: "Monitors internal behavior for high-risk patterns and raises alerts for anomalous operator activity."

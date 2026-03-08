@@ -1,0 +1,25 @@
+actions:
+- type: ingest
+- type: normalize
+- type: forward
+affirmation: I gather all signals into one stream.
+dependencies:
+- indexer
+- audit
+description: Centralized log collection from all hospital systems.
+glyph: "\U0001F9F2"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/collector.sock
+name: collector
+organ: collector
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/collector.log
+symbolic_role: gatherer
+technical_role: log_collector
+tier: monitoring
+triggers:
+- type: log_received
+- type: buffer_full
+version: 1.0

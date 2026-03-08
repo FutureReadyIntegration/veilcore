@@ -1,0 +1,25 @@
+name: queue
+version: 1.0
+tier: core
+glyph: "📬"
+technical_role: message_queue
+symbolic_role: waiting_line
+description: Reliable message queue for async organ communication.
+inputs:
+  - source: /opt/veil_os/sockets/queue.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/queue.log
+    format: jsonl
+triggers:
+  - type: message_enqueue
+  - type: queue_full
+  - type: consumer_timeout
+actions:
+  - type: enqueue
+  - type: dequeue
+  - type: retry
+  - type: dead_letter
+dependencies:
+  - dispatcher
+affirmation: Every message waits its turn.

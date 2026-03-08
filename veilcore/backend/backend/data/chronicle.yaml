@@ -1,0 +1,18 @@
+events:
+  - id: "evt-001"
+    timestamp: "2026-02-04T17:02:11Z"
+    source: "lab_pipeline"
+    severity: "warning"
+    message: "Lab result latency exceeded 120 seconds threshold."
+
+  - id: "evt-002"
+    timestamp: "2026-02-04T17:05:44Z"
+    source: "zero_trust_core"
+    severity: "info"
+    message: "Unusual login pattern flagged and challenged with MFA."
+
+  - id: "evt-003"
+    timestamp: "2026-02-04T17:12:09Z"
+    source: "icu_monitor"
+    severity: "info"
+    message: "ICU telemetry stream revalidated; all channels in spec."

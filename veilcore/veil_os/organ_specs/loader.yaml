@@ -1,0 +1,24 @@
+name: loader
+version: 1.0
+tier: core
+glyph: "📦"
+technical_role: module_loader
+symbolic_role: carrier
+description: Dynamic module and plugin loader for Veil OS extensions.
+inputs:
+  - source: /opt/veil_os/sockets/loader.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/loader.log
+    format: jsonl
+triggers:
+  - type: load_request
+  - type: unload_request
+actions:
+  - type: verify
+  - type: load
+  - type: unload
+dependencies:
+  - fingerprint
+  - init
+affirmation: I carry new capabilities into The Veil.

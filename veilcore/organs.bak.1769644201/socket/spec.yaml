@@ -1,0 +1,26 @@
+actions:
+- type: create
+- type: bind
+- type: close
+- type: cleanup
+affirmation: I create the channels through which organs speak.
+dependencies:
+- init
+description: Unix and network socket lifecycle management.
+glyph: "\U0001F50C"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/socket.sock
+name: socket
+organ: socket
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/socket.log
+symbolic_role: connector
+technical_role: socket_manager
+tier: core
+triggers:
+- type: socket_create
+- type: socket_error
+- type: connection_limit
+version: 1.0

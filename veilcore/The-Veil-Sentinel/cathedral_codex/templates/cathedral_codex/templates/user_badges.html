@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Badge Gallery — {{ user_id }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/glyph_theme.css') }}">
+  <style>
+    .gallery { display: flex; flex-wrap: wrap; gap: 1em; padding: 1em; }
+    .badge {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #2c2c3c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 4px solid;
+      box-shadow: 0 0 12px rgba(255,255,255,0.1);
+      transition: transform 0.3s ease;
+    }
+    .badge:hover { transform: scale(1.05); }
+    .urgent { animation: urgency-flame 1.8s infinite ease-in-out; }
+    @keyframes urgency-flame {
+      0% { box-shadow: 0 0 10px red; }
+      50% { box-shadow: 0 0 20px orange; }
+      100% { box-shadow: 0 0 10px red; }
+    }
+  </style>
+</head>
+<body>
+  <h1>👤 Glyph Badges for {{ user_id }}</h1>
+  <div class="gallery">
+    {% for e in entries %}
+      <div class="badge tier-{{ e.tier }} {% if e.urgent %}urgent{% endif %}" title="{{ e.phrase }}">
+        <div style="font-size: 2em;">{{ e.glyph }}</div>
+        <div style="font-size: 0.8em;">{{ e.method }}</div>
+        <div style="font-size: 0.7em;">{{ e.language }}</div>
+        <div style="font-size: 0.6em;">{{ e.timestamp[:10] }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

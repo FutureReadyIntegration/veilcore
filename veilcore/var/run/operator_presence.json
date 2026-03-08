@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/operator_presence.log",
+  "module": "veil.organs.runner",
+  "name": "operator_presence",
+  "pid": 134050
+}

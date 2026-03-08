@@ -1,0 +1,24 @@
+name: collector
+version: 1.0
+tier: monitoring
+glyph: "🧲"
+technical_role: log_collector
+symbolic_role: gatherer
+description: Centralized log collection from all hospital systems.
+inputs:
+  - source: /opt/veil_os/sockets/collector.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/collector.log
+    format: jsonl
+triggers:
+  - type: log_received
+  - type: buffer_full
+actions:
+  - type: ingest
+  - type: normalize
+  - type: forward
+dependencies:
+  - indexer
+  - audit
+affirmation: I gather all signals into one stream.

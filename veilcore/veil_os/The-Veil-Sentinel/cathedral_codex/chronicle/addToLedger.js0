@@ -1,0 +1,42 @@
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Appends a new badge event to the JSONL ledger.
+ * @param {Object} entry - Full badge metadata object
+ * @param {string} ledgerPath - Optional custom path to ledger.jsonl
+ */
+function addToLedger(entry, ledgerPath = path.join(__dirname, 'ledger.jsonl')) {
+  if (!entry || typeof entry !== 'object') {
+    console.error('Invalid entry. Must be an object.');
+    return;
+  }
+
+  const line = JSON.stringify(entry) + '\n';
+
+  try {
+    fs.appendFileSync(ledgerPath, line);
+    console.log(`Ledger entry added for glyph: ${entry.glyph} (${entry.code})`);
+  } catch (err) {
+    console.error('Failed to write to ledger:', err.message);
+  }
+}
+
+// Example usage
+if (require.main === module) {
+  const sampleEntry = {
+    timestamp: new Date().toISOString(),
+    glyph: "🜃",
+    phrase: "Resurrected in Clarity",
+    code: "sentinel-revive",
+    method: "revive",
+    style: "mobile-blessed",
+    status: "minted",
+    description: "Minted at revival. Signals system resurrection with clarity and override integrity.",
+    image: "badges/sentinel-revive.png"
+  };
+
+  addToLedger(sampleEntry);
+}
+
+module.exports = addToLedger;

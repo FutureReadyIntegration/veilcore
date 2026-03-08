@@ -1,0 +1,25 @@
+actions:
+- type: duplicate
+- type: route
+- type: confirm
+affirmation: One becomes many through me.
+dependencies:
+- dispatcher
+- queue
+description: Message fanout for multi-destination delivery.
+glyph: "\U0001F333"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/fanout.sock
+name: fanout
+organ: fanout
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/fanout.log
+symbolic_role: branching_tree
+technical_role: message_fanout
+tier: core
+triggers:
+- type: fanout_request
+- type: delivery_failure
+version: 1.0

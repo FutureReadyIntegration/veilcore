@@ -1,0 +1,10 @@
+{
+  "name": "fanout",
+  "version": 1.0,
+  "description": "Message fanout for multi-destination delivery.",
+  "tier": "core",
+  "glyph": "\ud83c\udf33",
+  "technical_role": "message_fanout",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.469891+00:00"
+}

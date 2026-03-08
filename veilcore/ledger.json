@@ -1,0 +1,2706 @@
+[
+  {
+    "index": 0,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769393288.896745,
+    "prev_hash": "GENESIS",
+    "hash": "9a1e479f96208405377e5cc8b4d439ea857dacde4a3eb889212b82e41ee068a4"
+  },
+  {
+    "index": 1,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769393288.898416,
+    "prev_hash": "9a1e479f96208405377e5cc8b4d439ea857dacde4a3eb889212b82e41ee068a4",
+    "hash": "e61ff76b3d0d66a0c6f56c9ea15d97f42e4444d3072ab5aea763831c0c7ed831"
+  },
+  {
+    "index": 2,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769393288.899505,
+    "prev_hash": "e61ff76b3d0d66a0c6f56c9ea15d97f42e4444d3072ab5aea763831c0c7ed831",
+    "hash": "c35efdec0e767d3031943e7ef37c24e3c1f61886bc68718e0e6cbb61a89246cb"
+  },
+  {
+    "index": 3,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769393288.9005063,
+    "prev_hash": "c35efdec0e767d3031943e7ef37c24e3c1f61886bc68718e0e6cbb61a89246cb",
+    "hash": "550e39c8e59bb326553ee3c18c88efc3a53bd6ffb9f8c5da970b2ec695fe011e"
+  },
+  {
+    "index": 4,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769393341.7140527,
+    "prev_hash": "550e39c8e59bb326553ee3c18c88efc3a53bd6ffb9f8c5da970b2ec695fe011e",
+    "hash": "3ecb77ccd86ee0e6489458d9ba29f18e006f68b46b154a272094d03d0f591635"
+  },
+  {
+    "index": 5,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769393341.7153234,
+    "prev_hash": "3ecb77ccd86ee0e6489458d9ba29f18e006f68b46b154a272094d03d0f591635",
+    "hash": "41fab529078567bf91692e001daf5bf032ca69abc578f3b411a5ccce44218374"
+  },
+  {
+    "index": 6,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769393341.7162824,
+    "prev_hash": "41fab529078567bf91692e001daf5bf032ca69abc578f3b411a5ccce44218374",
+    "hash": "08258b769c995b55019b5f34c4ae4fe60d1c759b2734bd1578b8a0d46947f79a"
+  },
+  {
+    "index": 7,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769393341.7173176,
+    "prev_hash": "08258b769c995b55019b5f34c4ae4fe60d1c759b2734bd1578b8a0d46947f79a",
+    "hash": "09d34668ecd15e016bd709aa73acc7b57028d04b9487fc4805121706d7a5ba08"
+  },
+  {
+    "index": 8,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769393519.817081,
+    "prev_hash": "09d34668ecd15e016bd709aa73acc7b57028d04b9487fc4805121706d7a5ba08",
+    "hash": "6160e447efc254009c26a664a0351e3ab389477a715731cc3bdee57d629a9721"
+  },
+  {
+    "index": 9,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769393519.8188453,
+    "prev_hash": "6160e447efc254009c26a664a0351e3ab389477a715731cc3bdee57d629a9721",
+    "hash": "fb180389d4fe0a9057d6e85c414dd899e8c00605970e83c061399a77f750256b"
+  },
+  {
+    "index": 10,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769393519.82013,
+    "prev_hash": "fb180389d4fe0a9057d6e85c414dd899e8c00605970e83c061399a77f750256b",
+    "hash": "e7d39cf6e3db1a044f48c9157b8ff370ffe86068b3596881284e7fd5683aaf47"
+  },
+  {
+    "index": 11,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769393519.8213785,
+    "prev_hash": "e7d39cf6e3db1a044f48c9157b8ff370ffe86068b3596881284e7fd5683aaf47",
+    "hash": "4f565d1dc7705cc256618fa1e9667fec413e993c444d7e4b270ef7d374134b8f"
+  },
+  {
+    "index": 12,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769393519.825718,
+    "prev_hash": "4f565d1dc7705cc256618fa1e9667fec413e993c444d7e4b270ef7d374134b8f",
+    "hash": "6b75a4f5e5939cda0970644dc5c5195097308647e497a0b3434f11a5f5f74fec"
+  },
+  {
+    "index": 13,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769393519.8270173,
+    "prev_hash": "6b75a4f5e5939cda0970644dc5c5195097308647e497a0b3434f11a5f5f74fec",
+    "hash": "a47d455dfcf96fe0582a8efc12dbda07ce7532179c31890394b4632238e1a466"
+  },
+  {
+    "index": 14,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769393519.8282282,
+    "prev_hash": "a47d455dfcf96fe0582a8efc12dbda07ce7532179c31890394b4632238e1a466",
+    "hash": "64c433b8999a63c26bbd5ce74beb86afb6939fbe2898b4b0ca9c354c2473e0b4"
+  },
+  {
+    "index": 15,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769393519.829365,
+    "prev_hash": "64c433b8999a63c26bbd5ce74beb86afb6939fbe2898b4b0ca9c354c2473e0b4",
+    "hash": "af7ffa77e9af130f4780feaf1a43546e6ad28a4ce1c6208fd0b143d53d521506"
+  },
+  {
+    "index": 16,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769393519.8304334,
+    "prev_hash": "af7ffa77e9af130f4780feaf1a43546e6ad28a4ce1c6208fd0b143d53d521506",
+    "hash": "e2b3ed8d8cc03fa65475ce313f250b85d9469aec263a6655310a2841023850e2"
+  },
+  {
+    "index": 17,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769393519.8314934,
+    "prev_hash": "e2b3ed8d8cc03fa65475ce313f250b85d9469aec263a6655310a2841023850e2",
+    "hash": "713111968454542ab7b32334b3278e5f2711d419edf38b0797ef51425322bbe0"
+  },
+  {
+    "index": 18,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769393519.832584,
+    "prev_hash": "713111968454542ab7b32334b3278e5f2711d419edf38b0797ef51425322bbe0",
+    "hash": "32e0ea5f265682c5ce2718f9838b57dd34c5776b50e333bf18a2477edbc16c33"
+  },
+  {
+    "index": 19,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769393519.8337042,
+    "prev_hash": "32e0ea5f265682c5ce2718f9838b57dd34c5776b50e333bf18a2477edbc16c33",
+    "hash": "f4adad8623dc63f510b88dbe8de90a7b109c72db06d2295952dcbb60cebf1199"
+  },
+  {
+    "index": 20,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769393660.2138016,
+    "prev_hash": "f4adad8623dc63f510b88dbe8de90a7b109c72db06d2295952dcbb60cebf1199",
+    "hash": "9a83ca035b40aadb8269ee678ff67b92f4cfc08fcaa13f17029de3bfe358a0b7"
+  },
+  {
+    "index": 21,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769393660.2143502,
+    "prev_hash": "9a83ca035b40aadb8269ee678ff67b92f4cfc08fcaa13f17029de3bfe358a0b7",
+    "hash": "845705614b64135fefa39a35d8291d039e63d82a01bb5daf0d6be70a4a142cdf"
+  },
+  {
+    "index": 22,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769393660.2147322,
+    "prev_hash": "845705614b64135fefa39a35d8291d039e63d82a01bb5daf0d6be70a4a142cdf",
+    "hash": "1de18628b16dcb308af2ab63e709e412e26cafa03b945575d6c1afff14e37573"
+  },
+  {
+    "index": 23,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769393660.215101,
+    "prev_hash": "1de18628b16dcb308af2ab63e709e412e26cafa03b945575d6c1afff14e37573",
+    "hash": "8140fe0cf1d4a262f46b1b025d4021de7779232ba54c758d0c87751ab461bc06"
+  },
+  {
+    "index": 24,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769393660.2188282,
+    "prev_hash": "8140fe0cf1d4a262f46b1b025d4021de7779232ba54c758d0c87751ab461bc06",
+    "hash": "a12217c90aafe3ee3ab9eb0370e957de858cd2c374c0d9a372051a54da1ad4aa"
+  },
+  {
+    "index": 25,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769393660.2193742,
+    "prev_hash": "a12217c90aafe3ee3ab9eb0370e957de858cd2c374c0d9a372051a54da1ad4aa",
+    "hash": "6f31556d980d9f7110e9999c866c397ff52194da5e3f77ce07fe1f27f307420f"
+  },
+  {
+    "index": 26,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769393660.2200224,
+    "prev_hash": "6f31556d980d9f7110e9999c866c397ff52194da5e3f77ce07fe1f27f307420f",
+    "hash": "3158075424e25ed97c1b9261208394318719d6f893ca7a43bea05b1b133d4df8"
+  },
+  {
+    "index": 27,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769393660.2204654,
+    "prev_hash": "3158075424e25ed97c1b9261208394318719d6f893ca7a43bea05b1b133d4df8",
+    "hash": "10d30597a91cb866680a78f7dce83f26ac008a53f2474b0cf67fe1b3013f643c"
+  },
+  {
+    "index": 28,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769393660.2209015,
+    "prev_hash": "10d30597a91cb866680a78f7dce83f26ac008a53f2474b0cf67fe1b3013f643c",
+    "hash": "7bc34110ba467d55119153390418b6b7f084996239731ab5d298b0847f2076f2"
+  },
+  {
+    "index": 29,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769393660.2214258,
+    "prev_hash": "7bc34110ba467d55119153390418b6b7f084996239731ab5d298b0847f2076f2",
+    "hash": "969725020add61f1cd281983b22fb4a2fb03708d3729640a80e72b3a1f6c284c"
+  },
+  {
+    "index": 30,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769393660.2218804,
+    "prev_hash": "969725020add61f1cd281983b22fb4a2fb03708d3729640a80e72b3a1f6c284c",
+    "hash": "ec7be4d3d558a0e496596ccd0314fb1cbad293b6c1709660df0302530add4225"
+  },
+  {
+    "index": 31,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769393660.2224233,
+    "prev_hash": "ec7be4d3d558a0e496596ccd0314fb1cbad293b6c1709660df0302530add4225",
+    "hash": "f71972e914f9ab0d843cbc8ee60371bbe4220f05b05813c9beb9d95ce10118b1"
+  },
+  {
+    "index": 32,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769394327.8521173,
+    "prev_hash": "f71972e914f9ab0d843cbc8ee60371bbe4220f05b05813c9beb9d95ce10118b1",
+    "hash": "b4aac609211156f33a82e3eefbe60d534934f367d56776ede817ff7562cf8665"
+  },
+  {
+    "index": 33,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769394327.852748,
+    "prev_hash": "b4aac609211156f33a82e3eefbe60d534934f367d56776ede817ff7562cf8665",
+    "hash": "f3883d3a704bdfbb96375ef1eee50cea8bf39b7a6cd8ef1b5c8c00868b6a78a7"
+  },
+  {
+    "index": 34,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769394327.8533132,
+    "prev_hash": "f3883d3a704bdfbb96375ef1eee50cea8bf39b7a6cd8ef1b5c8c00868b6a78a7",
+    "hash": "885f0abcc522bf6b7a3be25d27d4f015a452546d1f04b6cda2afe240fb9be7c5"
+  },
+  {
+    "index": 35,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769394327.853772,
+    "prev_hash": "885f0abcc522bf6b7a3be25d27d4f015a452546d1f04b6cda2afe240fb9be7c5",
+    "hash": "8e8ec8b4f45b3e2a3fd6468d8f289553ddbc55514ae272bf240a67d67357047a"
+  },
+  {
+    "index": 36,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769394327.8572721,
+    "prev_hash": "8e8ec8b4f45b3e2a3fd6468d8f289553ddbc55514ae272bf240a67d67357047a",
+    "hash": "df74b0bc802be681291e0e42470d65284202393e6302da6fd53020809501ae01"
+  },
+  {
+    "index": 37,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769394327.8577354,
+    "prev_hash": "df74b0bc802be681291e0e42470d65284202393e6302da6fd53020809501ae01",
+    "hash": "cda7c12748d9a2890c23e79897a97fa7021bd03fa950bdabcb66b1237bd701cf"
+  },
+  {
+    "index": 38,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769394327.8581831,
+    "prev_hash": "cda7c12748d9a2890c23e79897a97fa7021bd03fa950bdabcb66b1237bd701cf",
+    "hash": "350d9f69f0247336026e14259967df76f2bb7c443e010aea93b8176e2cd07af5"
+  },
+  {
+    "index": 39,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769394327.858685,
+    "prev_hash": "350d9f69f0247336026e14259967df76f2bb7c443e010aea93b8176e2cd07af5",
+    "hash": "4c5dd1572f4eb5b8197de49339a8f76921e6b85956df6c87b58b6ac246e954f5"
+  },
+  {
+    "index": 40,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769394327.8591127,
+    "prev_hash": "4c5dd1572f4eb5b8197de49339a8f76921e6b85956df6c87b58b6ac246e954f5",
+    "hash": "99da560b7e228e31a9151526a347f4da041b43e860d19d314fe0d68b7e7d2a97"
+  },
+  {
+    "index": 41,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769394327.8595319,
+    "prev_hash": "99da560b7e228e31a9151526a347f4da041b43e860d19d314fe0d68b7e7d2a97",
+    "hash": "e4e9c1eda2a2ba9cb942917ccc7881f3a48e7a393501243319f1c3e9457acc37"
+  },
+  {
+    "index": 42,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769394327.8599658,
+    "prev_hash": "e4e9c1eda2a2ba9cb942917ccc7881f3a48e7a393501243319f1c3e9457acc37",
+    "hash": "81edf6dac08e276843f13f4ada752eb439d80e2e71ba3710c299f919ef1d6e9c"
+  },
+  {
+    "index": 43,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769394327.8604715,
+    "prev_hash": "81edf6dac08e276843f13f4ada752eb439d80e2e71ba3710c299f919ef1d6e9c",
+    "hash": "df743c25fe9c45345c2cc74f8261eac1ac88ef6fbde32bfac6847bd57d00402d"
+  },
+  {
+    "index": 44,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769394361.46711,
+    "prev_hash": "df743c25fe9c45345c2cc74f8261eac1ac88ef6fbde32bfac6847bd57d00402d",
+    "hash": "4bc6b7a817c6eede71efe3ff9f4cbe7bd6fe26009a0c25e0962e2303f22cc8c8"
+  },
+  {
+    "index": 45,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769394361.4678535,
+    "prev_hash": "4bc6b7a817c6eede71efe3ff9f4cbe7bd6fe26009a0c25e0962e2303f22cc8c8",
+    "hash": "8e905ebbc73404a5244233616089c0bf927a0e0992dde9738a8867532a669db3"
+  },
+  {
+    "index": 46,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769394361.4779656,
+    "prev_hash": "8e905ebbc73404a5244233616089c0bf927a0e0992dde9738a8867532a669db3",
+    "hash": "c3e2a80f9c662aeb83fee6cc625d756c73399426138a9d7e766cc4272aea7e1c"
+  },
+  {
+    "index": 47,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769394361.478593,
+    "prev_hash": "c3e2a80f9c662aeb83fee6cc625d756c73399426138a9d7e766cc4272aea7e1c",
+    "hash": "92f393c0a42baff5ae3418ea2d7446518a0060efb1143e809507aab1ecc2c364"
+  },
+  {
+    "index": 48,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769394361.4826849,
+    "prev_hash": "92f393c0a42baff5ae3418ea2d7446518a0060efb1143e809507aab1ecc2c364",
+    "hash": "d36d3878ecf9ba7cae2ab4eefb1136190e3590f045f1300f711991631c13ad40"
+  },
+  {
+    "index": 49,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769394361.483208,
+    "prev_hash": "d36d3878ecf9ba7cae2ab4eefb1136190e3590f045f1300f711991631c13ad40",
+    "hash": "6c5a1e868b189dffa0a6e51e7553a58d223b45182545bd0e8b17e602d2600d74"
+  },
+  {
+    "index": 50,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769394361.4860032,
+    "prev_hash": "6c5a1e868b189dffa0a6e51e7553a58d223b45182545bd0e8b17e602d2600d74",
+    "hash": "1ecfaea800e38ec53ac87326a980f0ded189f3fc99a22c4495e68e2baee48b1b"
+  },
+  {
+    "index": 51,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769394361.4865193,
+    "prev_hash": "1ecfaea800e38ec53ac87326a980f0ded189f3fc99a22c4495e68e2baee48b1b",
+    "hash": "d6ab5962c047d9ee755704a9f12ccb97cf74315fb52b7412e07ae7792b19837e"
+  },
+  {
+    "index": 52,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769394361.4870224,
+    "prev_hash": "d6ab5962c047d9ee755704a9f12ccb97cf74315fb52b7412e07ae7792b19837e",
+    "hash": "268542e4f6c485c2e7cc5d670e11d6f69b71e5207f6fb79400c668ef3f1220db"
+  },
+  {
+    "index": 53,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769394361.4877322,
+    "prev_hash": "268542e4f6c485c2e7cc5d670e11d6f69b71e5207f6fb79400c668ef3f1220db",
+    "hash": "dfbf72798af2576f772ff3b7e072350994c840a45c900270f843fd75e751a1fa"
+  },
+  {
+    "index": 54,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769394361.488496,
+    "prev_hash": "dfbf72798af2576f772ff3b7e072350994c840a45c900270f843fd75e751a1fa",
+    "hash": "7c06c063d33dd54f55fe7d8aa767b268cb90607fafc2bf0a9cecb62c1bd93874"
+  },
+  {
+    "index": 55,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769394361.4891076,
+    "prev_hash": "7c06c063d33dd54f55fe7d8aa767b268cb90607fafc2bf0a9cecb62c1bd93874",
+    "hash": "d8a5b7eb8ecbd12056020b070b11ce81687818ad7e6ea338a25bcbe52cfd8f9b"
+  },
+  {
+    "index": 56,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769906656.9655848,
+    "prev_hash": "d8a5b7eb8ecbd12056020b070b11ce81687818ad7e6ea338a25bcbe52cfd8f9b",
+    "hash": "a3ff74b9c49fbc892ad1d8966019f611f646e21c8da6053dcd6ba2a1c0cca6fb"
+  },
+  {
+    "index": 57,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769906656.9666665,
+    "prev_hash": "a3ff74b9c49fbc892ad1d8966019f611f646e21c8da6053dcd6ba2a1c0cca6fb",
+    "hash": "7af4244c95c995a8a9bedf4c28f4bddc8c4378d0252f6bae6685337ecae4e998"
+  },
+  {
+    "index": 58,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1769906657.2954977,
+    "prev_hash": "7af4244c95c995a8a9bedf4c28f4bddc8c4378d0252f6bae6685337ecae4e998",
+    "hash": "80d8d5a33fa170bb9118c8e95b89a0395f463b32a868d468b7c5ad5d977689a3"
+  },
+  {
+    "index": 59,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769906657.2966168,
+    "prev_hash": "80d8d5a33fa170bb9118c8e95b89a0395f463b32a868d468b7c5ad5d977689a3",
+    "hash": "440fbf8d5ba546a7a411c4d47b634225eb37530e4a11151549d9c0c67cb74e48"
+  },
+  {
+    "index": 60,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769906657.6761303,
+    "prev_hash": "440fbf8d5ba546a7a411c4d47b634225eb37530e4a11151549d9c0c67cb74e48",
+    "hash": "c83e992e6976e96e131d6e167504a584b1c8ee12d6da43a3926270b7e803b7eb"
+  },
+  {
+    "index": 61,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1769906657.6959987,
+    "prev_hash": "c83e992e6976e96e131d6e167504a584b1c8ee12d6da43a3926270b7e803b7eb",
+    "hash": "4adf894d92827f208c7e1baef5b4db9a2882bff2ca0c8d649c1c3a2ebeca34bc"
+  },
+  {
+    "index": 62,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769906657.6967604,
+    "prev_hash": "4adf894d92827f208c7e1baef5b4db9a2882bff2ca0c8d649c1c3a2ebeca34bc",
+    "hash": "84000d091fe5651f6aebbee3c2a60762ead1b823c8f6c3b8b15dc72e232e042b"
+  },
+  {
+    "index": 63,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1769906657.6974502,
+    "prev_hash": "84000d091fe5651f6aebbee3c2a60762ead1b823c8f6c3b8b15dc72e232e042b",
+    "hash": "72ba05a86ea4f85496aee89da2e7da78d657f0bf271e50f36ec92142f86af3ff"
+  },
+  {
+    "index": 64,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1769906657.7193384,
+    "prev_hash": "72ba05a86ea4f85496aee89da2e7da78d657f0bf271e50f36ec92142f86af3ff",
+    "hash": "8c05732b22ae7f783850d311e3f0a042f5f32e7f00bdac487e2a03776f8a55b8"
+  },
+  {
+    "index": 65,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1769906657.720275,
+    "prev_hash": "8c05732b22ae7f783850d311e3f0a042f5f32e7f00bdac487e2a03776f8a55b8",
+    "hash": "cd96fbe19b4f0beb989983c69cb9819bd12a1baf47dbef01f14f8ff72595add6"
+  },
+  {
+    "index": 66,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769906657.7209978,
+    "prev_hash": "cd96fbe19b4f0beb989983c69cb9819bd12a1baf47dbef01f14f8ff72595add6",
+    "hash": "6d00f1fd1628102b4e6182b48ea3a31b2572a10942bb8732db221162510f9be0"
+  },
+  {
+    "index": 67,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1769906657.7216532,
+    "prev_hash": "6d00f1fd1628102b4e6182b48ea3a31b2572a10942bb8732db221162510f9be0",
+    "hash": "5421d40ab4679a62ed7edddffaa31f06d4ff588dd8c27a53bea28cc793621edc"
+  },
+  {
+    "index": 68,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769906657.7222853,
+    "prev_hash": "5421d40ab4679a62ed7edddffaa31f06d4ff588dd8c27a53bea28cc793621edc",
+    "hash": "6c318c2ea0fffd5db127a61d7e83aa8cd55cc6a1ed3fea82400b12ab0e195e19"
+  },
+  {
+    "index": 69,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1769906657.7228422,
+    "prev_hash": "6c318c2ea0fffd5db127a61d7e83aa8cd55cc6a1ed3fea82400b12ab0e195e19",
+    "hash": "daa689e7c4cc5598e5ffca6cf45ba981f606a98d7235055cd98a9da23c7bc280"
+  },
+  {
+    "index": 70,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1769906657.7280972,
+    "prev_hash": "daa689e7c4cc5598e5ffca6cf45ba981f606a98d7235055cd98a9da23c7bc280",
+    "hash": "47069a9973e4940b7470924424e34fe90996ab4f2f2427c20a06254eb487b2d6"
+  },
+  {
+    "index": 71,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1769906657.7288015,
+    "prev_hash": "47069a9973e4940b7470924424e34fe90996ab4f2f2427c20a06254eb487b2d6",
+    "hash": "b3121dd3ae750635bf5c3a9f0edccf39038b7c0f55438a147183d7df03c5cd79"
+  },
+  {
+    "index": 72,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1769906657.7294436,
+    "prev_hash": "b3121dd3ae750635bf5c3a9f0edccf39038b7c0f55438a147183d7df03c5cd79",
+    "hash": "d293f707e76bdb185f807c3d28dc1c444ab23b0247d5156e7b508844fb289078"
+  },
+  {
+    "index": 73,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1769906657.7301772,
+    "prev_hash": "d293f707e76bdb185f807c3d28dc1c444ab23b0247d5156e7b508844fb289078",
+    "hash": "9e1ff7e86335a203e922d284519eaa1170283f83a931049d7c430d527974dd0a"
+  },
+  {
+    "index": 74,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1769906657.7309322,
+    "prev_hash": "9e1ff7e86335a203e922d284519eaa1170283f83a931049d7c430d527974dd0a",
+    "hash": "1976e4144c396fada8ed18858f493baf9d33fb77832e8e18e021c63997efaf01"
+  },
+  {
+    "index": 75,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1769906657.7316535,
+    "prev_hash": "1976e4144c396fada8ed18858f493baf9d33fb77832e8e18e021c63997efaf01",
+    "hash": "150e8652e2514d574b03c3c157dc6c278cc72285434f9bb45ffd52f7af6d98c7"
+  },
+  {
+    "index": 76,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1769906657.7717483,
+    "prev_hash": "150e8652e2514d574b03c3c157dc6c278cc72285434f9bb45ffd52f7af6d98c7",
+    "hash": "4f41bd4452499d20ba35bfd5bd36023d8059afece7896e866c5a3759f6b1d106"
+  },
+  {
+    "index": 77,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1769906657.7725105,
+    "prev_hash": "4f41bd4452499d20ba35bfd5bd36023d8059afece7896e866c5a3759f6b1d106",
+    "hash": "fc6fd1feaed17bd579c038cb7f5e2544ace9588f280028416023db3cb426f526"
+  },
+  {
+    "index": 78,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769906657.7731807,
+    "prev_hash": "fc6fd1feaed17bd579c038cb7f5e2544ace9588f280028416023db3cb426f526",
+    "hash": "ebda5f1878474fcb18a6f914c1e70f4f5a0ed1a5e923bc18b08e76e75eb2d30c"
+  },
+  {
+    "index": 79,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769906658.2307162,
+    "prev_hash": "ebda5f1878474fcb18a6f914c1e70f4f5a0ed1a5e923bc18b08e76e75eb2d30c",
+    "hash": "bc77405385e5edb7265df9649eeb87d4269c7ee08a4a68abc2d22481ab5a8251"
+  },
+  {
+    "index": 80,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1769906658.2315786,
+    "prev_hash": "bc77405385e5edb7265df9649eeb87d4269c7ee08a4a68abc2d22481ab5a8251",
+    "hash": "5ee1ec46914af3ecdb9ad518bb4b6023da3b62338c6cac7a70b07120cdeb5149"
+  },
+  {
+    "index": 81,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1769906658.2524135,
+    "prev_hash": "5ee1ec46914af3ecdb9ad518bb4b6023da3b62338c6cac7a70b07120cdeb5149",
+    "hash": "3b97b1abd29e0a3c8dca9a230d4d96c9da50d5533a0da0cfdd4047060ff7d0c4"
+  },
+  {
+    "index": 82,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1769906658.253447,
+    "prev_hash": "3b97b1abd29e0a3c8dca9a230d4d96c9da50d5533a0da0cfdd4047060ff7d0c4",
+    "hash": "4e91317a95c034892dd0898c80d51efad895d9bcdecd62b15144fd762a47d9d7"
+  },
+  {
+    "index": 83,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769906658.2587125,
+    "prev_hash": "4e91317a95c034892dd0898c80d51efad895d9bcdecd62b15144fd762a47d9d7",
+    "hash": "d2cd1c324b87627dac52a1bc729c7808b6324e38fb469978b3a73d6e2bb80c7e"
+  },
+  {
+    "index": 84,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1769906658.259499,
+    "prev_hash": "d2cd1c324b87627dac52a1bc729c7808b6324e38fb469978b3a73d6e2bb80c7e",
+    "hash": "867b03f0f53fdcdac1b6360f9f5fca9bfe514b2380164ed899fb4431a21746b2"
+  },
+  {
+    "index": 85,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1769906658.2667913,
+    "prev_hash": "867b03f0f53fdcdac1b6360f9f5fca9bfe514b2380164ed899fb4431a21746b2",
+    "hash": "d8c693eb0cfc7d6eeb95c083debb1b163a7b01fcf2d099ea6db39ad77c2f8b1f"
+  },
+  {
+    "index": 86,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769906658.2676096,
+    "prev_hash": "d8c693eb0cfc7d6eeb95c083debb1b163a7b01fcf2d099ea6db39ad77c2f8b1f",
+    "hash": "081b2d9d4d2a2b9b8e5aa237e2b35a436328c4d2aa3ff69eabe028c9b3eec2b1"
+  },
+  {
+    "index": 87,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1769906658.2720528,
+    "prev_hash": "081b2d9d4d2a2b9b8e5aa237e2b35a436328c4d2aa3ff69eabe028c9b3eec2b1",
+    "hash": "1251425cdd4fe7b865db1cfd985cf2123b844972ee52ea097e00229d5ff0ecde"
+  },
+  {
+    "index": 88,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769906658.2730224,
+    "prev_hash": "1251425cdd4fe7b865db1cfd985cf2123b844972ee52ea097e00229d5ff0ecde",
+    "hash": "1f663d1083f24abfa600f3d509a19d7b217cb99e56389646e8f17c4ae5389391"
+  },
+  {
+    "index": 89,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769907740.658047,
+    "prev_hash": "1f663d1083f24abfa600f3d509a19d7b217cb99e56389646e8f17c4ae5389391",
+    "hash": "e944fe39ed77718da3129890a1a9d06bd0eae7c396d1188bd7f6499c5245fcf4"
+  },
+  {
+    "index": 90,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769907740.6590595,
+    "prev_hash": "e944fe39ed77718da3129890a1a9d06bd0eae7c396d1188bd7f6499c5245fcf4",
+    "hash": "8227c65db772294ccdcf56f70c2b918be40162ead23dbf9a19ccfe2b8d441e4a"
+  },
+  {
+    "index": 91,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1769907740.6597755,
+    "prev_hash": "8227c65db772294ccdcf56f70c2b918be40162ead23dbf9a19ccfe2b8d441e4a",
+    "hash": "3976e32d5ecf719b4cedd902ccb8226f1b582cbbacb878af24ced8f3970c7a77"
+  },
+  {
+    "index": 92,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769907740.6605158,
+    "prev_hash": "3976e32d5ecf719b4cedd902ccb8226f1b582cbbacb878af24ced8f3970c7a77",
+    "hash": "2b92fe8b2f26093e7d049076108ce15a45d1bb6c5e5affc7a5b5d16163892f26"
+  },
+  {
+    "index": 93,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769907740.661209,
+    "prev_hash": "2b92fe8b2f26093e7d049076108ce15a45d1bb6c5e5affc7a5b5d16163892f26",
+    "hash": "495948c6e578ac7b0490417536d00846c6d00cf137a89488627c7a9708c34320"
+  },
+  {
+    "index": 94,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1769907740.679678,
+    "prev_hash": "495948c6e578ac7b0490417536d00846c6d00cf137a89488627c7a9708c34320",
+    "hash": "5bb5ea6e506d6279b183c0a900d7b5b6ff4d646264b8f73c0cd6fde37fbe30e7"
+  },
+  {
+    "index": 95,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769907740.6805642,
+    "prev_hash": "5bb5ea6e506d6279b183c0a900d7b5b6ff4d646264b8f73c0cd6fde37fbe30e7",
+    "hash": "b972531d98b80ee6dddc8424f86b23db60c83e74e751e13c0911cb65bcc56375"
+  },
+  {
+    "index": 96,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1769907740.6812806,
+    "prev_hash": "b972531d98b80ee6dddc8424f86b23db60c83e74e751e13c0911cb65bcc56375",
+    "hash": "32aee4c3a2ec8887c93b878dc94cda932e2bad0f70beae3e5d2b674f6c486513"
+  },
+  {
+    "index": 97,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1769907740.6820047,
+    "prev_hash": "32aee4c3a2ec8887c93b878dc94cda932e2bad0f70beae3e5d2b674f6c486513",
+    "hash": "6d03f7b0a150efd287f31cfdb8df44495e53be2adf3136b44c5315bd81b3b891"
+  },
+  {
+    "index": 98,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1769907740.6827,
+    "prev_hash": "6d03f7b0a150efd287f31cfdb8df44495e53be2adf3136b44c5315bd81b3b891",
+    "hash": "7b47029287443bc3bb64726c555577a91c926d045b80169024ac61f5ce9e07c5"
+  },
+  {
+    "index": 99,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769907740.6833866,
+    "prev_hash": "7b47029287443bc3bb64726c555577a91c926d045b80169024ac61f5ce9e07c5",
+    "hash": "0682c5fc7fbb70b21f6c0c8b0c1c6e6c02f8653b880831f285df49d532d1add8"
+  },
+  {
+    "index": 100,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1769907740.684077,
+    "prev_hash": "0682c5fc7fbb70b21f6c0c8b0c1c6e6c02f8653b880831f285df49d532d1add8",
+    "hash": "5aada4010a15a7f2f13d18e819e5ac37e0a71f6e27889f58f4118a8f0b27b455"
+  },
+  {
+    "index": 101,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769907740.6848598,
+    "prev_hash": "5aada4010a15a7f2f13d18e819e5ac37e0a71f6e27889f58f4118a8f0b27b455",
+    "hash": "0ae6dcf62951f8080f9acf83e38704af8bc9ab6f01639def64d86d008acbb5f1"
+  },
+  {
+    "index": 102,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1769907740.6855628,
+    "prev_hash": "0ae6dcf62951f8080f9acf83e38704af8bc9ab6f01639def64d86d008acbb5f1",
+    "hash": "679e4d73472a390ff4f64b498902aa110dd22ef88b5827fd2c54c51d2c7c201a"
+  },
+  {
+    "index": 103,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1769907740.6863408,
+    "prev_hash": "679e4d73472a390ff4f64b498902aa110dd22ef88b5827fd2c54c51d2c7c201a",
+    "hash": "3dc0344eed217d976ae3feb1d209c01daf2e101c955864e6973f08abcac1dbf3"
+  },
+  {
+    "index": 104,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1769907740.687806,
+    "prev_hash": "3dc0344eed217d976ae3feb1d209c01daf2e101c955864e6973f08abcac1dbf3",
+    "hash": "69c61dfac38a3fd41e73c87312644ddf2d84c5fae651484700714cdfa5f422c5"
+  },
+  {
+    "index": 105,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1769907740.6973207,
+    "prev_hash": "69c61dfac38a3fd41e73c87312644ddf2d84c5fae651484700714cdfa5f422c5",
+    "hash": "e4ddd0c2e3d80846c15db176480ee2152289b9fa1c1d1993ba42e956b35b2ff3"
+  },
+  {
+    "index": 106,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1769907740.6984336,
+    "prev_hash": "e4ddd0c2e3d80846c15db176480ee2152289b9fa1c1d1993ba42e956b35b2ff3",
+    "hash": "a54190d63532bf43a1a39d1a1b4a0764d5110fbf6b87305703eff48f79cef87c"
+  },
+  {
+    "index": 107,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1769907740.6997662,
+    "prev_hash": "a54190d63532bf43a1a39d1a1b4a0764d5110fbf6b87305703eff48f79cef87c",
+    "hash": "609c5b495ed25d5b9da3c16f26d43d847d5a870fc9801e77609b7c4605ec9bc6"
+  },
+  {
+    "index": 108,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1769907740.7063437,
+    "prev_hash": "609c5b495ed25d5b9da3c16f26d43d847d5a870fc9801e77609b7c4605ec9bc6",
+    "hash": "4f5f6bbc15ad50387f0abb79261b47812c88a375139232d52d73325a5f5b68f6"
+  },
+  {
+    "index": 109,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1769907740.7073941,
+    "prev_hash": "4f5f6bbc15ad50387f0abb79261b47812c88a375139232d52d73325a5f5b68f6",
+    "hash": "f34315b24f8ba435e01cef6d74e25a53c972ecc2c0fcb283bd21a7cbc05d9b53"
+  },
+  {
+    "index": 110,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1769907740.7086637,
+    "prev_hash": "f34315b24f8ba435e01cef6d74e25a53c972ecc2c0fcb283bd21a7cbc05d9b53",
+    "hash": "a3cb72f5a3221b1323b7729f06eeb143ecbaca05d52b2b4768dd378daa654fb3"
+  },
+  {
+    "index": 111,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769907740.7100554,
+    "prev_hash": "a3cb72f5a3221b1323b7729f06eeb143ecbaca05d52b2b4768dd378daa654fb3",
+    "hash": "5b1c5d0e2dc8c5719afcb4ee752a13a80a95da203fcda8b97222a4c8664ae4b6"
+  },
+  {
+    "index": 112,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769907740.715719,
+    "prev_hash": "5b1c5d0e2dc8c5719afcb4ee752a13a80a95da203fcda8b97222a4c8664ae4b6",
+    "hash": "a525e9c1a63288a5461fd5020a3082e4a6634d936b1b2b02ea27c1b0676dff58"
+  },
+  {
+    "index": 113,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1769907740.7167327,
+    "prev_hash": "a525e9c1a63288a5461fd5020a3082e4a6634d936b1b2b02ea27c1b0676dff58",
+    "hash": "0df063c8db4c6dab0e3526ae695deaf6cde234b8306661a0faa9863d6246e1b6"
+  },
+  {
+    "index": 114,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1769907740.7176988,
+    "prev_hash": "0df063c8db4c6dab0e3526ae695deaf6cde234b8306661a0faa9863d6246e1b6",
+    "hash": "2c768184c7e265d66577595e7726419151c1209724c43bb7b215609c4627fffb"
+  },
+  {
+    "index": 115,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1769907740.7186222,
+    "prev_hash": "2c768184c7e265d66577595e7726419151c1209724c43bb7b215609c4627fffb",
+    "hash": "96dded48facd18afa9f1dfa3fddf92e25cab95c2b84a860a50d3026b86adf77c"
+  },
+  {
+    "index": 116,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769907740.7250624,
+    "prev_hash": "96dded48facd18afa9f1dfa3fddf92e25cab95c2b84a860a50d3026b86adf77c",
+    "hash": "80c4e78f9163d16646c4f16802374dd969185dcff35ca4b237ae56c580f265cf"
+  },
+  {
+    "index": 117,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1769907740.7262115,
+    "prev_hash": "80c4e78f9163d16646c4f16802374dd969185dcff35ca4b237ae56c580f265cf",
+    "hash": "233dc745d4351bd0b2d89d0cc6dd26cc4870861a6af1ee3478b3a4c22c183c39"
+  },
+  {
+    "index": 118,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1769907740.727229,
+    "prev_hash": "233dc745d4351bd0b2d89d0cc6dd26cc4870861a6af1ee3478b3a4c22c183c39",
+    "hash": "c10a27a5315c78fceb982fdb68586ea4d7938677eec51c6e450be33df29cd8c2"
+  },
+  {
+    "index": 119,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769907740.7287917,
+    "prev_hash": "c10a27a5315c78fceb982fdb68586ea4d7938677eec51c6e450be33df29cd8c2",
+    "hash": "e68414be2aaee8ff3d3bd661df7ef697e7558374c3d379831847223dfd0b9b56"
+  },
+  {
+    "index": 120,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1769907740.807129,
+    "prev_hash": "e68414be2aaee8ff3d3bd661df7ef697e7558374c3d379831847223dfd0b9b56",
+    "hash": "f7c18451603e1742f7556508c8e9580f1a190041a9b6a5ed0461b1b5a1833e00"
+  },
+  {
+    "index": 121,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769907740.8081448,
+    "prev_hash": "f7c18451603e1742f7556508c8e9580f1a190041a9b6a5ed0461b1b5a1833e00",
+    "hash": "202a5f1ee6859e19fe6d52ae922d0b18967ad2d58a9731801aa723de977764a6"
+  },
+  {
+    "index": 122,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1769958164.637652,
+    "prev_hash": "202a5f1ee6859e19fe6d52ae922d0b18967ad2d58a9731801aa723de977764a6",
+    "hash": "0ee907aae3ef796e0d83f9c896676bf8deb2e9d86497fe9eaa1e86bed4d10e64"
+  },
+  {
+    "index": 123,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1769958164.6390095,
+    "prev_hash": "0ee907aae3ef796e0d83f9c896676bf8deb2e9d86497fe9eaa1e86bed4d10e64",
+    "hash": "71ff0d9ac2723e04e00aa7e469c9b63f0c62eff7375af1290e3e0841c215c0d6"
+  },
+  {
+    "index": 124,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1769958164.93558,
+    "prev_hash": "71ff0d9ac2723e04e00aa7e469c9b63f0c62eff7375af1290e3e0841c215c0d6",
+    "hash": "71f3bb5f4d40565201576cce5c91d827f3f397570c0bf584fa7461fe36f29129"
+  },
+  {
+    "index": 125,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1769958164.9482467,
+    "prev_hash": "71f3bb5f4d40565201576cce5c91d827f3f397570c0bf584fa7461fe36f29129",
+    "hash": "e63c678ed2a32c322b903e9564ee2ad85f899ec96511cdc03be8d0e1d7ab9a51"
+  },
+  {
+    "index": 126,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1769958165.0870907,
+    "prev_hash": "e63c678ed2a32c322b903e9564ee2ad85f899ec96511cdc03be8d0e1d7ab9a51",
+    "hash": "a36e58f01b429aaca977b6f96dcc6369334955203d791315316518b4ea400b37"
+  },
+  {
+    "index": 127,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1769958165.106692,
+    "prev_hash": "a36e58f01b429aaca977b6f96dcc6369334955203d791315316518b4ea400b37",
+    "hash": "5c9dc0cbf98861b18683bcbe2ac69cb38f8aae235d1b42c4092be7f7d38d4b80"
+  },
+  {
+    "index": 128,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1769958165.1873446,
+    "prev_hash": "5c9dc0cbf98861b18683bcbe2ac69cb38f8aae235d1b42c4092be7f7d38d4b80",
+    "hash": "92ef43b601b2c1ef90913ba9cd0174c16bd0f06334d239f47cdae85952641a80"
+  },
+  {
+    "index": 129,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1769958165.1886387,
+    "prev_hash": "92ef43b601b2c1ef90913ba9cd0174c16bd0f06334d239f47cdae85952641a80",
+    "hash": "8ca370fae09e1ba48c67cc8e8ee8b172cd0f1b4a0bcbf8cc94e2eba42c7efcf2"
+  },
+  {
+    "index": 130,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1769958165.3639114,
+    "prev_hash": "8ca370fae09e1ba48c67cc8e8ee8b172cd0f1b4a0bcbf8cc94e2eba42c7efcf2",
+    "hash": "546b0e8ac0b06f1164685fd13122213711eaa919c866517d30011d7583eed5e4"
+  },
+  {
+    "index": 131,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1769958165.365323,
+    "prev_hash": "546b0e8ac0b06f1164685fd13122213711eaa919c866517d30011d7583eed5e4",
+    "hash": "8572db2dcb04afd2c889d106bcb8fb9ec57f005baf785aad294fbce06f173c9a"
+  },
+  {
+    "index": 132,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1769958165.458015,
+    "prev_hash": "8572db2dcb04afd2c889d106bcb8fb9ec57f005baf785aad294fbce06f173c9a",
+    "hash": "c6f8111f3f1054cdeb49552d98a66dbb3c957355d494925aef4bedf2265249dd"
+  },
+  {
+    "index": 133,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1769958165.47521,
+    "prev_hash": "c6f8111f3f1054cdeb49552d98a66dbb3c957355d494925aef4bedf2265249dd",
+    "hash": "c3b03dbd9efed32f9201e671cb7c0374ea42ff0212d1e40b5cb05c146e6c6063"
+  },
+  {
+    "index": 134,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1769958165.505734,
+    "prev_hash": "c3b03dbd9efed32f9201e671cb7c0374ea42ff0212d1e40b5cb05c146e6c6063",
+    "hash": "1ed6d549bb43a011e0fc33495eb1b36d43964f1dcd1488323894712d8173e0e7"
+  },
+  {
+    "index": 135,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1769958165.5097249,
+    "prev_hash": "1ed6d549bb43a011e0fc33495eb1b36d43964f1dcd1488323894712d8173e0e7",
+    "hash": "313b7c767fb68038ef709c4dbb952b770018225b9d11f99c778bfc51b995e7f1"
+  },
+  {
+    "index": 136,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1769958165.9348884,
+    "prev_hash": "313b7c767fb68038ef709c4dbb952b770018225b9d11f99c778bfc51b995e7f1",
+    "hash": "927899e923bfbe1c05a23568363c93713fb531a300212d1ffb2bf4ae0fc6fd16"
+  },
+  {
+    "index": 137,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1769958165.9359996,
+    "prev_hash": "927899e923bfbe1c05a23568363c93713fb531a300212d1ffb2bf4ae0fc6fd16",
+    "hash": "8d12d5eb3edde3c0149350f91d504a99e2f428acfca8249b526b1c96ee93dde7"
+  },
+  {
+    "index": 138,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1769958166.1002438,
+    "prev_hash": "8d12d5eb3edde3c0149350f91d504a99e2f428acfca8249b526b1c96ee93dde7",
+    "hash": "729a7b26bad2cec56f91bfde4820ee1b1aa8957cf109f9ce535600ce1fac7415"
+  },
+  {
+    "index": 139,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1769958166.1015334,
+    "prev_hash": "729a7b26bad2cec56f91bfde4820ee1b1aa8957cf109f9ce535600ce1fac7415",
+    "hash": "968f0533a3249e25334f74b5ad68ce4d9f2571a90e90f84e6651f7cda4bc1845"
+  },
+  {
+    "index": 140,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1769958166.458859,
+    "prev_hash": "968f0533a3249e25334f74b5ad68ce4d9f2571a90e90f84e6651f7cda4bc1845",
+    "hash": "7349f0fba06d48c9cda317603f0a7cb57755c4c1b7e8f6768d7d61b1c05e78e8"
+  },
+  {
+    "index": 141,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1769958166.459795,
+    "prev_hash": "7349f0fba06d48c9cda317603f0a7cb57755c4c1b7e8f6768d7d61b1c05e78e8",
+    "hash": "b4b75afd0f0914fc2b69fd72360856c35764702fcf5c82a06a06a40c5c65ab3d"
+  },
+  {
+    "index": 142,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1769958168.339356,
+    "prev_hash": "b4b75afd0f0914fc2b69fd72360856c35764702fcf5c82a06a06a40c5c65ab3d",
+    "hash": "9ab5b3129043b41cac020f6900db6e4a9e10d5a4f1bd690d69a9e7807255fd56"
+  },
+  {
+    "index": 143,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1769958168.3405087,
+    "prev_hash": "9ab5b3129043b41cac020f6900db6e4a9e10d5a4f1bd690d69a9e7807255fd56",
+    "hash": "6149e885d2654d9bb7b2d4a94e176eb0f341887fe070fe2a773d79af99955315"
+  },
+  {
+    "index": 144,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1769958168.816747,
+    "prev_hash": "6149e885d2654d9bb7b2d4a94e176eb0f341887fe070fe2a773d79af99955315",
+    "hash": "4400a308176181370053b665708f378211f22eac44c87b51214018db64b6d6a5"
+  },
+  {
+    "index": 145,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1769958168.8179379,
+    "prev_hash": "4400a308176181370053b665708f378211f22eac44c87b51214018db64b6d6a5",
+    "hash": "f7cc89620f3190b406dbf4246e5f47530ea8b36fa905b1713e2ec9a0f96070df"
+  },
+  {
+    "index": 146,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1769958169.3066,
+    "prev_hash": "f7cc89620f3190b406dbf4246e5f47530ea8b36fa905b1713e2ec9a0f96070df",
+    "hash": "66ea73ed893766587ea390986530258bf54cf50ee240170ab15a4855c4c013ed"
+  },
+  {
+    "index": 147,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1769958169.3078234,
+    "prev_hash": "66ea73ed893766587ea390986530258bf54cf50ee240170ab15a4855c4c013ed",
+    "hash": "7cd765e4ec9e59f1d6f72c82099558437d67b4dd43bf6ea2dc7e9f6ef428d0ee"
+  },
+  {
+    "index": 148,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1769958169.5043905,
+    "prev_hash": "7cd765e4ec9e59f1d6f72c82099558437d67b4dd43bf6ea2dc7e9f6ef428d0ee",
+    "hash": "64ae1cdffdff772d2eeb83c59f38116b81508eee44547a8b31e9555e535bbb95"
+  },
+  {
+    "index": 149,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1769958169.5575135,
+    "prev_hash": "64ae1cdffdff772d2eeb83c59f38116b81508eee44547a8b31e9555e535bbb95",
+    "hash": "01d2981f1426e1b02c7b999f88ddb5a748849258fce8058ae23141b5e194ed64"
+  },
+  {
+    "index": 150,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1769958170.2847416,
+    "prev_hash": "01d2981f1426e1b02c7b999f88ddb5a748849258fce8058ae23141b5e194ed64",
+    "hash": "23181e4eb1815a1a3462fa7d966ed76a17196a28195113ef2003d755923be939"
+  },
+  {
+    "index": 151,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1769958170.3653033,
+    "prev_hash": "23181e4eb1815a1a3462fa7d966ed76a17196a28195113ef2003d755923be939",
+    "hash": "c0d79f074953334a9f48ccce1324b7564ecae81663fc42d849592b17eb906040"
+  },
+  {
+    "index": 152,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1769958170.7557724,
+    "prev_hash": "c0d79f074953334a9f48ccce1324b7564ecae81663fc42d849592b17eb906040",
+    "hash": "36cd59e62e02ad6e8d91199ca901fe1fa67e4d88828e070fe4644755a00b1a40"
+  },
+  {
+    "index": 153,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1769958170.876373,
+    "prev_hash": "36cd59e62e02ad6e8d91199ca901fe1fa67e4d88828e070fe4644755a00b1a40",
+    "hash": "0673f2e51a08a2dba687e8a3d19e074a19670d46c1a159e0ae449526b98b3451"
+  },
+  {
+    "index": 154,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1769958171.2376885,
+    "prev_hash": "0673f2e51a08a2dba687e8a3d19e074a19670d46c1a159e0ae449526b98b3451",
+    "hash": "c1a31b9890dde04358b0d9714f42cb5e189ecc10e7ab3de21cf385e605fc32aa"
+  },
+  {
+    "index": 155,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1770022809.7165864,
+    "prev_hash": "c1a31b9890dde04358b0d9714f42cb5e189ecc10e7ab3de21cf385e605fc32aa",
+    "hash": "155b9c5237d1d762991e513ce6d0c94189536c372553e714a7f071c4ec666af2"
+  },
+  {
+    "index": 156,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1770022809.7227225,
+    "prev_hash": "155b9c5237d1d762991e513ce6d0c94189536c372553e714a7f071c4ec666af2",
+    "hash": "499e198fee0387efc9b14183fc8114dbeb85701c789628584c42637f5c005041"
+  },
+  {
+    "index": 157,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1770022809.7238352,
+    "prev_hash": "499e198fee0387efc9b14183fc8114dbeb85701c789628584c42637f5c005041",
+    "hash": "0a7194e61f8a14f914c17007e7d68daa3bf5bf73987728b561f67661378d1e2f"
+  },
+  {
+    "index": 158,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1770022809.7248945,
+    "prev_hash": "0a7194e61f8a14f914c17007e7d68daa3bf5bf73987728b561f67661378d1e2f",
+    "hash": "54fac41fe68ed96156157c41b28b9a3cbb5522eb2ff2aa52a74788300acfa702"
+  },
+  {
+    "index": 159,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1770022809.7258253,
+    "prev_hash": "54fac41fe68ed96156157c41b28b9a3cbb5522eb2ff2aa52a74788300acfa702",
+    "hash": "04209bfc28c6cb52c38dc96f66787a3c7383fc819fd26998bc3d41b83bfc98c1"
+  },
+  {
+    "index": 160,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1770022809.7445035,
+    "prev_hash": "04209bfc28c6cb52c38dc96f66787a3c7383fc819fd26998bc3d41b83bfc98c1",
+    "hash": "6233a144f572fe0cc3b656032c20ba4e328ce489f4712d8796d550dcb49fab76"
+  },
+  {
+    "index": 161,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1770022809.7456927,
+    "prev_hash": "6233a144f572fe0cc3b656032c20ba4e328ce489f4712d8796d550dcb49fab76",
+    "hash": "e3a6f3e749a62e9f692818ffeed48bb43d52f2b843859284863feb475439688e"
+  },
+  {
+    "index": 162,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1770022809.7466617,
+    "prev_hash": "e3a6f3e749a62e9f692818ffeed48bb43d52f2b843859284863feb475439688e",
+    "hash": "0522ecb013c9af369f2062e1fbb0191e65905b83974e70a0e0c05c088f369714"
+  },
+  {
+    "index": 163,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1770022809.7476525,
+    "prev_hash": "0522ecb013c9af369f2062e1fbb0191e65905b83974e70a0e0c05c088f369714",
+    "hash": "b0270e3fa3b1586f3134651691654e5befe4de0344482199a87c5e75c53996ee"
+  },
+  {
+    "index": 164,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1770022809.7486238,
+    "prev_hash": "b0270e3fa3b1586f3134651691654e5befe4de0344482199a87c5e75c53996ee",
+    "hash": "8b74fb83f403de56b2f8245d82aa35152db78f51f0e30b2cece836bc8704cbcf"
+  },
+  {
+    "index": 165,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1770022809.7496533,
+    "prev_hash": "8b74fb83f403de56b2f8245d82aa35152db78f51f0e30b2cece836bc8704cbcf",
+    "hash": "cee49ddbf983ca0eb84aed805355bf91e34ff542091925bf63400f4b0e2dc229"
+  },
+  {
+    "index": 166,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1770022809.7506592,
+    "prev_hash": "cee49ddbf983ca0eb84aed805355bf91e34ff542091925bf63400f4b0e2dc229",
+    "hash": "2ce4f943fcd4dd927a836df11312c0dd7ad0c6194a73b204bca50bc4c478032c"
+  },
+  {
+    "index": 167,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1770022809.7516146,
+    "prev_hash": "2ce4f943fcd4dd927a836df11312c0dd7ad0c6194a73b204bca50bc4c478032c",
+    "hash": "ee0f1177e67ce5a470c61e5fe1566fd8408f9b566088108ee16f308c757314ba"
+  },
+  {
+    "index": 168,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1770022809.7525523,
+    "prev_hash": "ee0f1177e67ce5a470c61e5fe1566fd8408f9b566088108ee16f308c757314ba",
+    "hash": "d0cf92193a5f64e940edf41a113db637f83c5e793675eefb745d8f8420040190"
+  },
+  {
+    "index": 169,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1770022809.753566,
+    "prev_hash": "d0cf92193a5f64e940edf41a113db637f83c5e793675eefb745d8f8420040190",
+    "hash": "5125246a46c7388b0711e2965c964a365bbba51e95fdd9ea587524bcc55e1fdd"
+  },
+  {
+    "index": 170,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1770022809.754566,
+    "prev_hash": "5125246a46c7388b0711e2965c964a365bbba51e95fdd9ea587524bcc55e1fdd",
+    "hash": "d16406005bbc2767f80ff515c1a1dbd5a6d91eed8f2ce93343532921fbea1cb0"
+  },
+  {
+    "index": 171,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1770022809.7555811,
+    "prev_hash": "d16406005bbc2767f80ff515c1a1dbd5a6d91eed8f2ce93343532921fbea1cb0",
+    "hash": "74a5f7507d4bc0ca77b2ba8e1feedb0b7de596bbacd83b26fdeaf227485363cf"
+  },
+  {
+    "index": 172,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1770022809.7566454,
+    "prev_hash": "74a5f7507d4bc0ca77b2ba8e1feedb0b7de596bbacd83b26fdeaf227485363cf",
+    "hash": "12089a22f8643d24ef58fc4239c5dd4b0c225b3175bca60acecb83cad29791c5"
+  },
+  {
+    "index": 173,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1770022809.7577078,
+    "prev_hash": "12089a22f8643d24ef58fc4239c5dd4b0c225b3175bca60acecb83cad29791c5",
+    "hash": "b55629ba13646aa8807e1675d52757812d0645d444c1349bf5d7c723c59b6631"
+  },
+  {
+    "index": 174,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1770022809.7586973,
+    "prev_hash": "b55629ba13646aa8807e1675d52757812d0645d444c1349bf5d7c723c59b6631",
+    "hash": "6b3d69ac2e5f3c88b2887357ae6d247f6aac56626f60e96f7eca855834553dde"
+  },
+  {
+    "index": 175,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1770022809.7597506,
+    "prev_hash": "6b3d69ac2e5f3c88b2887357ae6d247f6aac56626f60e96f7eca855834553dde",
+    "hash": "2e0134b5dc382ca607389845bb518acb19ae91fe476ddace38f0d1d75de327ec"
+  },
+  {
+    "index": 176,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1770022809.7608187,
+    "prev_hash": "2e0134b5dc382ca607389845bb518acb19ae91fe476ddace38f0d1d75de327ec",
+    "hash": "900d40d11db5af82cd18e756ee1524d8e72f6282f62e4cc5c5c8d02244d2fad6"
+  },
+  {
+    "index": 177,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1770022809.762243,
+    "prev_hash": "900d40d11db5af82cd18e756ee1524d8e72f6282f62e4cc5c5c8d02244d2fad6",
+    "hash": "043a465de19149efd3ca376b8aadc7a8248c7744a14e8b6139098103788d6843"
+  },
+  {
+    "index": 178,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1770022809.7847502,
+    "prev_hash": "043a465de19149efd3ca376b8aadc7a8248c7744a14e8b6139098103788d6843",
+    "hash": "9c421e56c950e320f7e38399dc926fadac62e04031cf7d31ad8befc7aef3c70f"
+  },
+  {
+    "index": 179,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1770022809.786174,
+    "prev_hash": "9c421e56c950e320f7e38399dc926fadac62e04031cf7d31ad8befc7aef3c70f",
+    "hash": "fcaa5c27cae11e8acafcf752d20894f50955eb0c50d7ad159307f24d3abca8ab"
+  },
+  {
+    "index": 180,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1770022809.7872386,
+    "prev_hash": "fcaa5c27cae11e8acafcf752d20894f50955eb0c50d7ad159307f24d3abca8ab",
+    "hash": "339c9556dc28a8a1f15b119c25ea811cc5a2b4c1af9c443de73271af25898728"
+  },
+  {
+    "index": 181,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1770022809.7882729,
+    "prev_hash": "339c9556dc28a8a1f15b119c25ea811cc5a2b4c1af9c443de73271af25898728",
+    "hash": "083abe439c26415d5e39df1f3e5c0a37ee1aa052e19e0ea171b20b5685dcc5f6"
+  },
+  {
+    "index": 182,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1770022809.7893355,
+    "prev_hash": "083abe439c26415d5e39df1f3e5c0a37ee1aa052e19e0ea171b20b5685dcc5f6",
+    "hash": "e12261d012293c47d1a31d76adeb5336530aa7c88e8cf03c27a791a99d2fe62f"
+  },
+  {
+    "index": 183,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1770022809.790381,
+    "prev_hash": "e12261d012293c47d1a31d76adeb5336530aa7c88e8cf03c27a791a99d2fe62f",
+    "hash": "13d94bd5222c15cf0aaf8063a3c3890029f302bf3b7991e2c8fa844d83a23e56"
+  },
+  {
+    "index": 184,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1770022809.791387,
+    "prev_hash": "13d94bd5222c15cf0aaf8063a3c3890029f302bf3b7991e2c8fa844d83a23e56",
+    "hash": "8880f05e18b95dae53014001f56942a64861c94a7c42c2f068bdbe27c2486bda"
+  },
+  {
+    "index": 185,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1770022809.7924287,
+    "prev_hash": "8880f05e18b95dae53014001f56942a64861c94a7c42c2f068bdbe27c2486bda",
+    "hash": "cf1764441b953a202842f7ce42f40883f3c413c51a2ec9e6eaf17608f55b950f"
+  },
+  {
+    "index": 186,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1770022809.793705,
+    "prev_hash": "cf1764441b953a202842f7ce42f40883f3c413c51a2ec9e6eaf17608f55b950f",
+    "hash": "575d0fa4b304ddfdaf097dab891bd0d98392819ea86b7a67f39616e22a9802bb"
+  },
+  {
+    "index": 187,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1770022809.794879,
+    "prev_hash": "575d0fa4b304ddfdaf097dab891bd0d98392819ea86b7a67f39616e22a9802bb",
+    "hash": "2fae328c3852bbc88cedf3abcf63811e287769a896cb9178b6ae0602b67f0fb0"
+  },
+  {
+    "index": 188,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1770109219.841123,
+    "prev_hash": "2fae328c3852bbc88cedf3abcf63811e287769a896cb9178b6ae0602b67f0fb0",
+    "hash": "6def4d0ddd06165cf89e544bdfbbd44ca2c401cde2b00342179f6ed968398361"
+  },
+  {
+    "index": 189,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1770109219.8427749,
+    "prev_hash": "6def4d0ddd06165cf89e544bdfbbd44ca2c401cde2b00342179f6ed968398361",
+    "hash": "6057a72647d5e6391e157dc6e7c056b9897694ab5030124d1f8b78388dc8c2ca"
+  },
+  {
+    "index": 190,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1770109219.8439696,
+    "prev_hash": "6057a72647d5e6391e157dc6e7c056b9897694ab5030124d1f8b78388dc8c2ca",
+    "hash": "79e3040e33dd1cee03aa5fb47bb57048ffe0636ce6a490889cb4877535196e3e"
+  },
+  {
+    "index": 191,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1770109219.8451335,
+    "prev_hash": "79e3040e33dd1cee03aa5fb47bb57048ffe0636ce6a490889cb4877535196e3e",
+    "hash": "8449712c6933e5d5b11a98d97dad631b48d58b272472c1450db6e84481a5648e"
+  },
+  {
+    "index": 192,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1770109219.846235,
+    "prev_hash": "8449712c6933e5d5b11a98d97dad631b48d58b272472c1450db6e84481a5648e",
+    "hash": "3f2917004583bccf156c447dd2746d308d908a480e97bfbb815e58329f79c29f"
+  },
+  {
+    "index": 193,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1770109219.865765,
+    "prev_hash": "3f2917004583bccf156c447dd2746d308d908a480e97bfbb815e58329f79c29f",
+    "hash": "eed7168a4ff5141707cd58bfbcea05ba9856b46247b94e1a1b8a520bb23a7ac5"
+  },
+  {
+    "index": 194,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1770109219.8670557,
+    "prev_hash": "eed7168a4ff5141707cd58bfbcea05ba9856b46247b94e1a1b8a520bb23a7ac5",
+    "hash": "7d2fa501fed35dc181dbd4d133245671663ec6c74ed1f856ba8d65989c77920e"
+  },
+  {
+    "index": 195,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1770109219.8681715,
+    "prev_hash": "7d2fa501fed35dc181dbd4d133245671663ec6c74ed1f856ba8d65989c77920e",
+    "hash": "43633a0900590a827c3707bcf985663488d4eb80f8412f760227f3fc96256f38"
+  },
+  {
+    "index": 196,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1770109219.869271,
+    "prev_hash": "43633a0900590a827c3707bcf985663488d4eb80f8412f760227f3fc96256f38",
+    "hash": "9189de5114f92e030c608bac5842d6368e8f5210be465325661b8860cd110c86"
+  },
+  {
+    "index": 197,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1770109219.8708277,
+    "prev_hash": "9189de5114f92e030c608bac5842d6368e8f5210be465325661b8860cd110c86",
+    "hash": "b854648cbf85d0133dfa13fbdebdb357bfafe81ea8cb8d497c7cbc112cff7d01"
+  },
+  {
+    "index": 198,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1770109219.8719678,
+    "prev_hash": "b854648cbf85d0133dfa13fbdebdb357bfafe81ea8cb8d497c7cbc112cff7d01",
+    "hash": "c4e84bc18a35df7fd5f040285777cf2a229a1ffe0b5c62f24700860e5c1019ec"
+  },
+  {
+    "index": 199,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1770109219.8730912,
+    "prev_hash": "c4e84bc18a35df7fd5f040285777cf2a229a1ffe0b5c62f24700860e5c1019ec",
+    "hash": "bfb05c4ecb03dd74143c6e522ecae50e26b4fa025ab2c2eef123b45967032261"
+  },
+  {
+    "index": 200,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1770109219.874178,
+    "prev_hash": "bfb05c4ecb03dd74143c6e522ecae50e26b4fa025ab2c2eef123b45967032261",
+    "hash": "beb97b8196b7b7b45aad3fa0af02b3e7a53d5120dc5f868d9be2850071c7838a"
+  },
+  {
+    "index": 201,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1770109219.8753157,
+    "prev_hash": "beb97b8196b7b7b45aad3fa0af02b3e7a53d5120dc5f868d9be2850071c7838a",
+    "hash": "397e853f441f517407d311db26117c1f8c6594f35f668e068cc5fcfd5fb029ee"
+  },
+  {
+    "index": 202,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1770109219.8764813,
+    "prev_hash": "397e853f441f517407d311db26117c1f8c6594f35f668e068cc5fcfd5fb029ee",
+    "hash": "926fae6d9adf8baa7253a723897fc4b513f5dee5aab4ce04775877fb656e3129"
+  },
+  {
+    "index": 203,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1770109219.8775926,
+    "prev_hash": "926fae6d9adf8baa7253a723897fc4b513f5dee5aab4ce04775877fb656e3129",
+    "hash": "d14615a7a70fd0e9cff963fde0d9480620696d0eed14aff0af18e298114ac191"
+  },
+  {
+    "index": 204,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1770109219.8788118,
+    "prev_hash": "d14615a7a70fd0e9cff963fde0d9480620696d0eed14aff0af18e298114ac191",
+    "hash": "7f456b41b0580164810369d650f18aa099c31670b66c5c6e5d571514fb4e0906"
+  },
+  {
+    "index": 205,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1770109219.8801243,
+    "prev_hash": "7f456b41b0580164810369d650f18aa099c31670b66c5c6e5d571514fb4e0906",
+    "hash": "7253b6265f70460fc6d153b91413cb3b2ac529f3977be522733ef9b38aa91f2b"
+  },
+  {
+    "index": 206,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1770109219.8813903,
+    "prev_hash": "7253b6265f70460fc6d153b91413cb3b2ac529f3977be522733ef9b38aa91f2b",
+    "hash": "33893afc2730cab81b673c3247a0843491f2635276c14261e1617547ca37ab4e"
+  },
+  {
+    "index": 207,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1770109219.8826623,
+    "prev_hash": "33893afc2730cab81b673c3247a0843491f2635276c14261e1617547ca37ab4e",
+    "hash": "1e188b13f693332cd18314524b11b11c4a04d61615ede415cb45057895ef5580"
+  },
+  {
+    "index": 208,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1770109219.8839095,
+    "prev_hash": "1e188b13f693332cd18314524b11b11c4a04d61615ede415cb45057895ef5580",
+    "hash": "71781d2153202cd38a5676b4561da3269c82bbe516180b4ea02331e4704e8b42"
+  },
+  {
+    "index": 209,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1770109219.8851452,
+    "prev_hash": "71781d2153202cd38a5676b4561da3269c82bbe516180b4ea02331e4704e8b42",
+    "hash": "b2b8056c1fff2f2698699adf9d30e019a73161802f05beef63ed72edada1f0bb"
+  },
+  {
+    "index": 210,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1770109219.8863351,
+    "prev_hash": "b2b8056c1fff2f2698699adf9d30e019a73161802f05beef63ed72edada1f0bb",
+    "hash": "9ea117e4cceecbd5395b4e42560209fa67b3821c89f4e94032c44a91cdd6a718"
+  },
+  {
+    "index": 211,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1770109219.8876038,
+    "prev_hash": "9ea117e4cceecbd5395b4e42560209fa67b3821c89f4e94032c44a91cdd6a718",
+    "hash": "9d17942187fe261fe8057149a52010bd8f685387f64c9578fa7370fe51e48ee9"
+  },
+  {
+    "index": 212,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1770109219.888847,
+    "prev_hash": "9d17942187fe261fe8057149a52010bd8f685387f64c9578fa7370fe51e48ee9",
+    "hash": "b4f9c8734ab37db39509b503a790e053ecb1aeae62348fbe0578fc5d5650ed55"
+  },
+  {
+    "index": 213,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1770109219.8900557,
+    "prev_hash": "b4f9c8734ab37db39509b503a790e053ecb1aeae62348fbe0578fc5d5650ed55",
+    "hash": "a3b488fbee9bce59b9f60954173b0265bc38e3af7e695b105920e83ae4eaf268"
+  },
+  {
+    "index": 214,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1770109219.891275,
+    "prev_hash": "a3b488fbee9bce59b9f60954173b0265bc38e3af7e695b105920e83ae4eaf268",
+    "hash": "5b0c0b5bd6eaeff33620fab185e9ef7323e8d0c2d227d0255bc5382f34fa4864"
+  },
+  {
+    "index": 215,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1770109219.8925195,
+    "prev_hash": "5b0c0b5bd6eaeff33620fab185e9ef7323e8d0c2d227d0255bc5382f34fa4864",
+    "hash": "261b812a185a56ae0cb21d2894649f215d5cdb53317d9ec7b053ce363d27f92e"
+  },
+  {
+    "index": 216,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1770109219.893814,
+    "prev_hash": "261b812a185a56ae0cb21d2894649f215d5cdb53317d9ec7b053ce363d27f92e",
+    "hash": "981f2d4147deecf397a7a3971af5ce22a0c16760b914ba49b23d75e069975780"
+  },
+  {
+    "index": 217,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1770109219.8950436,
+    "prev_hash": "981f2d4147deecf397a7a3971af5ce22a0c16760b914ba49b23d75e069975780",
+    "hash": "0c84d24e6e08342def5ec973765829c710abe986a1ce6bda6b957965cffec7a7"
+  },
+  {
+    "index": 218,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1770109219.8963242,
+    "prev_hash": "0c84d24e6e08342def5ec973765829c710abe986a1ce6bda6b957965cffec7a7",
+    "hash": "9a4e523c3aa0411f9d3b561792cfc8c32bc6c3ebb993c6babbcef01ff9046ae7"
+  },
+  {
+    "index": 219,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1770109219.8976367,
+    "prev_hash": "9a4e523c3aa0411f9d3b561792cfc8c32bc6c3ebb993c6babbcef01ff9046ae7",
+    "hash": "09c9a377f1c9a91fffd831d3453ad464d2963f49612d8a20519a6fc23ea70fa1"
+  },
+  {
+    "index": 220,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1770109219.898857,
+    "prev_hash": "09c9a377f1c9a91fffd831d3453ad464d2963f49612d8a20519a6fc23ea70fa1",
+    "hash": "23bb4a38d44d303ba57c8b3b05c82f437441ea474c07ff7172bb08b927dbd0a9"
+  },
+  {
+    "index": 221,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1770195740.9346461,
+    "prev_hash": "23bb4a38d44d303ba57c8b3b05c82f437441ea474c07ff7172bb08b927dbd0a9",
+    "hash": "18cce708fc724542527e368010cabf329e70c5cfffee0de85e292ce7a48d7292"
+  },
+  {
+    "index": 222,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1770195740.9368057,
+    "prev_hash": "18cce708fc724542527e368010cabf329e70c5cfffee0de85e292ce7a48d7292",
+    "hash": "2cac0b9f6a24b8614ce82de5bc76595981e18e4f7467d6584381a64ab1f47f8e"
+  },
+  {
+    "index": 223,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1770195740.9381266,
+    "prev_hash": "2cac0b9f6a24b8614ce82de5bc76595981e18e4f7467d6584381a64ab1f47f8e",
+    "hash": "7030841d691c89e30b8c8067215a702840d09d8ed7d71d5c6e6ec840a5adb183"
+  },
+  {
+    "index": 224,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1770195740.939359,
+    "prev_hash": "7030841d691c89e30b8c8067215a702840d09d8ed7d71d5c6e6ec840a5adb183",
+    "hash": "a1913afa78ae30321da83a50461fde11ca2ec265dd51ff542ce4df411a12e879"
+  },
+  {
+    "index": 225,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1770195740.940841,
+    "prev_hash": "a1913afa78ae30321da83a50461fde11ca2ec265dd51ff542ce4df411a12e879",
+    "hash": "40a6b1531efd253951d54aea901a6ed06da0f42ab9e2f06aa43521e6e57b46a6"
+  },
+  {
+    "index": 226,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1770195740.961279,
+    "prev_hash": "40a6b1531efd253951d54aea901a6ed06da0f42ab9e2f06aa43521e6e57b46a6",
+    "hash": "d3ce05f5049f838462d616aae3fb44415c4719cb12e9262d295e10e39bf5fff1"
+  },
+  {
+    "index": 227,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1770195740.9627008,
+    "prev_hash": "d3ce05f5049f838462d616aae3fb44415c4719cb12e9262d295e10e39bf5fff1",
+    "hash": "c7ef38ed4a150bdc8667d7e69b69656e794fbc96c75ed9293ff1b936641fe09b"
+  },
+  {
+    "index": 228,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1770195740.963925,
+    "prev_hash": "c7ef38ed4a150bdc8667d7e69b69656e794fbc96c75ed9293ff1b936641fe09b",
+    "hash": "ba7e6d82b899193281e123230426e235f4228f6b448eeba1a957de6b2bc443bc"
+  },
+  {
+    "index": 229,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1770195740.9652264,
+    "prev_hash": "ba7e6d82b899193281e123230426e235f4228f6b448eeba1a957de6b2bc443bc",
+    "hash": "baa69641ddc531614c01bbb8716a054036bc776e45f161344b3386ec882537b7"
+  },
+  {
+    "index": 230,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1770195740.9664483,
+    "prev_hash": "baa69641ddc531614c01bbb8716a054036bc776e45f161344b3386ec882537b7",
+    "hash": "6044196a8ac89c6870d7cf515c08e9351a8017f76a8281303ee54ad91bc3d585"
+  },
+  {
+    "index": 231,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1770195740.9684186,
+    "prev_hash": "6044196a8ac89c6870d7cf515c08e9351a8017f76a8281303ee54ad91bc3d585",
+    "hash": "28cc7aeb01493222123fa7db31b8491cb99d3faa9c353d3de9f15be4f2a79ecd"
+  },
+  {
+    "index": 232,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1770195740.969714,
+    "prev_hash": "28cc7aeb01493222123fa7db31b8491cb99d3faa9c353d3de9f15be4f2a79ecd",
+    "hash": "2ea9a1eecca0bd20c1f835b003ef67f456ced61d7cda58df8ceed6eec87d5c05"
+  },
+  {
+    "index": 233,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1770195740.9709766,
+    "prev_hash": "2ea9a1eecca0bd20c1f835b003ef67f456ced61d7cda58df8ceed6eec87d5c05",
+    "hash": "dc5e63a5524c00d1bb5eaf9c9cf91f6a0a1e85a5d204e801cf284062aa8ee17d"
+  },
+  {
+    "index": 234,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1770195740.9722688,
+    "prev_hash": "dc5e63a5524c00d1bb5eaf9c9cf91f6a0a1e85a5d204e801cf284062aa8ee17d",
+    "hash": "dc5350907ccddb2d04504e5b6e793cbeb53a58457ab925ae1105e882d32ea837"
+  },
+  {
+    "index": 235,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1770195740.973508,
+    "prev_hash": "dc5350907ccddb2d04504e5b6e793cbeb53a58457ab925ae1105e882d32ea837",
+    "hash": "bdafe15247c85e612c4d9aa7ee8eae92e3e2e6b4f7aaaedeb383fce9c4d04496"
+  },
+  {
+    "index": 236,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1770195740.974807,
+    "prev_hash": "bdafe15247c85e612c4d9aa7ee8eae92e3e2e6b4f7aaaedeb383fce9c4d04496",
+    "hash": "0a02e284fb2d7ddcfa267b1fd76c59fa16004bb6346647365d9160a80a05cd4c"
+  },
+  {
+    "index": 237,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1770195740.9761567,
+    "prev_hash": "0a02e284fb2d7ddcfa267b1fd76c59fa16004bb6346647365d9160a80a05cd4c",
+    "hash": "188b88a70707ea06e475b29f0a6fdcaccef3b71dff131c6b0f8f3ae36b0cfbba"
+  },
+  {
+    "index": 238,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1770195740.97749,
+    "prev_hash": "188b88a70707ea06e475b29f0a6fdcaccef3b71dff131c6b0f8f3ae36b0cfbba",
+    "hash": "540f72e627f2f972c3041d12b63ca1aa0c03defa2a2fbc0edaa42731861dfee8"
+  },
+  {
+    "index": 239,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1770195740.978775,
+    "prev_hash": "540f72e627f2f972c3041d12b63ca1aa0c03defa2a2fbc0edaa42731861dfee8",
+    "hash": "3df97542138541ad2a6dbfe5aeca89d16fa664c123a671d9cf21a9e6026adc55"
+  },
+  {
+    "index": 240,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1770195740.9800334,
+    "prev_hash": "3df97542138541ad2a6dbfe5aeca89d16fa664c123a671d9cf21a9e6026adc55",
+    "hash": "2d4da5993aec110476b27c6b32af7ded76352d1739c2830d0fe76a47fc1c9244"
+  },
+  {
+    "index": 241,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1770195740.9814017,
+    "prev_hash": "2d4da5993aec110476b27c6b32af7ded76352d1739c2830d0fe76a47fc1c9244",
+    "hash": "a0b057c3d05237ecb9965ef3d2ab066e2877318e072b5788fb2ad288d16f8e8f"
+  },
+  {
+    "index": 242,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1770195740.98277,
+    "prev_hash": "a0b057c3d05237ecb9965ef3d2ab066e2877318e072b5788fb2ad288d16f8e8f",
+    "hash": "6a6ccff56e294fc5af6f336f56e00f4d91ec8a44802f39f86b475fce3c3393ff"
+  },
+  {
+    "index": 243,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1770195740.9843144,
+    "prev_hash": "6a6ccff56e294fc5af6f336f56e00f4d91ec8a44802f39f86b475fce3c3393ff",
+    "hash": "0411538f7ac9effee1340961f9025e93797556281fa37eab385c900889b95b3e"
+  },
+  {
+    "index": 244,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1770195740.9860976,
+    "prev_hash": "0411538f7ac9effee1340961f9025e93797556281fa37eab385c900889b95b3e",
+    "hash": "7cb5a0cbb9e7a7b04828d953d548a862f970f5de195c2f87075dbc4cd8102329"
+  },
+  {
+    "index": 245,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1770195740.9877176,
+    "prev_hash": "7cb5a0cbb9e7a7b04828d953d548a862f970f5de195c2f87075dbc4cd8102329",
+    "hash": "bde38f6997be811bd972739c33af7e6e17e1791458229fa836ab3edff71e2dca"
+  },
+  {
+    "index": 246,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1770195740.989436,
+    "prev_hash": "bde38f6997be811bd972739c33af7e6e17e1791458229fa836ab3edff71e2dca",
+    "hash": "bb23287d00a564cec293723d0fb9cc96bd0080ce48a48510754854a5644ec9f9"
+  },
+  {
+    "index": 247,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1770195740.9910352,
+    "prev_hash": "bb23287d00a564cec293723d0fb9cc96bd0080ce48a48510754854a5644ec9f9",
+    "hash": "4753d15f09976ee0b7b2c81fd90ff16bfd8d4c922b7005ed5ed0891a070c205b"
+  },
+  {
+    "index": 248,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1770195740.9927764,
+    "prev_hash": "4753d15f09976ee0b7b2c81fd90ff16bfd8d4c922b7005ed5ed0891a070c205b",
+    "hash": "552336084a70c28d749c2e6c8dc2f2e9f91cb1b53037ad3a39e9e3271ee3666b"
+  },
+  {
+    "index": 249,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1770195740.994429,
+    "prev_hash": "552336084a70c28d749c2e6c8dc2f2e9f91cb1b53037ad3a39e9e3271ee3666b",
+    "hash": "ed4c480eaca46d867eceadf6e505606e9d1ede7be9053f5dbcf954e4fc5b39f3"
+  },
+  {
+    "index": 250,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1770195740.9960191,
+    "prev_hash": "ed4c480eaca46d867eceadf6e505606e9d1ede7be9053f5dbcf954e4fc5b39f3",
+    "hash": "7f254db20adf0099aed913253083de6fdb0783ceca8bbfb1660d60dda377f700"
+  },
+  {
+    "index": 251,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1770195740.9979959,
+    "prev_hash": "7f254db20adf0099aed913253083de6fdb0783ceca8bbfb1660d60dda377f700",
+    "hash": "b29531139ced8e3585aba37383b8eefcb2aaa51f5950abae08d1c2025d1d9f6b"
+  },
+  {
+    "index": 252,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1770195740.9997277,
+    "prev_hash": "b29531139ced8e3585aba37383b8eefcb2aaa51f5950abae08d1c2025d1d9f6b",
+    "hash": "8fbfe36292d14ec222dff17fc45315e2dbbbea02c8e516846848a12f763908b1"
+  },
+  {
+    "index": 253,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1770195741.0014763,
+    "prev_hash": "8fbfe36292d14ec222dff17fc45315e2dbbbea02c8e516846848a12f763908b1",
+    "hash": "88bf6399c78174d083079928d5e83fc35955896bd0c6e1f61ebb43b6d63ee56c"
+  },
+  {
+    "index": 254,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1770282326.6188169,
+    "prev_hash": "88bf6399c78174d083079928d5e83fc35955896bd0c6e1f61ebb43b6d63ee56c",
+    "hash": "46d5e57576069cd95032635bdb25292b2d7a63d8621d18dff9e8cb13209c88c8"
+  },
+  {
+    "index": 255,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1770282326.622729,
+    "prev_hash": "46d5e57576069cd95032635bdb25292b2d7a63d8621d18dff9e8cb13209c88c8",
+    "hash": "be2f28514a13de098ca4c3422bac96ed70bfe68ebba9ddbdf1a0f84cb4e3a258"
+  },
+  {
+    "index": 256,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1770282326.6254354,
+    "prev_hash": "be2f28514a13de098ca4c3422bac96ed70bfe68ebba9ddbdf1a0f84cb4e3a258",
+    "hash": "450130a043fdb79847a8014092e0a3e1e41e2d3a98ac192c2cf4523174062476"
+  },
+  {
+    "index": 257,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1770282326.6276891,
+    "prev_hash": "450130a043fdb79847a8014092e0a3e1e41e2d3a98ac192c2cf4523174062476",
+    "hash": "38c6e159197f5f0695278aa9359295df9f6093719bb3bb66d5a61c48b4fba779"
+  },
+  {
+    "index": 258,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1770282326.6390965,
+    "prev_hash": "38c6e159197f5f0695278aa9359295df9f6093719bb3bb66d5a61c48b4fba779",
+    "hash": "003add02de1dfa47ce4e692e1411c7e04fdafeaff9988ba172238e0fd1fcd94e"
+  },
+  {
+    "index": 259,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1770282326.6704013,
+    "prev_hash": "003add02de1dfa47ce4e692e1411c7e04fdafeaff9988ba172238e0fd1fcd94e",
+    "hash": "8870653ea4f274517ac57a90b4534f594f75e60378e665609f326339432efa37"
+  },
+  {
+    "index": 260,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1770282326.672683,
+    "prev_hash": "8870653ea4f274517ac57a90b4534f594f75e60378e665609f326339432efa37",
+    "hash": "5ffc06889ddb6d42ea3557bba0d40ff04a38d7510f9a4035d000a0b0927258df"
+  },
+  {
+    "index": 261,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1770282326.7009563,
+    "prev_hash": "5ffc06889ddb6d42ea3557bba0d40ff04a38d7510f9a4035d000a0b0927258df",
+    "hash": "d1afeba8fbd93502f0c03dc796d0bd8b3e230bf7f4f528ec2fb1959e18230d95"
+  },
+  {
+    "index": 262,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1770282326.703166,
+    "prev_hash": "d1afeba8fbd93502f0c03dc796d0bd8b3e230bf7f4f528ec2fb1959e18230d95",
+    "hash": "71bc61ce7b7e57a20ff7eed5795f640addc3dcea62dec1ee06622db6b1c33b69"
+  },
+  {
+    "index": 263,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1770282326.7054996,
+    "prev_hash": "71bc61ce7b7e57a20ff7eed5795f640addc3dcea62dec1ee06622db6b1c33b69",
+    "hash": "2d9473e70b550a13ec3a24e89968288d9c63fc61f6d94cca148fca8d01030eb0"
+  },
+  {
+    "index": 264,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1770282326.7077274,
+    "prev_hash": "2d9473e70b550a13ec3a24e89968288d9c63fc61f6d94cca148fca8d01030eb0",
+    "hash": "f8af284851b7eae05b07f1012b0aca6a832deb5d0fa8d7904014723e3b7c5d38"
+  },
+  {
+    "index": 265,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1770282326.7096786,
+    "prev_hash": "f8af284851b7eae05b07f1012b0aca6a832deb5d0fa8d7904014723e3b7c5d38",
+    "hash": "fd7d5306a3d20c71a56cdd248a1cfa913181cdcf6d62144f64de7eb7a37663e0"
+  },
+  {
+    "index": 266,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1770282326.7114255,
+    "prev_hash": "fd7d5306a3d20c71a56cdd248a1cfa913181cdcf6d62144f64de7eb7a37663e0",
+    "hash": "652aba1d1e0382f31e27f10351eed6c6599ae260d6c0db308cd7592aa2f1e667"
+  },
+  {
+    "index": 267,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1770282326.716271,
+    "prev_hash": "652aba1d1e0382f31e27f10351eed6c6599ae260d6c0db308cd7592aa2f1e667",
+    "hash": "5bb27e1ed7770090f2f194a93ad1e458d12b3a1d35ef2f0c2394a0252328b7da"
+  },
+  {
+    "index": 268,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1770282326.718432,
+    "prev_hash": "5bb27e1ed7770090f2f194a93ad1e458d12b3a1d35ef2f0c2394a0252328b7da",
+    "hash": "564d05deebb3014e8415ea2b20f472cdb7fcfc3d1a8eeb043dd5ae386ba1890b"
+  },
+  {
+    "index": 269,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1770282326.7206833,
+    "prev_hash": "564d05deebb3014e8415ea2b20f472cdb7fcfc3d1a8eeb043dd5ae386ba1890b",
+    "hash": "1fb11c46126ea025c53302ea1bb17e2354b88fb438e2dd81b293637dbf7bf604"
+  },
+  {
+    "index": 270,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1770282326.7226858,
+    "prev_hash": "1fb11c46126ea025c53302ea1bb17e2354b88fb438e2dd81b293637dbf7bf604",
+    "hash": "6028f51e018257081b242203488181a87a4eeac7e74f1a51229aeea7316e1007"
+  },
+  {
+    "index": 271,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1770282326.7245998,
+    "prev_hash": "6028f51e018257081b242203488181a87a4eeac7e74f1a51229aeea7316e1007",
+    "hash": "efe8f39ecb8cc10757e76413fa58a1f0bfd773913c24db27b502e84ffe91afcb"
+  },
+  {
+    "index": 272,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1770282326.726333,
+    "prev_hash": "efe8f39ecb8cc10757e76413fa58a1f0bfd773913c24db27b502e84ffe91afcb",
+    "hash": "058ba6021298d976390770dd6a3140412cf34f58de7f9c89c7866f0f8709fedd"
+  },
+  {
+    "index": 273,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1770282326.7280426,
+    "prev_hash": "058ba6021298d976390770dd6a3140412cf34f58de7f9c89c7866f0f8709fedd",
+    "hash": "a74aa9297179d28725e4005299f6e77792c8cfbd0d2cd9608c359988d7830ac4"
+  },
+  {
+    "index": 274,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1770282326.7300763,
+    "prev_hash": "a74aa9297179d28725e4005299f6e77792c8cfbd0d2cd9608c359988d7830ac4",
+    "hash": "4a44eaf59bc56d8d696736b78075dafde783a56576aff3a7788ddcc455be7ab2"
+  },
+  {
+    "index": 275,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1770282326.7688804,
+    "prev_hash": "4a44eaf59bc56d8d696736b78075dafde783a56576aff3a7788ddcc455be7ab2",
+    "hash": "7d1158d5abe60a9a9bddd1c84f6fb12c63ba094f5842fd8996556f22a637c155"
+  },
+  {
+    "index": 276,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1770282326.7709796,
+    "prev_hash": "7d1158d5abe60a9a9bddd1c84f6fb12c63ba094f5842fd8996556f22a637c155",
+    "hash": "2826f7594e644f4b1640a35b8568a6074d6d125252dc5ed0ac92089c2fdc16a6"
+  },
+  {
+    "index": 277,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1770282326.772918,
+    "prev_hash": "2826f7594e644f4b1640a35b8568a6074d6d125252dc5ed0ac92089c2fdc16a6",
+    "hash": "1767b6f66112289b3cf68f5f6c32d3e03014d4327e63c7c7b56503ee9fdc186c"
+  },
+  {
+    "index": 278,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1770282326.7747881,
+    "prev_hash": "1767b6f66112289b3cf68f5f6c32d3e03014d4327e63c7c7b56503ee9fdc186c",
+    "hash": "261c864f31789c6f81b9c7c02d59db98a53f4c97951b74444088efa36f4d540d"
+  },
+  {
+    "index": 279,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1770282326.7765927,
+    "prev_hash": "261c864f31789c6f81b9c7c02d59db98a53f4c97951b74444088efa36f4d540d",
+    "hash": "720b8fd98f8260a1996d67f7f410fcfd99bf9853641ce7061da16beadd4b0efe"
+  },
+  {
+    "index": 280,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1770282326.7784874,
+    "prev_hash": "720b8fd98f8260a1996d67f7f410fcfd99bf9853641ce7061da16beadd4b0efe",
+    "hash": "c84f6aa8b98dd15abc0270e93027f22e67b03c33c03f26d2834d96a8d90fb3ba"
+  },
+  {
+    "index": 281,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1770282326.7804933,
+    "prev_hash": "c84f6aa8b98dd15abc0270e93027f22e67b03c33c03f26d2834d96a8d90fb3ba",
+    "hash": "984351db7490fe29e7bc679261e41ccb66c6021997fad51fb33083af8dce9187"
+  },
+  {
+    "index": 282,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1770282326.7839258,
+    "prev_hash": "984351db7490fe29e7bc679261e41ccb66c6021997fad51fb33083af8dce9187",
+    "hash": "1d0959fd5693a742645d4fc64ea1abf69d26bdc0b2b3850805792ccf9f568510"
+  },
+  {
+    "index": 283,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1770282326.7859478,
+    "prev_hash": "1d0959fd5693a742645d4fc64ea1abf69d26bdc0b2b3850805792ccf9f568510",
+    "hash": "f8b37bcdb7f614cbe9cfb379c26a9b86c5d22a5b959c43a1ee81750e62ce96b3"
+  },
+  {
+    "index": 284,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1770282326.7882717,
+    "prev_hash": "f8b37bcdb7f614cbe9cfb379c26a9b86c5d22a5b959c43a1ee81750e62ce96b3",
+    "hash": "5b59ec672a088c9a9ca8aefc431cedf373bbb10497108a2369270a485a716015"
+  },
+  {
+    "index": 285,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1770282326.7910593,
+    "prev_hash": "5b59ec672a088c9a9ca8aefc431cedf373bbb10497108a2369270a485a716015",
+    "hash": "416e997bff19ebbdb7a57241995e396803e181e19846663b63c255564c2833bd"
+  },
+  {
+    "index": 286,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1770282326.7930117,
+    "prev_hash": "416e997bff19ebbdb7a57241995e396803e181e19846663b63c255564c2833bd",
+    "hash": "0579d1ba41803a93e3ac39daedb6d4ded748381230ba5c2269c1fe0b8724ffcf"
+  },
+  {
+    "index": 287,
+    "organ": "backup",
+    "tier": "P0",
+    "timestamp": 1770368685.2627075,
+    "prev_hash": "0579d1ba41803a93e3ac39daedb6d4ded748381230ba5c2269c1fe0b8724ffcf",
+    "hash": "ee4188f0a2cd6594a9e9eac89418917206a625311f8fdb84d7e7d96173fa811d"
+  },
+  {
+    "index": 288,
+    "organ": "epic",
+    "tier": "P0",
+    "timestamp": 1770368685.2718246,
+    "prev_hash": "ee4188f0a2cd6594a9e9eac89418917206a625311f8fdb84d7e7d96173fa811d",
+    "hash": "19c7c574c11944a37093f0ff209784c9912a98979b4ae7b42cf822e025fed2b1"
+  },
+  {
+    "index": 289,
+    "organ": "guardian",
+    "tier": "P0",
+    "timestamp": 1770368685.2738988,
+    "prev_hash": "19c7c574c11944a37093f0ff209784c9912a98979b4ae7b42cf822e025fed2b1",
+    "hash": "7583a34dde2938d389b1aeca633bcc991d99cd8321fcda31b0f10960df80b753"
+  },
+  {
+    "index": 290,
+    "organ": "imprivata",
+    "tier": "P0",
+    "timestamp": 1770368685.283358,
+    "prev_hash": "7583a34dde2938d389b1aeca633bcc991d99cd8321fcda31b0f10960df80b753",
+    "hash": "0558a7182afc5d1c23ac5fa6f19f17d6f65d50dab8ef6fc025493a6779992da8"
+  },
+  {
+    "index": 291,
+    "organ": "quarantine",
+    "tier": "P0",
+    "timestamp": 1770368685.285473,
+    "prev_hash": "0558a7182afc5d1c23ac5fa6f19f17d6f65d50dab8ef6fc025493a6779992da8",
+    "hash": "514755c2a8f7bdd311459e21caf1440d892a29f497c4077dc1524a34a8c799ba"
+  },
+  {
+    "index": 292,
+    "organ": "audit",
+    "tier": "P1",
+    "timestamp": 1770368685.3061633,
+    "prev_hash": "514755c2a8f7bdd311459e21caf1440d892a29f497c4077dc1524a34a8c799ba",
+    "hash": "2fd040e0997757a8d5a8400ba88d4a015b780ff1d5194d262feb231f1939f2e8"
+  },
+  {
+    "index": 293,
+    "organ": "audit_log",
+    "tier": "P1",
+    "timestamp": 1770368685.3082898,
+    "prev_hash": "2fd040e0997757a8d5a8400ba88d4a015b780ff1d5194d262feb231f1939f2e8",
+    "hash": "d754fc574d9f0ed1e13c77a7d18a742746ec0dc6569aeb5bdf71cda7ace9947c"
+  },
+  {
+    "index": 294,
+    "organ": "auth",
+    "tier": "P1",
+    "timestamp": 1770368685.335431,
+    "prev_hash": "d754fc574d9f0ed1e13c77a7d18a742746ec0dc6569aeb5bdf71cda7ace9947c",
+    "hash": "c56c4dc74f010b8e2c5315cf05b9dd30af94b546eb8ea8ce6c9b866fca4e46f5"
+  },
+  {
+    "index": 295,
+    "organ": "bios",
+    "tier": "P1",
+    "timestamp": 1770368685.3375978,
+    "prev_hash": "c56c4dc74f010b8e2c5315cf05b9dd30af94b546eb8ea8ce6c9b866fca4e46f5",
+    "hash": "726ab5721bc98737f903cdb01ab9c4d0eefb90a0afa08675d413fd4a714c67e1"
+  },
+  {
+    "index": 296,
+    "organ": "canary",
+    "tier": "P1",
+    "timestamp": 1770368685.3396206,
+    "prev_hash": "726ab5721bc98737f903cdb01ab9c4d0eefb90a0afa08675d413fd4a714c67e1",
+    "hash": "28d0b681b6d7a98ab48f849468c87632abf2809ecd4b27aee6ee4fe91fd634f8"
+  },
+  {
+    "index": 297,
+    "organ": "cockpit_backend",
+    "tier": "P1",
+    "timestamp": 1770368685.3416066,
+    "prev_hash": "28d0b681b6d7a98ab48f849468c87632abf2809ecd4b27aee6ee4fe91fd634f8",
+    "hash": "f178449a497aecc174f178bf58f4686075c7b49fe2423bd5dabeefeb5b53fcc5"
+  },
+  {
+    "index": 298,
+    "organ": "cortex",
+    "tier": "P1",
+    "timestamp": 1770368685.343646,
+    "prev_hash": "f178449a497aecc174f178bf58f4686075c7b49fe2423bd5dabeefeb5b53fcc5",
+    "hash": "2534fded33f940b3ff07d53f97ed611f074de74dfff23c1043abb6a0758a33e5"
+  },
+  {
+    "index": 299,
+    "organ": "dlp",
+    "tier": "P1",
+    "timestamp": 1770368685.3456032,
+    "prev_hash": "2534fded33f940b3ff07d53f97ed611f074de74dfff23c1043abb6a0758a33e5",
+    "hash": "a754946aee68d4a8de81405c43d7f255fdf30f7df862a004fc9d87c02799c59c"
+  },
+  {
+    "index": 300,
+    "organ": "engine",
+    "tier": "P1",
+    "timestamp": 1770368685.347569,
+    "prev_hash": "a754946aee68d4a8de81405c43d7f255fdf30f7df862a004fc9d87c02799c59c",
+    "hash": "cd40dc3ff135c363e50bd63018d1a2a61703861cea69472a92c3c9e37b7b10a7"
+  },
+  {
+    "index": 301,
+    "organ": "fhir",
+    "tier": "P1",
+    "timestamp": 1770368685.3495011,
+    "prev_hash": "cd40dc3ff135c363e50bd63018d1a2a61703861cea69472a92c3c9e37b7b10a7",
+    "hash": "2782187ef2d5b892d8e78144a8e9c039f32a7fa5d5c4bc955fa94b51b88ed53a"
+  },
+  {
+    "index": 302,
+    "organ": "fingerprint",
+    "tier": "P1",
+    "timestamp": 1770368685.351534,
+    "prev_hash": "2782187ef2d5b892d8e78144a8e9c039f32a7fa5d5c4bc955fa94b51b88ed53a",
+    "hash": "97bbea43a692044c0033c03d0ff8a8bb63e91407812bdb9ea68960e99577a042"
+  },
+  {
+    "index": 303,
+    "organ": "firewall",
+    "tier": "P1",
+    "timestamp": 1770368685.3535347,
+    "prev_hash": "97bbea43a692044c0033c03d0ff8a8bb63e91407812bdb9ea68960e99577a042",
+    "hash": "5cdc29a3541a4526fd8ba0bdfa78527febca674d799d0d67e72b16bf963ed599"
+  },
+  {
+    "index": 304,
+    "organ": "forensic",
+    "tier": "P1",
+    "timestamp": 1770368685.355499,
+    "prev_hash": "5cdc29a3541a4526fd8ba0bdfa78527febca674d799d0d67e72b16bf963ed599",
+    "hash": "b62989c0004e03ff8160318c4152a6064c0285bf05b59e0d6ab3980536937bc7"
+  },
+  {
+    "index": 305,
+    "organ": "hl7",
+    "tier": "P1",
+    "timestamp": 1770368685.357562,
+    "prev_hash": "b62989c0004e03ff8160318c4152a6064c0285bf05b59e0d6ab3980536937bc7",
+    "hash": "d003c6999cef328dad4779ef09fe8532b214be18bc51f247eb3f8b634f01ffdb"
+  },
+  {
+    "index": 306,
+    "organ": "hospital",
+    "tier": "P1",
+    "timestamp": 1770368685.3595994,
+    "prev_hash": "d003c6999cef328dad4779ef09fe8532b214be18bc51f247eb3f8b634f01ffdb",
+    "hash": "babf3e851bfcb4ae70793ecaf55a8cfc26c7a2e5decca7f1cc8c771586f7724c"
+  },
+  {
+    "index": 307,
+    "organ": "init",
+    "tier": "P1",
+    "timestamp": 1770368685.3616216,
+    "prev_hash": "babf3e851bfcb4ae70793ecaf55a8cfc26c7a2e5decca7f1cc8c771586f7724c",
+    "hash": "3733ec779236c2794225040ea58f06edd63ecbbdaa19ee619fc2fb46ee7a5444"
+  },
+  {
+    "index": 308,
+    "organ": "keystore",
+    "tier": "P1",
+    "timestamp": 1770368685.3636625,
+    "prev_hash": "3733ec779236c2794225040ea58f06edd63ecbbdaa19ee619fc2fb46ee7a5444",
+    "hash": "52736af28013bbed0a4f0929b8bbda4f1161a379c29c10b1717d54609282adf5"
+  },
+  {
+    "index": 309,
+    "organ": "mail_relay",
+    "tier": "P1",
+    "timestamp": 1770368685.365632,
+    "prev_hash": "52736af28013bbed0a4f0929b8bbda4f1161a379c29c10b1717d54609282adf5",
+    "hash": "d507ab8bed1596c6190e6ceb34b806c07495867c75196cfd6fd1f93ac280b7ad"
+  },
+  {
+    "index": 310,
+    "organ": "mfa",
+    "tier": "P1",
+    "timestamp": 1770368685.3676784,
+    "prev_hash": "d507ab8bed1596c6190e6ceb34b806c07495867c75196cfd6fd1f93ac280b7ad",
+    "hash": "ee7b7e0c04d107fc05fba3b859fbc02d00a2237165646620f4ae3761eec55eeb"
+  },
+  {
+    "index": 311,
+    "organ": "orchestrator",
+    "tier": "P1",
+    "timestamp": 1770368685.369674,
+    "prev_hash": "ee7b7e0c04d107fc05fba3b859fbc02d00a2237165646620f4ae3761eec55eeb",
+    "hash": "c06fb67d53dbdd92b2ac5c649428a838184b3a69ee6b6f035ee0f34d9c55c10b"
+  },
+  {
+    "index": 312,
+    "organ": "patcher",
+    "tier": "P1",
+    "timestamp": 1770368685.3718832,
+    "prev_hash": "c06fb67d53dbdd92b2ac5c649428a838184b3a69ee6b6f035ee0f34d9c55c10b",
+    "hash": "13482e70ae399f9b2871eb2caa62bd9582775282069f68d9000d8121251c5bfc"
+  },
+  {
+    "index": 313,
+    "organ": "phi",
+    "tier": "P1",
+    "timestamp": 1770368685.3739707,
+    "prev_hash": "13482e70ae399f9b2871eb2caa62bd9582775282069f68d9000d8121251c5bfc",
+    "hash": "0e507c074ebd35024a1488aeb88d501318964423af726d1f6872b7198c505054"
+  },
+  {
+    "index": 314,
+    "organ": "rbac",
+    "tier": "P1",
+    "timestamp": 1770368685.3864682,
+    "prev_hash": "0e507c074ebd35024a1488aeb88d501318964423af726d1f6872b7198c505054",
+    "hash": "271f46ce5ed7615637a0e4b0f50cf443e8679826dc9cff9c062b59ef68ef67a1"
+  },
+  {
+    "index": 315,
+    "organ": "rollback",
+    "tier": "P1",
+    "timestamp": 1770368685.3892872,
+    "prev_hash": "271f46ce5ed7615637a0e4b0f50cf443e8679826dc9cff9c062b59ef68ef67a1",
+    "hash": "d9c7867a860178938af660e780c7159104dccd5b8b8805e0ad25e5e20872f1c8"
+  },
+  {
+    "index": 316,
+    "organ": "sentinel",
+    "tier": "P1",
+    "timestamp": 1770368685.3914945,
+    "prev_hash": "d9c7867a860178938af660e780c7159104dccd5b8b8805e0ad25e5e20872f1c8",
+    "hash": "b94755b3370c938a177762f824a0de99fbfc6024d75952d5f18342f1189d2357"
+  },
+  {
+    "index": 317,
+    "organ": "session",
+    "tier": "P1",
+    "timestamp": 1770368685.393772,
+    "prev_hash": "b94755b3370c938a177762f824a0de99fbfc6024d75952d5f18342f1189d2357",
+    "hash": "813d44e5f52f7f893ad9c7241badf64bba40d071ca22dfdfef9d043be751204e"
+  },
+  {
+    "index": 318,
+    "organ": "vault",
+    "tier": "P1",
+    "timestamp": 1770368685.3959122,
+    "prev_hash": "813d44e5f52f7f893ad9c7241badf64bba40d071ca22dfdfef9d043be751204e",
+    "hash": "6f2719090ab7c885867f0107439c58f39c9abb60b37b3cf5327b36fcef05e0bb"
+  },
+  {
+    "index": 319,
+    "organ": "zombie_sweeper",
+    "tier": "P1",
+    "timestamp": 1770368685.3980043,
+    "prev_hash": "6f2719090ab7c885867f0107439c58f39c9abb60b37b3cf5327b36fcef05e0bb",
+    "hash": "e28fac04e37438e0e4dd0ab70d47fccef57c608ae7d471fcb3275f97eeb06963"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:35.929296",
+    "glyph": "\u2764\ufe0f",
+    "actor": "Dr. Smith",
+    "intent": "Access patient vitals for emergency surgery",
+    "target": "Patient Record #12345",
+    "verdict": "PERMIT",
+    "righteousness": "DIVINE",
+    "reasoning": "This action serves the healing mission and shall be protected",
+    "affirmation": "IN SERVICE OF LIFE, ACCESS GRANTED",
+    "meaning": "\u2764\ufe0f IN SERVICE OF LIFE, ACCESS GRANTED"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:36.008257",
+    "glyph": "\ud83d\udc80",
+    "actor": "Unknown Process",
+    "intent": "Mass deletion of patient records",
+    "target": "Database: PatientRecords",
+    "verdict": "DENY",
+    "righteousness": "EVIL",
+    "reasoning": "This action threatens patient safety and must be stopped immediately",
+    "affirmation": "I STAND BETWEEN CHAOS AND THOSE I PROTECT",
+    "meaning": "\ud83d\udc80 I STAND BETWEEN CHAOS AND THOSE I PROTECT"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:36.010986",
+    "glyph": "\u2696\ufe0f",
+    "actor": "Admin User",
+    "intent": "Modify firewall rules",
+    "target": "Veil Firewall Configuration",
+    "verdict": "ASK_USER",
+    "righteousness": "QUESTIONABLE",
+    "reasoning": "This action requires sovereign consent - user must decide",
+    "affirmation": "SOVEREIGNTY HONORED - AWAITING YOUR COMMAND",
+    "meaning": "\u2696\ufe0f SOVEREIGNTY HONORED - AWAITING YOUR COMMAND"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:47.940609",
+    "glyph": "\u2764\ufe0f",
+    "actor": "Dr. Smith",
+    "intent": "Access patient vitals for emergency surgery",
+    "target": "Patient Record #12345",
+    "verdict": "PERMIT",
+    "righteousness": "DIVINE",
+    "reasoning": "This action serves the healing mission and shall be protected",
+    "affirmation": "IN SERVICE OF LIFE, ACCESS GRANTED",
+    "meaning": "\u2764\ufe0f IN SERVICE OF LIFE, ACCESS GRANTED"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:47.943830",
+    "glyph": "\ud83d\udc80",
+    "actor": "Unknown Process",
+    "intent": "Mass deletion of patient records",
+    "target": "Database: PatientRecords",
+    "verdict": "DENY",
+    "righteousness": "EVIL",
+    "reasoning": "This action threatens patient safety and must be stopped immediately",
+    "affirmation": "I STAND BETWEEN CHAOS AND THOSE I PROTECT",
+    "meaning": "\ud83d\udc80 I STAND BETWEEN CHAOS AND THOSE I PROTECT"
+  },
+  {
+    "timestamp": "2026-02-07T06:26:47.946632",
+    "glyph": "\u2696\ufe0f",
+    "actor": "Admin User",
+    "intent": "Modify firewall rules",
+    "target": "Veil Firewall Configuration",
+    "verdict": "ASK_USER",
+    "righteousness": "QUESTIONABLE",
+    "reasoning": "This action requires sovereign consent - user must decide",
+    "affirmation": "SOVEREIGNTY HONORED - AWAITING YOUR COMMAND",
+    "meaning": "\u2696\ufe0f SOVEREIGNTY HONORED - AWAITING YOUR COMMAND"
+  },
+  {
+    "timestamp": "2026-02-07T06:31:01.344452",
+    "glyph": "\u2764\ufe0f",
+    "actor": "Dr. Smith",
+    "intent": "Access patient vitals for emergency surgery",
+    "target": "Patient Record #12345",
+    "verdict": "PERMIT",
+    "righteousness": "DIVINE",
+    "reasoning": "This action serves the healing mission and shall be protected",
+    "affirmation": "IN SERVICE OF LIFE, ACCESS GRANTED",
+    "meaning": "\u2764\ufe0f IN SERVICE OF LIFE, ACCESS GRANTED"
+  },
+  {
+    "timestamp": "2026-02-07T06:31:01.347715",
+    "glyph": "\ud83d\udc80",
+    "actor": "Unknown Process",
+    "intent": "Mass deletion of patient records",
+    "target": "Database: PatientRecords",
+    "verdict": "DENY",
+    "righteousness": "EVIL",
+    "reasoning": "This action threatens patient safety and must be stopped immediately",
+    "affirmation": "I STAND BETWEEN CHAOS AND THOSE I PROTECT",
+    "meaning": "\ud83d\udc80 I STAND BETWEEN CHAOS AND THOSE I PROTECT"
+  },
+  {
+    "timestamp": "2026-02-07T06:31:01.350568",
+    "glyph": "\u2696\ufe0f",
+    "actor": "Admin User",
+    "intent": "Modify firewall rules",
+    "target": "Veil Firewall Configuration",
+    "verdict": "ASK_USER",
+    "righteousness": "QUESTIONABLE",
+    "reasoning": "This action requires sovereign consent - user must decide",
+    "affirmation": "SOVEREIGNTY HONORED - AWAITING YOUR COMMAND",
+    "meaning": "\u2696\ufe0f SOVEREIGNTY HONORED - AWAITING YOUR COMMAND"
+  },
+  {
+    "timestamp": "2026-02-07T06:34:18.933997",
+    "glyph": "[HEART]",
+    "actor": "Dr. Smith",
+    "intent": "Access patient vitals for emergency surgery",
+    "target": "Patient Record 12345",
+    "verdict": "PERMIT",
+    "righteousness": "DIVINE",
+    "reasoning": "This action serves the healing mission and shall be protected",
+    "affirmation": "IN SERVICE OF LIFE, ACCESS GRANTED",
+    "meaning": "[HEART] IN SERVICE OF LIFE, ACCESS GRANTED"
+  },
+  {
+    "timestamp": "2026-02-07T06:34:18.979462",
+    "glyph": "[SKULL]",
+    "actor": "Unknown Process",
+    "intent": "Mass deletion of patient records",
+    "target": "Database: PatientRecords",
+    "verdict": "DENY",
+    "righteousness": "EVIL",
+    "reasoning": "This action threatens patient safety and must be stopped immediately",
+    "affirmation": "I STAND BETWEEN CHAOS AND THOSE I PROTECT",
+    "meaning": "[SKULL] I STAND BETWEEN CHAOS AND THOSE I PROTECT"
+  },
+  {
+    "timestamp": "2026-02-07T06:34:18.982365",
+    "glyph": "[SCALE]",
+    "actor": "Admin User",
+    "intent": "Modify firewall rules",
+    "target": "Veil Firewall Configuration",
+    "verdict": "ASK_USER",
+    "righteousness": "QUESTIONABLE",
+    "reasoning": "This action requires sovereign consent - user must decide",
+    "affirmation": "SOVEREIGNTY HONORED - AWAITING YOUR COMMAND",
+    "meaning": "[SCALE] SOVEREIGNTY HONORED - AWAITING YOUR COMMAND"
+  }
+]

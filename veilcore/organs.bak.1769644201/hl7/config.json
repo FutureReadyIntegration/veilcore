@@ -1,0 +1,10 @@
+{
+  "name": "hl7",
+  "version": 1.0,
+  "description": "HL7 v2 message parser for clinical system interoperability.",
+  "tier": "clinical",
+  "glyph": "\ud83d\udccb",
+  "technical_role": "message_parser",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.309456+00:00"
+}

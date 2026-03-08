@@ -1,0 +1,67 @@
+body {
+  background: #111;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 1em;
+}
+
+h1, h2, h3 {
+  color: #ffd24b;
+}
+
+.glyph-card, .badge {
+  border-radius: 8px;
+  padding: 1em;
+  background: #1e1e2f;
+  color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.glyph-card:hover, .badge:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.tier-label {
+  font-size: 0.9em;
+  font-style: italic;
+  color: #ccc;
+}
+
+.role-icon {
+  font-weight: bold;
+  margin-left: 0.3rem;
+  font-family: 'Segoe UI Symbol', serif;
+}
+
+.badge.audit::before  { content: "⚖️ "; color: #e2b714; }
+.badge.sentry::before { content: "👁 "; color: #ff5f5f; }
+.badge.ledger::before { content: "📜 "; color: #8ae99e; }
+.badge.r&d::before    { content: "🧪 "; color: #81b4ff; }
+.badge.neutral::before{ content: "🔹 "; color: #aaa; }
+
+.tier-critical   { border-top: 6px solid #ff4b4b; }
+.tier-guard      { border-top: 6px solid #ff884b; }
+.tier-immutable  { border-top: 6px solid #ffd24b; }
+.tier-experimental { border-top: 6px solid #8ad9ff; }
+.tier-general    { border-top: 6px solid #777; }
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #fff; }
+  50% { text-shadow: 0 0 20px #f4f4f4; }
+  100% { text-shadow: 0 0 5px #fff; }
+}
+
+@keyframes urgency-flame {
+  0%, 100% { box-shadow: 0 0 10px red; }
+  50% { box-shadow: 0 0 25px orange; }
+}
+
+.glyph-icon {
+  animation: glow 1.5s infinite ease-in-out;
+}
+
+.flame-urgent {
+  animation: urgency-flame 2s infinite ease-in-out;
+}

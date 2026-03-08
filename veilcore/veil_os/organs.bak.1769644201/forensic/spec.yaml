@@ -1,0 +1,27 @@
+actions:
+- type: capture_memory
+- type: capture_disk
+- type: capture_network
+- type: seal_evidence
+affirmation: Truth endures when properly preserved.
+dependencies:
+- quarantine
+- vault
+- audit
+description: Post-incident forensic evidence collection and chain of custody.
+glyph: "\U0001F52C"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/forensic.sock
+name: forensic
+organ: forensic
+outputs:
+- format: tar.gz.enc
+  path: /opt/veil_os/forensic/evidence/
+symbolic_role: truth_seeker
+technical_role: evidence_collector
+tier: security
+triggers:
+- type: incident_declared
+- type: quarantine_activated
+version: 1.0

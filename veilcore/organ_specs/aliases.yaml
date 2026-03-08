@@ -1,0 +1,29 @@
+hospital:
+  organ: master
+  display_name: "Hospital Organ"
+  feeds:
+    - "hospital-events.log"
+
+intrusion:
+  organ: sentinel
+  display_name: "Intrusion Organ"
+  feeds:
+    - "security_audit_log.txt"
+
+auto_lockdown:
+  organ: zero_trust
+  display_name: "Auto-Lockdown Engine"
+  feeds:
+    - "veil-auto-lockdown"
+
+telemetry:
+  organ: analytics
+  display_name: "Telemetry Engine"
+  feeds:
+    - "telemetry_engine.log"
+
+zombie_cleanup:
+  organ: zombie_sweeper
+  display_name: "Zombie Sweeper"
+  feeds:
+    - "zombie_sweeper.log"

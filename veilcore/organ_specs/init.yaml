@@ -1,0 +1,23 @@
+name: init
+version: 1.0
+tier: core
+glyph: "🌅"
+technical_role: system_init
+symbolic_role: dawn
+description: System initialization and boot sequence orchestrator.
+inputs:
+  - source: /opt/veil_os/config/init.yaml
+    format: yaml
+outputs:
+  - path: /opt/veil_os/ledger/init.log
+    format: jsonl
+triggers:
+  - type: boot
+  - type: reinit
+actions:
+  - type: sequence
+  - type: verify
+  - type: start
+dependencies:
+  - bios
+affirmation: I bring order from the void at dawn.

@@ -1,0 +1,24 @@
+name: signal
+version: 1.0
+tier: core
+glyph: "📶"
+technical_role: signal_processor
+symbolic_role: nerve
+description: Real-time signal processing for security events.
+inputs:
+  - source: /opt/veil_os/sockets/signal.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/signal.log
+    format: jsonl
+triggers:
+  - type: signal_received
+  - type: noise_threshold
+actions:
+  - type: filter
+  - type: amplify
+  - type: route
+dependencies:
+  - signal_router
+  - cortex
+affirmation: I carry the nerve impulses of The Veil.

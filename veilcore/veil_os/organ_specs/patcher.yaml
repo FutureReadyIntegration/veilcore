@@ -1,0 +1,27 @@
+name: patcher
+version: 1.0
+tier: security
+glyph: "🩹"
+technical_role: patch_manager
+symbolic_role: healer
+description: Security patch management and deployment automation.
+inputs:
+  - source: /opt/veil_os/sockets/patcher.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/patcher.log
+    format: jsonl
+triggers:
+  - type: cve_published
+  - type: patch_available
+  - type: maintenance_window
+actions:
+  - type: assess
+  - type: stage
+  - type: deploy
+  - type: verify
+dependencies:
+  - backup
+  - rollback
+  - audit
+affirmation: I heal vulnerabilities before they wound.

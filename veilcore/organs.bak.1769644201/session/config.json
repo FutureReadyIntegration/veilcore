@@ -1,0 +1,10 @@
+{
+  "name": "session",
+  "version": 1.0,
+  "description": "Session management with automatic timeout for HIPAA compliance.",
+  "tier": "security",
+  "glyph": "\u23f1\ufe0f",
+  "technical_role": "session_manager",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.454518+00:00"
+}

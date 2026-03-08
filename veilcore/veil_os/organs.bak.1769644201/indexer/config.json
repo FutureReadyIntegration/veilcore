@@ -1,0 +1,10 @@
+{
+  "name": "indexer",
+  "version": 1.0,
+  "description": "Fast log indexing for security event search and analysis.",
+  "tier": "monitoring",
+  "glyph": "\ud83d\udcc7",
+  "technical_role": "log_indexer",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.437185+00:00"
+}

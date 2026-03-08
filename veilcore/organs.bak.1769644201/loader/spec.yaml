@@ -1,0 +1,25 @@
+actions:
+- type: verify
+- type: load
+- type: unload
+affirmation: I carry new capabilities into The Veil.
+dependencies:
+- fingerprint
+- init
+description: Dynamic module and plugin loader for Veil OS extensions.
+glyph: "\U0001F4E6"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/loader.sock
+name: loader
+organ: loader
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/loader.log
+symbolic_role: carrier
+technical_role: module_loader
+tier: core
+triggers:
+- type: load_request
+- type: unload_request
+version: 1.0

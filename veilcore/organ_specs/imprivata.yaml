@@ -1,0 +1,24 @@
+name: imprivata
+version: 1.0
+tier: clinical
+glyph: "🔐"
+technical_role: sso_bridge
+symbolic_role: gatekeeper
+description: Imprivata SSO integration and badge-tap authentication bridge.
+inputs:
+  - source: /opt/veil_os/sockets/imprivata.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/imprivata.log
+    format: jsonl
+triggers:
+  - type: failed_badge_tap
+  - type: session_hijack_attempt
+actions:
+  - type: alert
+  - type: lock_workstation
+dependencies:
+  - auth
+  - guardian
+  - fingerprint
+affirmation: One identity, one trust, one gate.

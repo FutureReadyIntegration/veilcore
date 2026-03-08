@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/glyph_theme.css') }}"
+>
+  <title>Vault Cache Stats</title>
+</head>
+<body>- bitty_stats.html → <body class="stats-page">
+  <h1>📊 Cache Diagnostics</h1>
+  <ul>
+    {% for key, val in stats.items() %}
+      <li><strong>{{ key }}:</strong> {{ val }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

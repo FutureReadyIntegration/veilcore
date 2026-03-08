@@ -1,0 +1,10 @@
+{
+  "name": "init",
+  "version": 1.0,
+  "description": "System initialization and boot sequence orchestrator.",
+  "tier": "core",
+  "glyph": "\ud83c\udf05",
+  "technical_role": "system_init",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.479831+00:00"
+}

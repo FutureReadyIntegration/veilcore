@@ -1,0 +1,24 @@
+actions:
+- type: sequence
+- type: verify
+- type: start
+affirmation: I bring order from the void at dawn.
+dependencies:
+- bios
+description: System initialization and boot sequence orchestrator.
+glyph: "\U0001F305"
+inputs:
+- format: yaml
+  source: /opt/veil_os/config/init.yaml
+name: init
+organ: init
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/init.log
+symbolic_role: dawn
+technical_role: system_init
+tier: core
+triggers:
+- type: boot
+- type: reinit
+version: 1.0

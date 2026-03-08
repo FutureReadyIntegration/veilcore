@@ -1,0 +1,24 @@
+actions:
+- type: store
+- type: draw
+- type: mix
+affirmation: I hold the waters of randomness.
+dependencies:
+- vault
+description: Entropy pool management for continuous randomness.
+glyph: "\U0001F30A"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/entropy_pool.sock
+name: entropy_pool
+organ: entropy_pool
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/entropy_pool.log
+symbolic_role: deep_well
+technical_role: entropy_reservoir
+tier: security
+triggers:
+- type: draw_request
+- type: refill_needed
+version: 1.0

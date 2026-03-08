@@ -1,0 +1,9 @@
+id: "zero_trust_core"
+name: "Zero-Trust Core"
+type: "security"
+status: "watching"
+
+activity:
+  challenges_last_hour: 42
+  failed_challenges: 3
+  high_risk_sessions: 1

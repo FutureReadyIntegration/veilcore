@@ -1,0 +1,10 @@
+{
+  "name": "mfa",
+  "version": 1.0,
+  "description": "Multi-factor authentication enforcer for clinical systems.",
+  "tier": "security",
+  "glyph": "\ud83d\udd11",
+  "technical_role": "multi_factor_auth",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.358955+00:00"
+}
