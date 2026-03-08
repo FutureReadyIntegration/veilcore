@@ -1,16 +1,16 @@
-<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#050b15"/>
-      <stop offset="1" stop-color="#0c1626"/>
+      <stop offset="0%" stop-color="#050b15"/>
+      <stop offset="100%" stop-color="#0c1626"/>
     </linearGradient>
-    <radialGradient id="coreGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1320 520) rotate(90) scale(200 200)">
-      <stop stop-color="#fbbf24" stop-opacity="0.9"/>
-      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
-    </radialGradient>
     <radialGradient id="veilGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(760 520) rotate(90) scale(320 320)">
-      <stop stop-color="#00e5ff" stop-opacity="0.65"/>
-      <stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="coreGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1320 520) rotate(90) scale(200 200)">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
     </radialGradient>
     <style>
       .title { font: 700 88px 'Segoe UI', Arial, sans-serif; fill: #e6f7ff; letter-spacing: 10px; }

@@ -110,3 +110,9 @@ veilcore/backend/build/
 veilcore/backend/*.egg-info/
 veilcore/backend/*.tar.gz
 veilcore/backend/*.zip
+
+archive/root-legacy-dirs/
+
+**/target/
+*.rlib
+*.a

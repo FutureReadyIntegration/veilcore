@@ -47,13 +47,13 @@
   </g>
 
   <g>
-    <rect x="56"   y="186" width="390" height="54" rx="18" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.95"/>
-    <rect x="476"  y="186" width="390" height="54" rx="18" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.85"/>
-    <rect x="896"  y="186" width="390" height="54" rx="18" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.85"/>
+    <rect x="56" y="186" width="390" height="54" rx="18" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.95"/>
+    <rect x="476" y="186" width="390" height="54" rx="18" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.85"/>
+    <rect x="896" y="186" width="390" height="54" rx="18" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.85"/>
     <rect x="1316" y="186" width="428" height="54" rx="18" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.85"/>
 
-    <text x="180"  y="222" class="mono step">DETECT</text>
-    <text x="600"  y="222" class="mono step">EMIT EVENT</text>
+    <text x="180" y="222" class="mono step">DETECT</text>
+    <text x="600" y="222" class="mono step">EMIT EVENT</text>
     <text x="1030" y="222" class="mono step">CONTAIN / VISUALIZE</text>
     <text x="1490" y="222" class="mono step">PROTECT CORE</text>
 
