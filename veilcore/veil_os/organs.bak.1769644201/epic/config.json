@@ -1,0 +1,10 @@
+{
+  "name": "epic",
+  "version": 1.0,
+  "description": "Epic EHR integration layer for ransomware protection.",
+  "tier": "clinical",
+  "glyph": "\ud83c\udfe5",
+  "technical_role": "ehr_connector",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.329780+00:00"
+}

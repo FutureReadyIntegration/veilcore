@@ -1,0 +1,28 @@
+actions:
+- type: authenticate
+- type: route
+- type: throttle
+- type: transform
+affirmation: I am the door between worlds.
+dependencies:
+- auth
+- rbac
+- firewall
+description: Secure API gateway for external service integration.
+glyph: "\U0001F6AA"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/gateway.sock
+name: gateway
+organ: gateway
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/gateway.log
+symbolic_role: portal
+technical_role: api_gateway
+tier: network
+triggers:
+- type: api_request
+- type: rate_exceeded
+- type: auth_failure
+version: 1.0

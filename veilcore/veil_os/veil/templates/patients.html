@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row">
+    <h1>Patients</h1>
+    <a class="btn" href="/patients/new">+ New</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Age</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in patients %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.age }}</td>
+          <td><span class="pill">{{ p.status }}</span></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

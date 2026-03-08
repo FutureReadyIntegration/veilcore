@@ -1,0 +1,24 @@
+name: interpreter
+version: 1.0
+tier: core
+glyph: "📜"
+technical_role: policy_interpreter
+symbolic_role: sage
+description: Security policy interpreter and rule engine.
+inputs:
+  - source: /opt/veil_os/sockets/interpreter.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/interpreter.log
+    format: jsonl
+triggers:
+  - type: policy_check
+  - type: rule_evaluation
+actions:
+  - type: parse
+  - type: evaluate
+  - type: decide
+dependencies:
+  - rbac
+  - cortex
+affirmation: I read the sacred policies and speak their meaning.

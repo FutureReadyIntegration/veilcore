@@ -1,0 +1,10 @@
+{
+  "name": "queue",
+  "version": 1.0,
+  "description": "Reliable message queue for async organ communication.",
+  "tier": "core",
+  "glyph": "\ud83d\udcec",
+  "technical_role": "message_queue",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.800006+00:00"
+}

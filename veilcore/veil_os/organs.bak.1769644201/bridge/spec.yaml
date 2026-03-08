@@ -1,0 +1,25 @@
+actions:
+- type: route
+- type: filter
+- type: isolate
+affirmation: I connect what must be joined, separate what must be apart.
+dependencies:
+- firewall
+- guardian
+description: Network bridge for secure inter-segment communication.
+glyph: "\U0001F309"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/bridge.sock
+name: bridge
+organ: bridge
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/bridge.log
+symbolic_role: connector
+technical_role: network_bridge
+tier: network
+triggers:
+- type: segment_request
+- type: policy_violation
+version: 1.0

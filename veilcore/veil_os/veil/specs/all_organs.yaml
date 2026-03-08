@@ -1,0 +1,390 @@
+---
+name: epic
+tier: P0
+glyph: "🏥"
+affirmation: "I protect the healers so they may heal."
+---
+name: imprivata
+tier: P0
+glyph: "🔐"
+affirmation: "One identity, one trust, one gate."
+---
+name: guardian
+tier: P0
+glyph: "🛡️"
+affirmation: "I stand between chaos and those I protect."
+---
+name: backup
+tier: P0
+glyph: "💾"
+affirmation: "What is remembered cannot be destroyed."
+---
+name: quarantine
+tier: P0
+glyph: "🔒"
+affirmation: "I contain the infection to save the whole."
+---
+name: mfa
+tier: P1
+glyph: "🔑"
+affirmation: "Two keys open the sacred door."
+---
+name: rbac
+tier: P1
+glyph: "👥"
+affirmation: "Each role has its purpose and boundary."
+---
+name: dlp
+tier: P1
+glyph: "🛡️"
+affirmation: "No secret leaves without permission."
+---
+name: phi
+tier: P1
+glyph: "💊"
+affirmation: "I guard the sacred health records."
+---
+name: firewall
+tier: P1
+glyph: "🔥"
+affirmation: "None shall pass without my blessing."
+---
+name: vault
+tier: P1
+glyph: "🏦"
+affirmation: "Secrets sleep safely in my depths."
+---
+name: sentinel
+tier: P1
+glyph: "🗼"
+affirmation: "I see threats before they strike."
+---
+name: canary
+tier: P1
+glyph: "🐤"
+affirmation: "The small voice warns of great danger."
+---
+name: forensic
+tier: P1
+glyph: "🔬"
+affirmation: "Truth endures when properly preserved."
+---
+name: hl7
+tier: P1
+glyph: "🏷️"
+affirmation: "I translate so systems may speak."
+---
+name: fhir
+tier: P1
+glyph: "🔥"
+affirmation: "Fire connects all who seek healing."
+---
+name: hospital
+tier: P1
+glyph: "🏥"
+affirmation: "I understand the language of healers."
+---
+name: auth
+tier: P1
+glyph: "🔑"
+affirmation: "Only the worthy may pass."
+---
+name: audit
+tier: P1
+glyph: "📋"
+affirmation: "I witness all that passes through The Veil."
+---
+name: audit_log
+tier: P1
+glyph: "📝"
+affirmation: "Every record is preserved forever."
+---
+name: bios
+tier: P1
+glyph: "⚡"
+affirmation: "From nothing, I bring forth The Veil."
+---
+name: init
+tier: P1
+glyph: "🌅"
+affirmation: "I bring order from the void at dawn."
+---
+name: cortex
+tier: P1
+glyph: "🧠"
+affirmation: "I think so The Veil may act."
+---
+name: engine
+tier: P1
+glyph: "⚙️"
+affirmation: "I am the beating heart of The Veil."
+---
+name: daemon
+tier: P2
+glyph: "👻"
+affirmation: "I keep the spirits running in shadow."
+---
+name: daemonizer
+tier: P2
+glyph: "🔮"
+affirmation: "I give life to servants of The Veil."
+---
+name: bridge
+tier: P2
+glyph: "🌉"
+affirmation: "I connect what must be joined."
+---
+name: gateway
+tier: P2
+glyph: "🚪"
+affirmation: "I am the door between worlds."
+---
+name: router
+tier: P2
+glyph: "🔀"
+affirmation: "I find the path through complexity."
+---
+name: relay
+tier: P2
+glyph: "📡"
+affirmation: "I carry messages across the divide."
+---
+name: fabric
+tier: P2
+glyph: "🕸️"
+affirmation: "I weave connections between all organs."
+---
+name: switch
+tier: P2
+glyph: "🔲"
+affirmation: "I direct traffic at the crossroads."
+---
+name: harbor
+tier: P2
+glyph: "⚓"
+affirmation: "Safe harbor for trusted images only."
+---
+name: portal
+tier: P2
+glyph: "🌀"
+affirmation: "Through me, operators see The Veil."
+---
+name: monitor
+tier: P2
+glyph: "👁️"
+affirmation: "I watch without rest."
+---
+name: watchdog
+tier: P2
+glyph: "🐕"
+affirmation: "I never sleep, I never rest, I always watch."
+---
+name: telemetry
+tier: P2
+glyph: "📡"
+affirmation: "I listen to every whisper of the system."
+---
+name: metrics
+tier: P2
+glyph: "📊"
+affirmation: "I measure so we may improve."
+---
+name: collector
+tier: P2
+glyph: "🧲"
+affirmation: "I gather all signals into one stream."
+---
+name: indexer
+tier: P2
+glyph: "📇"
+affirmation: "I organize chaos into searchable truth."
+---
+name: logger
+tier: P2
+glyph: "📝"
+affirmation: "I record all that matters."
+---
+name: journal
+tier: P2
+glyph: "📔"
+affirmation: "What is written in me cannot be unwritten."
+---
+name: orchestrator
+tier: P1
+glyph: "🎭"
+affirmation: "I conduct the symphony of organs."
+---
+name: scheduler
+tier: P2
+glyph: "📅"
+affirmation: "Everything happens in its proper time."
+---
+name: dispatcher
+tier: P2
+glyph: "📤"
+affirmation: "Every message finds its destination."
+---
+name: queue
+tier: P2
+glyph: "📬"
+affirmation: "Every message waits its turn."
+---
+name: rollback
+tier: P1
+glyph: "⏪"
+affirmation: "What was lost shall be restored."
+---
+name: mirror
+tier: P2
+glyph: "🪞"
+affirmation: "What exists here exists there also."
+---
+name: cache
+tier: P2
+glyph: "💨"
+affirmation: "Speed serves those who protect."
+---
+name: clock
+tier: P2
+glyph: "🕐"
+affirmation: "Truth requires accurate time."
+---
+name: codec
+tier: P2
+glyph: "🔄"
+affirmation: "I transform data to travel safely."
+---
+name: keystore
+tier: P1
+glyph: "🗝️"
+affirmation: "I guard the keys that guard all else."
+---
+name: fingerprint
+tier: P1
+glyph: "👆"
+affirmation: "Every file has a unique truth I can verify."
+---
+name: entropy
+tier: P2
+glyph: "🎲"
+affirmation: "From chaos I harvest randomness."
+---
+name: entropy_pool
+tier: P2
+glyph: "🌊"
+affirmation: "I hold the waters of randomness."
+---
+name: signal
+tier: P2
+glyph: "📶"
+affirmation: "I carry the nerve impulses of The Veil."
+---
+name: emitter
+tier: P2
+glyph: "📢"
+affirmation: "I announce what all must hear."
+---
+name: fanout
+tier: P2
+glyph: "🌳"
+affirmation: "One becomes many through me."
+---
+name: mail_relay
+tier: P1
+glyph: "📧"
+affirmation: "Critical messages reach their destination."
+---
+name: console
+tier: P2
+glyph: "🖥️"
+affirmation: "Command flows through me with purpose."
+---
+name: driver
+tier: P2
+glyph: "🔧"
+affirmation: "I speak to the machines beneath."
+---
+name: dock
+tier: P2
+glyph: "🚢"
+affirmation: "Ships dock safely in my waters."
+---
+name: diffuser
+tier: P2
+glyph: "💨"
+affirmation: "I spread the load so none may break."
+---
+name: flux
+tier: P2
+glyph: "🌀"
+affirmation: "Change flows through me to all who listen."
+---
+name: hatchery
+tier: P2
+glyph: "🥚"
+affirmation: "New organs emerge when The Veil demands."
+---
+name: interpreter
+tier: P2
+glyph: "📜"
+affirmation: "I read the sacred policies and speak their meaning."
+---
+name: linker
+tier: P2
+glyph: "🔗"
+affirmation: "I bind organs together in purpose."
+---
+name: loader
+tier: P2
+glyph: "📦"
+affirmation: "I carry new capabilities into The Veil."
+---
+name: matrix
+tier: P2
+glyph: "🔢"
+affirmation: "I hold the true state of all things."
+---
+name: patcher
+tier: P1
+glyph: "🩹"
+affirmation: "I heal vulnerabilities before they wound."
+---
+name: session
+tier: P1
+glyph: "🎫"
+affirmation: "Every session has its time and purpose."
+---
+name: socket
+tier: P2
+glyph: "🔌"
+affirmation: "I create the channels through which organs speak."
+---
+name: spooler
+tier: P2
+glyph: "🧵"
+affirmation: "I gather threads into rope."
+---
+name: station
+tier: P2
+glyph: "🚉"
+affirmation: "I guard the places where healers work."
+---
+name: synth
+tier: P2
+glyph: "🎹"
+affirmation: "I compose configurations from templates."
+---
+name: veilctl
+tier: P2
+glyph: "⚔️"
+affirmation: "I translate human will into action."
+---
+name: zombie_sweeper
+tier: P1
+glyph: "🧟"
+affirmation: "I lay the dead to rest so the living may thrive."
+---
+name: cockpit_backend
+tier: P1
+glyph: "🎛️"
+affirmation: "I power the eyes of the operators."

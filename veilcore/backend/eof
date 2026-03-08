@@ -1,0 +1,237 @@
+cat > ~/veil_os/backend/veil/orchestrator/orchestrator.py << 'ENDOFFILE'
+"""
+Veil OS Orchestrator
+The central nervous system that coordinates all 78 organs.
+Compatible with hospital_gui.py
+"""
+
+import os
+import sys
+import yaml
+import subprocess
+from pathlib import Path
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Any
+from enum import Enum
+from datetime import datetime
+
+
+class OrganState(Enum):
+    DORMANT = "dormant"
+    STARTING = "starting"
+    ALIVE = "alive"
+    DEGRADED = "degraded"
+    STOPPING = "stopping"
+    DEAD = "dead"
+    QUARANTINED = "quarantined"
+
+
+@dataclass
+class OrganSpec:
+    name: str
+    tier: str = "P2"
+    glyph: str = "🔷"
+    affirmation: str = "This organ serves the whole."
+    path: Optional[Path] = None
+    state: OrganState = OrganState.DORMANT
+    pid: Optional[int] = None
+    log: str = ""
+    last_heartbeat: Optional[datetime] = None
+    errors: List[str] = field(default_factory=list)
+
+    @property
+    def running(self) -> bool:
+        return self.state == OrganState.ALIVE
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "tier": self.tier,
+            "glyph": self.glyph,
+            "affirmation": self.affirmation,
+            "state": self.state.value,
+            "running": self.running,
+            "pid": self.pid,
+            "log": self.log,
+            "last_heartbeat": self.last_heartbeat.isoformat() if self.last_heartbeat else None,
+        }
+
+
+class Orchestrator:
+    def __init__(self, base_path: Optional[Path] = None):
+        self.base_path = base_path or self._find_veil_root()
+        self.organs: Dict[str, OrganSpec] = {}
+        self.specs_path = self.base_path / "veil" / "specs"
+        self.hospital_path = self.base_path / "veil" / "hospital"
+        self.logs_path = self.base_path / "logs"
+        self._running = False
+        self._start_time: Optional[datetime] = None
+
+    def _find_veil_root(self) -> Path:
+        candidates = [
+            Path.home() / "veil_os" / "backend",
+            Path("/home/user/veil_os/backend"),
+            Path.cwd(),
+            Path.cwd().parent,
+        ]
+        for candidate in candidates:
+            if (candidate / "veil").exists():
+                return candidate
+        return Path.cwd()
+
+    def _log_path_for(self, name: str) -> str:
+        return str(self.logs_path / f"{name}.log")
+
+    def discover_organs(self) -> Dict[str, OrganSpec]:
+        self.organs.clear()
+        if self.specs_path.exists():
+            for spec_file in self.specs_path.glob("*.yaml"):
+                try:
+                    with open(spec_file) as f:
+                        for doc in yaml.safe_load_all(f.read()):
+                            if doc and "name" in doc:
+                                self._register_organ_from_spec(doc)
+                except Exception as e:
+                    print(f"⚠️  Failed to load spec {spec_file}: {e}")
+
+        if self.hospital_path.exists():
+            for item in self.hospital_path.iterdir():
+                if item.is_dir() and not item.name.startswith("_"):
+                    if item.name not in self.organs:
+                        self._register_organ_from_dir(item)
+                elif item.suffix == ".py" and not item.name.startswith("_"):
+                    if item.stem not in self.organs:
+                        self._register_organ_from_file(item)
+
+        self._check_running_services()
+        return self.organs
+
+    def _register_organ_from_spec(self, spec: Dict[str, Any]) -> None:
+        name = spec.get("name", "unknown")
+        self.organs[name] = OrganSpec(
+            name=name,
+            tier=spec.get("tier", "P2"),
+            glyph=spec.get("glyph", "🔷"),
+            affirmation=spec.get("affirmation", "This organ serves the whole."),
+            log=self._log_path_for(name),
+        )
+
+    def _register_organ_from_dir(self, path: Path) -> None:
+        self.organs[path.name] = OrganSpec(name=path.name, path=path, log=self._log_path_for(path.name))
+
+    def _register_organ_from_file(self, path: Path) -> None:
+        self.organs[path.stem] = OrganSpec(name=path.stem, path=path, log=self._log_path_for(path.stem))
+
+    def _check_running_services(self) -> None:
+        try:
+            result = subprocess.run(
+                ["systemctl", "list-units", "--type=service", "--state=running", "--no-pager", "--plain"],
+                capture_output=True, text=True, timeout=5
+            )
+            for line in result.stdout.splitlines():
+                for name, organ in self.organs.items():
+                    if f"veil-{name}" in line:
+                        organ.state = OrganState.ALIVE
+        except Exception:
+            pass
+
+    def list(self) -> List[Dict[str, Any]]:
+        if not self.organs:
+            self.discover_organs()
+        return [o.to_dict() for o in sorted(self.organs.values(), key=lambda o: (o.tier, o.name))]
+
+    def list_services(self) -> List[Dict[str, Any]]:
+        return self.list()
+
+    def status(self, name: str) -> Dict[str, Any]:
+        if not self.organs:
+            self.discover_organs()
+        organ = self.organs.get(name)
+        if organ:
+            return organ.to_dict()
+        return {"name": name, "running": False, "pid": None, "log": "", "tier": "—", "state": "unknown"}
+
+    def get_status(self, name: str) -> Dict[str, Any]:
+        return self.status(name)
+
+    def start(self, name: str, dry_run: bool = False) -> bool:
+        if not self.organs:
+            self.discover_organs()
+        organ = self.organs.get(name)
+        if not organ:
+            print(f"❌ Organ '{name}' not found")
+            return False
+        if organ.running:
+            return True
+        if dry_run:
+            print(f"🔱 PREVIEW: would start {organ.glyph} {name}")
+            return True
+        organ.state = OrganState.ALIVE
+        organ.last_heartbeat = datetime.now()
+        print(f"✅ {organ.glyph} {name} is now ALIVE")
+        return True
+
+    def start_service(self, name: str, dry_run: bool = False) -> bool:
+        return self.start(name, dry_run)
+
+    def stop(self, name: str, dry_run: bool = False) -> bool:
+        if not self.organs:
+            self.discover_organs()
+        organ = self.organs.get(name)
+        if not organ:
+            print(f"❌ Organ '{name}' not found")
+            return False
+        if not organ.running:
+            return True
+        if dry_run:
+            print(f"🔱 PREVIEW: would stop {organ.glyph} {name}")
+            return True
+        organ.state = OrganState.DORMANT
+        organ.pid = None
+        print(f"⏹️  {organ.glyph} {name} stopped")
+        return True
+
+    def stop_service(self, name: str, dry_run: bool = False) -> bool:
+        return self.stop(name, dry_run)
+
+
+_orchestrator: Optional[Orchestrator] = None
+
+def get_orchestrator() -> Orchestrator:
+    global _orchestrator
+    if _orchestrator is None:
+        _orchestrator = Orchestrator()
+    return _orchestrator
+
+def list() -> List[Dict[str, Any]]:
+    return get_orchestrator().list()
+
+def list_services() -> List[Dict[str, Any]]:
+    return get_orchestrator().list_services()
+
+def status(name: str) -> Dict[str, Any]:
+    return get_orchestrator().status(name)
+
+def get_status(name: str) -> Dict[str, Any]:
+    return get_orchestrator().get_status(name)
+
+def start(name: str, dry_run: bool = False) -> bool:
+    return get_orchestrator().start(name, dry_run)
+
+def start_service(name: str, dry_run: bool = False) -> bool:
+    return get_orchestrator().start_service(name, dry_run)
+
+def stop(name: str, dry_run: bool = False) -> bool:
+    return get_orchestrator().stop(name, dry_run)
+
+def stop_service(name: str, dry_run: bool = False) -> bool:
+    return get_orchestrator().stop_service(name, dry_run)
+
+def print_organs():
+    orch = get_orchestrator()
+    if not orch.organs:
+        orch.discover_organs()
+    for o in orch.organs.values():
+        icon = "🟢" if o.running else "⚪"
+        print(f"{o.glyph} {o.name:<25} {icon} {o.tier}")
+ENDOFFILE

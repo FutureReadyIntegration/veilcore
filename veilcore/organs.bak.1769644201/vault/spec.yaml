@@ -1,0 +1,27 @@
+actions:
+- type: store
+- type: retrieve
+- type: rotate
+- type: seal
+affirmation: Secrets sleep safely in my depths.
+dependencies:
+- keystore
+- audit
+description: Secure secrets management and credential vault.
+glyph: "\U0001F3E6"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/vault.sock
+name: vault
+organ: vault
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/vault.log
+symbolic_role: treasury
+technical_role: secret_store
+tier: security
+triggers:
+- type: secret_request
+- type: lease_expire
+- type: access_denied
+version: 1.0

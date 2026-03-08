@@ -1,0 +1,27 @@
+actions:
+- type: alert_immediate
+- type: trigger_quarantine
+- type: snapshot
+affirmation: The small voice warns of great danger.
+dependencies:
+- sentinel
+- quarantine
+- backup
+description: Honeypot files and canary tokens to detect ransomware early.
+glyph: "\U0001F424"
+inputs:
+- format: filesystem
+  source: /opt/veil_os/canary/tokens/
+name: canary
+organ: canary
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/canary.log
+symbolic_role: early_warning
+technical_role: tripwire
+tier: security
+triggers:
+- type: file_accessed
+- type: file_modified
+- type: file_encrypted
+version: 1.0

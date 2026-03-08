@@ -1,0 +1,10 @@
+{
+  "name": "backup",
+  "version": 1.0,
+  "description": "Immutable backup orchestrator for ransomware recovery.",
+  "tier": "core",
+  "glyph": "\ud83d\udcbe",
+  "technical_role": "recovery",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:57.937136+00:00"
+}

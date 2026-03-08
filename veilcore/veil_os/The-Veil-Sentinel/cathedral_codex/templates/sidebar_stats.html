@@ -1,0 +1,17 @@
+<h2>🜅 Glyph Intelligence Stats</h2>
+{% if stats.critical_pct >= 30 %}
+  <div class="alert-critical">⚠️ High critical glyph activity: {{ stats.critical_pct }}%</div>
+{% endif %}
+<p><strong>Total Entries:</strong> {{ stats.total }}</p>
+<h3>By Role</h3>
+<ul>
+  {% for role, count in stats.roles.items() %}
+    <li>{{ role.title() }} → {{ count }}</li>
+  {% endfor %}
+</ul>
+<h3>By Tier</h3>
+<ul>
+  {% for tier, count in stats.tiers.items() %}
+    <li>{{ tier.title() }} → {{ count }}</li>
+  {% endfor %}
+</ul>

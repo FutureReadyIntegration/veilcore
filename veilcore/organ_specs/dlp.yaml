@@ -1,0 +1,26 @@
+name: dlp
+version: 1.0
+tier: security
+glyph: "🛡️"
+technical_role: data_loss_prevention
+symbolic_role: guardian_of_exit
+description: Data loss prevention to stop PHI exfiltration.
+inputs:
+  - source: /opt/veil_os/sockets/dlp.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/dlp.log
+    format: jsonl
+triggers:
+  - type: large_data_transfer
+  - type: unusual_destination
+  - type: phi_detected
+actions:
+  - type: block
+  - type: alert
+  - type: quarantine
+dependencies:
+  - firewall
+  - phi
+  - sentinel
+affirmation: Nothing leaves without permission.

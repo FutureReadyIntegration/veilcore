@@ -1,0 +1,28 @@
+actions:
+- type: detect
+- type: classify
+- type: alert
+- type: hunt
+affirmation: I see threats before they strike.
+dependencies:
+- cortex
+- analytics
+- intrusion_monitor
+description: Advanced threat detection using behavioral analysis.
+glyph: "\U0001F5FC"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/sentinel.sock
+name: sentinel
+organ: sentinel
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/sentinel.log
+symbolic_role: watchtower
+technical_role: threat_detector
+tier: security
+triggers:
+- type: anomaly_score
+- type: pattern_match
+- type: baseline_drift
+version: 1.0

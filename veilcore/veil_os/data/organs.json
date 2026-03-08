@@ -1,0 +1,506 @@
+{
+  "schema": "veil.organs.registry.v2",
+  "version": 1,
+  "generated_at": "manual",
+  "tier_definitions": [
+    {
+      "tier": "P0",
+      "order": 0,
+      "label": "Critical / Core"
+    },
+    {
+      "tier": "P1",
+      "order": 1,
+      "label": "Security / Control"
+    },
+    {
+      "tier": "P2",
+      "order": 2,
+      "label": "Signals / Awareness"
+    }
+  ],
+  "organs": [
+    {
+      "id": "epic",
+      "name": "epic",
+      "tier": "P0",
+      "glyph": "⚡",
+      "affirmation": "Stability is sacred.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/epic.log"
+      },
+      "tags": [
+        "core"
+      ]
+    },
+    {
+      "id": "imprivata",
+      "name": "imprivata",
+      "tier": "P0",
+      "glyph": "🔐",
+      "affirmation": "Identity is protection.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/imprivata.log"
+      },
+      "tags": [
+        "core",
+        "identity"
+      ]
+    },
+    {
+      "id": "backup",
+      "name": "backup",
+      "tier": "P0",
+      "glyph": "💾",
+      "affirmation": "Nothing is ever truly lost.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/backup.log"
+      },
+      "tags": [
+        "core",
+        "recovery"
+      ]
+    },
+    {
+      "id": "quarantine",
+      "name": "quarantine",
+      "tier": "P0",
+      "glyph": "🚫",
+      "affirmation": "Containment preserves the whole.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/quarantine.log"
+      },
+      "tags": [
+        "core",
+        "containment"
+      ]
+    },
+    {
+      "id": "zombie_sweeper",
+      "name": "zombie_sweeper",
+      "tier": "P1",
+      "glyph": "🧹",
+      "affirmation": "Clean systems stay alive.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/zombie_sweeper.log"
+      },
+      "tags": [
+        "security",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "audit_log",
+      "name": "audit_log",
+      "tier": "P1",
+      "glyph": "📜",
+      "affirmation": "Every action leaves a trace.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/audit_log.log"
+      },
+      "tags": [
+        "security",
+        "audit"
+      ]
+    },
+    {
+      "id": "mail_relay",
+      "name": "mail_relay",
+      "tier": "P1",
+      "glyph": "📨",
+      "affirmation": "Messages must always move.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/mail_relay.log"
+      },
+      "tags": [
+        "network"
+      ]
+    },
+    {
+      "id": "cockpit_backend",
+      "name": "cockpit_backend",
+      "tier": "P1",
+      "glyph": "🛠️",
+      "affirmation": "Control requires clarity.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/cockpit_backend.log"
+      },
+      "tags": [
+        "control"
+      ]
+    },
+    {
+      "id": "mfa",
+      "name": "mfa",
+      "tier": "P1",
+      "glyph": "🛡️",
+      "affirmation": "Trust is earned, not assumed.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/mfa.log"
+      },
+      "tags": [
+        "security",
+        "identity"
+      ]
+    },
+    {
+      "id": "rbac",
+      "name": "rbac",
+      "tier": "P1",
+      "glyph": "🧩",
+      "affirmation": "Access follows purpose.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/rbac.log"
+      },
+      "tags": [
+        "security",
+        "identity"
+      ]
+    },
+    {
+      "id": "phi",
+      "name": "phi",
+      "tier": "P1",
+      "glyph": "❤️",
+      "affirmation": "Care begins with privacy.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/phi.log"
+      },
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "id": "dlp",
+      "name": "dlp",
+      "tier": "P1",
+      "glyph": "🧯",
+      "affirmation": "Protection prevents loss.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/dlp.log"
+      },
+      "tags": [
+        "security",
+        "privacy"
+      ]
+    },
+    {
+      "id": "session",
+      "name": "session",
+      "tier": "P1",
+      "glyph": "🔗",
+      "affirmation": "Connections define presence.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/session.log"
+      },
+      "tags": [
+        "identity"
+      ]
+    },
+    {
+      "id": "hl7",
+      "name": "hl7",
+      "tier": "P1",
+      "glyph": "🏥",
+      "affirmation": "Interoperability saves lives.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/hl7.log"
+      },
+      "tags": [
+        "interop"
+      ]
+    },
+    {
+      "id": "fhir",
+      "name": "fhir",
+      "tier": "P1",
+      "glyph": "🔥",
+      "affirmation": "Data must flow freely.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/fhir.log"
+      },
+      "tags": [
+        "interop"
+      ]
+    },
+    {
+      "id": "canary",
+      "name": "canary",
+      "tier": "P1",
+      "glyph": "🐤",
+      "affirmation": "Early warnings prevent collapse.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/canary.log"
+      },
+      "tags": [
+        "security",
+        "monitoring"
+      ]
+    },
+    {
+      "id": "rollback",
+      "name": "rollback",
+      "tier": "P1",
+      "glyph": "⏪",
+      "affirmation": "Recovery is resilience.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/rollback.log"
+      },
+      "tags": [
+        "recovery"
+      ]
+    },
+    {
+      "id": "forensic",
+      "name": "forensic",
+      "tier": "P1",
+      "glyph": "🕵️",
+      "affirmation": "Truth hides in the details.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/forensic.log"
+      },
+      "tags": [
+        "security",
+        "audit"
+      ]
+    },
+    {
+      "id": "heartbeat",
+      "name": "heartbeat",
+      "tier": "P2",
+      "glyph": "💓",
+      "affirmation": "The system lives through rhythm.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/heartbeat.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "telemetry",
+      "name": "telemetry",
+      "tier": "P2",
+      "glyph": "📡",
+      "affirmation": "Signals reveal the unseen.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/telemetry.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "analytics",
+      "name": "analytics",
+      "tier": "P2",
+      "glyph": "📊",
+      "affirmation": "Patterns speak truth.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/analytics.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "operator_presence",
+      "name": "operator_presence",
+      "tier": "P2",
+      "glyph": "👁️",
+      "affirmation": "Awareness shapes reality.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/operator_presence.log"
+      },
+      "tags": [
+        "signals",
+        "operator"
+      ]
+    },
+    {
+      "id": "timeline",
+      "name": "timeline",
+      "tier": "P2",
+      "glyph": "🕰️",
+      "affirmation": "Every moment has meaning.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/timeline.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "notifier",
+      "name": "notifier",
+      "tier": "P2",
+      "glyph": "🔔",
+      "affirmation": "Signals must be heard.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/notifier.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "state_vector",
+      "name": "state_vector",
+      "tier": "P2",
+      "glyph": "🧭",
+      "affirmation": "Orientation creates stability.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/state_vector.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "chronicle",
+      "name": "chronicle",
+      "tier": "P2",
+      "glyph": "📘",
+      "affirmation": "Memory preserves the organism.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/chronicle.log"
+      },
+      "tags": [
+        "signals",
+        "audit"
+      ]
+    },
+    {
+      "id": "chronicle_recap",
+      "name": "chronicle_recap",
+      "tier": "P2",
+      "glyph": "📙",
+      "affirmation": "Reflection strengthens lineage.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/chronicle_recap.log"
+      },
+      "tags": [
+        "signals",
+        "audit"
+      ]
+    },
+    {
+      "id": "signal_router",
+      "name": "signal_router",
+      "tier": "P2",
+      "glyph": "🛰️",
+      "affirmation": "Signals must find their path.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/signal_router.log"
+      },
+      "tags": [
+        "signals",
+        "network"
+      ]
+    },
+    {
+      "id": "presence_beacon",
+      "name": "presence_beacon",
+      "tier": "P2",
+      "glyph": "📡",
+      "affirmation": "Presence must be known.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/presence_beacon.log"
+      },
+      "tags": [
+        "signals"
+      ]
+    },
+    {
+      "id": "operator_log",
+      "name": "operator_log",
+      "tier": "P2",
+      "glyph": "📝",
+      "affirmation": "Operators leave legacy.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/operator_log.log"
+      },
+      "tags": [
+        "signals",
+        "audit",
+        "operator"
+      ]
+    },
+    {
+      "id": "system_snapshot",
+      "name": "system_snapshot",
+      "tier": "P2",
+      "glyph": "📷",
+      "affirmation": "Snapshots preserve truth.",
+      "service": {
+        "enabled": true,
+        "autostart": false,
+        "log": "/opt/veil_os/var/log/system_snapshot.log"
+      },
+      "tags": [
+        "signals",
+        "recovery"
+      ]
+    }
+  ]
+}

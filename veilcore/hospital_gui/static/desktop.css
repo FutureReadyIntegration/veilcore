@@ -1,0 +1,84 @@
+:root{
+  --bg:#0b0f13;
+  --panel:#161b22;
+  --panel2:#21262d;
+  --border:#30363d;
+  --text:#e6edf3;
+  --muted:#9fb0c3;
+  --good:#34d399;
+  --bad:#fb7185;
+  --radius:10px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  font-family:sans-serif;
+}
+
+#desktop{
+  position:relative;
+  width:100%;
+  height:calc(100% - 40px);
+}
+
+#taskbar{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  height:40px;
+  background:rgba(22,27,34,.95);
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 10px;
+}
+
+.svc-pill{
+  font-family:var(--mono);
+  font-size:11px;
+  padding:6px 10px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(33,38,45,.65);
+  color:var(--muted);
+}
+
+.window{
+  position:absolute;
+  width:360px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+
+.titlebar{
+  padding:8px 10px;
+  background:var(--panel2);
+  cursor:move;
+  user-select:none;
+}
+
+.body{
+  padding:10px;
+  font-family:var(--mono);
+  font-size:11px;
+  white-space:pre-wrap;
+}
+
+.btn{
+  font-family:var(--mono);
+  font-size:11px;
+  padding:6px 8px;
+  border:1px solid var(--border);
+  background:rgba(33,38,45,.65);
+  color:var(--text);
+  border-radius:8px;
+  cursor:pointer;
+}

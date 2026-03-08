@@ -1,0 +1,10 @@
+{
+  "name": "veilctl",
+  "version": 1.0,
+  "description": "Command-line control interface for Veil OS.",
+  "tier": "core",
+  "glyph": "\u2694\ufe0f",
+  "technical_role": "control_cli",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.856014+00:00"
+}

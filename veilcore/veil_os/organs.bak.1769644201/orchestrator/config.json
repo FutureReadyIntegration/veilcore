@@ -1,0 +1,10 @@
+{
+  "name": "orchestrator",
+  "version": 1.0,
+  "description": "Workflow orchestration and multi-organ coordination.",
+  "tier": "core",
+  "glyph": "\ud83c\udfad",
+  "technical_role": "workflow_orchestrator",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.488361+00:00"
+}

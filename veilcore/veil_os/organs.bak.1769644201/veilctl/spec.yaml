@@ -1,0 +1,26 @@
+actions:
+- type: execute
+- type: query
+- type: configure
+affirmation: I translate human will into action.
+dependencies:
+- auth
+- console
+- audit
+description: Command-line control interface for Veil OS.
+glyph: "\u2694\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/veilctl.sock
+name: veilctl
+organ: veilctl
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/veilctl.log
+symbolic_role: command
+technical_role: control_cli
+tier: core
+triggers:
+- type: command_issued
+- type: query_request
+version: 1.0

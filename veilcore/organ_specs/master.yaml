@@ -1,0 +1,23 @@
+name: master
+tier: 1
+glyph: "🧠"
+description: |
+  Central coordinator organ responsible for orchestrating all other organs,
+  maintaining system state, and ensuring cross-organ communication.
+
+entrypoint: "veil.organs.master.main"
+
+logging:
+  file: "/var/log/veil/master.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/master"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

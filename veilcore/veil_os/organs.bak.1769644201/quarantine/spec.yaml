@@ -1,0 +1,25 @@
+actions:
+- type: isolate_host
+- type: block_lateral
+affirmation: Containment is compassion. Isolation saves the whole.
+dependencies:
+- firewall
+- sentinel
+- backup
+description: Emergency isolation system for compromised hosts.
+glyph: "\U0001F512"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/quarantine.sock
+name: quarantine
+organ: quarantine
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/quarantine.log
+symbolic_role: containment
+technical_role: isolation
+tier: security
+triggers:
+- type: ransomware_signature
+- type: anomaly_threshold_exceeded
+version: 1.0

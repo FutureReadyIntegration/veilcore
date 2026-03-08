@@ -1,0 +1,25 @@
+actions:
+- type: hash
+- type: compare
+- type: alert
+affirmation: Every file has a unique truth I can verify.
+dependencies:
+- vault
+- audit
+description: File and system integrity verification via cryptographic hashes.
+glyph: "\U0001F446"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/fingerprint.sock
+name: fingerprint
+organ: fingerprint
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/fingerprint.log
+symbolic_role: identifier
+technical_role: hash_verifier
+tier: security
+triggers:
+- type: scan_request
+- type: baseline_drift
+version: 1.0

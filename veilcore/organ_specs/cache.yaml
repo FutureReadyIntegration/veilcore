@@ -1,0 +1,24 @@
+name: cache
+version: 1.0
+tier: core
+glyph: "💨"
+technical_role: memory_cache
+symbolic_role: quicksilver
+description: High-speed cache layer for frequently accessed security data.
+inputs:
+  - source: /opt/veil_os/sockets/cache.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/cache.log
+    format: jsonl
+triggers:
+  - type: cache_miss
+  - type: ttl_expire
+  - type: invalidate
+actions:
+  - type: store
+  - type: retrieve
+  - type: flush
+dependencies:
+  - vault
+affirmation: Speed serves those who protect.

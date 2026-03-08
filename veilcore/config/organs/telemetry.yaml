@@ -1,0 +1,10 @@
+name: telemetry
+enabled: true
+system_interval: 30
+organ_interval: 60
+event_interval: 15
+
+cpu_warn_threshold: 75.0
+cpu_crit_threshold: 90.0
+mem_warn_threshold: 75.0
+mem_crit_threshold: 90.0

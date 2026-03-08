@@ -1,0 +1,18 @@
+actions:
+- type: collect_metrics
+- type: emit_report
+affirmation: What is measured can be improved.
+description: 'The telemetry organ collects performance metrics and system vitals.
+  It emits periodic reports for observability and trend analysis.
+
+  '
+inputs: []
+name: telemetry
+organ: telemetry
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/telemetry.log
+triggers:
+- interval_seconds: 60
+  type: time_interval
+version: 1.0

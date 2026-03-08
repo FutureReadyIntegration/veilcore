@@ -1,0 +1,21 @@
+name: clock
+version: 1.0
+tier: core
+glyph: "🕐"
+technical_role: time_sync
+symbolic_role: timekeeper
+description: Synchronized time service for accurate audit timestamps.
+inputs:
+  - source: /opt/veil_os/config/ntp.yaml
+    format: yaml
+outputs:
+  - path: /opt/veil_os/ledger/clock.log
+    format: jsonl
+triggers:
+  - type: drift_detected
+  - type: sync_failure
+actions:
+  - type: sync
+  - type: alert
+dependencies: []
+affirmation: Truth requires accurate time.

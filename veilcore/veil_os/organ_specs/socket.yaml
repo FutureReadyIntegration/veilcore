@@ -1,0 +1,25 @@
+name: socket
+version: 1.0
+tier: core
+glyph: "🔌"
+technical_role: socket_manager
+symbolic_role: connector
+description: Unix and network socket lifecycle management.
+inputs:
+  - source: /opt/veil_os/sockets/socket.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/socket.log
+    format: jsonl
+triggers:
+  - type: socket_create
+  - type: socket_error
+  - type: connection_limit
+actions:
+  - type: create
+  - type: bind
+  - type: close
+  - type: cleanup
+dependencies:
+  - init
+affirmation: I create the channels through which organs speak.

@@ -1,0 +1,27 @@
+actions:
+- type: coordinate
+- type: sequence
+- type: rollback
+affirmation: I conduct the symphony of organs.
+dependencies:
+- scheduler
+- dispatcher
+- engine
+description: Workflow orchestration and multi-organ coordination.
+glyph: "\U0001F3AD"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/orchestrator.sock
+name: orchestrator
+organ: orchestrator
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/orchestrator.log
+symbolic_role: conductor
+technical_role: workflow_orchestrator
+tier: core
+triggers:
+- type: workflow_start
+- type: step_complete
+- type: workflow_error
+version: 1.0

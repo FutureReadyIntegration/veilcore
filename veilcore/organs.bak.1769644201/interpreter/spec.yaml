@@ -1,0 +1,25 @@
+actions:
+- type: parse
+- type: evaluate
+- type: decide
+affirmation: I read the sacred policies and speak their meaning.
+dependencies:
+- rbac
+- cortex
+description: Security policy interpreter and rule engine.
+glyph: "\U0001F4DC"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/interpreter.sock
+name: interpreter
+organ: interpreter
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/interpreter.log
+symbolic_role: sage
+technical_role: policy_interpreter
+tier: core
+triggers:
+- type: policy_check
+- type: rule_evaluation
+version: 1.0

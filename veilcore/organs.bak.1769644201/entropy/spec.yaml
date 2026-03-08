@@ -1,0 +1,24 @@
+actions:
+- type: collect
+- type: mix
+- type: distribute
+affirmation: From chaos I harvest randomness.
+dependencies:
+- entropy_pool
+description: Cryptographic entropy collection for key generation.
+glyph: "\U0001F3B2"
+inputs:
+- format: binary
+  source: /dev/random
+name: entropy
+organ: entropy
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/entropy.log
+symbolic_role: chaos_tamer
+technical_role: entropy_source
+tier: security
+triggers:
+- type: entropy_request
+- type: pool_low
+version: 1.0

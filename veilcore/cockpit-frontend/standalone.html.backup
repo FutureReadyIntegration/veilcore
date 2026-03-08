@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL OS - Living Hospital Defense</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg-deep: #030810;
+            --bg-panel: #0a1020;
+            --bg-card: #0d1528;
+            --border: #1a2744;
+            --accent: #0ff5a0;
+            --accent-dim: #0ff5a040;
+            --danger: #ff3b5c;
+            --text: #e0e8f0;
+            --text-dim: #5a6e8a;
+            --cyan: #00d4ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .main {
+            padding: 24px 32px;
+            min-height: 100vh;
+        }
+
+        .guardian-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1a12 0%, #0d1528 50%, #0a1220 100%);
+            border: 1px solid var(--accent);
+            border-radius: 14px;
+            padding: 18px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 30px var(--accent-dim);
+        }
+
+        .guardian-shield svg {
+            width: 48px;
+            height: 48px;
+            filter: drop-shadow(0 0 12px var(--accent));
+        }
+
+        .guardian-title {
+            font-size: 1.05em;
+            color: var(--text);
+        }
+
+        .guardian-title strong {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-dim);
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .topbar h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+        }
+
+        .metric-label {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .viz-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .viz-panel canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .alert-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .alert-panel h3 {
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .alert-feed {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .alert-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            font-size: 0.82em;
+            margin-bottom: 8px;
+        }
+
+        .righteousness-section {
+            margin-bottom: 28px;
+        }
+
+        .righteousness-section h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .righteousness-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .right-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .right-card.divine { border-color: #00d4ff; }
+        .right-card.righteous { border-color: var(--accent); }
+        .right-card.neutral { border-color: #5a6e8a; }
+        .right-card.questionable { border-color: #ffb347; }
+        .right-card.evil { border-color: var(--danger); }
+
+        .right-glyph {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+        }
+
+        .right-label {
+            font-size: 0.7em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .right-count {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .decisions-feed {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .decision-item {
+            padding: 12px;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .organs-section h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .organ-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .organ-card {
+            background: linear-gradient(145deg, #0f1a2e, #0a1220);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .organ-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .organ-icon {
+            font-size: 3em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .organ-name {
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .organ-status {
+            font-size: 0.68em;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .zombie-sweeper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3em;
+            z-index: 1000;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            animation: sweep 4s ease-in-out infinite;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        @keyframes sweep {
+            0%, 100% { transform: translateX(0) rotate(-5deg); }
+            50% { transform: translateX(-20px) rotate(5deg); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="guardian-banner">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="guardian-shield">
+                <svg width="48" height="48" viewBox="0 0 48 48">
+                    <path fill="#0ff5a0" d="M24 4L4 14V24C4 34.4 11.2 43.6 24 48C36.8 43.6 44 34.4 44 24V14L24 4Z"/>
+                </svg>
+            </span>
+            <div>
+                <div class="guardian-title">Protected by <strong>Guardian</strong></div>
+                <div style="font-size: 0.78em; color: var(--text-dim); font-style: italic; margin-top: 3px;">
+                    "I stand between chaos and those I protect."
+                </div>
+            </div>
+        </div>
+        <div style="background: #0ff5a010; border: 1px solid var(--accent); border-radius: 10px; padding: 10px 18px;">
+            <div style="font-size: 0.9em; font-weight: 800; color: var(--accent); letter-spacing: 3px;">HIPAA</div>
+            <div style="font-size: 0.65em; color: var(--text-dim); text-transform: uppercase;">Compliant</div>
+        </div>
+    </div>
+
+    <div class="topbar">
+        <h2>Command Center</h2>
+        <div class="live-badge"><div class="live-dot"></div> LIVE</div>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-label">Organs Online</div>
+            <div class="metric-value" id="mv-organs">--/--</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">CPU Load</div>
+            <div class="metric-value" id="mv-cpu">--%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Memory</div>
+            <div class="metric-value" id="mv-mem">--%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Shield Strength</div>
+            <div class="metric-value" id="mv-shield">--%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Threats Blocked</div>
+            <div class="metric-value" id="mv-threats">0</div>
+        </div>
+    </div>
+
+    <div class="righteousness-section">
+        <h3>Righteousness Engine - Ethical Evaluation</h3>
+        <div class="righteousness-grid">
+            <div class="right-card divine">
+                <div class="right-glyph">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <path fill="#00d4ff" d="M24 4L26.9 16.1L38 11.8L32.4 22.8L44 24L32.4 25.2L38 36.2L26.9 31.9L24 44L21.1 31.9L10 36.2L15.6 25.2L4 24L15.6 22.8L10 11.8L21.1 16.1L24 4Z"/>
+                    </svg>
+                </div>
+                <div class="right-label">Divine</div>
+                <div class="right-count" id="right-divine">0</div>
+            </div>
+            <div class="right-card righteous">
+                <div class="right-glyph">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <path fill="#0ff5a0" d="M24 4L4 14V24C4 34.4 11.2 43.6 24 48C36.8 43.6 44 34.4 44 24V14L24 4Z"/>
+                    </svg>
+                </div>
+                <div class="right-label">Righteous</div>
+                <div class="right-count" id="right-righteous">0</div>
+            </div>
+            <div class="right-card neutral">
+                <div class="right-glyph">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="16" fill="none" stroke="#5a6e8a" stroke-width="4"/>
+                        <circle cx="24" cy="24" r="8" fill="#5a6e8a"/>
+                    </svg>
+                </div>
+                <div class="right-label">Neutral</div>
+                <div class="right-count" id="right-neutral">0</div>
+            </div>
+            <div class="right-card questionable">
+                <div class="right-glyph">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <path fill="#ffb347" d="M24 4L44 44H4L24 4Z"/>
+                        <text x="24" y="36" text-anchor="middle" fill="#030810" font-size="24" font-weight="bold">!</text>
+                    </svg>
+                </div>
+                <div class="right-label">Questionable</div>
+                <div class="right-count" id="right-questionable">0</div>
+            </div>
+            <div class="right-card evil">
+                <div class="right-glyph">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <line x1="12" y1="12" x2="36" y2="36" stroke="#ff3b5c" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="36" y1="12" x2="12" y2="36" stroke="#ff3b5c" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="right-label">Blocked</div>
+                <div class="right-count" id="right-evil">0</div>
+            </div>
+        </div>
+
+        <h3>Recent Ethical Decisions</h3>
+        <div class="decisions-feed" id="decisions-feed">
+            <div class="decision-item">Righteousness Engine starting...</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="viz-panel" id="viz-container"></div>
+        <div class="alert-panel">
+            <h3>Security Feed</h3>
+            <div class="alert-feed" id="alert-feed">
+                <div class="alert-item">System initializing...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="organs-section">
+        <h3>Security Organs</h3>
+        <div class="organ-grid" id="organ-grid"></div>
+    </div>
+</div>
+
+<div class="zombie-sweeper">🧟🧹</div>
+
+<script>
+const ORGAN_ICONS = {
+    'Guardian': '🛡', 'Sentinel': '👁', 'Audit': '📋', 'Chronicle': '📚', 'Cortex': '🧠',
+    'Watchdog': '🐕', 'Firewall': '🔥', 'Backup': '💾', 'Quarantine': '🔒', 'Vault': '🔐',
+    'MFA': '🔑', 'RBAC': '👥', 'Host Sensor': '🖥', 'Network Monitor': '📡', 'Threat Intel': '🎯',
+    'PHI Guard': '🏥', 'Canary': '🐦', 'Scanner': '🔍', 'Patcher': '🩹', 'Encryptor': '🔐',
+    'DLP Engine': '📊', 'Behavioral Analysis': '📈', 'Anomaly Detector': '⚠', 'Epic Connector': '⚕',
+    'Imprivata Bridge': '🌉', 'HL7 Filter': '💉', 'FHIR Gateway': '🚪', 'DICOM Shield': '🩻',
+    'IoMT Protector': '📟', 'VPN Manager': '🔐', 'Certificate Authority': '📜', 'Key Manager': '🗝',
+    'Session Monitor': '👤', 'Compliance Engine': '✅', 'Risk Analyzer': '⚖', 'Forensic Collector': '🔬',
+    'Incident Responder': '🚨', 'Malware Detector': '🦠', 'Ransomware Shield': '🛡', 'Zero Trust Engine': '⛔',
+    'Micro-segmentation': '🧩', 'API Gateway': '🚪', 'Load Balancer': '⚖', 'WAF': '🧱', 'IDS/IPS': '🚦',
+    'SIEM Connector': '🔗', 'Log Aggregator': '📝', 'Metrics Collector': '📊', 'Alert Manager': '🔔',
+    'Notification Engine': '📬', 'Email Gateway': '📧', 'SMS Notifier': '📱', 'Webhook Handler': '🪝',
+    'DNS Filter': '🌐', 'Web Proxy': '🔄', 'Content Filter': '🔍', 'SSL Inspector': '🔒',
+    'Traffic Shaper': '🚥', 'Bandwidth Monitor': '📶', 'Port Scanner': '🔌', 'Vulnerability Scanner': '🔎',
+    'Patch Manager': '🩹', 'Config Auditor': '⚙', 'Baseline Monitor': '📏', 'Integrity Checker': '✔',
+    'File Monitor': '📁', 'Registry Watcher': '📋', 'Process Monitor': '⚙', 'Service Guardian': '🛡',
+    'Resource Limiter': '🎚', 'Performance Monitor': '📈', 'Health Checker': '💚', 'Uptime Tracker': '⏱',
+    'Disaster Recovery': '🆘', 'Snapshot Manager': '📸', 'Replication Engine': '🔄', 'Failover Controller': '🔀',
+    'Backup Validator': '✅'
+};
+
+let scene, camera, renderer, shield, core, ring;
+
+function initViz() {
+    const container = document.getElementById('viz-container');
+    const w = container.clientWidth;
+    const h = container.clientHeight || 400;
+
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030810, 0.02);
+    camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 100);
+    camera.position.set(0, 2, 12);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setClearColor(0x030810, 1);
+    container.appendChild(renderer.domElement);
+
+    const shieldGeo = new THREE.SphereGeometry(1.5, 32, 32);
+    const shieldMat = new THREE.MeshBasicMaterial({
+        color: 0x00d4ff, wireframe: true, transparent: true, opacity: 0.4
+    });
+    shield = new THREE.Mesh(shieldGeo, shieldMat);
+    scene.add(shield);
+
+    const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x0ff5a0, transparent: true, opacity: 0.8
+    });
+    core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    const ringGeo = new THREE.BufferGeometry();
+    const ringCount = 300;
+    const ringPos = new Float32Array(ringCount * 3);
+    for (let i = 0; i < ringCount; i++) {
+        const angle = (i / ringCount) * Math.PI * 2;
+        const r = 4 + Math.random() * 0.8;
+        ringPos[i * 3] = Math.cos(angle) * r;
+        ringPos[i * 3 + 1] = (Math.random() - 0.5) * 2;
+        ringPos[i * 3 + 2] = Math.sin(angle) * r;
+    }
+    ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+    const ringMat = new THREE.PointsMaterial({
+        color: 0x00d4ff, size: 0.12, transparent: true, opacity: 0.8
+    });
+    ring = new THREE.Points(ringGeo, ringMat);
+    scene.add(ring);
+
+    const gridGeo = new THREE.BufferGeometry();
+    const gridCount = 500;
+    const gridPos = new Float32Array(gridCount * 3);
+    for (let i = 0; i < gridCount; i++) {
+        gridPos[i * 3] = (Math.random() - 0.5) * 50;
+        gridPos[i * 3 + 1] = (Math.random() - 0.5) * 50;
+        gridPos[i * 3 + 2] = (Math.random() - 0.5) * 50;
+    }
+    gridGeo.setAttribute('position', new THREE.BufferAttribute(gridPos, 3));
+    const gridMat = new THREE.PointsMaterial({
+        color: 0x5a6e8a, size: 0.05, transparent: true, opacity: 0.3
+    });
+    const grid = new THREE.Points(gridGeo, gridMat);
+    scene.add(grid);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const t = Date.now() * 0.001;
+        shield.rotation.y = t * 0.3;
+        shield.rotation.x = Math.sin(t * 0.1) * 0.2;
+        core.scale.setScalar(0.5 + Math.sin(t * 2) * 0.1);
+        ring.rotation.y = -t * 0.15;
+        camera.position.x = Math.sin(t * 0.1) * 12;
+        camera.position.z = Math.cos(t * 0.1) * 12;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+    }
+    animate();
+}
+
+async function fetchData() {
+    try {
+        const [status, organs] = await Promise.all([
+            fetch('/api/status').then(r => r.json()),
+            fetch('/api/organs').then(r => r.json())
+        ]);
+
+        document.getElementById('mv-cpu').textContent = status.cpu.toFixed(1) + '%';
+        document.getElementById('mv-mem').textContent = status.memory.toFixed(1) + '%';
+        document.getElementById('mv-organs').textContent = organs.running + '/' + organs.total;
+        
+        const shield = Math.round((organs.running / organs.total) * 100);
+        document.getElementById('mv-shield').textContent = shield + '%';
+        document.getElementById('mv-threats').textContent = organs.threats_found || 0;
+
+        const grid = document.getElementById('organ-grid');
+        grid.innerHTML = organs.organs.map(o => {
+            const icon = ORGAN_ICONS[o.name] || '⚙';
+            return `
+            <div class="organ-card">
+                <span class="organ-icon">${icon}</span>
+                <div class="organ-name">${o.name}</div>
+                <div class="organ-status">${o.status.toUpperCase()}</div>
+            </div>`;
+        }).join('');
+    } catch (e) {
+        console.error('Fetch error:', e);
+    }
+}
+
+async function fetchRighteousness() {
+    try {
+        const [report, recent] = await Promise.all([
+            fetch('/api/righteousness/report').then(r => r.json()),
+            fetch('/api/righteousness/recent').then(r => r.json())
+        ]);
+
+        document.getElementById('right-divine').textContent = report.by_level?.DIVINE || 0;
+        document.getElementById('right-righteous').textContent = report.by_level?.RIGHTEOUS || 0;
+        document.getElementById('right-neutral').textContent = report.by_level?.NEUTRAL || 0;
+        document.getElementById('right-questionable').textContent = report.by_level?.QUESTIONABLE || 0;
+        document.getElementById('right-evil').textContent = report.by_level?.EVIL || 0;
+
+        const feed = document.getElementById('decisions-feed');
+        if (recent.decisions && recent.decisions.length > 0) {
+            feed.innerHTML = recent.decisions.reverse().slice(0, 5).map(d => 
+                `<div class="decision-item">${d.affirmation || d.message || 'Decision logged'}</div>`
+            ).join('');
+        }
+    } catch (e) {
+        console.error('Righteousness fetch error:', e);
+    }
+}
+
+initViz();
+fetchData();
+fetchRighteousness();
+setInterval(fetchData, 5000);
+setInterval(fetchRighteousness, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+actions:
+- type: enqueue
+- type: dequeue
+- type: retry
+- type: dead_letter
+affirmation: Every message waits its turn.
+dependencies:
+- dispatcher
+description: Reliable message queue for async organ communication.
+glyph: "\U0001F4EC"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/queue.sock
+name: queue
+organ: queue
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/queue.log
+symbolic_role: waiting_line
+technical_role: message_queue
+tier: core
+triggers:
+- type: message_enqueue
+- type: queue_full
+- type: consumer_timeout
+version: 1.0

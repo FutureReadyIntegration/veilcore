@@ -1,0 +1,10 @@
+{
+  "name": "collector",
+  "version": 1.0,
+  "description": "Centralized log collection from all hospital systems.",
+  "tier": "monitoring",
+  "glyph": "\ud83e\uddf2",
+  "technical_role": "log_collector",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.227906+00:00"
+}

@@ -1,0 +1,26 @@
+name: hospital
+version: 1.0
+tier: clinical
+glyph: "🏥"
+technical_role: hospital_adapter
+symbolic_role: sanctuary
+description: Hospital system integration and clinical workflow adapter.
+inputs:
+  - source: /opt/veil_os/sockets/hospital.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/hospital.log
+    format: jsonl
+triggers:
+  - type: clinical_event
+  - type: system_alert
+  - type: workflow_trigger
+actions:
+  - type: adapt
+  - type: translate
+  - type: monitor
+dependencies:
+  - epic
+  - hl7
+  - fhir
+affirmation: I understand the language of healers.

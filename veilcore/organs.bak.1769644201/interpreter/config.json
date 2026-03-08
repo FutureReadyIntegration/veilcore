@@ -1,0 +1,10 @@
+{
+  "name": "interpreter",
+  "version": 1.0,
+  "description": "Security policy interpreter and rule engine.",
+  "tier": "core",
+  "glyph": "\ud83d\udcdc",
+  "technical_role": "policy_interpreter",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.739387+00:00"
+}

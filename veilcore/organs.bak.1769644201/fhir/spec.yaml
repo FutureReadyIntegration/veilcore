@@ -1,0 +1,26 @@
+actions:
+- type: validate
+- type: transform
+- type: proxy
+affirmation: Fire connects all who seek healing.
+dependencies:
+- epic
+- auth
+- rbac
+description: FHIR R4 API gateway for modern healthcare interoperability.
+glyph: "\U0001F525"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/fhir.sock
+name: fhir
+organ: fhir
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/fhir.log
+symbolic_role: bridge_of_fire
+technical_role: api_gateway
+tier: clinical
+triggers:
+- type: api_request
+- type: auth_failure
+version: 1.0

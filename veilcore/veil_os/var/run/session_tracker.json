@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/session_tracker.log",
+  "module": "veil.organs.runner",
+  "name": "session_tracker",
+  "pid": 134069
+}

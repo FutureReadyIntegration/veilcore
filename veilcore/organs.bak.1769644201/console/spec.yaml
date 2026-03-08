@@ -1,0 +1,25 @@
+actions:
+- type: execute
+- type: audit_command
+affirmation: Command flows through me with purpose.
+dependencies:
+- auth
+- rbac
+- audit
+description: Administrative console for Veil OS operators.
+glyph: "\U0001F5A5\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/console.sock
+name: console
+organ: console
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/console.log
+symbolic_role: command_throne
+technical_role: admin_console
+tier: interface
+triggers:
+- type: command_issued
+- type: session_start
+version: 1.0

@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL OS — Living Hospital Defense</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg-deep: #030810;
+            --bg-panel: #0a1020;
+            --bg-card: #0d1528;
+            --bg-card-hover: #111d35;
+            --border: #1a2744;
+            --border-glow: #0f8b5540;
+            --accent: #0ff5a0;
+            --accent-dim: #0ff5a040;
+            --accent-bright: #3dffc0;
+            --danger: #ff3b5c;
+            --danger-dim: #ff3b5c30;
+            --warn: #ffb347;
+            --warn-dim: #ffb34730;
+            --text: #e0e8f0;
+            --text-dim: #5a6e8a;
+            --text-muted: #3a4e6a;
+            --cyan: #00d4ff;
+            --cyan-dim: #00d4ff25;
+            --sidebar-w: 220px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: var(--sidebar-w);
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            padding: 24px 0;
+            z-index: 100;
+        }
+        .sidebar-brand {
+            padding: 0 20px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .sidebar-brand h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-dim);
+            letter-spacing: 3px;
+        }
+        .sidebar-brand .subtitle {
+            font-size: 0.65em;
+            color: var(--text-dim);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 400;
+            transition: all 0.25s;
+            border-left: 3px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+            border-left-color: var(--accent);
+        }
+        .nav-link .icon { font-size: 1.1em; width: 24px; text-align: center; }
+        .nav-spacer { flex: 1; }
+        .nav-status {
+            margin: 0 16px;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .nav-status .label { font-size: 0.7em; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-status .value { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); margin-top: 4px; }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            margin-left: var(--sidebar-w);
+            padding: 24px 32px;
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        .topbar h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .topbar .live-badge {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+        }
+        .topbar .live-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* ── METRICS ROW ── */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .metric-card:hover { border-color: var(--accent); }
+        .metric-card .metric-label {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .metric-card .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .metric-card .metric-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--border);
+        }
+        .metric-card .metric-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            transition: width 1s ease;
+        }
+        .metric-card.danger .metric-value { color: var(--danger); }
+        .metric-card.danger .metric-bar-fill { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+        .metric-card.warn .metric-value { color: var(--warn); }
+        .metric-card.warn .metric-bar-fill { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+
+        /* ── LAYOUT GRID ── */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+
+        /* ── 3D VIZ CONTAINER ── */
+        .viz-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-height: 360px;
+        }
+        .viz-panel canvas { display: block; width: 100%; height: 100%; }
+        .viz-overlay {
+            position: absolute;
+            top: 16px; left: 20px;
+            z-index: 10;
+        }
+        .viz-overlay h3 {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .viz-overlay .viz-sub {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .viz-legend {
+            position: absolute;
+            bottom: 16px; right: 20px;
+            z-index: 10;
+            display: flex; gap: 16px;
+        }
+        .viz-legend span {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.7em; color: var(--text-dim);
+        }
+        .viz-legend .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+        }
+        .viz-legend .dot.green { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+        .viz-legend .dot.red { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+        .viz-legend .dot.blue { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+
+        /* ── RIGHT PANEL ── */
+        .right-panel { display: flex; flex-direction: column; gap: 20px; }
+
+        /* ── ALERT FEED ── */
+        .alert-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            flex: 1;
+            max-height: 360px;
+            display: flex; flex-direction: column;
+        }
+        .alert-panel h3 {
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .alert-panel h3 .count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            color: var(--bg-deep);
+            background: var(--danger);
+            padding: 1px 8px;
+            border-radius: 10px;
+        }
+        .alert-feed {
+            flex: 1;
+            overflow-y: auto;
+            display: flex; flex-direction: column; gap: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+        .alert-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border-left: 3px solid var(--danger);
+            font-size: 0.82em;
+            animation: slideIn 0.3s ease;
+        }
+        .alert-item.warn { border-left-color: var(--warn); }
+        .alert-item.info { border-left-color: var(--cyan); }
+        .alert-item .alert-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .alert-item .alert-msg { color: var(--text-dim); line-height: 1.4; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* ── ORGAN GRID ── */
+        .organs-section {
+            margin-top: 28px;
+        }
+        .organs-section .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        .organs-section h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .tier-tabs {
+            display: flex; gap: 4px;
+        }
+        .tier-tab {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            padding: 5px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tier-tab:hover, .tier-tab.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .organ-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .organ-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex; flex-direction: column; gap: 10px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .organ-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px #0003;
+        }
+        .organ-card.running::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .organ-card.stopped::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--danger);
+            box-shadow: 0 0 6px var(--danger-dim);
+        }
+        .organ-top {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .organ-name {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .organ-status {
+            display: flex; align-items: center; gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72em;
+        }
+        .organ-status .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+        }
+        .organ-card.running .dot {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+        .organ-card.stopped .dot {
+            background: var(--danger);
+            box-shadow: 0 0 4px var(--danger-dim);
+        }
+        .organ-card.running .organ-status { color: var(--accent); }
+        .organ-card.stopped .organ-status { color: var(--danger); }
+        @keyframes pulse-glow {
+            0%,100% { box-shadow: 0 0 6px var(--accent); }
+            50% { box-shadow: 0 0 16px var(--accent), 0 0 30px var(--accent-dim); }
+        }
+        .organ-meta {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .organ-tier {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68em;
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+        .organ-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7em;
+            padding: 4px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .organ-card.running .organ-btn {
+            color: var(--danger);
+            border-color: var(--danger-dim);
+        }
+        .organ-card.running .organ-btn:hover {
+            background: var(--danger-dim);
+        }
+        .organ-card.stopped .organ-btn {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+        }
+        .organ-card.stopped .organ-btn:hover {
+            background: var(--accent-dim);
+        }
+
+        /* ── PROTECTED SYSTEMS (bottom) ── */
+        .systems-section { margin-top: 28px; }
+        .systems-section h3 { font-size: 1.1em; font-weight: 600; margin-bottom: 16px; }
+        .systems-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .sys-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sys-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at top left, var(--accent-dim), transparent 70%);
+            pointer-events: none;
+        }
+        .sys-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px;
+        }
+        .sys-name { font-weight: 700; font-size: 1.1em; }
+        .sys-glyph { font-size: 1.8em; }
+        .sys-status {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82em; color: var(--accent);
+            margin-bottom: 14px;
+        }
+        .sys-status .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+        .sys-guards {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .sys-guard-tag {
+            font-size: 0.75em;
+            padding: 3px 10px;
+            border-radius: 5px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--border-glow);
+        }
+
+        /* ── GUARDIAN BANNER ── */
+        .guardian-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1a12 0%, #0d1528 50%, #0a1220 100%);
+            border: 1px solid var(--accent);
+            border-radius: 14px;
+            padding: 18px 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px var(--accent-dim), inset 0 0 60px #0ff5a008;
+        }
+        .guardian-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, #0ff5a008, transparent);
+            animation: guardian-sweep 4s infinite;
+        }
+        @keyframes guardian-sweep {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(50%); }
+        }
+        .guardian-left {
+            display: flex; align-items: center; gap: 16px;
+            z-index: 1;
+        }
+        .guardian-shield {
+            font-size: 2.4em;
+            filter: drop-shadow(0 0 12px var(--accent));
+            animation: shield-pulse 3s ease-in-out infinite;
+        }
+        @keyframes shield-pulse {
+            0%,100% { transform: scale(1); filter: drop-shadow(0 0 12px var(--accent)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 24px var(--accent-bright)); }
+        }
+        .guardian-title {
+            font-size: 1.05em;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+        .guardian-title strong {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-dim);
+        }
+        .guardian-slogan {
+            font-size: 0.78em;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+        .guardian-right { z-index: 1; }
+        .hipaa-badge {
+            display: flex; align-items: center; gap: 10px;
+            background: #0ff5a010;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 10px 18px;
+            box-shadow: 0 0 16px var(--accent-dim);
+        }
+        .hipaa-lock {
+            font-size: 1.4em;
+        }
+        .hipaa-text {
+            display: flex; flex-direction: column;
+        }
+        .hipaa-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+        .hipaa-sub {
+            font-size: 0.65em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* ── LOCKDOWN BANNER ── */
+        .lockdown-banner {
+            display: none;
+            background: linear-gradient(90deg, var(--danger-dim), var(--bg-card));
+            border: 1px solid var(--danger);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--danger);
+            font-weight: 600;
+            animation: flash 1s infinite;
+        }
+        .lockdown-banner.active { display: flex; align-items: center; gap: 10px; }
+        @keyframes flash { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1200px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .metrics-row { grid-template-columns: repeat(3, 1fr); }
+            .systems-row { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 60px; padding: 12px 0; }
+            .sidebar .nav-link span, .sidebar-brand .subtitle, .nav-status { display: none; }
+            .sidebar-brand h1 { font-size: 0.9em; text-align: center; letter-spacing: 0; }
+            .main { margin-left: 60px; padding: 16px; }
+            .metrics-row { grid-template-columns: repeat(2, 1fr); }
+            .systems-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+    <div class="sidebar-brand">
+        <h1>🔱 VEIL</h1>
+        <div class="subtitle">Hospital Defense OS</div>
+    </div>
+    <a href="/" class="nav-link active"><span class="icon">⬡</span><span>Command</span></a>
+    <a href="/patients" class="nav-link"><span class="icon">👤</span><span>Patients</span></a>
+    <a href="/discharged" class="nav-link"><span class="icon">📋</span><span>Discharged</span></a>
+    <a href="/organs" class="nav-link"><span class="icon">🫀</span><span>Organs</span></a>
+    <a href="/status" class="nav-link"><span class="icon">📊</span><span>Diagnostics</span></a>
+    <div class="nav-spacer"></div>
+    <div class="nav-status">
+        <div class="label">Uptime</div>
+        <div class="value" id="nav-uptime">--:--:--</div>
+    </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+    <!-- LOCKDOWN BANNER -->
+    <div class="lockdown-banner" id="lockdown-banner">
+        🚨 LOCKDOWN ACTIVE — Threat detected. All non-critical ports sealed.
+    </div>
+
+    <!-- GUARDIAN BANNER -->
+    <div class="guardian-banner">
+        <div class="guardian-left">
+            <span class="guardian-shield">🛡️</span>
+            <div class="guardian-text">
+                <div class="guardian-title">Protected by <strong>Guardian</strong></div>
+                <div class="guardian-slogan">"I stand between chaos and those I protect."</div>
+            </div>
+        </div>
+        <div class="guardian-right">
+            <div class="hipaa-badge">
+                <span class="hipaa-lock">🔒</span>
+                <div class="hipaa-text">
+                    <span class="hipaa-label">HIPAA</span>
+                    <span class="hipaa-sub">Compliant</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>Command Center</h2>
+        <div class="live-badge"><div class="live-dot"></div> LIVE</div>
+    </div>
+
+    <!-- METRICS ROW -->
+    <div class="metrics-row">
+        <div class="metric-card" id="mc-organs">
+            <div class="metric-label">Organs Online</div>
+            <div class="metric-value" id="mv-organs">--/--</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-organs" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-cpu">
+            <div class="metric-label">CPU Load</div>
+            <div class="metric-value" id="mv-cpu">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-cpu" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-mem">
+            <div class="metric-label">Memory</div>
+            <div class="metric-value" id="mv-mem">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-mem" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-shield">
+            <div class="metric-label">Shield Strength</div>
+            <div class="metric-value" id="mv-shield">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-shield" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-events">
+            <div class="metric-label">Security Events</div>
+            <div class="metric-value" id="mv-events">--</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-events" style="width:0%"></div></div>
+        </div>
+    </div>
+
+    <!-- VIZ + ALERTS -->
+    <div class="content-grid">
+        <!-- 3D THREAT VISUALIZATION -->
+        <div class="viz-panel" id="viz-container">
+            <div class="viz-overlay">
+                <h3>Threat Landscape</h3>
+                <div class="viz-sub">Real-time organ network topology</div>
+            </div>
+            <div class="viz-legend">
+                <span><div class="dot green"></div> Running</span>
+                <span><div class="dot red"></div> Stopped</span>
+                <span><div class="dot blue"></div> Connection</span>
+            </div>
+        </div>
+
+        <!-- ALERT FEED -->
+        <div class="right-panel">
+            <div class="alert-panel">
+                <h3>⚡ Security Feed <span class="count" id="alert-count">0</span></h3>
+                <div class="alert-feed" id="alert-feed">
+                    <div class="alert-item info">
+                        <span class="alert-time">--:--</span>
+                        <span class="alert-msg">Waiting for data…</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORGAN GRID -->
+    <div class="organs-section">
+        <div class="section-header">
+            <h3>🫀 Security Organs</h3>
+            <div class="tier-tabs">
+                <button class="tier-tab active" onclick="filterOrgans('all')">All</button>
+                <button class="tier-tab" onclick="filterOrgans('P0')">P0 Critical</button>
+                <button class="tier-tab" onclick="filterOrgans('P1')">P1 Important</button>
+                <button class="tier-tab" onclick="filterOrgans('P2')">P2 Standard</button>
+            </div>
+        </div>
+        <div class="organ-grid" id="organ-grid">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- PROTECTED SYSTEMS -->
+    <div class="systems-section">
+        <h3>🏥 Protected Systems</h3>
+        <div class="systems-row">
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Epic EHR</span>
+                    <span class="sys-glyph">🏥</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="epic-guards"></div>
+            </div>
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Imprivata SSO</span>
+                    <span class="sys-glyph">🔐</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="imprivata-guards"></div>
+            </div>
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Medical IoT</span>
+                    <span class="sys-glyph">🩺</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="iot-guards"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script>
+// ── STATE ──
+let organData = [];
+let systemStatus = {};
+let alertLog = [];
+let currentFilter = 'all';
+let startTime = Date.now();
+let vizNodes = [];   // for 3D scene
+
+// Organ-to-system mapping
+const SYSTEM_GUARDS = {
+    epic: ['Guardian', 'Sentinel', 'Watchdog', 'Backup', 'Quarantine', 'Host Sensor'],
+    imprivata: ['Guardian', 'MFA', 'RBAC', 'Vault', 'Audit'],
+    iot: ['Guardian', 'Sentinel', 'Firewall', 'PHI', 'Canary', 'Host Sensor']
+};
+
+const ORGAN_GLYPHS = {
+    'Guardian': '🛡️', 'Sentinel': '🗼', 'Audit': '📋', 'Behavioral Anomaly Detection': '🧠',
+    'Host Sensor': '📡', 'Watchdog': '🐕', 'Firewall': '🔥', 'Backup': '💾',
+    'Quarantine': '🔒', 'Vault': '🏦', 'MFA': '🔑', 'RBAC': '👥',
+    'PHI': '💊', 'Canary': '🐤', 'Chronicle': '📜', 'Reconciler': '⚖️',
+    'Auditor': '🔍', 'Scanner': '🔎', 'Patcher': '🩹', 'Encryptor': '🔐'
+};
+
+// ── API POLLING ──
+async function fetchOrgans() {
+    try {
+        const res = await fetch('/api/organs');
+        const data = await res.json();
+        organData = data.organs || [];
+        updateMetrics(data);
+        renderOrgans();
+        updateSystemGuards();
+        updateVizNodes();
+    } catch (e) {
+        console.warn('Organ fetch failed:', e);
+    }
+}
+
+async function fetchStatus() {
+    try {
+        const res = await fetch('/api/status');
+        systemStatus = await res.json();
+        updateStatusMetrics();
+    } catch (e) {
+        console.warn('Status fetch failed:', e);
+    }
+}
+
+// ── METRICS ──
+function updateMetrics(data) {
+    const running = data.running || 0;
+    const total = data.total || 0;
+    const pct = total > 0 ? Math.round((running / total) * 100) : 0;
+
+    document.getElementById('mv-organs').textContent = `${running}/${total}`;
+    document.getElementById('mb-organs').style.width = pct + '%';
+
+    // Shield strength based on running ratio
+    const shield = total > 0 ? Math.round((running / total) * 100) : 0;
+    document.getElementById('mv-shield').textContent = shield + '%';
+    document.getElementById('mb-shield').style.width = shield + '%';
+
+    const mc = document.getElementById('mc-organs');
+    mc.classList.toggle('danger', pct < 50);
+    mc.classList.toggle('warn', pct >= 50 && pct < 80);
+
+    const sc = document.getElementById('mc-shield');
+    sc.classList.toggle('danger', shield < 50);
+    sc.classList.toggle('warn', shield >= 50 && shield < 80);
+}
+
+function updateStatusMetrics() {
+    const cpu = systemStatus.cpu || 0;
+    const mem = systemStatus.memory || 0;
+    const events = systemStatus.security_events || 0;
+    const lockdown = systemStatus.lockdown || false;
+
+    document.getElementById('mv-cpu').textContent = cpu.toFixed(1) + '%';
+    document.getElementById('mb-cpu').style.width = Math.min(cpu, 100) + '%';
+    const cpuCard = document.getElementById('mc-cpu');
+    cpuCard.classList.toggle('danger', cpu > 90);
+    cpuCard.classList.toggle('warn', cpu > 70 && cpu <= 90);
+
+    document.getElementById('mv-mem').textContent = mem.toFixed(1) + '%';
+    document.getElementById('mb-mem').style.width = Math.min(mem, 100) + '%';
+    const memCard = document.getElementById('mc-mem');
+    memCard.classList.toggle('danger', mem > 90);
+    memCard.classList.toggle('warn', mem > 70 && mem <= 90);
+
+    document.getElementById('mv-events').textContent = events.toLocaleString();
+    document.getElementById('mb-events').style.width = Math.min(events / 50, 100) + '%';
+
+    // Lockdown banner
+    const banner = document.getElementById('lockdown-banner');
+    banner.classList.toggle('active', lockdown);
+
+    // Generate alerts from event count changes
+    if (alertLog.length === 0 || events !== alertLog[alertLog.length - 1]?.count) {
+        addAlert(events);
+    }
+}
+
+// ── ALERTS ──
+function addAlert(eventCount) {
+    const now = new Date();
+    const timeStr = now.toTimeString().slice(0, 5);
+    const messages = [
+        { msg: `${eventCount.toLocaleString()} security events processed`, type: 'info' },
+        { msg: `Guardian screening network traffic`, type: 'info' },
+        { msg: `Sentinel behavioral scan complete`, type: 'info' },
+        { msg: `Host Sensor telemetry nominal`, type: 'info' },
+    ];
+
+    // Add organ-specific alerts
+    organData.forEach(o => {
+        if (o.status === 'stopped') {
+            messages.push({ msg: `${o.name} is OFFLINE — protection degraded`, type: 'warn' });
+        }
+    });
+
+    // Pick a relevant alert
+    const stoppedOrgans = organData.filter(o => o.status === 'stopped');
+    let alert;
+    if (stoppedOrgans.length > 0 && Math.random() > 0.5) {
+        const org = stoppedOrgans[Math.floor(Math.random() * stoppedOrgans.length)];
+        alert = { time: timeStr, msg: `⚠ ${org.name} offline — coverage gap detected`, type: 'warn', count: eventCount };
+    } else {
+        const pick = messages[Math.floor(Math.random() * messages.length)];
+        alert = { time: timeStr, msg: pick.msg, type: pick.type, count: eventCount };
+    }
+
+    alertLog.push(alert);
+    if (alertLog.length > 50) alertLog.shift();
+    renderAlerts();
+}
+
+function renderAlerts() {
+    const feed = document.getElementById('alert-feed');
+    const recent = alertLog.slice(-20).reverse();
+    document.getElementById('alert-count').textContent = alertLog.length;
+
+    feed.innerHTML = recent.map(a =>
+        `<div class="alert-item ${a.type}">
+            <span class="alert-time">${a.time}</span>
+            <span class="alert-msg">${a.msg}</span>
+        </div>`
+    ).join('');
+}
+
+// ── ORGAN GRID ──
+function renderOrgans() {
+    const grid = document.getElementById('organ-grid');
+    const filtered = currentFilter === 'all'
+        ? organData
+        : organData.filter(o => o.priority === currentFilter);
+
+    grid.innerHTML = filtered.map(o => {
+        const running = o.status === 'running';
+        const glyph = ORGAN_GLYPHS[o.name] || '🫀';
+        return `
+        <div class="organ-card ${running ? 'running' : 'stopped'}" data-tier="${o.priority || 'P2'}">
+            <div class="organ-top">
+                <span class="organ-name">${glyph} ${o.name}</span>
+            </div>
+            <div class="organ-meta">
+                <span class="organ-tier">${o.priority || 'P2'}</span>
+                <div class="organ-status">
+                    <span class="dot"></span>
+                    ${running ? 'ONLINE' : 'OFFLINE'}
+                </div>
+            </div>
+            <div class="organ-meta">
+                <span></span>
+                <button class="organ-btn" onclick="toggleOrgan('${o.name}', ${running})">
+                    ${running ? '■ STOP' : '▶ START'}
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function filterOrgans(tier) {
+    currentFilter = tier;
+    document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    renderOrgans();
+}
+
+async function toggleOrgan(name, isRunning) {
+    const action = isRunning ? 'stop' : 'start';
+    try {
+        await fetch(`/api/organs/${encodeURIComponent(name)}/${action}`, { method: 'POST' });
+        setTimeout(fetchOrgans, 500);
+    } catch (e) {
+        console.error('Toggle failed:', e);
+    }
+}
+
+// ── SYSTEM GUARD TAGS ──
+function updateSystemGuards() {
+    const running = new Set(organData.filter(o => o.status === 'running').map(o => o.name));
+
+    Object.entries(SYSTEM_GUARDS).forEach(([sysId, guards]) => {
+        const el = document.getElementById(sysId + '-guards');
+        if (!el) return;
+        el.innerHTML = guards.map(g => {
+            const live = running.has(g);
+            const glyph = ORGAN_GLYPHS[g] || '🫀';
+            return `<span class="sys-guard-tag" style="${live ? '' : 'opacity:0.35;border-color:var(--danger-dim);color:var(--danger)'}">${glyph} ${g}</span>`;
+        }).join('');
+    });
+}
+
+// ── UPTIME CLOCK ──
+function updateUptime() {
+    const diff = Math.floor((Date.now() - startTime) / 1000);
+    const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+    const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+    const s = String(diff % 60).padStart(2, '0');
+    document.getElementById('nav-uptime').textContent = `${h}:${m}:${s}`;
+}
+
+// ═════════════════════════════════════════
+// THREE.JS — 3D ORGAN NETWORK VISUALIZATION
+// ═════════════════════════════════════════
+let scene, camera, renderer, frameId;
+
+function initViz() {
+    const container = document.getElementById('viz-container');
+    const w = container.clientWidth;
+    const h = container.clientHeight || 360;
+
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030810, 0.04);
+
+    camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 100);
+    camera.position.set(0, 2, 12);
+    camera.lookAt(0, 0, 0);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x030810, 1);
+    container.appendChild(renderer.domElement);
+
+    // Central shield sphere
+    const shieldGeo = new THREE.SphereGeometry(1.5, 32, 32);
+    const shieldMat = new THREE.MeshBasicMaterial({
+        color: 0x0ff5a0,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15
+    });
+    const shield = new THREE.Mesh(shieldGeo, shieldMat);
+    scene.add(shield);
+
+    // Inner core glow
+    const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x0ff5a0,
+        transparent: true,
+        opacity: 0.4
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    // Particle ring
+    const ringGeo = new THREE.BufferGeometry();
+    const ringCount = 200;
+    const ringPos = new Float32Array(ringCount * 3);
+    for (let i = 0; i < ringCount; i++) {
+        const angle = (i / ringCount) * Math.PI * 2;
+        const r = 4 + Math.random() * 0.5;
+        ringPos[i * 3] = Math.cos(angle) * r;
+        ringPos[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+        ringPos[i * 3 + 2] = Math.sin(angle) * r;
+    }
+    ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+    const ringMat = new THREE.PointsMaterial({ color: 0x00d4ff, size: 0.06, transparent: true, opacity: 0.5 });
+    const ring = new THREE.Points(ringGeo, ringMat);
+    scene.add(ring);
+
+    // Ambient light
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+    // Organ nodes (will be updated when data arrives)
+    buildOrganNodes();
+
+    // Animate
+    function animate() {
+        frameId = requestAnimationFrame(animate);
+        const t = Date.now() * 0.001;
+
+        shield.rotation.y = t * 0.15;
+        shield.rotation.x = Math.sin(t * 0.1) * 0.1;
+        core.scale.setScalar(0.5 + Math.sin(t * 2) * 0.05);
+        ring.rotation.y = -t * 0.05;
+
+        // Orbit camera slowly
+        camera.position.x = Math.sin(t * 0.08) * 12;
+        camera.position.z = Math.cos(t * 0.08) * 12;
+        camera.position.y = 2 + Math.sin(t * 0.12) * 1;
+        camera.lookAt(0, 0, 0);
+
+        // Pulse organ nodes
+        vizNodes.forEach((node, i) => {
+            if (node.userData.running) {
+                node.scale.setScalar(0.18 + Math.sin(t * 3 + i) * 0.04);
+            }
+        });
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+        const w2 = container.clientWidth;
+        const h2 = container.clientHeight || 360;
+        camera.aspect = w2 / h2;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w2, h2);
+    });
+}
+
+function buildOrganNodes() {
+    // Remove old nodes
+    vizNodes.forEach(n => scene.remove(n));
+    vizNodes = [];
+
+    const organs = organData.length > 0 ? organData : [
+        { name: 'Guardian', status: 'running' },
+        { name: 'Sentinel', status: 'running' },
+        { name: 'Audit', status: 'stopped' },
+        { name: 'BAD', status: 'stopped' },
+        { name: 'Host Sensor', status: 'running' }
+    ];
+
+    organs.forEach((o, i) => {
+        const angle = (i / organs.length) * Math.PI * 2;
+        const radius = 3;
+        const running = o.status === 'running';
+
+        // Node sphere
+        const geo = new THREE.SphereGeometry(0.18, 12, 12);
+        const mat = new THREE.MeshBasicMaterial({
+            color: running ? 0x0ff5a0 : 0xff3b5c,
+            transparent: true,
+            opacity: running ? 0.9 : 0.5
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(
+            Math.cos(angle) * radius,
+            (Math.random() - 0.5) * 2,
+            Math.sin(angle) * radius
+        );
+        mesh.userData = { name: o.name, running };
+        scene.add(mesh);
+        vizNodes.push(mesh);
+
+        // Connection line to center
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, 0),
+            mesh.position
+        ]);
+        const lineMat = new THREE.LineBasicMaterial({
+            color: running ? 0x00d4ff : 0xff3b5c,
+            transparent: true,
+            opacity: running ? 0.2 : 0.08
+        });
+        const line = new THREE.Line(lineGeo, lineMat);
+        scene.add(line);
+    });
+}
+
+function updateVizNodes() {
+    buildOrganNodes();
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+    initViz();
+    fetchOrgans();
+    fetchStatus();
+
+    // Poll every 4 seconds
+    setInterval(fetchOrgans, 4000);
+    setInterval(fetchStatus, 4000);
+    setInterval(updateUptime, 1000);
+});
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL OS — Living Hospital Defense</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg-deep: #030810;
+            --bg-panel: #0a1020;
+            --bg-card: #0d1528;
+            --bg-card-hover: #111d35;
+            --border: #1a2744;
+            --border-glow: #0f8b5540;
+            --accent: #0ff5a0;
+            --accent-dim: #0ff5a040;
+            --accent-bright: #3dffc0;
+            --danger: #ff3b5c;
+            --danger-dim: #ff3b5c30;
+            --warn: #ffb347;
+            --warn-dim: #ffb34730;
+            --text: #e0e8f0;
+            --text-dim: #5a6e8a;
+            --text-muted: #3a4e6a;
+            --cyan: #00d4ff;
+            --cyan-dim: #00d4ff25;
+            --sidebar-w: 220px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: var(--sidebar-w);
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            padding: 24px 0;
+            z-index: 100;
+        }
+        .sidebar-brand {
+            padding: 0 20px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .sidebar-brand h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-dim);
+            letter-spacing: 3px;
+        }
+        .sidebar-brand .subtitle {
+            font-size: 0.65em;
+            color: var(--text-dim);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 400;
+            transition: all 0.25s;
+            border-left: 3px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+            border-left-color: var(--accent);
+        }
+        .nav-link .icon { font-size: 1.1em; width: 24px; text-align: center; }
+        .nav-spacer { flex: 1; }
+        .nav-status {
+            margin: 0 16px;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .nav-status .label { font-size: 0.7em; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-status .value { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); margin-top: 4px; }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            margin-left: var(--sidebar-w);
+            padding: 24px 32px;
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        .topbar h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .topbar .live-badge {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+        }
+        .topbar .live-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* ── METRICS ROW ── */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .metric-card:hover { border-color: var(--accent); }
+        .metric-card .metric-label {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .metric-card .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .metric-card .metric-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--border);
+        }
+        .metric-card .metric-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            transition: width 1s ease;
+        }
+        .metric-card.danger .metric-value { color: var(--danger); }
+        .metric-card.danger .metric-bar-fill { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+        .metric-card.warn .metric-value { color: var(--warn); }
+        .metric-card.warn .metric-bar-fill { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+
+        /* ── LAYOUT GRID ── */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+
+        /* ── 3D VIZ CONTAINER ── */
+        .viz-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-height: 360px;
+        }
+        .viz-panel canvas { display: block; width: 100%; height: 100%; }
+        .viz-overlay {
+            position: absolute;
+            top: 16px; left: 20px;
+            z-index: 10;
+        }
+        .viz-overlay h3 {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .viz-overlay .viz-sub {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .viz-legend {
+            position: absolute;
+            bottom: 16px; right: 20px;
+            z-index: 10;
+            display: flex; gap: 16px;
+        }
+        .viz-legend span {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.7em; color: var(--text-dim);
+        }
+        .viz-legend .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+        }
+        .viz-legend .dot.green { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+        .viz-legend .dot.red { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+        .viz-legend .dot.blue { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+
+        /* ── RIGHT PANEL ── */
+        .right-panel { display: flex; flex-direction: column; gap: 20px; }
+
+        /* ── ALERT FEED ── */
+        .alert-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            flex: 1;
+            max-height: 360px;
+            display: flex; flex-direction: column;
+        }
+        .alert-panel h3 {
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .alert-panel h3 .count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            color: var(--bg-deep);
+            background: var(--danger);
+            padding: 1px 8px;
+            border-radius: 10px;
+        }
+        .alert-feed {
+            flex: 1;
+            overflow-y: auto;
+            display: flex; flex-direction: column; gap: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+        .alert-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border-left: 3px solid var(--danger);
+            font-size: 0.82em;
+            animation: slideIn 0.3s ease;
+        }
+        .alert-item.warn { border-left-color: var(--warn); }
+        .alert-item.info { border-left-color: var(--cyan); }
+        .alert-item .alert-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .alert-item .alert-msg { color: var(--text-dim); line-height: 1.4; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* ── ORGAN GRID ── */
+        .organs-section {
+            margin-top: 28px;
+        }
+        .organs-section .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        .organs-section h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .tier-tabs {
+            display: flex; gap: 4px;
+        }
+        .tier-tab {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            padding: 5px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tier-tab:hover, .tier-tab.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .organ-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .organ-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex; flex-direction: column; gap: 10px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .organ-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px #0003;
+        }
+        .organ-card.running::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .organ-card.stopped::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--danger);
+            box-shadow: 0 0 6px var(--danger-dim);
+        }
+        .organ-top {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .organ-name {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .organ-status {
+            display: flex; align-items: center; gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72em;
+        }
+        .organ-status .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+        }
+        .organ-card.running .dot {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+        .organ-card.stopped .dot {
+            background: var(--danger);
+            box-shadow: 0 0 4px var(--danger-dim);
+        }
+        .organ-card.running .organ-status { color: var(--accent); }
+        .organ-card.stopped .organ-status { color: var(--danger); }
+        @keyframes pulse-glow {
+            0%,100% { box-shadow: 0 0 6px var(--accent); }
+            50% { box-shadow: 0 0 16px var(--accent), 0 0 30px var(--accent-dim); }
+        }
+        .organ-meta {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .organ-tier {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68em;
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+        .organ-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7em;
+            padding: 4px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .organ-card.running .organ-btn {
+            color: var(--danger);
+            border-color: var(--danger-dim);
+        }
+        .organ-card.running .organ-btn:hover {
+            background: var(--danger-dim);
+        }
+        .organ-card.stopped .organ-btn {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+        }
+        .organ-card.stopped .organ-btn:hover {
+            background: var(--accent-dim);
+        }
+
+        /* ── PROTECTED SYSTEMS (bottom) ── */
+        .systems-section { margin-top: 28px; }
+        .systems-section h3 { font-size: 1.1em; font-weight: 600; margin-bottom: 16px; }
+        .systems-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .sys-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sys-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at top left, var(--accent-dim), transparent 70%);
+            pointer-events: none;
+        }
+        .sys-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px;
+        }
+        .sys-name { font-weight: 700; font-size: 1.1em; }
+        .sys-glyph { font-size: 1.8em; }
+        .sys-status {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82em; color: var(--accent);
+            margin-bottom: 14px;
+        }
+        .sys-status .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+        .sys-guards {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .sys-guard-tag {
+            font-size: 0.75em;
+            padding: 3px 10px;
+            border-radius: 5px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--border-glow);
+        }
+
+        /* ── GUARDIAN BANNER ── */
+        .guardian-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1a12 0%, #0d1528 50%, #0a1220 100%);
+            border: 1px solid var(--accent);
+            border-radius: 14px;
+            padding: 18px 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px var(--accent-dim), inset 0 0 60px #0ff5a008;
+        }
+        .guardian-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, #0ff5a008, transparent);
+            animation: guardian-sweep 4s infinite;
+        }
+        @keyframes guardian-sweep {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(50%); }
+        }
+        .guardian-left {
+            display: flex; align-items: center; gap: 16px;
+            z-index: 1;
+        }
+        .guardian-shield {
+            font-size: 2.4em;
+            filter: drop-shadow(0 0 12px var(--accent));
+            animation: shield-pulse 3s ease-in-out infinite;
+        }
+        @keyframes shield-pulse {
+            0%,100% { transform: scale(1); filter: drop-shadow(0 0 12px var(--accent)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 24px var(--accent-bright)); }
+        }
+        .guardian-title {
+            font-size: 1.05em;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+        .guardian-title strong {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-dim);
+        }
+        .guardian-slogan {
+            font-size: 0.78em;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+        .guardian-right { z-index: 1; }
+        .hipaa-badge {
+            display: flex; align-items: center; gap: 10px;
+            background: #0ff5a010;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 10px 18px;
+            box-shadow: 0 0 16px var(--accent-dim);
+        }
+        .hipaa-lock {
+            font-size: 1.4em;
+        }
+        .hipaa-text {
+            display: flex; flex-direction: column;
+        }
+        .hipaa-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+        .hipaa-sub {
+            font-size: 0.65em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* ── LOCKDOWN BANNER ── */
+        .lockdown-banner {
+            display: none;
+            background: linear-gradient(90deg, var(--danger-dim), var(--bg-card));
+            border: 1px solid var(--danger);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--danger);
+            font-weight: 600;
+            animation: flash 1s infinite;
+        }
+        .lockdown-banner.active { display: flex; align-items: center; gap: 10px; }
+        @keyframes flash { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1200px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .metrics-row { grid-template-columns: repeat(3, 1fr); }
+            .systems-row { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 60px; padding: 12px 0; }
+            .sidebar .nav-link span, .sidebar-brand .subtitle, .nav-status { display: none; }
+            .sidebar-brand h1 { font-size: 0.9em; text-align: center; letter-spacing: 0; }
+            .main { margin-left: 60px; padding: 16px; }
+            .metrics-row { grid-template-columns: repeat(2, 1fr); }
+            .systems-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+    <div class="sidebar-brand">
+        <h1>🔱 VEIL</h1>
+        <div class="subtitle">Hospital Defense OS</div>
+    </div>
+    <a href="/" class="nav-link active"><span class="icon">⬡</span><span>Command</span></a>
+    <a href="/patients" class="nav-link"><span class="icon">👤</span><span>Patients</span></a>
+    <a href="/discharged" class="nav-link"><span class="icon">📋</span><span>Discharged</span></a>
+    <a href="/organs" class="nav-link"><span class="icon">🫀</span><span>Organs</span></a>
+    <a href="/status" class="nav-link"><span class="icon">📊</span><span>Diagnostics</span></a>
+    <div class="nav-spacer"></div>
+    <div class="nav-status">
+        <div class="label">Uptime</div>
+        <div class="value" id="nav-uptime">--:--:--</div>
+    </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+    <!-- LOCKDOWN BANNER -->
+    <div class="lockdown-banner" id="lockdown-banner">
+        🚨 LOCKDOWN ACTIVE — Threat detected. All non-critical ports sealed.
+    </div>
+
+    <!-- GUARDIAN BANNER -->
+    <div class="guardian-banner">
+        <div class="guardian-left">
+            <span class="guardian-shield">🛡️</span>
+            <div class="guardian-text">
+                <div class="guardian-title">Protected by <strong>Guardian</strong></div>
+                <div class="guardian-slogan">"I stand between chaos and those I protect."</div>
+            </div>
+        </div>
+        <div class="guardian-right">
+            <div class="hipaa-badge">
+                <span class="hipaa-lock">🔒</span>
+                <div class="hipaa-text">
+                    <span class="hipaa-label">HIPAA</span>
+                    <span class="hipaa-sub">Compliant</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>Command Center</h2>
+        <div class="live-badge"><div class="live-dot"></div> LIVE</div>
+    </div>
+
+    <!-- METRICS ROW -->
+    <div class="metrics-row">
+        <div class="metric-card" id="mc-organs">
+            <div class="metric-label">Organs Online</div>
+            <div class="metric-value" id="mv-organs">--/--</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-organs" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-cpu">
+            <div class="metric-label">CPU Load</div>
+            <div class="metric-value" id="mv-cpu">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-cpu" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-mem">
+            <div class="metric-label">Memory</div>
+            <div class="metric-value" id="mv-mem">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-mem" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-shield">
+            <div class="metric-label">Shield Strength</div>
+            <div class="metric-value" id="mv-shield">--%</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-shield" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card" id="mc-events">
+            <div class="metric-label">Security Events</div>
+            <div class="metric-value" id="mv-events">--</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="mb-events" style="width:0%"></div></div>
+        </div>
+    </div>
+
+    <!-- VIZ + ALERTS -->
+    <div class="content-grid">
+        <!-- 3D THREAT VISUALIZATION -->
+        <div class="viz-panel" id="viz-container">
+            <div class="viz-overlay">
+                <h3>Threat Landscape</h3>
+                <div class="viz-sub">Real-time organ network topology</div>
+            </div>
+            <div class="viz-legend">
+                <span><div class="dot green"></div> Running</span>
+                <span><div class="dot red"></div> Stopped</span>
+                <span><div class="dot blue"></div> Connection</span>
+            </div>
+        </div>
+
+        <!-- ALERT FEED -->
+        <div class="right-panel">
+            <div class="alert-panel">
+                <h3>⚡ Security Feed <span class="count" id="alert-count">0</span></h3>
+                <div class="alert-feed" id="alert-feed">
+                    <div class="alert-item info">
+                        <span class="alert-time">--:--</span>
+                        <span class="alert-msg">Waiting for data…</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORGAN GRID -->
+    <div class="organs-section">
+        <div class="section-header">
+            <h3>🫀 Security Organs</h3>
+            <div class="tier-tabs">
+                <button class="tier-tab active" onclick="filterOrgans('all')">All</button>
+                <button class="tier-tab" onclick="filterOrgans('P0')">P0 Critical</button>
+                <button class="tier-tab" onclick="filterOrgans('P1')">P1 Important</button>
+                <button class="tier-tab" onclick="filterOrgans('P2')">P2 Standard</button>
+            </div>
+        </div>
+        <div class="organ-grid" id="organ-grid">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- PROTECTED SYSTEMS -->
+    <div class="systems-section">
+        <h3>🏥 Protected Systems</h3>
+        <div class="systems-row">
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Epic EHR</span>
+                    <span class="sys-glyph">🏥</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="epic-guards"></div>
+            </div>
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Imprivata SSO</span>
+                    <span class="sys-glyph">🔐</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="imprivata-guards"></div>
+            </div>
+            <div class="sys-card">
+                <div class="sys-header">
+                    <span class="sys-name">Medical IoT</span>
+                    <span class="sys-glyph">🩺</span>
+                </div>
+                <div class="sys-status"><span class="status-dot"></span> Protected · Always Running</div>
+                <div class="sys-guards" id="iot-guards"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script>
+// ── STATE ──
+let organData = [];
+let systemStatus = {};
+let alertLog = [];
+let currentFilter = 'all';
+let startTime = Date.now();
+let vizNodes = [];   // for 3D scene
+
+// Organ-to-system mapping
+const SYSTEM_GUARDS = {
+    epic: ['Guardian', 'Sentinel', 'Watchdog', 'Backup', 'Quarantine', 'Host Sensor'],
+    imprivata: ['Guardian', 'MFA', 'RBAC', 'Vault', 'Audit'],
+    iot: ['Guardian', 'Sentinel', 'Firewall', 'PHI', 'Canary', 'Host Sensor']
+};
+
+const ORGAN_GLYPHS = {
+    'Guardian': '🛡️', 'Sentinel': '🗼', 'Audit': '📋', 'Behavioral Anomaly Detection': '🧠',
+    'Host Sensor': '📡', 'Watchdog': '🐕', 'Firewall': '🔥', 'Backup': '💾',
+    'Quarantine': '🔒', 'Vault': '🏦', 'MFA': '🔑', 'RBAC': '👥',
+    'PHI': '💊', 'Canary': '🐤', 'Chronicle': '📜', 'Reconciler': '⚖️',
+    'Auditor': '🔍', 'Scanner': '🔎', 'Patcher': '🩹', 'Encryptor': '🔐'
+};
+
+// ── API POLLING ──
+async function fetchOrgans() {
+    try {
+        const res = await fetch('/api/organs');
+        const data = await res.json();
+        organData = data.organs || [];
+        updateMetrics(data);
+        renderOrgans();
+        updateSystemGuards();
+        updateVizNodes();
+    } catch (e) {
+        console.warn('Organ fetch failed:', e);
+    }
+}
+
+async function fetchStatus() {
+    try {
+        const res = await fetch('/api/status');
+        systemStatus = await res.json();
+        updateStatusMetrics();
+    } catch (e) {
+        console.warn('Status fetch failed:', e);
+    }
+}
+
+// ── METRICS ──
+function updateMetrics(data) {
+    const running = data.running || 0;
+    const total = data.total || 0;
+    const pct = total > 0 ? Math.round((running / total) * 100) : 0;
+
+    document.getElementById('mv-organs').textContent = `${running}/${total}`;
+    document.getElementById('mb-organs').style.width = pct + '%';
+
+    // Shield strength based on running ratio
+    const shield = total > 0 ? Math.round((running / total) * 100) : 0;
+    document.getElementById('mv-shield').textContent = shield + '%';
+    document.getElementById('mb-shield').style.width = shield + '%';
+
+    const mc = document.getElementById('mc-organs');
+    mc.classList.toggle('danger', pct < 50);
+    mc.classList.toggle('warn', pct >= 50 && pct < 80);
+
+    const sc = document.getElementById('mc-shield');
+    sc.classList.toggle('danger', shield < 50);
+    sc.classList.toggle('warn', shield >= 50 && shield < 80);
+}
+
+function updateStatusMetrics() {
+    const cpu = systemStatus.cpu || 0;
+    const mem = systemStatus.memory || 0;
+    const events = systemStatus.security_events || 0;
+    const lockdown = systemStatus.lockdown || false;
+
+    document.getElementById('mv-cpu').textContent = cpu.toFixed(1) + '%';
+    document.getElementById('mb-cpu').style.width = Math.min(cpu, 100) + '%';
+    const cpuCard = document.getElementById('mc-cpu');
+    cpuCard.classList.toggle('danger', cpu > 90);
+    cpuCard.classList.toggle('warn', cpu > 70 && cpu <= 90);
+
+    document.getElementById('mv-mem').textContent = mem.toFixed(1) + '%';
+    document.getElementById('mb-mem').style.width = Math.min(mem, 100) + '%';
+    const memCard = document.getElementById('mc-mem');
+    memCard.classList.toggle('danger', mem > 90);
+    memCard.classList.toggle('warn', mem > 70 && mem <= 90);
+
+    document.getElementById('mv-events').textContent = events.toLocaleString();
+    document.getElementById('mb-events').style.width = Math.min(events / 50, 100) + '%';
+
+    // Lockdown banner
+    const banner = document.getElementById('lockdown-banner');
+    banner.classList.toggle('active', lockdown);
+
+    // Generate alerts from event count changes
+    if (alertLog.length === 0 || events !== alertLog[alertLog.length - 1]?.count) {
+        addAlert(events);
+    }
+}
+
+// ── ALERTS ──
+function addAlert(eventCount) {
+    const now = new Date();
+    const timeStr = now.toTimeString().slice(0, 5);
+    const messages = [
+        { msg: `${eventCount.toLocaleString()} security events processed`, type: 'info' },
+        { msg: `Guardian screening network traffic`, type: 'info' },
+        { msg: `Sentinel behavioral scan complete`, type: 'info' },
+        { msg: `Host Sensor telemetry nominal`, type: 'info' },
+    ];
+
+    // Add organ-specific alerts
+    organData.forEach(o => {
+        if (o.status === 'stopped') {
+            messages.push({ msg: `${o.name} is OFFLINE — protection degraded`, type: 'warn' });
+        }
+    });
+
+    // Pick a relevant alert
+    const stoppedOrgans = organData.filter(o => o.status === 'stopped');
+    let alert;
+    if (stoppedOrgans.length > 0 && Math.random() > 0.5) {
+        const org = stoppedOrgans[Math.floor(Math.random() * stoppedOrgans.length)];
+        alert = { time: timeStr, msg: `⚠ ${org.name} offline — coverage gap detected`, type: 'warn', count: eventCount };
+    } else {
+        const pick = messages[Math.floor(Math.random() * messages.length)];
+        alert = { time: timeStr, msg: pick.msg, type: pick.type, count: eventCount };
+    }
+
+    alertLog.push(alert);
+    if (alertLog.length > 50) alertLog.shift();
+    renderAlerts();
+}
+
+function renderAlerts() {
+    const feed = document.getElementById('alert-feed');
+    const recent = alertLog.slice(-20).reverse();
+    document.getElementById('alert-count').textContent = alertLog.length;
+
+    feed.innerHTML = recent.map(a =>
+        `<div class="alert-item ${a.type}">
+            <span class="alert-time">${a.time}</span>
+            <span class="alert-msg">${a.msg}</span>
+        </div>`
+    ).join('');
+}
+
+// ── ORGAN GRID ──
+function renderOrgans() {
+    const grid = document.getElementById('organ-grid');
+    const filtered = currentFilter === 'all'
+        ? organData
+        : organData.filter(o => o.priority === currentFilter);
+
+    grid.innerHTML = filtered.map(o => {
+        const running = o.status === 'running';
+        const glyph = ORGAN_GLYPHS[o.name] || '🫀';
+        return `
+        <div class="organ-card ${running ? 'running' : 'stopped'}" data-tier="${o.priority || 'P2'}">
+            <div class="organ-top">
+                <span class="organ-name">${glyph} ${o.name}</span>
+            </div>
+            <div class="organ-meta">
+                <span class="organ-tier">${o.priority || 'P2'}</span>
+                <div class="organ-status">
+                    <span class="dot"></span>
+                    ${running ? 'ONLINE' : 'OFFLINE'}
+                </div>
+            </div>
+            <div class="organ-meta">
+                <span></span>
+                <button class="organ-btn" onclick="toggleOrgan('${o.name}', ${running})">
+                    ${running ? '■ STOP' : '▶ START'}
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function filterOrgans(tier) {
+    currentFilter = tier;
+    document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    renderOrgans();
+}
+
+async function toggleOrgan(name, isRunning) {
+    const action = isRunning ? 'stop' : 'start';
+    try {
+        await fetch(`/api/organs/${encodeURIComponent(name)}/${action}`, { method: 'POST' });
+        setTimeout(fetchOrgans, 500);
+    } catch (e) {
+        console.error('Toggle failed:', e);
+    }
+}
+
+// ── SYSTEM GUARD TAGS ──
+function updateSystemGuards() {
+    const running = new Set(organData.filter(o => o.status === 'running').map(o => o.name));
+
+    Object.entries(SYSTEM_GUARDS).forEach(([sysId, guards]) => {
+        const el = document.getElementById(sysId + '-guards');
+        if (!el) return;
+        el.innerHTML = guards.map(g => {
+            const live = running.has(g);
+            const glyph = ORGAN_GLYPHS[g] || '🫀';
+            return `<span class="sys-guard-tag" style="${live ? '' : 'opacity:0.35;border-color:var(--danger-dim);color:var(--danger)'}">${glyph} ${g}</span>`;
+        }).join('');
+    });
+}
+
+// ── UPTIME CLOCK ──
+function updateUptime() {
+    const diff = Math.floor((Date.now() - startTime) / 1000);
+    const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+    const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+    const s = String(diff % 60).padStart(2, '0');
+    document.getElementById('nav-uptime').textContent = `${h}:${m}:${s}`;
+}
+
+// ═════════════════════════════════════════
+// THREE.JS — 3D ORGAN NETWORK VISUALIZATION
+// ═════════════════════════════════════════
+let scene, camera, renderer, frameId;
+
+function initViz() {
+    const container = document.getElementById('viz-container');
+    const w = container.clientWidth;
+    const h = container.clientHeight || 360;
+
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030810, 0.04);
+
+    camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 100);
+    camera.position.set(0, 2, 12);
+    camera.lookAt(0, 0, 0);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x030810, 1);
+    container.appendChild(renderer.domElement);
+
+    // Central shield sphere
+    const shieldGeo = new THREE.SphereGeometry(1.5, 32, 32);
+    const shieldMat = new THREE.MeshBasicMaterial({
+        color: 0x0ff5a0,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15
+    });
+    const shield = new THREE.Mesh(shieldGeo, shieldMat);
+    scene.add(shield);
+
+    // Inner core glow
+    const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x0ff5a0,
+        transparent: true,
+        opacity: 0.4
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    // Particle ring
+    const ringGeo = new THREE.BufferGeometry();
+    const ringCount = 200;
+    const ringPos = new Float32Array(ringCount * 3);
+    for (let i = 0; i < ringCount; i++) {
+        const angle = (i / ringCount) * Math.PI * 2;
+        const r = 4 + Math.random() * 0.5;
+        ringPos[i * 3] = Math.cos(angle) * r;
+        ringPos[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+        ringPos[i * 3 + 2] = Math.sin(angle) * r;
+    }
+    ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+    const ringMat = new THREE.PointsMaterial({ color: 0x00d4ff, size: 0.06, transparent: true, opacity: 0.5 });
+    const ring = new THREE.Points(ringGeo, ringMat);
+    scene.add(ring);
+
+    // Ambient light
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+    // Organ nodes (will be updated when data arrives)
+    buildOrganNodes();
+
+    // Animate
+    function animate() {
+        frameId = requestAnimationFrame(animate);
+        const t = Date.now() * 0.001;
+
+        shield.rotation.y = t * 0.15;
+        shield.rotation.x = Math.sin(t * 0.1) * 0.1;
+        core.scale.setScalar(0.5 + Math.sin(t * 2) * 0.05);
+        ring.rotation.y = -t * 0.05;
+
+        // Orbit camera slowly
+        camera.position.x = Math.sin(t * 0.08) * 12;
+        camera.position.z = Math.cos(t * 0.08) * 12;
+        camera.position.y = 2 + Math.sin(t * 0.12) * 1;
+        camera.lookAt(0, 0, 0);
+
+        // Pulse organ nodes
+        vizNodes.forEach((node, i) => {
+            if (node.userData.running) {
+                node.scale.setScalar(0.18 + Math.sin(t * 3 + i) * 0.04);
+            }
+        });
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+        const w2 = container.clientWidth;
+        const h2 = container.clientHeight || 360;
+        camera.aspect = w2 / h2;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w2, h2);
+    });
+}
+
+function buildOrganNodes() {
+    // Remove old nodes
+    vizNodes.forEach(n => scene.remove(n));
+    vizNodes = [];
+
+    const organs = organData.length > 0 ? organData : [
+        { name: 'Guardian', status: 'running' },
+        { name: 'Sentinel', status: 'running' },
+        { name: 'Audit', status: 'stopped' },
+        { name: 'BAD', status: 'stopped' },
+        { name: 'Host Sensor', status: 'running' }
+    ];
+
+    organs.forEach((o, i) => {
+        const angle = (i / organs.length) * Math.PI * 2;
+        const radius = 3;
+        const running = o.status === 'running';
+
+        // Node sphere
+        const geo = new THREE.SphereGeometry(0.18, 12, 12);
+        const mat = new THREE.MeshBasicMaterial({
+            color: running ? 0x0ff5a0 : 0xff3b5c,
+            transparent: true,
+            opacity: running ? 0.9 : 0.5
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(
+            Math.cos(angle) * radius,
+            (Math.random() - 0.5) * 2,
+            Math.sin(angle) * radius
+        );
+        mesh.userData = { name: o.name, running };
+        scene.add(mesh);
+        vizNodes.push(mesh);
+
+        // Connection line to center
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, 0),
+            mesh.position
+        ]);
+        const lineMat = new THREE.LineBasicMaterial({
+            color: running ? 0x00d4ff : 0xff3b5c,
+            transparent: true,
+            opacity: running ? 0.2 : 0.08
+        });
+        const line = new THREE.Line(lineGeo, lineMat);
+        scene.add(line);
+    });
+}
+
+function updateVizNodes() {
+    buildOrganNodes();
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+    initViz();
+    fetchOrgans();
+    fetchStatus();
+
+    // Poll every 4 seconds
+    setInterval(fetchOrgans, 4000);
+    setInterval(fetchStatus, 4000);
+    setInterval(updateUptime, 1000);
+});
+</script>
+
+</body>
+</html>

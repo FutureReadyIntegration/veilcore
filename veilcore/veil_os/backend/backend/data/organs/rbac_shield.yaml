@@ -1,0 +1,9 @@
+id: "rbac_shield"
+name: "RBAC Shield"
+type: "security"
+status: "healthy"
+
+policies:
+  total_policies: 24
+  last_update: "2026-02-03T21:10:00Z"
+  denied_requests_last_hour: 17

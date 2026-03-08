@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/glyph_theme.css') }}"
+>
+  <title>Codex Timeline</title>
+</head>
+<body>- <body class="timeline-page">
+  <h1>🕰️ Chronicle Timeline</h1>
+  <ul>
+    {% for event in timeline %}
+      <li>
+        <strong>{{ event.timestamp }}</strong> — {{ event.description }}
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

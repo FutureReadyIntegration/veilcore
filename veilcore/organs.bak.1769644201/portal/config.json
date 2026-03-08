@@ -1,0 +1,10 @@
+{
+  "name": "portal",
+  "version": 1.0,
+  "description": "Secure web portal for Veil OS administration.",
+  "tier": "interface",
+  "glyph": "\ud83c\udf00",
+  "technical_role": "web_portal",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.713703+00:00"
+}

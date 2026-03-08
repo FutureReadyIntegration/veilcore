@@ -1,0 +1,25 @@
+name: router
+version: 1.0
+tier: network
+glyph: "🔀"
+technical_role: traffic_router
+symbolic_role: pathfinder
+description: Intelligent traffic routing and load balancing.
+inputs:
+  - source: /opt/veil_os/sockets/router.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/router.log
+    format: jsonl
+triggers:
+  - type: route_request
+  - type: path_failure
+  - type: load_imbalance
+actions:
+  - type: route
+  - type: balance
+  - type: reroute
+dependencies:
+  - fabric
+  - monitor
+affirmation: I find the path through complexity.

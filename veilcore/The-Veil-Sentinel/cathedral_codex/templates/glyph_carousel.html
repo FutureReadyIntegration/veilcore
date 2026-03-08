@@ -1,0 +1,11 @@
+<h1>🔥 Glyph Override Carousel</h1>
+<div class="carousel">
+  {% for e in entries %}
+    <div class="glyph-card tier-{{ e.tier }} {% if e.urgent %}flame-urgent{% endif %}">
+      <div class="glyph-icon">{{ e.glyph }}</div>
+      <div class="tier-label">{{ e.tier }} (Level {{ e.level }})</div>
+      <small>{{ e.text }}</small><br>
+      <small>{{ e.timestamp }}</small>
+    </div>
+  {% endfor %}
+</div>

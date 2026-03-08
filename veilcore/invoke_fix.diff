@@ -1,0 +1,140 @@
+diff --git a/veil/api.py b/veil/api.py
+index 0000000..1111111 100644
+--- a/veil/api.py
++++ b/veil/api.py
+@@ -1,15 +1,16 @@
+ import json
+ import hashlib
+ import os
+ import socket
+ import time
+ import logging
+ from collections import defaultdict
+-from typing import Any, Dict, List, Optional
++from typing import Any, Dict, List, Optional, Tuple
+ 
+ from fastapi import FastAPI, HTTPException, Request, Response
+ from pydantic import BaseModel, Field, field_validator
+ 
+@@ -290,6 +291,88 @@ def organs():
+       except Exception as e:
+           raise HTTPException(status_code=503, detail=str(e))
+ 
++
++# ================================================================
++# INVOKE AUTHZ SHAPING (server-owned, Guardian stays pure)
++# ================================================================
++def _canon(s: Optional[str]) -> str:
++    return (s or "").strip().lower()
++
++
++class MethodSpec(BaseModel):
++    # Mutating calls MUST provide an explicit resource; Guardian evaluates the full tuple.
++    mutating: bool = False
++    # If set, req.resource.type must match this value for the call to be considered well-formed.
++    required_resource_type: Optional[str] = None
++    # If True, unknown organ/method combos are rejected (fail-closed).
++    # Keep True for safety. If you need gradual rollout, you can temporarily set False.
++    known: bool = True
++
++
++# A minimal manifest. Expand as you add organs/methods.
++# Key is canonicalized (organ, method).
++METHOD_MANIFEST: Dict[Tuple[str, str], MethodSpec] = {
++    # Firewall is privileged/mutating
++    ("firewall", "apply"): MethodSpec(mutating=True, required_resource_type="policy"),
++    ("firewall", "set_policy"): MethodSpec(mutating=True, required_resource_type="policy"),
++    ("firewall", "flush"): MethodSpec(mutating=True, required_resource_type="firewall"),
++    # Verify is read-only-ish, but still best to bind to a capability resource.
++    ("firewall", "verify"): MethodSpec(mutating=False, required_resource_type=None),
++
++    # Guardian status is read-only
++    ("guardian", "status"): MethodSpec(mutating=False, required_resource_type=None),
++}
++
++
++def _method_spec(organ: str, method: str) -> MethodSpec:
++    key = (_canon(organ), _canon(method))
++    spec = METHOD_MANIFEST.get(key)
++    if spec is not None:
++        return spec
++    # Fail-closed by default for unknown methods:
++    # unknown methods must not fall into "standard".
++    return MethodSpec(mutating=True, required_resource_type=None, known=False)
++
++
++def _derive_resource_for_nonmutating(organ: str, method: str) -> "ResourceModel":
++    # Avoid the "standard" bucket entirely. This is stable and explicit.
++    cap = f"{_canon(organ)}.{_canon(method)}"
++    return ResourceModel(type="capability", id=cap, method=_canon(method))
++
++
++def _normalize_and_validate_invoke(req: "InvokeReq") -> Tuple["SubjectModel", "ResourceModel", MethodSpec]:
++    organ = _canon(req.name)
++    method = _canon(req.method)
++    spec = _method_spec(organ, method)
++
++    # Optional tightening: do NOT default to admin if subject is omitted.
++    # If you need backward compatibility, keep the old behavior, but it is unsafe.
++    subject = req.subject or SubjectModel(user="api", roles=[])
++
++    if not spec.known:
++        # Unknown method: fail closed.
++        raise HTTPException(status_code=400, detail={"error": "unknown_method", "organ": organ, "method": method})
++
++    if spec.mutating:
++        if not req.resource:
++            raise HTTPException(
++                status_code=400,
++                detail={"error": "resource_required", "organ": organ, "method": method,
++                        "required_type": spec.required_resource_type},
++            )
++        resource = req.resource
++        if spec.required_resource_type and resource.type != spec.required_resource_type:
++            raise HTTPException(
++                status_code=400,
++                detail={"error": "wrong_resource_type",
++                        "required_type": spec.required_resource_type,
++                        "got": resource.type,
++                        "organ": organ, "method": method},
++            )
++        return subject, resource, spec
++
++    # Non-mutating: if resource missing, bind to a capability resource (not "standard").
++    resource = req.resource or _derive_resource_for_nonmutating(organ, method)
++    return subject, resource, spec
++
+ 
+ @app.post("/invoke")
+ def invoke(req: InvokeReq):
+     try:
+-        subject = req.subject or SubjectModel(user="api", roles=["admin"])
+-        resource = req.resource or ResourceModel(type="standard", method=req.method)
++        subject, resource, spec = _normalize_and_validate_invoke(req)
+ 
+         if not _check_nonce(req.nonce):
+             raise HTTPException(status_code=409, detail="nonce_replayed")
+ 
+-        gate_result = _gate(subject, req.name, req.method, resource)
++        # Use canonical values consistently
++        gate_result = _gate(subject, _canon(req.name), _canon(req.method), resource)
+ 
+         clean_kwargs = {k: v for k, v in (req.kwargs or {}).items()
+                         if k not in RESERVED_KEYS}
+ 
+         t0 = time.monotonic()
+         resp = _msos_call({
+-            "cmd": "invoke", "name": req.name, "method": req.method,
++            "cmd": "invoke", "name": _canon(req.name), "method": _canon(req.method),
+             "args": req.args or [], "kwargs": clean_kwargs,
+         })
+         elapsed = time.monotonic() - t0
+ 
+         _audit("invoke",
+-               user=subject.user, organ=req.name, method=req.method,
++               user=subject.user, organ=_canon(req.name), method=_canon(req.method),
+                resource_class=gate_result.get("resource_class"),
+                ok=resp.get("ok", False), elapsed_ms=round(elapsed * 1000, 1))
+ 
+         resp["_gate"] = gate_result
+         return resp

@@ -1,0 +1,12 @@
+[Unit]
+Description=Veil Dashboard Backend
+After=network.target veil-api.service
+
+[Service]
+User=user
+WorkingDirectory=/home/user/veil_os/backend
+ExecStart=/usr/bin/python3 -m veil.dashboard.service
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

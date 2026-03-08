@@ -1,0 +1,10 @@
+{
+  "name": "forensic",
+  "version": 1.0,
+  "description": "Post-incident forensic evidence collection and chain of custody.",
+  "tier": "security",
+  "glyph": "\ud83d\udd2c",
+  "technical_role": "evidence_collector",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.709638+00:00"
+}

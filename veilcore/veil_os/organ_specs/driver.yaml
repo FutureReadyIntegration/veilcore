@@ -1,0 +1,23 @@
+name: driver
+version: 1.0
+tier: core
+glyph: "🔧"
+technical_role: hardware_interface
+symbolic_role: hands
+description: Hardware abstraction layer for security devices.
+inputs:
+  - source: /opt/veil_os/sockets/driver.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/driver.log
+    format: jsonl
+triggers:
+  - type: device_attached
+  - type: device_error
+actions:
+  - type: initialize
+  - type: communicate
+  - type: reset
+dependencies:
+  - init
+affirmation: I speak to the machines beneath.

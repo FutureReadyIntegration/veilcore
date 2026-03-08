@@ -1,0 +1,26 @@
+actions:
+- type: grant
+- type: deny
+- type: audit
+affirmation: Each role carries its own weight.
+dependencies:
+- auth
+- audit
+- guardian
+description: Role-based access control for HIPAA compliance.
+glyph: "\U0001F465"
+inputs:
+- format: yaml
+  source: /opt/veil_os/config/roles.yaml
+name: rbac
+organ: rbac
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/rbac.log
+symbolic_role: hierarchy
+technical_role: role_based_access
+tier: security
+triggers:
+- type: access_request
+- type: role_change
+version: 1.0

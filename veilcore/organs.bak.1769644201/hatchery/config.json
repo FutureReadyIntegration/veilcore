@@ -1,0 +1,10 @@
+{
+  "name": "hatchery",
+  "version": 1.0,
+  "description": "Dynamic organ instantiation and lifecycle management.",
+  "tier": "core",
+  "glyph": "\ud83e\udd52",
+  "technical_role": "organ_spawner",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.265927+00:00"
+}

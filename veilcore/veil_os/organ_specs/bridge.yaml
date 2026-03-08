@@ -1,0 +1,24 @@
+name: bridge
+version: 1.0
+tier: network
+glyph: "🌉"
+technical_role: network_bridge
+symbolic_role: connector
+description: Network bridge for secure inter-segment communication.
+inputs:
+  - source: /opt/veil_os/sockets/bridge.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/bridge.log
+    format: jsonl
+triggers:
+  - type: segment_request
+  - type: policy_violation
+actions:
+  - type: route
+  - type: filter
+  - type: isolate
+dependencies:
+  - firewall
+  - guardian
+affirmation: I connect what must be joined, separate what must be apart.

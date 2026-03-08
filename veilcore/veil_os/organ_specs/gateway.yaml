@@ -1,0 +1,27 @@
+name: gateway
+version: 1.0
+tier: network
+glyph: "🚪"
+technical_role: api_gateway
+symbolic_role: portal
+description: Secure API gateway for external service integration.
+inputs:
+  - source: /opt/veil_os/sockets/gateway.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/gateway.log
+    format: jsonl
+triggers:
+  - type: api_request
+  - type: rate_exceeded
+  - type: auth_failure
+actions:
+  - type: authenticate
+  - type: route
+  - type: throttle
+  - type: transform
+dependencies:
+  - auth
+  - rbac
+  - firewall
+affirmation: I am the door between worlds.

@@ -1,0 +1,22 @@
+name: bios
+version: 1.0
+tier: core
+glyph: "⚡"
+technical_role: bootstrap
+symbolic_role: awakener
+description: Bootstrap initialization system for Veil OS startup sequence.
+inputs:
+  - source: /opt/veil_os/config/boot.yaml
+    format: yaml
+outputs:
+  - path: /opt/veil_os/ledger/bios.log
+    format: jsonl
+triggers:
+  - type: system_boot
+  - type: warm_restart
+actions:
+  - type: initialize
+  - type: verify_integrity
+  - type: load_core
+dependencies: []
+affirmation: From nothing, I bring forth The Veil.

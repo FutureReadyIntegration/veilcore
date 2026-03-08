@@ -1,0 +1,24 @@
+name: synth
+version: 1.0
+tier: core
+glyph: "🎹"
+technical_role: config_synthesizer
+symbolic_role: composer
+description: Configuration synthesis and template generation.
+inputs:
+  - source: /opt/veil_os/sockets/synth.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/synth.log
+    format: jsonl
+triggers:
+  - type: config_request
+  - type: template_render
+actions:
+  - type: synthesize
+  - type: validate
+  - type: deploy
+dependencies:
+  - vault
+  - interpreter
+affirmation: I compose configurations from templates.

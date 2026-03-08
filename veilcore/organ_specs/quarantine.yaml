@@ -1,0 +1,24 @@
+name: quarantine
+version: 1.0
+tier: security
+glyph: "🔒"
+technical_role: isolation
+symbolic_role: containment
+description: Emergency isolation system for compromised hosts.
+inputs:
+  - source: /opt/veil_os/sockets/quarantine.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/quarantine.log
+    format: jsonl
+triggers:
+  - type: ransomware_signature
+  - type: anomaly_threshold_exceeded
+actions:
+  - type: isolate_host
+  - type: block_lateral
+dependencies:
+  - firewall
+  - sentinel
+  - backup
+affirmation: Containment is compassion. Isolation saves the whole.

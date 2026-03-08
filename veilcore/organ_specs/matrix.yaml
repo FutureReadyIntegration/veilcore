@@ -1,0 +1,24 @@
+name: matrix
+version: 1.0
+tier: core
+glyph: "🔢"
+technical_role: state_matrix
+symbolic_role: reality
+description: System-wide state matrix for organ coordination.
+inputs:
+  - source: /opt/veil_os/sockets/matrix.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/matrix.log
+    format: jsonl
+triggers:
+  - type: state_change
+  - type: sync_request
+actions:
+  - type: update
+  - type: broadcast
+  - type: reconcile
+dependencies:
+  - state_vector
+  - fabric
+affirmation: I hold the true state of all things.

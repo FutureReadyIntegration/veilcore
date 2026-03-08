@@ -1,0 +1,25 @@
+name: audit
+version: 1.0
+tier: core
+glyph: "📋"
+technical_role: audit_engine
+symbolic_role: witness
+description: Core audit engine with tamper-proof event logging.
+inputs:
+  - source: /opt/veil_os/sockets/audit.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/audit.log
+    format: jsonl
+triggers:
+  - type: security_event
+  - type: access_attempt
+  - type: config_change
+actions:
+  - type: log_immutable
+  - type: hash_chain
+  - type: alert
+dependencies:
+  - vault
+  - keystore
+affirmation: I witness all that passes through The Veil.

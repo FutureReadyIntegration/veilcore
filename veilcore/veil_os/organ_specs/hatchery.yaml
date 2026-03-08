@@ -1,0 +1,25 @@
+name: hatchery
+version: 1.0
+tier: core
+glyph: "🥒"
+technical_role: organ_spawner
+symbolic_role: birthplace
+description: Dynamic organ instantiation and lifecycle management.
+inputs:
+  - source: /opt/veil_os/sockets/hatchery.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/hatchery.log
+    format: jsonl
+triggers:
+  - type: spawn_request
+  - type: scale_up
+  - type: scale_down
+actions:
+  - type: spawn
+  - type: configure
+  - type: terminate
+dependencies:
+  - orchestrator
+  - daemon
+affirmation: New organs emerge when The Veil demands.

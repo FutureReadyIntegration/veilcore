@@ -1,0 +1,10 @@
+{
+  "name": "bios",
+  "version": 1.0,
+  "description": "Bootstrap initialization system for Veil OS startup sequence.",
+  "tier": "core",
+  "glyph": "\u26a1",
+  "technical_role": "bootstrap",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:57.978060+00:00"
+}

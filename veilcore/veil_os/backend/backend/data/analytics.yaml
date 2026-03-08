@@ -1,0 +1,17 @@
+summary:
+  window_hours: 24
+  total_events: 1432
+  security_alerts: 12
+  clinical_alerts: 47
+  integration_errors: 5
+
+risk_profile:
+  overall: "low"
+  clinical_risk: "moderate"
+  security_risk: "low"
+  integration_risk: "low"
+
+latency:
+  lab_results_ms_p95: 1840
+  vitals_stream_ms_p95: 220
+  imaging_stream_ms_p95: 740

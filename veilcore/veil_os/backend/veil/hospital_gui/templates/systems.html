@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Veil Systems</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="logo">🏥 Veil Hospital</div>
+    <a href="/" class="nav-btn active">Systems</a>
+    <a href="/patients" class="nav-btn">Patients</a>
+    <a href="/discharged" class="nav-btn">Discharged</a>
+    <a href="/organs" class="nav-btn">🛡️ Security</a>
+    <a href="/status" class="nav-btn">System Status</a>
+    <a href="/app/" class="nav-btn">🧠 3D Dashboard</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Systems</h1>
+      <button class="btn-primary" onclick="location.reload()">↻ Refresh</button>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">{{ counts.active }}</div>
+        <div class="stat-label">Active Patients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">{{ counts.discharged }}</div>
+        <div class="stat-label">Discharged</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">{{ organs_total }}</div>
+        <div class="stat-label">Configured Organs</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">{{ organs_running }}</div>
+        <div class="stat-label">Running</div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
