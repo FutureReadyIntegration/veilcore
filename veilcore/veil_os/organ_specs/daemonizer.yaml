@@ -1,0 +1,24 @@
+name: daemonizer
+version: 1.0
+tier: core
+glyph: "🔮"
+technical_role: process_forker
+symbolic_role: summoner
+description: Converts processes into managed background daemons.
+inputs:
+  - source: /opt/veil_os/sockets/daemonizer.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/daemonizer.log
+    format: jsonl
+triggers:
+  - type: daemon_request
+  - type: spawn_service
+actions:
+  - type: fork
+  - type: detach
+  - type: register
+dependencies:
+  - daemon
+  - init
+affirmation: I give life to servants of The Veil.

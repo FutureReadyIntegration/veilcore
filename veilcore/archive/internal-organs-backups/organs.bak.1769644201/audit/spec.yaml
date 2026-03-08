@@ -1,0 +1,26 @@
+actions:
+- type: log_immutable
+- type: hash_chain
+- type: alert
+affirmation: I witness all that passes through The Veil.
+dependencies:
+- vault
+- keystore
+description: Core audit engine with tamper-proof event logging.
+glyph: "\U0001F4CB"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/audit.sock
+name: audit
+organ: audit
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/audit.log
+symbolic_role: witness
+technical_role: audit_engine
+tier: core
+triggers:
+- type: security_event
+- type: access_attempt
+- type: config_change
+version: 1.0

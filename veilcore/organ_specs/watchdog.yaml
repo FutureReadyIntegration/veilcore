@@ -1,0 +1,25 @@
+name: watchdog
+version: 1.0
+tier: core
+glyph: "🐕"
+technical_role: health_monitor
+symbolic_role: faithful_guardian
+description: Process watchdog ensuring organ health and auto-recovery.
+inputs:
+  - source: /opt/veil_os/sockets/watchdog.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/watchdog.log
+    format: jsonl
+triggers:
+  - type: heartbeat_missed
+  - type: process_crash
+  - type: memory_leak
+actions:
+  - type: restart
+  - type: alert
+  - type: isolate
+dependencies:
+  - heartbeat
+  - daemon
+affirmation: I never sleep, I never rest, I always watch.

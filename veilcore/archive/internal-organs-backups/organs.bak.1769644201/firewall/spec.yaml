@@ -1,0 +1,27 @@
+actions:
+- type: block
+- type: allow
+- type: log
+- type: rate_limit
+affirmation: None shall pass without my blessing.
+dependencies:
+- guardian
+- audit
+description: Core firewall engine for network traffic control.
+glyph: "\U0001F525"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/firewall.sock
+name: firewall
+organ: firewall
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/firewall.log
+symbolic_role: flame_wall
+technical_role: packet_filter
+tier: security
+triggers:
+- type: rule_violation
+- type: ddos_detected
+- type: port_scan
+version: 1.0

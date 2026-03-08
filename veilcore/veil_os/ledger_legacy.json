@@ -1,0 +1,2314 @@
+[
+  {
+    "organ": "audit",
+    "action": "created",
+    "timestamp": "2026-01-25T21:51:52.024347+00:00",
+    "spec_hash": 23215833,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 0
+  },
+  {
+    "organ": "audit",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.351439+00:00",
+    "spec_hash": 328121674,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 1
+  },
+  {
+    "organ": "auth",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.399312+00:00",
+    "spec_hash": 2580713115,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 2
+  },
+  {
+    "organ": "bios",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.449334+00:00",
+    "spec_hash": 72955771,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 3
+  },
+  {
+    "organ": "cortex",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.520092+00:00",
+    "spec_hash": 4044841810,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 4
+  },
+  {
+    "organ": "daemon",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.570658+00:00",
+    "spec_hash": 3648712969,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 5
+  },
+  {
+    "organ": "entropy",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.618463+00:00",
+    "spec_hash": 124183426,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 6
+  },
+  {
+    "organ": "entropy_pool",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.702448+00:00",
+    "spec_hash": 2557757911,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 7
+  },
+  {
+    "organ": "firewall",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.749953+00:00",
+    "spec_hash": 1928667547,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 8
+  },
+  {
+    "organ": "gateway",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.796837+00:00",
+    "spec_hash": 1939079105,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 9
+  },
+  {
+    "organ": "hospital",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.845036+00:00",
+    "spec_hash": 209429614,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 10
+  },
+  {
+    "organ": "journal",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.894864+00:00",
+    "spec_hash": 4194357737,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 11
+  },
+  {
+    "organ": "logger",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.944620+00:00",
+    "spec_hash": 1708147633,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 12
+  },
+  {
+    "organ": "metrics",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:18.992726+00:00",
+    "spec_hash": 2244022522,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 13
+  },
+  {
+    "organ": "orchestrator",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.040246+00:00",
+    "spec_hash": 2610472622,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 14
+  },
+  {
+    "organ": "queue",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.089376+00:00",
+    "spec_hash": 1656329221,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 15
+  },
+  {
+    "organ": "scheduler",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.139533+00:00",
+    "spec_hash": 3769999684,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 16
+  },
+  {
+    "organ": "telemetry",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.187496+00:00",
+    "spec_hash": 3015694073,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 17
+  },
+  {
+    "organ": "vault",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.236230+00:00",
+    "spec_hash": 855243632,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 18
+  },
+  {
+    "organ": "veilctl",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.284010+00:00",
+    "spec_hash": 2341858251,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 19
+  },
+  {
+    "organ": "watchdog",
+    "action": "created",
+    "timestamp": "2026-01-25T21:52:19.332203+00:00",
+    "spec_hash": 4156132780,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 20
+  },
+  {
+    "organ": "audit",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:39.928845+00:00",
+    "spec_hash": 238263939,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 21
+  },
+  {
+    "organ": "auth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:39.972137+00:00",
+    "spec_hash": 484404525,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 22
+  },
+  {
+    "organ": "bios",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.017456+00:00",
+    "spec_hash": 81745628,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 23
+  },
+  {
+    "organ": "bridge",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.064521+00:00",
+    "spec_hash": 1208592793,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 24
+  },
+  {
+    "organ": "cache",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.108607+00:00",
+    "spec_hash": 89664513,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 25
+  },
+  {
+    "organ": "clock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.153015+00:00",
+    "spec_hash": 1885142667,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 26
+  },
+  {
+    "organ": "codec",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.196815+00:00",
+    "spec_hash": 4260161018,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 27
+  },
+  {
+    "organ": "collector",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.251163+00:00",
+    "spec_hash": 2069915536,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 28
+  },
+  {
+    "organ": "console",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.294665+00:00",
+    "spec_hash": 4240923595,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 29
+  },
+  {
+    "organ": "cortex",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.339194+00:00",
+    "spec_hash": 2441105308,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 30
+  },
+  {
+    "organ": "daemon",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.382954+00:00",
+    "spec_hash": 795049307,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 31
+  },
+  {
+    "organ": "daemonizer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.426100+00:00",
+    "spec_hash": 3835075513,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 32
+  },
+  {
+    "organ": "diffuser",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.470522+00:00",
+    "spec_hash": 2961085753,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 33
+  },
+  {
+    "organ": "dispatcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.514389+00:00",
+    "spec_hash": 3584548866,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 34
+  },
+  {
+    "organ": "dock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.558056+00:00",
+    "spec_hash": 281587644,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 35
+  },
+  {
+    "organ": "driver",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.601613+00:00",
+    "spec_hash": 1002330783,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 36
+  },
+  {
+    "organ": "emitter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.644696+00:00",
+    "spec_hash": 4136825520,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 37
+  },
+  {
+    "organ": "engine",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.689482+00:00",
+    "spec_hash": 2657270838,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 38
+  },
+  {
+    "organ": "entropy",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.733027+00:00",
+    "spec_hash": 2119477430,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 39
+  },
+  {
+    "organ": "entropy_pool",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.778952+00:00",
+    "spec_hash": 844619561,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 40
+  },
+  {
+    "organ": "fabric",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.823240+00:00",
+    "spec_hash": 1519718965,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 41
+  },
+  {
+    "organ": "fanout",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.880268+00:00",
+    "spec_hash": 723193355,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 42
+  },
+  {
+    "organ": "fingerprint",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.924309+00:00",
+    "spec_hash": 570020733,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 43
+  },
+  {
+    "organ": "firewall",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:40.967500+00:00",
+    "spec_hash": 3961301413,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 44
+  },
+  {
+    "organ": "flux",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.011874+00:00",
+    "spec_hash": 2240660404,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 45
+  },
+  {
+    "organ": "gateway",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.058048+00:00",
+    "spec_hash": 2612208475,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 46
+  },
+  {
+    "organ": "guardian",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.101017+00:00",
+    "spec_hash": 1978350282,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 47
+  },
+  {
+    "organ": "harbor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.143473+00:00",
+    "spec_hash": 4090650016,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 48
+  },
+  {
+    "organ": "hatchery",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.186073+00:00",
+    "spec_hash": 1128564813,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 49
+  },
+  {
+    "organ": "hospital",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.230435+00:00",
+    "spec_hash": 1993542740,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 50
+  },
+  {
+    "organ": "indexer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.669905+00:00",
+    "spec_hash": 63692563,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 51
+  },
+  {
+    "organ": "init",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.714365+00:00",
+    "spec_hash": 3661601641,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 52
+  },
+  {
+    "organ": "interpreter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.757656+00:00",
+    "spec_hash": 2080661544,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 53
+  },
+  {
+    "organ": "journal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.800578+00:00",
+    "spec_hash": 1356990261,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 54
+  },
+  {
+    "organ": "keystore",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.844121+00:00",
+    "spec_hash": 3796709467,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 55
+  },
+  {
+    "organ": "linker",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.889111+00:00",
+    "spec_hash": 1568613577,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 56
+  },
+  {
+    "organ": "loader",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.931472+00:00",
+    "spec_hash": 497586036,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 57
+  },
+  {
+    "organ": "logger",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:41.974968+00:00",
+    "spec_hash": 1102820041,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 58
+  },
+  {
+    "organ": "matrix",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.018851+00:00",
+    "spec_hash": 4265505393,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 59
+  },
+  {
+    "organ": "metrics",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.064749+00:00",
+    "spec_hash": 1426956231,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 60
+  },
+  {
+    "organ": "mirror",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.108034+00:00",
+    "spec_hash": 154252936,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 61
+  },
+  {
+    "organ": "monitor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.150722+00:00",
+    "spec_hash": 4217170326,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 62
+  },
+  {
+    "organ": "orchestrator",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.193258+00:00",
+    "spec_hash": 2259636797,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 63
+  },
+  {
+    "organ": "patcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.251059+00:00",
+    "spec_hash": 1883851362,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 64
+  },
+  {
+    "organ": "portal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.295060+00:00",
+    "spec_hash": 2463117807,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 65
+  },
+  {
+    "organ": "queue",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.338298+00:00",
+    "spec_hash": 3415165213,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 66
+  },
+  {
+    "organ": "relay",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.380272+00:00",
+    "spec_hash": 192541569,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 67
+  },
+  {
+    "organ": "router",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.423567+00:00",
+    "spec_hash": 1401591873,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 68
+  },
+  {
+    "organ": "scheduler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.466913+00:00",
+    "spec_hash": 1899482174,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 69
+  },
+  {
+    "organ": "sentinel",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.509108+00:00",
+    "spec_hash": 2344608970,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 70
+  },
+  {
+    "organ": "signal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.552088+00:00",
+    "spec_hash": 1409608415,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 71
+  },
+  {
+    "organ": "socket",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.597108+00:00",
+    "spec_hash": 1968807390,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 72
+  },
+  {
+    "organ": "spooler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.641379+00:00",
+    "spec_hash": 1450227140,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 73
+  },
+  {
+    "organ": "station",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.684016+00:00",
+    "spec_hash": 2429917231,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 74
+  },
+  {
+    "organ": "switch",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.727337+00:00",
+    "spec_hash": 4206125510,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 75
+  },
+  {
+    "organ": "synth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.774967+00:00",
+    "spec_hash": 1407810616,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 76
+  },
+  {
+    "organ": "telemetry",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.817991+00:00",
+    "spec_hash": 2359136216,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 77
+  },
+  {
+    "organ": "vault",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.861533+00:00",
+    "spec_hash": 75445308,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 78
+  },
+  {
+    "organ": "veilctl",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.904680+00:00",
+    "spec_hash": 1376281686,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 79
+  },
+  {
+    "organ": "watchdog",
+    "action": "created",
+    "timestamp": "2026-01-25T22:15:42.948833+00:00",
+    "spec_hash": 3191582133,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 80
+  },
+  {
+    "organ": "audit",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.354781+00:00",
+    "spec_hash": 4130784493,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 81
+  },
+  {
+    "organ": "auth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.450799+00:00",
+    "spec_hash": 1170570257,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 82
+  },
+  {
+    "organ": "bios",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.601288+00:00",
+    "spec_hash": 5956176,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 83
+  },
+  {
+    "organ": "bridge",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.730929+00:00",
+    "spec_hash": 3802870914,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 84
+  },
+  {
+    "organ": "cache",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.851597+00:00",
+    "spec_hash": 3848648877,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 85
+  },
+  {
+    "organ": "clock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:36.962422+00:00",
+    "spec_hash": 2164850393,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 86
+  },
+  {
+    "organ": "codec",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.053277+00:00",
+    "spec_hash": 2571603847,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 87
+  },
+  {
+    "organ": "collector",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.133788+00:00",
+    "spec_hash": 116448288,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 88
+  },
+  {
+    "organ": "console",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.215078+00:00",
+    "spec_hash": 2609855070,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 89
+  },
+  {
+    "organ": "cortex",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.311507+00:00",
+    "spec_hash": 2047948249,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 90
+  },
+  {
+    "organ": "daemon",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.403832+00:00",
+    "spec_hash": 494612133,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 91
+  },
+  {
+    "organ": "daemonizer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.518832+00:00",
+    "spec_hash": 692819977,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 92
+  },
+  {
+    "organ": "diffuser",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.599900+00:00",
+    "spec_hash": 3843954506,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 93
+  },
+  {
+    "organ": "dispatcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.697400+00:00",
+    "spec_hash": 825388305,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 94
+  },
+  {
+    "organ": "dock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.786285+00:00",
+    "spec_hash": 3550580032,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 95
+  },
+  {
+    "organ": "driver",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:37.975163+00:00",
+    "spec_hash": 2419580449,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 96
+  },
+  {
+    "organ": "emitter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.058886+00:00",
+    "spec_hash": 384482776,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 97
+  },
+  {
+    "organ": "engine",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.156655+00:00",
+    "spec_hash": 4264385792,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 98
+  },
+  {
+    "organ": "entropy",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.238731+00:00",
+    "spec_hash": 2758236105,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 99
+  },
+  {
+    "organ": "entropy_pool",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.321004+00:00",
+    "spec_hash": 1663210185,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 100
+  },
+  {
+    "organ": "fabric",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.445392+00:00",
+    "spec_hash": 1767547808,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 101
+  },
+  {
+    "organ": "fanout",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.534367+00:00",
+    "spec_hash": 160946094,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 102
+  },
+  {
+    "organ": "fingerprint",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.618060+00:00",
+    "spec_hash": 241574238,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 103
+  },
+  {
+    "organ": "firewall",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.717393+00:00",
+    "spec_hash": 3440460408,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 104
+  },
+  {
+    "organ": "flux",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.799594+00:00",
+    "spec_hash": 2997298597,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 105
+  },
+  {
+    "organ": "gateway",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.901291+00:00",
+    "spec_hash": 1149874052,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 106
+  },
+  {
+    "organ": "guardian",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:38.986925+00:00",
+    "spec_hash": 4062841734,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 107
+  },
+  {
+    "organ": "harbor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.072199+00:00",
+    "spec_hash": 1996842515,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 108
+  },
+  {
+    "organ": "hatchery",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.184483+00:00",
+    "spec_hash": 1322581318,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 109
+  },
+  {
+    "organ": "hospital",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.271786+00:00",
+    "spec_hash": 1127036642,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 110
+  },
+  {
+    "organ": "indexer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.360360+00:00",
+    "spec_hash": 501064529,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 111
+  },
+  {
+    "organ": "init",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.441455+00:00",
+    "spec_hash": 2267734398,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 112
+  },
+  {
+    "organ": "interpreter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.531882+00:00",
+    "spec_hash": 2843578149,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 113
+  },
+  {
+    "organ": "journal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.633985+00:00",
+    "spec_hash": 420641967,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 114
+  },
+  {
+    "organ": "keystore",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.720429+00:00",
+    "spec_hash": 4208857331,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 115
+  },
+  {
+    "organ": "linker",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.804773+00:00",
+    "spec_hash": 3426469308,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 116
+  },
+  {
+    "organ": "loader",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.889214+00:00",
+    "spec_hash": 2332593527,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 117
+  },
+  {
+    "organ": "logger",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:39.971460+00:00",
+    "spec_hash": 121339664,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 118
+  },
+  {
+    "organ": "matrix",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.054218+00:00",
+    "spec_hash": 473066908,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 119
+  },
+  {
+    "organ": "metrics",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.143526+00:00",
+    "spec_hash": 4225611795,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 120
+  },
+  {
+    "organ": "mirror",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.227555+00:00",
+    "spec_hash": 781546994,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 121
+  },
+  {
+    "organ": "monitor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.312995+00:00",
+    "spec_hash": 2237354191,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 122
+  },
+  {
+    "organ": "orchestrator",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.394933+00:00",
+    "spec_hash": 1017139237,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 123
+  },
+  {
+    "organ": "patcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.478862+00:00",
+    "spec_hash": 1066008009,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 124
+  },
+  {
+    "organ": "portal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.587061+00:00",
+    "spec_hash": 985363557,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 125
+  },
+  {
+    "organ": "queue",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.671953+00:00",
+    "spec_hash": 3861422209,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 126
+  },
+  {
+    "organ": "relay",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.763919+00:00",
+    "spec_hash": 1263185234,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 127
+  },
+  {
+    "organ": "router",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.864193+00:00",
+    "spec_hash": 3711735617,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 128
+  },
+  {
+    "organ": "scheduler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:40.951975+00:00",
+    "spec_hash": 3263972066,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 129
+  },
+  {
+    "organ": "sentinel",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.032104+00:00",
+    "spec_hash": 1334256557,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 130
+  },
+  {
+    "organ": "signal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.112034+00:00",
+    "spec_hash": 4005777272,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 131
+  },
+  {
+    "organ": "socket",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.194499+00:00",
+    "spec_hash": 3885400086,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 132
+  },
+  {
+    "organ": "spooler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.276270+00:00",
+    "spec_hash": 2831997586,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 133
+  },
+  {
+    "organ": "station",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.387390+00:00",
+    "spec_hash": 3905559378,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 134
+  },
+  {
+    "organ": "switch",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.493481+00:00",
+    "spec_hash": 1621162687,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 135
+  },
+  {
+    "organ": "synth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.576205+00:00",
+    "spec_hash": 1248690526,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 136
+  },
+  {
+    "organ": "telemetry",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.658703+00:00",
+    "spec_hash": 271554141,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 137
+  },
+  {
+    "organ": "vault",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.740307+00:00",
+    "spec_hash": 4040245938,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 138
+  },
+  {
+    "organ": "veilctl",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.822278+00:00",
+    "spec_hash": 2687737794,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 139
+  },
+  {
+    "organ": "watchdog",
+    "action": "created",
+    "timestamp": "2026-01-25T22:27:41.907538+00:00",
+    "spec_hash": 3636104781,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 140
+  },
+  {
+    "organ": "audit",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.081967+00:00",
+    "spec_hash": 595789467,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 141
+  },
+  {
+    "organ": "audit",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.146091+00:00",
+    "spec_hash": 1460811489,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 142
+  },
+  {
+    "organ": "auth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.192248+00:00",
+    "spec_hash": 1011887611,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 143
+  },
+  {
+    "organ": "auth",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.234387+00:00",
+    "spec_hash": 3132246735,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 144
+  },
+  {
+    "organ": "bios",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.307447+00:00",
+    "spec_hash": 1214576700,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 145
+  },
+  {
+    "organ": "bios",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.350514+00:00",
+    "spec_hash": 3648409500,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 146
+  },
+  {
+    "organ": "bridge",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.469671+00:00",
+    "spec_hash": 3283626839,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 147
+  },
+  {
+    "organ": "bridge",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.512829+00:00",
+    "spec_hash": 1462405218,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 148
+  },
+  {
+    "organ": "cache",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.557728+00:00",
+    "spec_hash": 2171542251,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 149
+  },
+  {
+    "organ": "cache",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.599545+00:00",
+    "spec_hash": 756263432,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 150
+  },
+  {
+    "organ": "clock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.676488+00:00",
+    "spec_hash": 2097787681,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 151
+  },
+  {
+    "organ": "clock",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.723715+00:00",
+    "spec_hash": 3284242724,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 152
+  },
+  {
+    "organ": "codec",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.817374+00:00",
+    "spec_hash": 1998456885,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 153
+  },
+  {
+    "organ": "codec",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.859115+00:00",
+    "spec_hash": 2246289699,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 154
+  },
+  {
+    "organ": "collector",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:06.941682+00:00",
+    "spec_hash": 1688469666,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 155
+  },
+  {
+    "organ": "collector",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:06.985689+00:00",
+    "spec_hash": 1224844571,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 156
+  },
+  {
+    "organ": "console",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.032285+00:00",
+    "spec_hash": 2894650291,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 157
+  },
+  {
+    "organ": "console",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.076814+00:00",
+    "spec_hash": 3134172188,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 158
+  },
+  {
+    "organ": "cortex",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.156234+00:00",
+    "spec_hash": 578007492,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 159
+  },
+  {
+    "organ": "cortex",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.198441+00:00",
+    "spec_hash": 2590024190,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 160
+  },
+  {
+    "organ": "daemon",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.248715+00:00",
+    "spec_hash": 2487085611,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 161
+  },
+  {
+    "organ": "daemon",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.292380+00:00",
+    "spec_hash": 1048101342,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 162
+  },
+  {
+    "organ": "daemonizer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.382594+00:00",
+    "spec_hash": 4019811794,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 163
+  },
+  {
+    "organ": "daemonizer",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.422952+00:00",
+    "spec_hash": 366987732,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 164
+  },
+  {
+    "organ": "diffuser",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.466975+00:00",
+    "spec_hash": 2283737260,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 165
+  },
+  {
+    "organ": "diffuser",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.509975+00:00",
+    "spec_hash": 1478493665,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 166
+  },
+  {
+    "organ": "dispatcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.586364+00:00",
+    "spec_hash": 2802997193,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 167
+  },
+  {
+    "organ": "dispatcher",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.627346+00:00",
+    "spec_hash": 3332524755,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 168
+  },
+  {
+    "organ": "dock",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.673228+00:00",
+    "spec_hash": 1763057960,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 169
+  },
+  {
+    "organ": "dock",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.714934+00:00",
+    "spec_hash": 1620906290,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 170
+  },
+  {
+    "organ": "driver",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.758166+00:00",
+    "spec_hash": 3592550676,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 171
+  },
+  {
+    "organ": "driver",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.801332+00:00",
+    "spec_hash": 938406549,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 172
+  },
+  {
+    "organ": "emitter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.851223+00:00",
+    "spec_hash": 2129691421,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 173
+  },
+  {
+    "organ": "emitter",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:07.892731+00:00",
+    "spec_hash": 3497942821,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 174
+  },
+  {
+    "organ": "engine",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:07.970514+00:00",
+    "spec_hash": 576222999,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 175
+  },
+  {
+    "organ": "engine",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.011781+00:00",
+    "spec_hash": 2340929178,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 176
+  },
+  {
+    "organ": "entropy",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.055344+00:00",
+    "spec_hash": 3769800050,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 177
+  },
+  {
+    "organ": "entropy",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.096997+00:00",
+    "spec_hash": 3041214590,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 178
+  },
+  {
+    "organ": "entropy_pool",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.142134+00:00",
+    "spec_hash": 1276644046,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 179
+  },
+  {
+    "organ": "entropy_pool",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.184145+00:00",
+    "spec_hash": 3526852711,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 180
+  },
+  {
+    "organ": "fabric",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.242749+00:00",
+    "spec_hash": 3583481933,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 181
+  },
+  {
+    "organ": "fabric",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.283386+00:00",
+    "spec_hash": 2211736917,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 182
+  },
+  {
+    "organ": "fanout",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.340331+00:00",
+    "spec_hash": 1719487565,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 183
+  },
+  {
+    "organ": "fanout",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.381665+00:00",
+    "spec_hash": 478501782,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 184
+  },
+  {
+    "organ": "fingerprint",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.425710+00:00",
+    "spec_hash": 3504940798,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 185
+  },
+  {
+    "organ": "fingerprint",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.466340+00:00",
+    "spec_hash": 4116489432,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 186
+  },
+  {
+    "organ": "firewall",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.523996+00:00",
+    "spec_hash": 873847532,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 187
+  },
+  {
+    "organ": "firewall",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.565981+00:00",
+    "spec_hash": 1229694229,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 188
+  },
+  {
+    "organ": "flux",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.609937+00:00",
+    "spec_hash": 1178391380,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 189
+  },
+  {
+    "organ": "flux",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.651237+00:00",
+    "spec_hash": 661794749,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 190
+  },
+  {
+    "organ": "gateway",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.743383+00:00",
+    "spec_hash": 1528870584,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 191
+  },
+  {
+    "organ": "gateway",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.784989+00:00",
+    "spec_hash": 2398273881,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 192
+  },
+  {
+    "organ": "guardian",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.829006+00:00",
+    "spec_hash": 2852654103,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 193
+  },
+  {
+    "organ": "guardian",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.870404+00:00",
+    "spec_hash": 3685554862,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 194
+  },
+  {
+    "organ": "harbor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:08.931185+00:00",
+    "spec_hash": 3742653269,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 195
+  },
+  {
+    "organ": "harbor",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:08.978178+00:00",
+    "spec_hash": 2646440411,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 196
+  },
+  {
+    "organ": "hatchery",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.031730+00:00",
+    "spec_hash": 1822822276,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 197
+  },
+  {
+    "organ": "hatchery",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.073028+00:00",
+    "spec_hash": 2079421809,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 198
+  },
+  {
+    "organ": "hospital",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.118616+00:00",
+    "spec_hash": 1621556145,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 199
+  },
+  {
+    "organ": "hospital",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.161176+00:00",
+    "spec_hash": 3767085300,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 200
+  },
+  {
+    "organ": "indexer",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.215985+00:00",
+    "spec_hash": 2351908358,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 201
+  },
+  {
+    "organ": "indexer",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.258613+00:00",
+    "spec_hash": 3007964237,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 202
+  },
+  {
+    "organ": "init",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.302929+00:00",
+    "spec_hash": 9544226,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 203
+  },
+  {
+    "organ": "init",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.343289+00:00",
+    "spec_hash": 3820810874,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 204
+  },
+  {
+    "organ": "interpreter",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.388159+00:00",
+    "spec_hash": 1319889633,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 205
+  },
+  {
+    "organ": "interpreter",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.429938+00:00",
+    "spec_hash": 2993071470,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 206
+  },
+  {
+    "organ": "journal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.497609+00:00",
+    "spec_hash": 2322788578,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 207
+  },
+  {
+    "organ": "journal",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.539839+00:00",
+    "spec_hash": 989794571,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 208
+  },
+  {
+    "organ": "keystore",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.582623+00:00",
+    "spec_hash": 3625553178,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 209
+  },
+  {
+    "organ": "keystore",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.623609+00:00",
+    "spec_hash": 1283397624,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 210
+  },
+  {
+    "organ": "linker",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.670840+00:00",
+    "spec_hash": 3958194964,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 211
+  },
+  {
+    "organ": "linker",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.711321+00:00",
+    "spec_hash": 4042042542,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 212
+  },
+  {
+    "organ": "loader",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.755877+00:00",
+    "spec_hash": 751661078,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 213
+  },
+  {
+    "organ": "loader",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.799240+00:00",
+    "spec_hash": 4290378052,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 214
+  },
+  {
+    "organ": "logger",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.850157+00:00",
+    "spec_hash": 1387695163,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 215
+  },
+  {
+    "organ": "logger",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.895309+00:00",
+    "spec_hash": 1236591689,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 216
+  },
+  {
+    "organ": "matrix",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:09.954784+00:00",
+    "spec_hash": 3802250630,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 217
+  },
+  {
+    "organ": "matrix",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:09.996670+00:00",
+    "spec_hash": 976156066,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 218
+  },
+  {
+    "organ": "metrics",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.040619+00:00",
+    "spec_hash": 598599438,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 219
+  },
+  {
+    "organ": "metrics",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.081593+00:00",
+    "spec_hash": 2425441250,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 220
+  },
+  {
+    "organ": "mirror",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.125689+00:00",
+    "spec_hash": 2241018121,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 221
+  },
+  {
+    "organ": "mirror",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.167461+00:00",
+    "spec_hash": 2909405752,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 222
+  },
+  {
+    "organ": "monitor",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.213469+00:00",
+    "spec_hash": 2558545023,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 223
+  },
+  {
+    "organ": "monitor",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.254902+00:00",
+    "spec_hash": 441377514,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 224
+  },
+  {
+    "organ": "orchestrator",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.300608+00:00",
+    "spec_hash": 1182907801,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 225
+  },
+  {
+    "organ": "orchestrator",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.343607+00:00",
+    "spec_hash": 341753030,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 226
+  },
+  {
+    "organ": "patcher",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.395069+00:00",
+    "spec_hash": 2578729238,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 227
+  },
+  {
+    "organ": "patcher",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.436840+00:00",
+    "spec_hash": 4139077251,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 228
+  },
+  {
+    "organ": "portal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.492813+00:00",
+    "spec_hash": 414574206,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 229
+  },
+  {
+    "organ": "portal",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.533551+00:00",
+    "spec_hash": 3634336126,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 230
+  },
+  {
+    "organ": "queue",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.578816+00:00",
+    "spec_hash": 208809631,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 231
+  },
+  {
+    "organ": "queue",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.626214+00:00",
+    "spec_hash": 3490805404,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 232
+  },
+  {
+    "organ": "relay",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.670108+00:00",
+    "spec_hash": 1002321582,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 233
+  },
+  {
+    "organ": "relay",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.710774+00:00",
+    "spec_hash": 3337355894,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 234
+  },
+  {
+    "organ": "router",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.803134+00:00",
+    "spec_hash": 4155604522,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 235
+  },
+  {
+    "organ": "router",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.844671+00:00",
+    "spec_hash": 2067956987,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 236
+  },
+  {
+    "organ": "scheduler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.890271+00:00",
+    "spec_hash": 4257542521,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 237
+  },
+  {
+    "organ": "scheduler",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:10.932953+00:00",
+    "spec_hash": 430140902,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 238
+  },
+  {
+    "organ": "sentinel",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:10.977569+00:00",
+    "spec_hash": 3554515798,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 239
+  },
+  {
+    "organ": "sentinel",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.017942+00:00",
+    "spec_hash": 3469629063,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 240
+  },
+  {
+    "organ": "signal",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.062799+00:00",
+    "spec_hash": 1393132808,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 241
+  },
+  {
+    "organ": "signal",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.106199+00:00",
+    "spec_hash": 1425201387,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 242
+  },
+  {
+    "organ": "socket",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.149998+00:00",
+    "spec_hash": 1922500845,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 243
+  },
+  {
+    "organ": "socket",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.190856+00:00",
+    "spec_hash": 2666299007,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 244
+  },
+  {
+    "organ": "spooler",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.236524+00:00",
+    "spec_hash": 1823086190,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 245
+  },
+  {
+    "organ": "spooler",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.278183+00:00",
+    "spec_hash": 576460040,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 246
+  },
+  {
+    "organ": "station",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.334976+00:00",
+    "spec_hash": 101695907,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 247
+  },
+  {
+    "organ": "station",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.376818+00:00",
+    "spec_hash": 2187702754,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 248
+  },
+  {
+    "organ": "switch",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.466132+00:00",
+    "spec_hash": 1603921762,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 249
+  },
+  {
+    "organ": "switch",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.508225+00:00",
+    "spec_hash": 2710543983,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 250
+  },
+  {
+    "organ": "synth",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.553790+00:00",
+    "spec_hash": 3671219961,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 251
+  },
+  {
+    "organ": "synth",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.594901+00:00",
+    "spec_hash": 3988428815,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 252
+  },
+  {
+    "organ": "telemetry",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.639957+00:00",
+    "spec_hash": 302972535,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 253
+  },
+  {
+    "organ": "telemetry",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.682730+00:00",
+    "spec_hash": 1058669727,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 254
+  },
+  {
+    "organ": "vault",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.727613+00:00",
+    "spec_hash": 862166789,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 255
+  },
+  {
+    "organ": "vault",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.770092+00:00",
+    "spec_hash": 802566047,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 256
+  },
+  {
+    "organ": "veilctl",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.816171+00:00",
+    "spec_hash": 3124272296,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 257
+  },
+  {
+    "organ": "veilctl",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.859894+00:00",
+    "spec_hash": 1268049716,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 258
+  },
+  {
+    "organ": "watchdog",
+    "action": "created",
+    "timestamp": "2026-01-25T22:36:11.941126+00:00",
+    "spec_hash": 1723539793,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 259
+  },
+  {
+    "organ": "watchdog",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:36:11.983922+00:00",
+    "spec_hash": 1551211082,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 260
+  },
+  {
+    "organ": "epic",
+    "action": "created",
+    "timestamp": "2026-01-25T22:51:09.910164+00:00",
+    "spec_hash": 3635157667,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 261
+  },
+  {
+    "organ": "epic",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:51:09.954098+00:00",
+    "spec_hash": 398924043,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 262
+  },
+  {
+    "organ": "imprivata",
+    "action": "created",
+    "timestamp": "2026-01-25T22:51:10.000267+00:00",
+    "spec_hash": 811136771,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 263
+  },
+  {
+    "organ": "imprivata",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:51:10.045025+00:00",
+    "spec_hash": 541069552,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 264
+  },
+  {
+    "organ": "backup",
+    "action": "created",
+    "timestamp": "2026-01-25T22:51:10.093664+00:00",
+    "spec_hash": 896758762,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 265
+  },
+  {
+    "organ": "backup",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:51:10.136959+00:00",
+    "spec_hash": 2637384077,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 266
+  },
+  {
+    "organ": "quarantine",
+    "action": "created",
+    "timestamp": "2026-01-25T22:51:10.182493+00:00",
+    "spec_hash": 3271107756,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 267
+  },
+  {
+    "organ": "quarantine",
+    "action": "activated",
+    "timestamp": "2026-01-25T22:51:10.226795+00:00",
+    "spec_hash": 3826098558,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 268
+  },
+  {
+    "organ": "mfa",
+    "action": "created",
+    "timestamp": "2026-01-25T23:25:07.046894+00:00",
+    "spec_hash": 1832264855,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 269
+  },
+  {
+    "organ": "mfa",
+    "action": "activated",
+    "timestamp": "2026-01-25T23:25:07.089584+00:00",
+    "spec_hash": 3573637578,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 270
+  },
+  {
+    "organ": "rbac",
+    "action": "created",
+    "timestamp": "2026-01-25T23:25:07.133098+00:00",
+    "spec_hash": 944334286,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 271
+  },
+  {
+    "organ": "rbac",
+    "action": "activated",
+    "timestamp": "2026-01-25T23:25:07.174072+00:00",
+    "spec_hash": 273891008,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 272
+  },
+  {
+    "organ": "phi",
+    "action": "created",
+    "timestamp": "2026-01-25T23:25:07.217889+00:00",
+    "spec_hash": 2030461759,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 273
+  },
+  {
+    "organ": "phi",
+    "action": "activated",
+    "timestamp": "2026-01-25T23:25:07.261587+00:00",
+    "spec_hash": 1955099125,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 274
+  },
+  {
+    "organ": "dlp",
+    "action": "created",
+    "timestamp": "2026-01-25T23:25:07.304438+00:00",
+    "spec_hash": 20326337,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 275
+  },
+  {
+    "organ": "dlp",
+    "action": "activated",
+    "timestamp": "2026-01-25T23:25:07.346188+00:00",
+    "spec_hash": 448312975,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 276
+  },
+  {
+    "organ": "session",
+    "action": "created",
+    "timestamp": "2026-01-25T23:25:07.389342+00:00",
+    "spec_hash": 3107838208,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 277
+  },
+  {
+    "organ": "session",
+    "action": "activated",
+    "timestamp": "2026-01-25T23:25:07.431416+00:00",
+    "spec_hash": 718128145,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 278
+  },
+  {
+    "organ": "hl7",
+    "action": "created",
+    "timestamp": "2026-01-26T00:25:58.802351+00:00",
+    "spec_hash": 3354936406,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 279
+  },
+  {
+    "organ": "hl7",
+    "action": "activated",
+    "timestamp": "2026-01-26T00:25:58.844275+00:00",
+    "spec_hash": 102649681,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 280
+  },
+  {
+    "organ": "fhir",
+    "action": "created",
+    "timestamp": "2026-01-26T00:25:58.889107+00:00",
+    "spec_hash": 1276717108,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 281
+  },
+  {
+    "organ": "fhir",
+    "action": "activated",
+    "timestamp": "2026-01-26T00:25:58.983108+00:00",
+    "spec_hash": 6369644,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 282
+  },
+  {
+    "organ": "canary",
+    "action": "created",
+    "timestamp": "2026-01-26T00:25:59.027720+00:00",
+    "spec_hash": 1382978652,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 283
+  },
+  {
+    "organ": "canary",
+    "action": "activated",
+    "timestamp": "2026-01-26T00:25:59.114091+00:00",
+    "spec_hash": 101673299,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 284
+  },
+  {
+    "organ": "rollback",
+    "action": "created",
+    "timestamp": "2026-01-26T00:25:59.160771+00:00",
+    "spec_hash": 3265196181,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 285
+  },
+  {
+    "organ": "rollback",
+    "action": "activated",
+    "timestamp": "2026-01-26T00:25:59.206498+00:00",
+    "spec_hash": 2385703377,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 286
+  },
+  {
+    "organ": "forensic",
+    "action": "created",
+    "timestamp": "2026-01-26T00:25:59.254986+00:00",
+    "spec_hash": 397920552,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 287
+  },
+  {
+    "organ": "forensic",
+    "action": "activated",
+    "timestamp": "2026-01-26T00:25:59.300960+00:00",
+    "spec_hash": 2570586582,
+    "_reason": "missing organ/tier/timestamp",
+    "_original_index": 288
+  }
+]

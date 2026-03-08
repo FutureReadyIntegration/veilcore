@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# -------------------------
+# Project metadata
+# -------------------------
+[project]
+name = "veil-os"
+version = "0.1.0"
+description = "Veil OS hybrid organ engine"
+authors = [{ name = "Future_Ready" }]
+requires-python = ">=3.10"
+dependencies = [
+  "pyyaml",
+  "fastapi",
+  "uvicorn",
+  "jinja2"
+]
+
+# -------------------------
+# CLI entry points
+# -------------------------
+[project.scripts]
+veil = "veil.cli:main"
+veil-compile = "veil.compiler:compile_all"
+veil-hospital = "veil.hospital.__main__:main"
+veil-intrusion = "veil.intrusion.__main__:main"
+veil-api = "veil.api.__main__:main"
+
+# organs (only keep ones that exist)
+veil-sentinel = "veil.organs.sentinel.runner:main"
+veil-auto-lockdown = "veil.organs.auto_lockdown.runner:main"
+veil-zero-trust = "veil.organs.zero_trust.runner:main"
+
+# REMOVE this until folder exists:
+# veil-insider-threat = "veil.organs.insider_threat.runner:main"
+
+# -------------------------
+# SETUPTOOLS AUTO DISCOVERY
+# -------------------------
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["veil*"]
+exclude = [
+  "tests*",
+  "docs*",
+]

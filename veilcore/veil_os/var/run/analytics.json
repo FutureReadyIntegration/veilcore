@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/analytics.log",
+  "module": "veil.organs.runner",
+  "name": "analytics",
+  "pid": 138015
+}

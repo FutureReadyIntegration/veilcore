@@ -1,0 +1,25 @@
+actions:
+- type: stream
+- type: notify
+- type: replay
+affirmation: Change flows through me to all who listen.
+dependencies:
+- state_vector
+- emitter
+description: Real-time state change streaming and propagation.
+glyph: "\U0001F300"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/flux.sock
+name: flux
+organ: flux
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/flux.log
+symbolic_role: change_stream
+technical_role: state_flux
+tier: core
+triggers:
+- type: state_change
+- type: subscription
+version: 1.0

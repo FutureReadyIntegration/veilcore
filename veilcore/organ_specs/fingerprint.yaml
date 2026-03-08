@@ -1,0 +1,24 @@
+name: fingerprint
+version: 1.0
+tier: security
+glyph: "👆"
+technical_role: hash_verifier
+symbolic_role: identifier
+description: File and system integrity verification via cryptographic hashes.
+inputs:
+  - source: /opt/veil_os/sockets/fingerprint.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/fingerprint.log
+    format: jsonl
+triggers:
+  - type: scan_request
+  - type: baseline_drift
+actions:
+  - type: hash
+  - type: compare
+  - type: alert
+dependencies:
+  - vault
+  - audit
+affirmation: Every file has a unique truth I can verify.

@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/system_snapshot.log",
+  "module": "veil.organs.runner",
+  "name": "system_snapshot",
+  "pid": 152651
+}

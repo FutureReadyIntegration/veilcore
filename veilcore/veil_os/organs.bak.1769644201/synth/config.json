@@ -1,0 +1,10 @@
+{
+  "name": "synth",
+  "version": 1.0,
+  "description": "Configuration synthesis and template generation.",
+  "tier": "core",
+  "glyph": "\ud83c\udfb9",
+  "technical_role": "config_synthesizer",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.705343+00:00"
+}

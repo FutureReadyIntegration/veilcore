@@ -1,0 +1,26 @@
+actions:
+- type: challenge
+- type: verify
+- type: deny
+affirmation: Two keys open the sacred door.
+dependencies:
+- auth
+- imprivata
+- guardian
+description: Multi-factor authentication enforcer for clinical systems.
+glyph: "\U0001F511"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/mfa.sock
+name: mfa
+organ: mfa
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/mfa.log
+symbolic_role: second_gate
+technical_role: multi_factor_auth
+tier: security
+triggers:
+- type: login_attempt
+- type: privilege_escalation
+version: 1.0

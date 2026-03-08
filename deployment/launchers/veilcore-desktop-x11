@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+unset WAYLAND_DISPLAY
+export QT_QPA_PLATFORM=xcb
+export QT_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+
+python3 ~/veilcore/scripts/veilcore_desktop.py &
+PID=$!
+
+sleep 3
+
+if command -v wmctrl >/dev/null 2>&1; then
+  wmctrl -l | grep -i "VeilCore" || true
+  wmctrl -a "VeilCore" || true
+fi
+
+wait $PID

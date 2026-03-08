@@ -1,0 +1,10 @@
+{
+  "name": "audit",
+  "version": 1.0,
+  "description": "Core audit engine with tamper-proof event logging.",
+  "tier": "core",
+  "glyph": "\ud83d\udccb",
+  "technical_role": "audit_engine",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:57.844880+00:00"
+}

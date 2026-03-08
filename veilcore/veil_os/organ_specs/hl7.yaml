@@ -1,0 +1,25 @@
+name: hl7
+version: 1.0
+tier: clinical
+glyph: "📋"
+technical_role: message_parser
+symbolic_role: translator
+description: HL7 v2 message parser for clinical system interoperability.
+inputs:
+  - source: /opt/veil_os/sockets/hl7.sock
+    format: hl7v2
+outputs:
+  - path: /opt/veil_os/ledger/hl7.log
+    format: jsonl
+triggers:
+  - type: message_received
+  - type: parse_error
+actions:
+  - type: parse
+  - type: validate
+  - type: route
+dependencies:
+  - epic
+  - audit
+  - router
+affirmation: I translate so systems may speak.

@@ -1,0 +1,10 @@
+{
+  "name": "console",
+  "version": 1.0,
+  "description": "Administrative console for Veil OS operators.",
+  "tier": "interface",
+  "glyph": "\ud83d\udda5\ufe0f",
+  "technical_role": "admin_console",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.272235+00:00"
+}

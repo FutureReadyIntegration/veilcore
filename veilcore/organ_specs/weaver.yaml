@@ -1,0 +1,23 @@
+name: weaver
+tier: 3
+glyph: "🕸️"
+description: |
+  The organ responsible for stitching together data streams, weaving context,
+  and ensuring coherent flow between subsystems.
+
+entrypoint: "veil.organs.weaver.main"
+
+logging:
+  file: "/var/log/veil/weaver.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/weaver"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

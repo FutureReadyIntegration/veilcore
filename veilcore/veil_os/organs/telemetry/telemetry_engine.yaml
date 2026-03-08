@@ -1,0 +1,15 @@
+name: telemetry-engine
+description: Telemetry Engine
+category: Telemetry & Sensing
+unit: veil-telemetry
+display_name: "Telemetry Engine"
+glyph: "📈"
+tier: P2
+allowed: true
+group: "Telemetry & Sensing"
+order: 30
+color: "#00796B"
+accent: "#B2DFDB"
+health_check: true
+telemetry: true
+purpose: "Streams system vitals, event signals, and environment metrics to the cockpit and analytics pipeline."

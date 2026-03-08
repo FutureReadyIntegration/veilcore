@@ -1,0 +1,8 @@
+# Veil OS Command Index
+
+veilc create <spec.yaml>     → Compile an organ spec
+veilc activate <organ>       → Activate a compiled organ
+veilc status                 → Show organ states
+veilc diagnose               → Diagnose failed organs
+veilctl broadcast <message>  → Send signal to all active organs
+activate_all.sh              → Compile + activate all organs

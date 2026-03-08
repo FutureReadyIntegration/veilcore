@@ -1,0 +1,40 @@
+import os
+import base64
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.staticfiles import StaticFiles
+
+VEIL_SUPERVISOR_BASIC_USER = os.getenv("VEIL_SUPERVISOR_BASIC_USER")
+VEIL_SUPERVISOR_BASIC_PASS = os.getenv("VEIL_SUPERVISOR_BASIC_PASS")
+
+app = FastAPI()
+
+# Mount static frontend at root
+app.mount("/", StaticFiles(directory="/opt/veilcore/gui/veil_gui_web/static", html=True), name="static")
+
+# Sub-app for cockpit status
+gui_app = FastAPI()
+
+@gui_app.get("/status")
+def gui_status():
+    return {"gui": "ready"}
+
+app.mount("/gui", gui_app)
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+@app.get("/secure")
+def secure(request: Request):
+    auth = request.headers.get("authorization")
+    if VEIL_SUPERVISOR_BASIC_USER and VEIL_SUPERVISOR_BASIC_PASS:
+        expected = "Basic " + base64.b64encode(
+            f"{VEIL_SUPERVISOR_BASIC_USER}:{VEIL_SUPERVISOR_BASIC_PASS}".encode("utf-8")
+        ).decode("ascii")
+        if auth != expected:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+    return {"message": "Authenticated access granted"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("service:app", host="0.0.0.0", port=8147)

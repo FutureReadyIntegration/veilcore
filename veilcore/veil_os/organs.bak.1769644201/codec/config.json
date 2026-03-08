@@ -1,0 +1,10 @@
+{
+  "name": "codec",
+  "version": 1.0,
+  "description": "Data encoding/decoding for secure transmission formats.",
+  "tier": "core",
+  "glyph": "\ud83d\udd04",
+  "technical_role": "encoder_decoder",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.185338+00:00"
+}

@@ -1,0 +1,25 @@
+actions:
+- type: replicate
+- type: verify
+- type: failover
+affirmation: What exists here exists there also.
+dependencies:
+- backup
+- vault
+description: Real-time data mirroring for high availability.
+glyph: "\U0001FA9E"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/mirror.sock
+name: mirror
+organ: mirror
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/mirror.log
+symbolic_role: reflection
+technical_role: data_replicator
+tier: recovery
+triggers:
+- type: write_event
+- type: sync_lag
+version: 1.0

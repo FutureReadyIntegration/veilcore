@@ -1,0 +1,10 @@
+{
+  "name": "entropy",
+  "version": 1.0,
+  "description": "Cryptographic entropy collection for key generation.",
+  "tier": "security",
+  "glyph": "\ud83c\udfb2",
+  "technical_role": "entropy_source",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:59.205895+00:00"
+}

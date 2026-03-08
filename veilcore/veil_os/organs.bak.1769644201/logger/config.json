@@ -1,0 +1,10 @@
+{
+  "name": "logger",
+  "version": 1.0,
+  "description": "Structured logging service for all Veil OS components.",
+  "tier": "monitoring",
+  "glyph": "\ud83d\udcdd",
+  "technical_role": "structured_logger",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.227915+00:00"
+}

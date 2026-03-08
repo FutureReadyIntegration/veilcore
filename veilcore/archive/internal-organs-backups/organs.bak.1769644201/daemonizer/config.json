@@ -1,0 +1,10 @@
+{
+  "name": "daemonizer",
+  "version": 1.0,
+  "description": "Converts processes into managed background daemons.",
+  "tier": "core",
+  "glyph": "\ud83d\udd2e",
+  "technical_role": "process_forker",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.621288+00:00"
+}

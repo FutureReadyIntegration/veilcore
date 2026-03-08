@@ -1,0 +1,40 @@
+system:
+  cpu:
+    usage_percent: 37.4
+    load_average:
+      - 0.82
+      - 0.91
+      - 0.88
+
+  memory:
+    total_gb: 32
+    used_gb: 12.7
+    usage_percent: 39.7
+
+  disk:
+    root:
+      total_gb: 512
+      used_gb: 211
+      usage_percent: 41.2
+    data:
+      total_gb: 2048
+      used_gb: 973
+      usage_percent: 47.5
+
+  network:
+    inbound_kbps: 842
+    outbound_kbps: 1294
+    active_connections: 187
+
+clinical_streams:
+  vitals_feed:
+    status: "healthy"
+    last_message_age_seconds: 3
+
+  lab_results_feed:
+    status: "delayed"
+    last_message_age_seconds: 127
+
+  imaging_feed:
+    status: "healthy"
+    last_message_age_seconds: 11

@@ -1,0 +1,10 @@
+{
+  "name": "scheduler",
+  "version": 1.0,
+  "description": "Distributed task scheduling and cron management.",
+  "tier": "core",
+  "glyph": "\ud83d\udcc5",
+  "technical_role": "task_scheduler",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:02.367823+00:00"
+}

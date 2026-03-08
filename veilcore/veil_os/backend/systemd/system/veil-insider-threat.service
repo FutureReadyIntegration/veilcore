@@ -1,0 +1,13 @@
+[Unit]
+Description=Veil Insider Threat Detector
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/veil_os/organs/insider_threat/insider_threat_service.py
+Restart=always
+User=root
+WorkingDirectory=/opt/veil_os/organs/insider_threat
+
+[Install]
+WantedBy=multi-user.target

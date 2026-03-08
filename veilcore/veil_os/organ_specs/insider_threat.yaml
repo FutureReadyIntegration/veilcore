@@ -1,0 +1,23 @@
+name: insider_threat
+tier: 4
+glyph: "🕵️"
+description: |
+  Behavioral analysis organ that monitors for insider threats, unusual access
+  patterns, and high-risk activity within the system.
+
+entrypoint: "veil.organs.insider_threat.main"
+
+logging:
+  file: "/var/log/veil/insider_threat.log"
+  level: "INFO"
+
+storage:
+  path: "/var/lib/veil/insider_threat"
+  retention_days: 90
+
+health:
+  enabled: true
+  interval_seconds: 30
+
+allowed:
+  - "user"

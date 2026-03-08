@@ -1,0 +1,28 @@
+actions:
+- type: block
+- type: quarantine
+- type: alert
+- type: counter
+affirmation: I stand between chaos and those I protect.
+dependencies:
+- firewall
+- quarantine
+- cortex
+description: Primary threat defense and intrusion prevention system.
+glyph: "\U0001F6E1\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/guardian.sock
+name: guardian
+organ: guardian
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/guardian.log
+symbolic_role: protector
+technical_role: threat_defense
+tier: security
+triggers:
+- type: threat_detected
+- type: intrusion_attempt
+- type: malware_signature
+version: 1.0

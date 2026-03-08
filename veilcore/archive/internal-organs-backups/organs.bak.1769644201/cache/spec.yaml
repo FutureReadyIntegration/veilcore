@@ -1,0 +1,25 @@
+actions:
+- type: store
+- type: retrieve
+- type: flush
+affirmation: Speed serves those who protect.
+dependencies:
+- vault
+description: High-speed cache layer for frequently accessed security data.
+glyph: "\U0001F4A8"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/cache.sock
+name: cache
+organ: cache
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/cache.log
+symbolic_role: quicksilver
+technical_role: memory_cache
+tier: core
+triggers:
+- type: cache_miss
+- type: ttl_expire
+- type: invalidate
+version: 1.0

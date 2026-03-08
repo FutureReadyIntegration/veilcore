@@ -1,0 +1,10 @@
+{
+  "name": "imprivata",
+  "version": 1.0,
+  "description": "Imprivata SSO integration and badge-tap authentication bridge.",
+  "tier": "clinical",
+  "glyph": "\ud83d\udd10",
+  "technical_role": "sso_bridge",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:00.393952+00:00"
+}

@@ -1,0 +1,24 @@
+name: indexer
+version: 1.0
+tier: monitoring
+glyph: "📇"
+technical_role: log_indexer
+symbolic_role: librarian
+description: Fast log indexing for security event search and analysis.
+inputs:
+  - source: /opt/veil_os/sockets/indexer.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/indexer.log
+    format: jsonl
+triggers:
+  - type: log_batch
+  - type: index_request
+actions:
+  - type: index
+  - type: search
+  - type: aggregate
+dependencies:
+  - collector
+  - cache
+affirmation: I organize chaos into searchable truth.

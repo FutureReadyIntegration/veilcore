@@ -1,0 +1,25 @@
+actions:
+- type: index
+- type: search
+- type: aggregate
+affirmation: I organize chaos into searchable truth.
+dependencies:
+- collector
+- cache
+description: Fast log indexing for security event search and analysis.
+glyph: "\U0001F4C7"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/indexer.sock
+name: indexer
+organ: indexer
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/indexer.log
+symbolic_role: librarian
+technical_role: log_indexer
+tier: monitoring
+triggers:
+- type: log_batch
+- type: index_request
+version: 1.0

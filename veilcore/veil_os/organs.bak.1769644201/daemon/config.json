@@ -1,0 +1,10 @@
+{
+  "name": "daemon",
+  "version": 1.0,
+  "description": "Background service manager for Veil OS daemons.",
+  "tier": "core",
+  "glyph": "\ud83d\udc7b",
+  "technical_role": "service_manager",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.356501+00:00"
+}

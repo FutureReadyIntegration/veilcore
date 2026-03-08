@@ -1,0 +1,24 @@
+name: fabric
+version: 1.0
+tier: network
+glyph: "🕸️"
+technical_role: network_fabric
+symbolic_role: web
+description: Software-defined network fabric for organ interconnection.
+inputs:
+  - source: /opt/veil_os/sockets/fabric.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/fabric.log
+    format: jsonl
+triggers:
+  - type: topology_change
+  - type: link_failure
+actions:
+  - type: reconfigure
+  - type: reroute
+  - type: heal
+dependencies:
+  - bridge
+  - router
+affirmation: I weave connections between all organs.

@@ -1,0 +1,25 @@
+actions:
+- type: deploy
+- type: scale
+- type: destroy
+affirmation: Ships dock safely in my waters.
+dependencies:
+- harbor
+- orchestrator
+description: Container lifecycle and deployment management.
+glyph: "\U0001F6A2"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/dock.sock
+name: dock
+organ: dock
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/dock.log
+symbolic_role: harbor_master
+technical_role: container_dock
+tier: core
+triggers:
+- type: deploy_request
+- type: container_crash
+version: 1.0

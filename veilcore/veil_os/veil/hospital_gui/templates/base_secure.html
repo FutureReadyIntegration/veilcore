@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Veil Hospital{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-yellow: #eab308;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .vh-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .vh-header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .vh-title {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .vh-title-icon {
+            font-size: 24px;
+        }
+        
+        .vh-nav {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .vh-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .vh-nav a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+        .vh-nav a.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .vh-header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .user-role {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        
+        /* Main Content */
+        .vh-main-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .vh-panel {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .vh-panel h2 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .panel-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0 0 20px 0;
+        }
+        
+        /* Role Badges */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .role-admin {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+        
+        .role-operator {
+            background: rgba(234, 179, 8, 0.2);
+            color: #fde047;
+        }
+        
+        .role-viewer {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .vh-main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .vh-nav {
+                display: none;
+            }
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="vh-header">
+    <div class="vh-header-left">
+        <div class="vh-title">
+            <span class="vh-title-icon">🛡️</span>
+            <span>Veil Hospital</span>
+        </div>
+        <nav class="vh-nav">
+            <a href="/" {% if request.url.path == "/" %}class="active"{% endif %}>Dashboard</a>
+            <a href="/patients" {% if request.url.path == "/patients" %}class="active"{% endif %}>Patients</a>
+            <a href="/discharged" {% if request.url.path == "/discharged" %}class="active"{% endif %}>Discharged</a>
+            <a href="/organs" {% if request.url.path == "/organs" %}class="active"{% endif %}>Organs</a>
+            <a href="/status" {% if request.url.path == "/status" %}class="active"{% endif %}>Status</a>
+            {% if role == "admin" %}
+            <a href="/audit" {% if request.url.path == "/audit" %}class="active"{% endif %}>Audit</a>
+            <a href="/security" {% if request.url.path == "/security" %}class="active"{% endif %}>Security</a>
+            {% endif %}
+        </nav>
+    </div>
+    
+    <div class="vh-header-right">
+        {% if user %}
+        <div class="user-menu">
+            <div class="user-avatar">{{ user[0]|upper }}</div>
+            <div class="user-info">
+                <span class="user-name">{{ user }}</span>
+                <span class="user-role role-badge role-{{ role }}">{{ role }}</span>
+            </div>
+        </div>
+        <a href="/logout" class="logout-btn">Logout</a>
+        {% endif %}
+    </div>
+</header>
+
+<main class="vh-main-grid">
+    <section class="vh-panel vh-panel-left">
+        {% block left_panel %}{% endblock %}
+    </section>
+    <section class="vh-panel vh-panel-right">
+        {% block right_panel %}{% endblock %}
+    </section>
+</main>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+actions:
+- type: format
+- type: write
+- type: rotate
+affirmation: I record all that matters.
+dependencies:
+- collector
+description: Structured logging service for all Veil OS components.
+glyph: "\U0001F4DD"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/logger.sock
+name: logger
+organ: logger
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/logger.log
+symbolic_role: recorder
+technical_role: structured_logger
+tier: monitoring
+triggers:
+- type: log_event
+- type: level_change
+version: 1.0

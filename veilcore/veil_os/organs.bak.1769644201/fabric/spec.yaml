@@ -1,0 +1,25 @@
+actions:
+- type: reconfigure
+- type: reroute
+- type: heal
+affirmation: I weave connections between all organs.
+dependencies:
+- bridge
+- router
+description: Software-defined network fabric for organ interconnection.
+glyph: "\U0001F578\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/fabric.sock
+name: fabric
+organ: fabric
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/fabric.log
+symbolic_role: web
+technical_role: network_fabric
+tier: network
+triggers:
+- type: topology_change
+- type: link_failure
+version: 1.0

@@ -1,0 +1,6 @@
+{
+  "log_path": "/opt/veil_os/var/log/epic.log",
+  "module": "veil.organs.runner",
+  "name": "epic",
+  "pid": 71561
+}

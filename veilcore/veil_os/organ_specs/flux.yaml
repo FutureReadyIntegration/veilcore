@@ -1,0 +1,24 @@
+name: flux
+version: 1.0
+tier: core
+glyph: "🌀"
+technical_role: state_flux
+symbolic_role: change_stream
+description: Real-time state change streaming and propagation.
+inputs:
+  - source: /opt/veil_os/sockets/flux.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/flux.log
+    format: jsonl
+triggers:
+  - type: state_change
+  - type: subscription
+actions:
+  - type: stream
+  - type: notify
+  - type: replay
+dependencies:
+  - state_vector
+  - emitter
+affirmation: Change flows through me to all who listen.

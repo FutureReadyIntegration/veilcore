@@ -1,0 +1,27 @@
+actions:
+- type: block
+- type: alert
+- type: quarantine
+affirmation: Nothing leaves without permission.
+dependencies:
+- firewall
+- phi
+- sentinel
+description: Data loss prevention to stop PHI exfiltration.
+glyph: "\U0001F6E1\uFE0F"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/dlp.sock
+name: dlp
+organ: dlp
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/dlp.log
+symbolic_role: guardian_of_exit
+technical_role: data_loss_prevention
+tier: security
+triggers:
+- type: large_data_transfer
+- type: unusual_destination
+- type: phi_detected
+version: 1.0

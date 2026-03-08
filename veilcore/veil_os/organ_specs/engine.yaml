@@ -1,0 +1,24 @@
+name: engine
+version: 1.0
+tier: core
+glyph: "⚙️"
+technical_role: execution_engine
+symbolic_role: heart
+description: Core execution engine powering all Veil OS operations.
+inputs:
+  - source: /opt/veil_os/sockets/engine.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/engine.log
+    format: jsonl
+triggers:
+  - type: task_submitted
+  - type: priority_escalation
+actions:
+  - type: execute
+  - type: schedule
+  - type: throttle
+dependencies:
+  - scheduler
+  - queue
+affirmation: I am the beating heart of The Veil.

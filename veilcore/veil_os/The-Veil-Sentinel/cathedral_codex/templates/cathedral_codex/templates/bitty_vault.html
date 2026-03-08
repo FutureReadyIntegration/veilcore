@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/glyph_theme.css') }}"
+>
+  <title>Vault Disk Stats</title>
+</head>
+<body>- bitty_vault.html  <body class="vault-page">
+  <h1>🧠 Vault Disk Overview</h1>
+  <ul>
+    {% for key, val in stats.items() %}
+      <li><strong>{{ key }}:</strong> {{ val }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

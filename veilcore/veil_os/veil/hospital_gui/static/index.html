@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veil OS - Hospital Control Plane</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ VEIL OS</h1>
+            <p class="subtitle">Hospital Cybersecurity Control Plane</p>
+        </header>
+
+        <div class="grid">
+            <!-- System Status -->
+            <div class="card">
+                <h2>System Status</h2>
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="label">CPU</span>
+                        <span class="value" id="cpu">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Memory</span>
+                        <span class="value" id="memory">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Security Events</span>
+                        <span class="value" id="events">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Lockdown</span>
+                        <span class="value" id="lockdown">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Organs -->
+            <div class="card">
+                <h2>Security Organs</h2>
+                <div id="organs-list">
+                    <p class="loading">Loading organs...</p>
+                </div>
+                <div class="organ-summary">
+                    <span id="organs-running">0</span> / <span id="organs-total">0</span> Running
+                </div>
+            </div>
+
+            <!-- Patients -->
+            <div class="card">
+                <h2>Patient Monitor</h2>
+                <div class="patient-count">
+                    <div class="count-display" id="patient-count">0</div>
+                    <p class="count-label">Active Patients</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Veil OS v0.1.0 | Last Update: <span id="last-update">--</span></p>
+        </footer>
+    </div>
+
+    <script src="/static/patients.js"></script>
+    <script>
+        // Update status every 2 seconds
+        async function updateStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                document.getElementById('cpu').textContent = data.cpu.toFixed(1) + '%';
+                document.getElementById('memory').textContent = data.memory.toFixed(1) + '%';
+                document.getElementById('events').textContent = data.security_events;
+                document.getElementById('lockdown').textContent = data.lockdown ? '🔒 ACTIVE' : '✓ Normal';
+                document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error('Failed to update status:', error);
+            }
+        }
+
+        // Update organs every 5 seconds
+        async function updateOrgans() {
+            try {
+                const response = await fetch('/api/organs');
+                const data = await response.json();
+                
+                const organsList = document.getElementById('organs-list');
+                organsList.innerHTML = data.organs.map(organ => `
+                    <div class="organ ${organ.status}">
+                        <span class="organ-name">${organ.name}</span>
+                        <span class="organ-priority">${organ.priority}</span>
+                        <span class="organ-status">${organ.status}</span>
+                    </div>
+                `).join('');
+
+                document.getElementById('organs-running').textContent = data.running;
+                document.getElementById('organs-total').textContent = data.total;
+            } catch (error) {
+                console.error('Failed to update organs:', error);
+            }
+        }
+
+        // Initial load
+        updateStatus();
+        updateOrgans();
+
+        // Set intervals
+        setInterval(updateStatus, 2000);
+        setInterval(updateOrgans, 5000);
+    </script>
+</body>
+</html>

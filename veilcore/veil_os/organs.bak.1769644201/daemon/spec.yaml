@@ -1,0 +1,25 @@
+actions:
+- type: restart
+- type: monitor
+- type: report
+affirmation: I keep the spirits running in shadow.
+dependencies:
+- watchdog
+- heartbeat
+description: Background service manager for Veil OS daemons.
+glyph: "\U0001F47B"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/daemon.sock
+name: daemon
+organ: daemon
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/daemon.log
+symbolic_role: spirit
+technical_role: service_manager
+tier: core
+triggers:
+- type: service_crash
+- type: health_check
+version: 1.0

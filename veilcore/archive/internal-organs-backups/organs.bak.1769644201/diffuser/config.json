@@ -1,0 +1,10 @@
+{
+  "name": "diffuser",
+  "version": 1.0,
+  "description": "Load diffusion across organ replicas.",
+  "tier": "core",
+  "glyph": "\ud83d\udca8",
+  "technical_role": "load_diffuser",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:40:58.663347+00:00"
+}

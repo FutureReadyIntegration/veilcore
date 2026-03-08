@@ -1,0 +1,26 @@
+name: vault
+version: 1.0
+tier: security
+glyph: "🏦"
+technical_role: secret_store
+symbolic_role: treasury
+description: Secure secrets management and credential vault.
+inputs:
+  - source: /opt/veil_os/sockets/vault.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/vault.log
+    format: jsonl
+triggers:
+  - type: secret_request
+  - type: lease_expire
+  - type: access_denied
+actions:
+  - type: store
+  - type: retrieve
+  - type: rotate
+  - type: seal
+dependencies:
+  - keystore
+  - audit
+affirmation: Secrets sleep safely in my depths.

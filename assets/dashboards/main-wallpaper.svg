@@ -1,0 +1,53 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#050b15"/>
+      <stop offset="1" stop-color="#0c1626"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1320 520) rotate(90) scale(200 200)">
+      <stop stop-color="#fbbf24" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="veilGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(760 520) rotate(90) scale(320 320)">
+      <stop stop-color="#00e5ff" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .title { font: 700 88px 'Segoe UI', Arial, sans-serif; fill: #e6f7ff; letter-spacing: 10px; }
+      .sub { font: 600 30px 'Segoe UI', Arial, sans-serif; fill: #9fc7dd; letter-spacing: 3px; }
+      .small { font: 600 20px 'Segoe UI', Arial, sans-serif; fill: #7baac4; letter-spacing: 2px; }
+      .label { font: 700 28px 'Segoe UI', Arial, sans-serif; fill: #e6f7ff; letter-spacing: 2px; }
+      .body { font: 500 20px 'Segoe UI', Arial, sans-serif; fill: #9fc7dd; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="760" cy="520" r="320" fill="url(#veilGlow)"/>
+  <circle cx="1320" cy="520" r="200" fill="url(#coreGlow)"/>
+
+  <rect x="170" y="320" width="360" height="150" rx="26" fill="#0f1726" stroke="#1e3a4a" stroke-width="2"/>
+  <text x="350" y="380" text-anchor="middle" class="label">OPERATOR</text>
+  <text x="350" y="420" text-anchor="middle" class="body">Desktop · Prism · Terminal</text>
+
+  <rect x="610" y="280" width="420" height="300" rx="34" fill="#0d1625" stroke="#00e5ff" stroke-opacity="0.55" stroke-width="3"/>
+  <text x="820" y="340" text-anchor="middle" class="label">THE VEIL</text>
+  <text x="820" y="388" text-anchor="middle" class="body">Organs · Engines · Events</text>
+  <text x="820" y="430" text-anchor="middle" class="body">Containment · Deception</text>
+  <text x="820" y="472" text-anchor="middle" class="body">Visibility · Defensive Mediation</text>
+
+  <rect x="1180" y="350" width="280" height="200" rx="28" fill="#111722" stroke="#fbbf24" stroke-width="3"/>
+  <text x="1320" y="415" text-anchor="middle" class="label">THE CORE</text>
+  <text x="1320" y="458" text-anchor="middle" class="body">Policy · Trust · Continuity</text>
+  <text x="1320" y="496" text-anchor="middle" class="body">Protected State</text>
+
+  <path d="M530 395 C590 395, 610 400, 660 420" stroke="#00e5ff" stroke-width="6" fill="none"/>
+  <path d="M1030 430 C1100 430, 1140 430, 1180 450" stroke="#fbbf24" stroke-width="6" fill="none"/>
+
+  <text x="170" y="150" class="title">VEILCORE</text>
+  <text x="170" y="205" class="sub">THE VEIL PROTECTS THE CORE</text>
+  <text x="170" y="248" class="small">Event-Driven Cyber Defense for Hospitals</text>
+
+  <text x="170" y="900" class="small">Canonical API: veilcore/veil/api.py</text>
+  <text x="170" y="935" class="small">Canonical Desktop: scripts/veilcore_desktop.py</text>
+  <text x="170" y="970" class="small">Branch: beta-foundation</text>
+</svg>

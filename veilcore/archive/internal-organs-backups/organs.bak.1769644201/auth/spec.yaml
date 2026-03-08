@@ -1,0 +1,26 @@
+actions:
+- type: authenticate
+- type: issue_token
+- type: revoke
+affirmation: Only the worthy may pass.
+dependencies:
+- keystore
+- audit
+description: Primary authentication service for all Veil OS components.
+glyph: "\U0001F511"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/auth.sock
+name: auth
+organ: auth
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/auth.log
+symbolic_role: gatekeeper
+technical_role: authentication
+tier: core
+triggers:
+- type: login_attempt
+- type: token_request
+- type: session_validate
+version: 1.0

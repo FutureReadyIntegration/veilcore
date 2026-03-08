@@ -1,0 +1,10 @@
+id: "icu_monitor"
+name: "ICU Monitor Cluster"
+type: "monitoring"
+status: "healthy"
+
+signals:
+  beds_monitored: 18
+  active_alarms: 2
+  suppressed_alarms: 1
+  last_calibration: "2026-01-28T09:14:00Z"

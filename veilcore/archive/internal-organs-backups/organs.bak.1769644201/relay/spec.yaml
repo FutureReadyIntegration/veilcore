@@ -1,0 +1,25 @@
+actions:
+- type: forward
+- type: buffer
+- type: retry
+affirmation: I carry messages across the divide.
+dependencies:
+- bridge
+- fabric
+description: Secure message relay between network segments.
+glyph: "\U0001F4E1"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/relay.sock
+name: relay
+organ: relay
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/relay.log
+symbolic_role: messenger
+technical_role: message_relay
+tier: network
+triggers:
+- type: relay_request
+- type: circuit_break
+version: 1.0

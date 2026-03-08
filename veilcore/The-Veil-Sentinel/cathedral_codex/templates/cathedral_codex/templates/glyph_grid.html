@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Glyph Matrix Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/glyph_theme.css') }}">
+  <style>
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1em; }
+    .glyph-card {
+      background: #2e2e3a;
+      padding: 1em;
+      border-radius: 6px;
+      border-top: 6px solid;
+      color: #eee;
+    }
+    .glyph-header { font-size: 1.5em; margin-bottom: 0.3em; }
+    .glyph-tier { font-style: italic; font-size: 0.9em; color: #ccc; }
+  </style>
+</head>
+<body>
+  <h1>🜅 Glyph Matrix</h1>
+  <div class="grid">
+    {% for entry in matrix %}
+      <div class="glyph-card tier-{{ entry.tier }} badge-{{ entry.role }}">
+        <div class="glyph-header glyph-icon">{{ entry.glyph }} <span class="role-icon">{{ entry.icon }}</span></div>
+        <div>{{ entry.text }}</div>
+        <div class="glyph-tier">⧉ {{ entry.tier }} • Level {{ entry.level }}</div>
+        <small>{{ entry.file }} [Line {{ entry.line }}]</small><br>
+        <small>{{ entry.timestamp }}</small>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+actions:
+- type: append
+- type: seal
+- type: archive
+affirmation: What is written in me cannot be unwritten.
+dependencies:
+- audit
+- vault
+description: Append-only event journal for forensic reconstruction.
+glyph: "\U0001F4D4"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/journal.sock
+name: journal
+organ: journal
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/journal.log
+symbolic_role: scribe
+technical_role: event_journal
+tier: monitoring
+triggers:
+- type: event_received
+- type: checkpoint
+version: 1.0

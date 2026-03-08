@@ -1,0 +1,22 @@
+actions:
+- type: sync
+- type: alert
+affirmation: Truth requires accurate time.
+dependencies: []
+description: Synchronized time service for accurate audit timestamps.
+glyph: "\U0001F550"
+inputs:
+- format: yaml
+  source: /opt/veil_os/config/ntp.yaml
+name: clock
+organ: clock
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/clock.log
+symbolic_role: timekeeper
+technical_role: time_sync
+tier: core
+triggers:
+- type: drift_detected
+- type: sync_failure
+version: 1.0

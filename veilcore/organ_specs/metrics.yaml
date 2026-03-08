@@ -1,0 +1,24 @@
+name: metrics
+version: 1.0
+tier: monitoring
+glyph: "📊"
+technical_role: metrics_collector
+symbolic_role: measurer
+description: Performance and security metrics collection and aggregation.
+inputs:
+  - source: /opt/veil_os/sockets/metrics.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/metrics.log
+    format: jsonl
+triggers:
+  - type: scrape_interval
+  - type: threshold_breach
+actions:
+  - type: collect
+  - type: aggregate
+  - type: alert
+dependencies:
+  - telemetry
+  - analytics
+affirmation: I measure so we may improve.

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Veil Hospital</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="vh-header">
+    <div class="vh-title">🧑‍⚕️ Veil Hospital</div>
+    <nav class="vh-nav">
+        <a href="/">Patients</a>
+        <a href="/discharged">Discharged</a>
+        <a href="/organs">Organs</a>
+        <a href="/status">🛡️ Security Status</a>
+    </nav>
+</header>
+
+<main class="vh-main-grid">
+    <section class="vh-panel vh-panel-left">
+        {% block left_panel %}{% endblock %}
+    </section>
+    <section class="vh-panel vh-panel-right">
+        {% block right_panel %}{% endblock %}
+    </section>
+</main>
+
+</body>
+</html>

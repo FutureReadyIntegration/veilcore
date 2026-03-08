@@ -1,0 +1,25 @@
+actions:
+- type: filter
+- type: amplify
+- type: route
+affirmation: I carry the nerve impulses of The Veil.
+dependencies:
+- signal_router
+- cortex
+description: Real-time signal processing for security events.
+glyph: "\U0001F4F6"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/signal.sock
+name: signal
+organ: signal
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/signal.log
+symbolic_role: nerve
+technical_role: signal_processor
+tier: core
+triggers:
+- type: signal_received
+- type: noise_threshold
+version: 1.0

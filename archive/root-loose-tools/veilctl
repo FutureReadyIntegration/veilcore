@@ -1,0 +1,39 @@
+#!/opt/veil_os/api_venv/bin/python
+import importlib
+import sys
+
+CANDIDATES = ("engine", "detector", "service", "main")
+
+def die(msg, code=2):
+    print(msg, file=sys.stderr)
+    raise SystemExit(code)
+
+def run_organ(name: str):
+    last_err = None
+    for mod in CANDIDATES:
+        module_name = f"veil.organs.{name}.{mod}"
+        try:
+            m = importlib.import_module(module_name)
+        except Exception as e:
+            last_err = e
+            continue
+
+        # Prefer callable entrypoints
+        for fn in ("main", "run", "start"):
+            f = getattr(m, fn, None)
+            if callable(f):
+                return f()
+
+        # If module imports but has no entrypoint, just keep it alive?
+        # Better to fail loudly so we know what to wire.
+        die(f"{module_name} imported but no main()/run()/start() found")
+
+    die(f"Could not import any entrypoint for organ '{name}'. Last error: {last_err}")
+
+def main():
+    if len(sys.argv) != 3 or sys.argv[1] != "run":
+        die("Usage: veilctl run <organ_name>")
+    run_organ(sys.argv[2])
+
+if __name__ == "__main__":
+    main()

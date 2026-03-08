@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Epic Patients - Veil Hospital</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .epic-header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); padding: 20px; border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .epic-logo { font-size: 1.5em; font-weight: bold; color: #60a5fa; }
+        .epic-status { color: #10b981; display: flex; align-items: center; gap: 8px; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; }
+        table { width: 100%; border-collapse: collapse; background: #111827; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid #1f2937; }
+        th { background: #1a2332; color: #9ca3af; font-weight: 600; text-transform: uppercase; font-size: 0.8em; }
+        tr:hover { background: #1f2937; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8em; }
+        .badge-active { background: #065f46; color: #10b981; }
+        .badge-critical { background: #7c2d12; color: #fca5a5; }
+        .protected { color: #10b981; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">🏥 Veil Hospital</div>
+        <a href="/" class="nav-btn">🖥️ Systems</a>
+        <a href="/patients" class="nav-btn active">👤 Patients</a>
+        <a href="/discharged" class="nav-btn">🚪 Discharged</a>
+        <a href="/organs" class="nav-btn">🛡️ Security</a>
+        <a href="/status" class="nav-btn">📊 Status</a>
+    </nav>
+    <main>
+        <div class="epic-header">
+            <div class="epic-logo">🏥 Epic EHR — Active Patients</div>
+            <div class="epic-status"><span class="status-dot"></span> Connected • Protected by Guardian</div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>MRN</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Unit</th>
+                    <th>Status</th>
+                    <th>Protected</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>EPC-001247</td><td>REDACTED</td><td>REDACTED</td><td>ICU-3</td><td><span class="badge badge-critical">Critical</span></td><td class="protected">🛡️ PHI Encrypted</td></tr>
+                <tr><td>EPC-001248</td><td>REDACTED</td><td>REDACTED</td><td>MED-2</td><td><span class="badge badge-active">Stable</span></td><td class="protected">🛡️ PHI Encrypted</td></tr>
+                <tr><td>EPC-001249</td><td>REDACTED</td><td>REDACTED</td><td>SURG-1</td><td><span class="badge badge-active">Stable</span></td><td class="protected">🛡️ PHI Encrypted</td></tr>
+                <tr><td>EPC-001250</td><td>REDACTED</td><td>REDACTED</td><td>ER-4</td><td><span class="badge badge-critical">Critical</span></td><td class="protected">🛡️ PHI Encrypted</td></tr>
+                <tr><td>EPC-001251</td><td>REDACTED</td><td>REDACTED</td><td>PEDS-1</td><td><span class="badge badge-active">Stable</span></td><td class="protected">🛡️ PHI Encrypted</td></tr>
+            </tbody>
+        </table>
+        <p style="color: #6b7280; margin-top: 16px; font-size: 0.9em;">📋 Read-only view from Epic EHR • PHI protected by Veil OS • HIPAA compliant</p>
+    </main>
+</body>
+</html>

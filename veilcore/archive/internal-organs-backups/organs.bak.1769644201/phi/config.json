@@ -1,0 +1,10 @@
+{
+  "name": "phi",
+  "version": 1.0,
+  "description": "Protected Health Information tracker and tagger for HIPAA.",
+  "tier": "compliance",
+  "glyph": "\ud83c\udff7\ufe0f",
+  "technical_role": "phi_tracker",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.667841+00:00"
+}

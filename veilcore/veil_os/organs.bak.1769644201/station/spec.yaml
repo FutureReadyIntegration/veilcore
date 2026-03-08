@@ -1,0 +1,27 @@
+actions:
+- type: monitor
+- type: enforce
+- type: report
+affirmation: I guard the places where healers work.
+dependencies:
+- imprivata
+- guardian
+- dlp
+description: Endpoint agent for clinical workstation protection.
+glyph: "\U0001F689"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/station.sock
+name: station
+organ: station
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/station.log
+symbolic_role: outpost
+technical_role: workstation_agent
+tier: interface
+triggers:
+- type: workstation_event
+- type: usb_inserted
+- type: screen_lock
+version: 1.0

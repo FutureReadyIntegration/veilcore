@@ -1,0 +1,23 @@
+name: codec
+version: 1.0
+tier: core
+glyph: "🔄"
+technical_role: encoder_decoder
+symbolic_role: translator
+description: Data encoding/decoding for secure transmission formats.
+inputs:
+  - source: /opt/veil_os/sockets/codec.sock
+    format: json
+outputs:
+  - path: /opt/veil_os/ledger/codec.log
+    format: jsonl
+triggers:
+  - type: encode_request
+  - type: decode_request
+actions:
+  - type: encode
+  - type: decode
+  - type: validate
+dependencies:
+  - vault
+affirmation: I transform data to travel safely.

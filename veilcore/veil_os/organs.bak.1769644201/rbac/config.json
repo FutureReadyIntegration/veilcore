@@ -1,0 +1,10 @@
+{
+  "name": "rbac",
+  "version": 1.0,
+  "description": "Role-based access control for HIPAA compliance.",
+  "tier": "security",
+  "glyph": "\ud83d\udc65",
+  "technical_role": "role_based_access",
+  "status": "inactive",
+  "created_at": "2026-01-27T15:41:01.842351+00:00"
+}

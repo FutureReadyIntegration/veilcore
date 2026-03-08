@@ -1,0 +1,25 @@
+actions:
+- type: synthesize
+- type: validate
+- type: deploy
+affirmation: I compose configurations from templates.
+dependencies:
+- vault
+- interpreter
+description: Configuration synthesis and template generation.
+glyph: "\U0001F3B9"
+inputs:
+- format: json
+  source: /opt/veil_os/sockets/synth.sock
+name: synth
+organ: synth
+outputs:
+- format: jsonl
+  path: /opt/veil_os/ledger/synth.log
+symbolic_role: composer
+technical_role: config_synthesizer
+tier: core
+triggers:
+- type: config_request
+- type: template_render
+version: 1.0
