@@ -103,3 +103,10 @@ veilcore/.venv/
 veilcore/organs.bak.*/
 veilcore/data/*.bak.*
 veilcore/data/*.broken.*
+
+# legacy backend packaging artifacts
+veilcore/backend/dist/
+veilcore/backend/build/
+veilcore/backend/*.egg-info/
+veilcore/backend/*.tar.gz
+veilcore/backend/*.zip
