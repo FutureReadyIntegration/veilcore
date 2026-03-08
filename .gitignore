@@ -91,3 +91,15 @@ assets/exports/
 __pycache__/
 data/events.json
 .config/veilcore/
+
+# absorbed veilcore internal artifacts
+veilcore/.venv/
+veilcore/organs.bak.*/
+veilcore/data/*.bak.*
+veilcore/data/*.broken.*
+
+# absorbed veilcore internal artifacts
+veilcore/.venv/
+veilcore/organs.bak.*/
+veilcore/data/*.bak.*
+veilcore/data/*.broken.*
