@@ -1,30 +1,175 @@
-<svg width="1600" height="520" viewBox="0 0 1600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1600" height="520" viewBox="0 0 1600 520" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="520" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#07101d"/>
-      <stop offset="1" stop-color="#0f1b2e"/>
+      <stop offset="0%" stop-color="#07101d"/>
+      <stop offset="100%" stop-color="#0f1b2e"/>
     </linearGradient>
-    <radialGradient id="orb" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 210) rotate(90) scale(170 170)">
-      <stop stop-color="#00e5ff" stop-opacity="0.95"/>
-      <stop offset="0.45" stop-color="#3b82f6" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#07101d" stop-opacity="0"/>
+
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00e5ff">
+        <animate attributeName="stop-color" values="#00e5ff;#3b82f6;#00e5ff" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#fbbf24">
+        <animate attributeName="stop-color" values="#fbbf24;#00e5ff;#fbbf24" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#00e5ff">
+        <animate attributeName="stop-color" values="#00e5ff;#3b82f6;#00e5ff" dur="6s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur">
+        <animate attributeName="stdDeviation" values="4;8;4" dur="3.5s" repeatCount="indefinite"/>
+      </feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <radialGradient id="orb" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 215) rotate(90) scale(170 170)">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#3b82f6" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#07101d" stop-opacity="0"/>
     </radialGradient>
+
     <style>
-      .title { font: 700 70px 'Segoe UI', Arial, sans-serif; fill: #e6f7ff; letter-spacing: 8px; }
-      .sub { font: 600 26px 'Segoe UI', Arial, sans-serif; fill: #9fc7dd; letter-spacing: 2px; }
-      .tag { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #00e5ff; letter-spacing: 3px; }
-      .small { font: 600 16px 'Segoe UI', Arial, sans-serif; fill: #7baac4; letter-spacing: 1px; }
+      .title { font: 700 72px 'Segoe UI', Arial, sans-serif; fill: url(#titleGrad); letter-spacing: 8px; }
+      .sub { font: 600 26px 'Segoe UI', Arial, sans-serif; fill: #d9f5ff; letter-spacing: 2px; }
+      .tag { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #7baac4; letter-spacing: 3px; }
+      .meshlabel { font: 700 15px 'Segoe UI', Arial, sans-serif; fill: #9fc7dd; letter-spacing: 1px; }
     </style>
   </defs>
 
   <rect width="1600" height="520" fill="url(#bg)"/>
-  <circle cx="800" cy="210" r="170" fill="url(#orb)"/>
-  <circle cx="800" cy="210" r="118" stroke="#00e5ff" stroke-opacity="0.55" stroke-width="3"/>
-  <circle cx="800" cy="210" r="72" stroke="#fbbf24" stroke-opacity="0.7" stroke-width="3"/>
-  <circle cx="800" cy="210" r="26" fill="#0a0e17" stroke="#00e5ff" stroke-width="3"/>
 
-  <text x="800" y="375" text-anchor="middle" class="title">VEILCORE</text>
-  <text x="800" y="414" text-anchor="middle" class="sub">THE VEIL PROTECTS THE CORE</text>
-  <text x="800" y="450" text-anchor="middle" class="tag">EVENT-DRIVEN HOSPITAL DEFENSE PLATFORM</text>
-  <text x="800" y="485" text-anchor="middle" class="small">Organs · Engines · Events · Containment · Accountability</text>
+  <!-- subtle sweep -->
+  <rect x="-260" y="0" width="260" height="520" fill="#00e5ff" opacity="0.05">
+    <animate attributeName="x" from="-260" to="1600" dur="8s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- central eye/core -->
+  <circle cx="800" cy="215" r="170" fill="url(#orb)"/>
+  <circle cx="800" cy="215" r="118" fill="none" stroke="#00e5ff" stroke-opacity="0.45" stroke-width="3">
+    <animate attributeName="r" values="114;120;114" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="800" cy="215" r="72" fill="none" stroke="#fbbf24" stroke-opacity="0.75" stroke-width="3"/>
+  <circle cx="800" cy="215" r="26" fill="#0a0e17" stroke="#00e5ff" stroke-width="3"/>
+
+  <!-- mesh links -->
+  <g opacity="0.55">
+    <line x1="420" y1="120" x2="800" y2="215" stroke="#00e5ff" stroke-width="2"/>
+    <line x1="460" y1="300" x2="800" y2="215" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="560" y1="80" x2="800" y2="215" stroke="#00e5ff" stroke-width="2"/>
+    <line x1="560" y1="350" x2="800" y2="215" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="1180" y1="120" x2="800" y2="215" stroke="#00e5ff" stroke-width="2"/>
+    <line x1="1140" y1="300" x2="800" y2="215" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="1040" y1="80" x2="800" y2="215" stroke="#00e5ff" stroke-width="2"/>
+    <line x1="1040" y1="350" x2="800" y2="215" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="300" y1="215" x2="800" y2="215" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.35"/>
+    <line x1="1300" y1="215" x2="800" y2="215" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.35"/>
+  </g>
+
+  <!-- 80 organ mesh nodes represented by animated rings -->
+  <g>
+    <!-- left cluster -->
+    <g transform="translate(420 120)">
+      <circle r="10" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="2.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.8s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(460 300)">
+      <circle r="10" fill="#0f1726" stroke="#3b82f6" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="3.1s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3.1s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(560 80)">
+      <circle r="10" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="2.3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(560 350)">
+      <circle r="10" fill="#0f1726" stroke="#3b82f6" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="3.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3.4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- right cluster -->
+    <g transform="translate(1180 120)">
+      <circle r="10" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="2.7s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.7s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(1140 300)">
+      <circle r="10" fill="#0f1726" stroke="#3b82f6" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="3.0s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3.0s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(1040 80)">
+      <circle r="10" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(1040 350)">
+      <circle r="10" fill="#0f1726" stroke="#3b82f6" stroke-width="2"/>
+      <circle r="10" fill="none" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="10;18;10" dur="3.3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3.3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- edge nodes -->
+    <g transform="translate(300 215)">
+      <circle r="9" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="9" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="9;16;9" dur="2.9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.35;0;0.35" dur="2.9s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(1300 215)">
+      <circle r="9" fill="#0f1726" stroke="#00e5ff" stroke-width="2"/>
+      <circle r="9" fill="none" stroke="#00e5ff" stroke-opacity="0.4" stroke-width="2">
+        <animate attributeName="r" values="9;16;9" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.35;0;0.35" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <!-- data pulses -->
+  <g>
+    <circle cx="420" cy="120" r="4" fill="#00e5ff">
+      <animateMotion dur="3.8s" repeatCount="indefinite" path="M0 0 Q180 30 380 95"/>
+    </circle>
+    <circle cx="1140" cy="300" r="4" fill="#fbbf24">
+      <animateMotion dur="4.2s" repeatCount="indefinite" path="M0 0 Q-160 -40 -340 -85"/>
+    </circle>
+    <circle cx="560" cy="350" r="4" fill="#3b82f6">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M0 0 Q120 -80 240 -135"/>
+    </circle>
+  </g>
+
+  <text x="800" y="392" text-anchor="middle" class="title" filter="url(#glow)">
+    VEILCORE
+    <animate attributeName="opacity" values="0.88;1;0.88" dur="3s" repeatCount="indefinite"/>
+  </text>
+  <text x="800" y="432" text-anchor="middle" class="sub">THE VEIL PROTECTS THE CORE</text>
+  <text x="800" y="468" text-anchor="middle" class="tag">80-ORGAN MESH • EVENT-DRIVEN HOSPITAL DEFENSE • BETA FOUNDATION</text>
+
+  <text x="450" y="110" text-anchor="middle" class="meshlabel">ORGANS</text>
+  <text x="1150" y="110" text-anchor="middle" class="meshlabel">ENGINES</text>
+  <text x="800" y="95" text-anchor="middle" class="meshlabel">PROTECTED CORE</text>
 </svg>
