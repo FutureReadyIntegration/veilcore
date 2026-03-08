@@ -82,3 +82,12 @@ assets/exports/
 
 # exports (generated artifacts)
 assets/exports/
+
+# VeilCore local/runtime artifacts
+*.bak
+*.broken.*
+*.pyc
+*.pyo
+__pycache__/
+data/events.json
+.config/veilcore/
