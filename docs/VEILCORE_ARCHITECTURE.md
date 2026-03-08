@@ -1,334 +1,359 @@
 # VeilCore Architecture
 
-Author: Marlon Ástin Williams  
-Project: VeilCore Defense Platform  
-Branch: beta-foundation  
+Author: Marlon Ástin Williams
+Project: VeilCore Defense Platform
+Branch: beta-foundation
 
 ---
 
-# 1. Concept
+## 1. Concept
 
-Traditional security protects the **door**.
+Traditional security protects the perimeter.
 
-VeilCore protects the **core**.
+VeilCore protects the Core.
 
-Instead of preventing attackers from touching the perimeter, VeilCore builds a **defensive veil of autonomous system organs** around the core infrastructure.
+Instead of allowing attackers to reach real infrastructure after a perimeter failure, VeilCore places a defensive veil of organs, engines, event handling, and containment logic between hostile activity and protected systems.
 
-Attackers never reach the protected systems.
-
-They interact with the **Veil**.
-
-The Veil studies them, traps them, contains them, and feeds the intelligence back into the system.
+Attackers interact with the Veil, not the Core.
 
 ---
 
-# 2. Core Principle
+## 2. Core Principle
 
-Traditional Model:
+Traditional model:
 
+User -> Firewall -> Server
+              ^
+           Attacker
 
-Once the firewall fails, the attacker is **inside the server environment**.
+If the firewall fails, the attacker can reach the real environment.
 
----
+VeilCore model:
 
-VeilCore Model:
+User -> Veil -> Core
+         ^
+      Attacker
 
-
-Attackers never interact with the core system.
-
-They interact with **defensive simulation and containment layers**.
-
----
-
-# 3. Core vs Veil
-
-## The Core
-
-The Core represents the protected infrastructure.
-
-Examples:
-
-- hospital servers
-- patient data
-- medical systems
-- authentication services
-- security ledger
-- infrastructure orchestration
-
-The Core is intentionally **minimal and shielded**.
-
-It should never directly interact with external threats.
+The Veil absorbs, studies, contains, and redirects hostile interaction before it reaches the protected system truth layer.
 
 ---
 
-## The Veil
+## 3. Core vs Veil
 
-The Veil is a distributed defensive fabric made of **organs**.
+### The Core
 
-Each organ performs a security function.
+The Core is the protected truth layer.
 
-Examples:
+It includes things such as:
 
-- firewall
-- telemetry
-- forensic collection
-- anomaly detection
+- hospital systems
+- patient-related infrastructure
+- identity and policy truth
+- continuity logic
+- accountability records
+- protected command authority
+
+The Core should not directly trust hostile input.
+
+### The Veil
+
+The Veil is the protective interaction layer.
+
+It is responsible for:
+
+- interception
+- challenge
+- containment
 - deception
+- delay
+- event generation
+- controlled visibility
+
+The Veil exists to keep the Core shielded.
+
+---
+
+## 4. Organ Architecture
+
+VeilCore uses a distributed defensive model built from organs.
+
+Primary organ path:
+
+veilcore/organs/
+
+Organs are modular security and operational units. They monitor, react, emit state, and participate in coordinated system defense.
+
+Examples include:
+
+- analytics
+- audit
+- auth
+- auto_lockdown
+- firewall
+- forensic
+- guardian
+- hospital
+- insider_threat
+- metrics
 - quarantine
-- monitoring
-- authentication
-- policy enforcement
+- sentinel
+- telemetry
+- zero_trust
 
-These organs collectively act as a **living defensive system**.
-
----
-
-# 4. Organ Architecture
-
-Organs are modular components located in:
-
-
-Each organ contains:
-
-
-Typical responsibilities:
-
-- monitoring events
-- analyzing activity
-- enforcing policy
-- reporting telemetry
-- initiating containment actions
+This structure gives VeilCore a living-system defensive model instead of a single monolithic control point.
 
 ---
 
-Example organ categories:
+## 5. Engine Layer
 
-### Detection organs
+VeilCore also includes specialized engines in:
 
-Detect suspicious activity.
+veilcore/core/
 
-Examples:
+Examples include:
 
+- core/accessibility
+- core/cloud
+- core/compliance
+- core/federation
+- core/mesh
+- core/ml
+- core/mobile
+- core/pentest
+- core/physical
+- core/wireless
 
----
+These engines provide higher-level capabilities such as:
 
-### Containment organs
-
-Contain threats.
-
-Examples:
-
-
----
-
-### Deception organs
-
-Interact with attackers without exposing the core.
-
-Examples:
-
-
----
-
-### Infrastructure organs
-
-Maintain system operations.
-
-Examples:
-
-
----
-
-# 5. Event System
-
-All activity flows through an **event stream**.
-
-Example events:
-
-
-Events are emitted by organs and consumed by other organs.
-
-This creates an **autonomous reaction chain**.
-
----
-
-Example:
-
-
----
-
-# 6. Engine Layer
-
-Engines exist in:
-
-
-Engines provide:
-
-- advanced detection
-- environment analysis
-- system simulation
-- penetration testing
-- wireless monitoring
+- machine learning threat scoring
+- penetration simulation
+- wireless defense
 - physical security integration
+- accessibility support
+- cloud and federation support
 
 ---
 
-# 7. Event API
+## 6. Event Fabric
 
-The event API exposes the state of the Veil.
+VeilCore is event-driven.
 
-Example endpoints:
+Events are produced when engines or organs change state or detect conditions.
 
+Examples include:
 
-Engine control:
+- engine.degraded
+- engine.restarted
+- physical.camera_feed_lost
+- physical.sensor_triggered
 
+These events flow through the platform and are used for:
 
-Engine control:
+- dashboard visibility
+- threat awareness
+- system reaction
+- operator insight
+- future automation chains
 
-
-These endpoints power the VeilCore dashboard.
+This event system is a core part of VeilCore’s defensive architecture.
 
 ---
 
-# 8. VeilCore Desktop
+## 7. API Layer
 
-The VeilCore desktop provides a real-time visualization of the platform.
+The canonical API source of record is:
 
-Features include:
+veilcore/veil/api.py
+
+The API provides live system visibility and engine control.
+
+Important routes include:
+
+- GET /health
+- GET /organs
+- GET /events
+- POST /engines/{engine_id}/start
+- POST /engines/{engine_id}/stop
+- POST /engines/{engine_id}/restart
+- POST /engines/{engine_id}/fail
+
+This API is the command and visibility layer for live VeilCore operations.
+
+---
+
+## 8. Desktop / Prism Layer
+
+The current desktop runtime is centered on the VeilCore desktop and Prism event presentation.
+
+Primary runtime files include:
+
+- scripts/veilcore_desktop.py
+- scripts/prism_events.py
+
+The desktop provides:
 
 - subsystem health cards
-- event stream
-- neural mesh visualization
-- system telemetry
-- engine state control
-- integrated terminal
+- event feed visualization
+- mesh / overlay visuals
+- telemetry display
+- integrated terminal behavior
+- operator awareness
 
-The UI reflects **live system activity**.
-
----
-
-# 9. Deception Strategy
-
-Traditional security blocks attackers.
-
-VeilCore **traps them in controlled environments**.
-
-Instead of giving attackers access to real infrastructure, VeilCore presents simulated surfaces.
-
-Attackers:
-
-- waste time
-- expose tools
-- reveal tactics
-- generate intelligence
-
-The Veil records this activity.
+This is not intended to be a passive dashboard only. It is the operator-facing expression of the event-driven defense model.
 
 ---
 
-# 10. Hospital Deployment Model
+## 9. Deception and Containment
 
-VeilCore was designed for healthcare infrastructure.
+Traditional security systems often focus on blocking.
 
-Key protections:
+VeilCore is designed around a stronger model:
 
+- detect
+- contain
+- observe
+- redirect
+- preserve continuity
 
-VeilCore isolates medical systems from attackers using layered organs.
+The goal is to keep attackers interacting with defensive layers instead of real protected infrastructure.
+
+This changes the architecture from passive monitoring into active defensive mediation.
 
 ---
 
-# 11. Accessibility Engine
+## 10. Hospital Focus
 
-VeilCore includes a dedicated accessibility system.
+VeilCore is designed for healthcare and critical infrastructure conditions.
 
-Located in:
+That includes environments involving:
 
+- hospital operations
+- clinical systems
+- HL7 / FHIR related integrations
+- medical networks
+- patient-impacting infrastructure
+- continuity-sensitive operations
 
-Capabilities include:
+The platform is designed to reduce ransomware impact and preserve operational continuity under attack pressure.
 
+---
+
+## 11. Accessibility Engine
+
+VeilCore includes an accessibility direction as a core platform concern.
+
+Relevant path:
+
+veilcore/core/accessibility/
+
+This area includes support work for:
+
+- audio interaction
 - screen reader support
-- audio feedback
-- braille interface (experimental)
-- accessible security dashboards
+- braille-oriented functionality
+- accessible operator interaction
 
-Security platforms rarely implement accessibility support.
-
-VeilCore treats accessibility as a core system function.
+Accessibility is treated as a first-class platform concern, not an afterthought.
 
 ---
 
-# 12. Immutable Ledger
+## 12. Accountability and Ledger Direction
 
-VeilCore maintains a security ledger.
+VeilCore is intended to support traceability and accountability.
 
-Example file:
+Relevant artifacts include:
 
+- ledger.json
+- ledger_legacy.json
+- security and audit policies
+- event history
 
-The ledger records:
+The long-term goal is a platform where actions, decisions, and state changes are attributable and difficult to silently erase or deny.
 
-- system events
-- enforcement actions
-- engine state changes
-- operator activity
-
-The ledger supports accountability and auditability.
-
----
-
-# 13. Design Goals
-
-VeilCore aims to create a system that is:
-
-- resilient
-- autonomous
-- observable
-- accountable
-- adaptive
-
-The system is designed to **respond to threats automatically**, while maintaining transparency for operators.
+This supports both security response and operational accountability.
 
 ---
 
-# 14. Current Development Status
+## 13. Security Documentation Layer
+
+Security and policy documentation is present under:
+
+veilcore/security/
+
+This includes materials such as:
+
+- incident response
+- access control policy
+- audit log policy
+- system overview
+- threat model
+- risk analysis
+- operator guidance
+
+This layer helps align the codebase with governance, audit, and operational review.
+
+---
+
+## 14. Current Canonical Source Areas
+
+The primary active source areas currently treated as canonical are:
+
+- veilcore/veil/
+- veilcore/core/
+- veilcore/organs/
+- veilcore/organ_specs/
+- veilcore/security/
+- scripts/
+- docs/
+
+These areas represent the current source-of-record direction for the beta-foundation branch.
+
+---
+
+## 15. Current Beta Status
 
 Branch:
 
+beta-foundation
 
-Capabilities currently operational:
+Current confirmed platform characteristics include:
 
-- event engine
-- subsystem dashboard
-- organ architecture
-- engine simulation
-- threat event flow
-- real-time UI response
+- live API behavior
+- working event route
+- engine fail testing
+- dashboard reaction to events
+- physical engine integration
+- desktop launch path
+- in-platform terminal usage
+- repository cleanup and source-of-record alignment
 
-VeilCore has progressed beyond concept stage into a **functional prototype security platform**.
+VeilCore is beyond concept stage and exists as an operational beta-foundation platform.
 
 ---
 
-# 15. Future Directions
+## 16. Future Direction
 
-Planned evolution includes:
+Planned or implied future directions include:
 
 - sovereign core enforcement
-- distributed federation between sites
-- immutable security ledger
+- signed action envelopes
 - automated containment chains
-- hardened hospital deployment packages
+- stronger immutability
+- clearer hospital deployment packages
+- deeper accessibility validation
+- federation across sites
+- stronger operator accountability
 
 ---
 
-# Conclusion
+## 17. Summary
 
-VeilCore represents a shift from passive security systems toward **active defensive architecture**.
+VeilCore is a defensive architecture built around one principle:
 
-Instead of simply blocking threats, VeilCore:
+The Veil protects the Core.
 
-- observes them
-- contains them
-- learns from them
-- strengthens the system.
+Instead of trusting the perimeter, VeilCore places a defensive fabric between hostile reality and protected system truth.
 
-The goal is a security platform that protects critical infrastructure while continuously adapting to new threats.
+That defensive fabric is made of organs, engines, events, containment logic, visibility systems, and accountability direction.
 
+The result is a platform designed not only to detect cyber pressure, but to contain it, study it, and preserve continuity while protecting critical systems.
