@@ -1,30 +1,30 @@
-<svg width="900" height="200" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg">
+<svg width="1600" height="520" viewBox="0 0 1600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="50%" stop-color="#00ff9a"/>
-      <stop offset="100%" stop-color="#00e5ff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07101d"/>
+      <stop offset="1" stop-color="#0f1b2e"/>
     </linearGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <radialGradient id="orb" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 210) rotate(90) scale(170 170)">
+      <stop stop-color="#00e5ff" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#3b82f6" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#07101d" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .title { font: 700 70px 'Segoe UI', Arial, sans-serif; fill: #e6f7ff; letter-spacing: 8px; }
+      .sub { font: 600 26px 'Segoe UI', Arial, sans-serif; fill: #9fc7dd; letter-spacing: 2px; }
+      .tag { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #00e5ff; letter-spacing: 3px; }
+      .small { font: 600 16px 'Segoe UI', Arial, sans-serif; fill: #7baac4; letter-spacing: 1px; }
+    </style>
   </defs>
 
-  <rect width="900" height="200" fill="#070b12"/>
-  <path d="M0 160 H900" stroke="#0b2a33" stroke-width="2" opacity="0.55"/>
+  <rect width="1600" height="520" fill="url(#bg)"/>
+  <circle cx="800" cy="210" r="170" fill="url(#orb)"/>
+  <circle cx="800" cy="210" r="118" stroke="#00e5ff" stroke-opacity="0.55" stroke-width="3"/>
+  <circle cx="800" cy="210" r="72" stroke="#fbbf24" stroke-opacity="0.7" stroke-width="3"/>
+  <circle cx="800" cy="210" r="26" fill="#0a0e17" stroke="#00e5ff" stroke-width="3"/>
 
-  <text x="450" y="92" text-anchor="middle"
-        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-        font-size="54" font-weight="800"
-        fill="url(#g)" filter="url(#glow)">VEILCORE</text>
-
-  <text x="450" y="142" text-anchor="middle"
-        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-        font-size="16" fill="#9fb4c7" opacity="0.92">
-        LIVE SECURITY CONTROL PLANE
-  </text>
+  <text x="800" y="375" text-anchor="middle" class="title">VEILCORE</text>
+  <text x="800" y="414" text-anchor="middle" class="sub">THE VEIL PROTECTS THE CORE</text>
+  <text x="800" y="450" text-anchor="middle" class="tag">EVENT-DRIVEN HOSPITAL DEFENSE PLATFORM</text>
+  <text x="800" y="485" text-anchor="middle" class="small">Organs · Engines · Events · Containment · Accountability</text>
 </svg>
