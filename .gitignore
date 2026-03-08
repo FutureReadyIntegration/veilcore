@@ -110,3 +110,7 @@ veilcore/backend/build/
 veilcore/backend/*.egg-info/
 veilcore/backend/*.tar.gz
 veilcore/backend/*.zip
+
+# local runtime noise
+.venv/
+__pycache__/
