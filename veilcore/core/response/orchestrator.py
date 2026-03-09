@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 
 from .actions import ACTION_MAP, ActionResult
 from .policies import match_policy
-
+from .escalation import EscalationEngine
 
 def _now() -> str:
     return datetime.now().isoformat(timespec="seconds")
