@@ -121,3 +121,8 @@ archive/root-legacy-dirs/
 **/target/
 *.rlib
 *.a
+
+archive/root-legacy-dirs/
+**/target/
+*.rlib
+*.a
