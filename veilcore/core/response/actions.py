@@ -63,7 +63,7 @@ def revoke_session(ctx: dict) -> ActionResult:
 def sinkhole_connection(ctx: dict) -> ActionResult:
     payload = _payload_dict(ctx)
     zone = payload.get("zone") or "unknown_zone"
-    target = ctx.get("target") or payload.get("camera_id") or payload.get("sensor_id") or "unknown_target"
+    target = ctx.get("target") or payload.get("camera_id") or payload.get("sensor_id") or payload.get("name") or "unknown_target"
     return ActionResult(
         ok=True,
         action="sinkhole_connection",
@@ -112,6 +112,9 @@ def snapshot_host(ctx: dict) -> ActionResult:
         ctx.get("target")
         or payload.get("camera_id")
         or payload.get("sensor_id")
+        or payload.get("name")
+        or payload.get("service")
+        or ctx.get("source")
         or "unknown_host"
     )
     return ActionResult(
