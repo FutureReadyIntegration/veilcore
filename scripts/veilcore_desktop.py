@@ -53,6 +53,28 @@ def api_post(base: str, path: str, payload: dict, timeout: float = 3.0) -> dict:
     return json.loads(raw) if raw else {}
 
 
+def derive_engines_from_events(events: list[dict]) -> list[dict]:
+    latest: dict[str, dict] = {}
+    for ev in events:
+        et = str(ev.get("type", ""))
+        payload = ev.get("payload", {}) if isinstance(ev.get("payload"), dict) else {}
+        name = payload.get("name")
+        if not name:
+            continue
+        if not et.startswith("engine."):
+            continue
+        latest[str(name)] = {
+            "id": str(ev.get("source") or str(name).lower()),
+            "name": str(name),
+            "state": str(payload.get("state", "unknown")),
+            "health": payload.get("health", "--"),
+            "service": str(payload.get("service", "")),
+            "last_error": str(payload.get("last_error", ev.get("message", ""))),
+            "updated_at": str(payload.get("updated_at", ev.get("ts", ""))),
+        }
+    return list(latest.values())
+
+
 @dataclass
 class GlobalState:
     api_base_url: str = DEFAULT_API
@@ -257,15 +279,19 @@ class DashboardTab(ttk.Frame):
     def refresh(self):
         try:
             self.api_var.set(f"API: {self.gs.api_base()}")
-            data = api_get(self.gs.api_base(), "/engines")
-            engines = data.get("engines", [])
-            if not isinstance(engines, list):
-                engines = []
 
             ev_data = api_get(self.gs.api_base(), "/events")
             events = ev_data.get("events", [])
             if not isinstance(events, list):
                 events = []
+
+            try:
+                data = api_get(self.gs.api_base(), "/engines")
+                engines = data.get("engines", [])
+                if not isinstance(engines, list):
+                    engines = []
+            except Exception:
+                engines = derive_engines_from_events(events)
 
             for item in self.tree.get_children():
                 self.tree.delete(item)
