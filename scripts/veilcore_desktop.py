@@ -57,11 +57,11 @@ def derive_engines_from_events(events: list[dict]) -> list[dict]:
     latest: dict[str, dict] = {}
     for ev in events:
         et = str(ev.get("type", ""))
+        if not et.startswith("engine."):
+            continue
         payload = ev.get("payload", {}) if isinstance(ev.get("payload"), dict) else {}
         name = payload.get("name")
         if not name:
-            continue
-        if not et.startswith("engine."):
             continue
         latest[str(name)] = {
             "id": str(ev.get("source") or str(name).lower()),
@@ -98,7 +98,7 @@ def apply_theme(root: tk.Tk) -> None:
     style.configure("Card.TLabel", background=C["panel2"], foreground=C["text"])
     style.configure("Dim.TLabel", background=C["bg"], foreground=C["dim"])
     style.configure("Title.TLabel", background=C["bg"], foreground=C["cyan"], font=("Segoe UI", 18, "bold"))
-    style.configure("Section.TLabel", background=C["bg"], foreground=C["gold"], font=("Segoe UI", 11, "bold"))
+    style.configure("Section.TLabel", background=C["panel"], foreground=C["gold"], font=("Segoe UI", 11, "bold"))
     style.configure("MetricValue.TLabel", background=C["panel2"], foreground=C["cyan2"], font=("Segoe UI", 20, "bold"))
     style.configure("MetricLabel.TLabel", background=C["panel2"], foreground=C["text2"], font=("Segoe UI", 9, "bold"))
 
@@ -183,6 +183,53 @@ class MetricCard(ttk.Frame):
         self.value_var.set(value)
 
 
+class InfoCard(ttk.Frame):
+    def __init__(self, parent, title: str, accent: str | None = None):
+        super().__init__(parent, style="Card.TFrame", padding=12)
+
+        self.title_var = tk.StringVar(value=title)
+        self.line1_var = tk.StringVar(value="--")
+        self.line2_var = tk.StringVar(value="--")
+        self.line3_var = tk.StringVar(value="--")
+
+        ttk.Label(self, textvariable=self.title_var, style="MetricLabel.TLabel").pack(anchor="w")
+
+        self.line1 = tk.Label(
+            self,
+            textvariable=self.line1_var,
+            bg=C["panel2"],
+            fg=accent or C["cyan2"],
+            font=("Segoe UI", 14, "bold"),
+            anchor="w",
+        )
+        self.line1.pack(fill="x", anchor="w", pady=(8, 2))
+
+        self.line2 = tk.Label(
+            self,
+            textvariable=self.line2_var,
+            bg=C["panel2"],
+            fg=C["text"],
+            font=("Segoe UI", 10),
+            anchor="w",
+        )
+        self.line2.pack(fill="x", anchor="w", pady=1)
+
+        self.line3 = tk.Label(
+            self,
+            textvariable=self.line3_var,
+            bg=C["panel2"],
+            fg=C["text2"],
+            font=("Consolas", 9),
+            anchor="w",
+        )
+        self.line3.pack(fill="x", anchor="w", pady=(2, 0))
+
+    def set_lines(self, a: str, b: str, c: str):
+        self.line1_var.set(a)
+        self.line2_var.set(b)
+        self.line3_var.set(c)
+
+
 class DashboardTab(ttk.Frame):
     def __init__(self, parent, gs: GlobalState):
         super().__init__(parent, style="TFrame")
@@ -216,6 +263,21 @@ class DashboardTab(ttk.Frame):
         for i, card in enumerate((self.metric_health, self.metric_degraded, self.metric_chains, self.metric_tier)):
             card.grid(row=0, column=i, sticky="nsew", padx=(0 if i == 0 else 8, 0))
             metrics.columnconfigure(i, weight=1)
+
+        live_cards = ttk.Frame(self, style="TFrame")
+        live_cards.pack(fill="x", padx=10, pady=(0, 8))
+
+        self.card_ds = InfoCard(live_cards, "DEEPSENTINEL LIVE", C["cyan"])
+        self.card_containment = InfoCard(live_cards, "CONTAINMENT STATUS", C["gold"])
+        self.card_physical = InfoCard(live_cards, "PHYSICAL SECURITY", C["red"])
+
+        self.card_ds.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
+        self.card_containment.grid(row=0, column=1, sticky="nsew", padx=(0, 8))
+        self.card_physical.grid(row=0, column=2, sticky="nsew")
+
+        live_cards.columnconfigure(0, weight=1)
+        live_cards.columnconfigure(1, weight=1)
+        live_cards.columnconfigure(2, weight=1)
 
         health_panel = ttk.Frame(self, style="Panel.TFrame", padding=10)
         health_panel.pack(fill="x", padx=10, pady=(0, 8))
@@ -302,14 +364,37 @@ class DashboardTab(ttk.Frame):
             max_tier = 0
             response_events = 0
 
+            latest_ds = None
+            latest_physical = None
+            latest_response = None
+            containment_flags = {"sinkhole": False, "isolated": False}
+
             for ev in events:
-                if str(ev.get("type", "")).startswith("response."):
+                et = str(ev.get("type", ""))
+                payload = ev.get("payload", {}) if isinstance(ev.get("payload"), dict) else {}
+
+                if et.startswith("response."):
                     response_events += 1
-                    payload = ev.get("payload", {}) if isinstance(ev.get("payload"), dict) else {}
                     try:
                         max_tier = max(max_tier, int(payload.get("tier", 0) or 0))
                     except Exception:
                         pass
+
+                if et.startswith("engine.") and payload.get("name") == "DeepSentinel" and latest_ds is None:
+                    latest_ds = ev
+
+                if et.startswith("physical.") and latest_physical is None:
+                    latest_physical = ev
+
+                if et.startswith("response.") and latest_response is None:
+                    latest_response = ev
+
+                msg = str(ev.get("message", "")).lower()
+                action = str(payload.get("action", "")).lower()
+                if "sinkhole" in msg or "sinkhole" in action:
+                    containment_flags["sinkhole"] = True
+                if "isolate" in msg or "isolate" in action:
+                    containment_flags["isolated"] = True
 
             for eng in engines:
                 name = str(eng.get("name", eng.get("id", "unknown")))
@@ -321,8 +406,11 @@ class DashboardTab(ttk.Frame):
                 tag = "nominal"
                 if state.lower() == "degraded":
                     tag = "degraded"
-                if str(health).isdigit() and float(health) < 30:
-                    tag = "critical"
+                try:
+                    if float(health) < 30:
+                        tag = "critical"
+                except Exception:
+                    pass
 
                 self.tree.insert("", "end", values=(name, state, health, service, last_error), tags=(tag,))
 
@@ -351,6 +439,45 @@ class DashboardTab(ttk.Frame):
             self.health_detail.set(
                 f"{count} engines tracked • {degraded} degraded • max containment tier {max_tier or 0}"
             )
+
+            if latest_ds:
+                p = latest_ds.get("payload", {}) if isinstance(latest_ds.get("payload"), dict) else {}
+                self.card_ds.set_lines(
+                    f"{str(p.get('state', 'unknown')).upper()} • {p.get('health', '--')}%",
+                    f"Last error: {p.get('last_error', 'none')}",
+                    f"Updated: {p.get('updated_at', latest_ds.get('ts', '--'))}",
+                )
+            else:
+                self.card_ds.set_lines("NO DATA", "No DeepSentinel engine event found", "--")
+
+            if latest_response:
+                rp = latest_response.get("payload", {}) if isinstance(latest_response.get("payload"), dict) else {}
+                tier_text = f"Tier {max_tier or 0}"
+                flags = []
+                if containment_flags["isolated"]:
+                    flags.append("VLAN isolated")
+                if containment_flags["sinkhole"]:
+                    flags.append("Sinkhole active")
+                flag_text = " • ".join(flags) if flags else "No containment flags"
+                self.card_containment.set_lines(
+                    f"{tier_text} • {response_events} events",
+                    f"Last action: {rp.get('action', latest_response.get('type', '--'))}",
+                    flag_text,
+                )
+            else:
+                self.card_containment.set_lines("NO RESPONSE", "No response events found", "--")
+
+            if latest_physical:
+                pp = latest_physical.get("payload", {}) if isinstance(latest_physical.get("payload"), dict) else {}
+                zone = pp.get("zone") or pp.get("location") or "--"
+                self.card_physical.set_lines(
+                    f"{str(latest_physical.get('level', '--')).upper()} • {latest_physical.get('type', '--')}",
+                    f"Target: {latest_physical.get('target', '--')}",
+                    f"Zone: {zone}",
+                )
+            else:
+                self.card_physical.set_lines("NO PHYSICAL ALERTS", "No physical events found", "--")
+
         except Exception as e:
             self.status_var.set(f"Status: OFFLINE - {e}")
 
@@ -408,13 +535,18 @@ class EventsTab(ttk.Frame):
             for ev in events[:180]:
                 level = str(ev.get("level", "")).lower()
                 tag = level if level in {"info", "warning", "critical"} else ""
-                self.tree.insert("", "end", values=(
-                    str(ev.get("ts", "")),
-                    str(ev.get("type", "")),
-                    str(ev.get("level", "")),
-                    str(ev.get("target", "")),
-                    str(ev.get("message", "")),
-                ), tags=(tag,))
+                self.tree.insert(
+                    "",
+                    "end",
+                    values=(
+                        str(ev.get("ts", "")),
+                        str(ev.get("type", "")),
+                        str(ev.get("level", "")),
+                        str(ev.get("target", "")),
+                        str(ev.get("message", "")),
+                    ),
+                    tags=(tag,),
+                )
                 shown += 1
 
             self.info_var.set(f"Latest events ({shown} shown)")
@@ -490,14 +622,19 @@ class ResponseTab(ttk.Frame):
                 elif tier == "3":
                     tag = "tier3"
 
-                self.tree.insert("", "end", values=(
-                    str(ev.get("ts", "")),
-                    et,
-                    tier,
-                    action,
-                    str(ev.get("target", "")),
-                    str(ev.get("message", "")),
-                ), tags=(tag,))
+                self.tree.insert(
+                    "",
+                    "end",
+                    values=(
+                        str(ev.get("ts", "")),
+                        et,
+                        tier,
+                        action,
+                        str(ev.get("target", "")),
+                        str(ev.get("message", "")),
+                    ),
+                    tags=(tag,),
+                )
                 shown += 1
                 if shown >= 180:
                     break
